@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ipsoflatus.dreamgifts;
+package com.ipsoflatus.dreamgifts.vista;
 
 /**
  *
@@ -34,25 +34,25 @@ public class DreamGifts extends javax.swing.JFrame {
         jPanelUsuario = new javax.swing.JPanel();
         jPanelDatosUsuario = new javax.swing.JPanel();
         jPanelCampos = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        lblNombreUsuario = new javax.swing.JLabel();
         txfNombreUsuario = new javax.swing.JTextField();
+        lblPassword = new javax.swing.JLabel();
         txfPassword = new javax.swing.JPasswordField();
+        lblRePassword = new javax.swing.JLabel();
         txfRePassword = new javax.swing.JPasswordField();
-        jPanelBotones = new javax.swing.JPanel();
-        btnGuardar = new javax.swing.JToggleButton();
+        jPanelBotonesDatosUsuario = new javax.swing.JPanel();
         btnCancelar = new javax.swing.JToggleButton();
+        btnGuardar = new javax.swing.JToggleButton();
         jPanelTablaUsuarios = new javax.swing.JPanel();
-        jScrollPaneUsuarios = new javax.swing.JScrollPane();
-        tablaUsuarios = new javax.swing.JTable();
-        jLabel5 = new javax.swing.JLabel();
+        lblTablaUsuarios = new javax.swing.JLabel();
         jPanelBuscar = new javax.swing.JPanel();
         txfBuscar = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
-        jPanel5 = new javax.swing.JPanel();
-        btnActivar = new javax.swing.JButton();
+        jScrollPaneUsuarios = new javax.swing.JScrollPane();
+        tablaUsuarios = new javax.swing.JTable();
+        jPanelBotonesTablaUsuarios = new javax.swing.JPanel();
         btnDesactivar = new javax.swing.JButton();
+        btnActivar = new javax.swing.JButton();
         jPanelEstado = new javax.swing.JPanel();
         lblEstado = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
@@ -98,11 +98,7 @@ public class DreamGifts extends javax.swing.JFrame {
 
         jPanelDatosUsuario.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Usuario", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
-        jLabel2.setText("Nombre:");
-
-        jLabel3.setText("Password:");
-
-        jLabel4.setText("Confirme password:");
+        lblNombreUsuario.setText("Nombre Usuario:");
 
         txfNombreUsuario.setToolTipText("Ingrese nombre de usuario");
         txfNombreUsuario.setName(""); // NOI18N
@@ -112,13 +108,22 @@ public class DreamGifts extends javax.swing.JFrame {
             }
         });
 
+        lblPassword.setText("Contraseña:");
+
         txfPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txfPasswordActionPerformed(evt);
             }
         });
 
+        lblRePassword.setText("Confirme contraseña:");
+
         txfRePassword.setToolTipText("");
+        txfRePassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfRePasswordActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelCamposLayout = new javax.swing.GroupLayout(jPanelCampos);
         jPanelCampos.setLayout(jPanelCamposLayout);
@@ -126,40 +131,34 @@ public class DreamGifts extends javax.swing.JFrame {
             jPanelCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelCamposLayout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(jPanelCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblNombreUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblRePassword, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
+                    .addComponent(lblPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(10, 10, 10)
                 .addGroup(jPanelCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelCamposLayout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txfNombreUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanelCamposLayout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanelCamposLayout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
-                        .addComponent(txfRePassword, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txfNombreUsuario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
+                    .addComponent(txfPassword, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txfRePassword, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
         );
         jPanelCamposLayout.setVerticalGroup(
             jPanelCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelCamposLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
+                    .addComponent(lblNombreUsuario)
                     .addComponent(txfNombreUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
+                    .addComponent(lblPassword)
                     .addComponent(txfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
+                    .addComponent(lblRePassword)
                     .addComponent(txfRePassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
-
-        btnGuardar.setText("Guardar");
 
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -168,22 +167,24 @@ public class DreamGifts extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanelBotonesLayout = new javax.swing.GroupLayout(jPanelBotones);
-        jPanelBotones.setLayout(jPanelBotonesLayout);
-        jPanelBotonesLayout.setHorizontalGroup(
-            jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBotonesLayout.createSequentialGroup()
+        btnGuardar.setText("Guardar");
+
+        javax.swing.GroupLayout jPanelBotonesDatosUsuarioLayout = new javax.swing.GroupLayout(jPanelBotonesDatosUsuario);
+        jPanelBotonesDatosUsuario.setLayout(jPanelBotonesDatosUsuarioLayout);
+        jPanelBotonesDatosUsuarioLayout.setHorizontalGroup(
+            jPanelBotonesDatosUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBotonesDatosUsuarioLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnCancelar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnGuardar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanelBotonesLayout.setVerticalGroup(
-            jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBotonesLayout.createSequentialGroup()
+        jPanelBotonesDatosUsuarioLayout.setVerticalGroup(
+            jPanelBotonesDatosUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBotonesDatosUsuarioLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelBotonesDatosUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
                     .addComponent(btnCancelar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -197,7 +198,7 @@ public class DreamGifts extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanelCampos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
-                .addComponent(jPanelBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelBotonesDatosUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(54, 54, 54))
         );
         jPanelDatosUsuarioLayout.setVerticalGroup(
@@ -208,11 +209,41 @@ public class DreamGifts extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelDatosUsuarioLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanelBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelBotonesDatosUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26))
         );
 
         jPanelTablaUsuarios.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        lblTablaUsuarios.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblTablaUsuarios.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTablaUsuarios.setText("Usuarios Registrados");
+        lblTablaUsuarios.setToolTipText("");
+
+        txfBuscar.setToolTipText("Ingrese nombre de usuario");
+
+        btnBuscar.setText("Buscar");
+
+        javax.swing.GroupLayout jPanelBuscarLayout = new javax.swing.GroupLayout(jPanelBuscar);
+        jPanelBuscar.setLayout(jPanelBuscarLayout);
+        jPanelBuscarLayout.setHorizontalGroup(
+            jPanelBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBuscarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txfBuscar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnBuscar)
+                .addContainerGap())
+        );
+        jPanelBuscarLayout.setVerticalGroup(
+            jPanelBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelBuscarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txfBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         tablaUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -243,56 +274,26 @@ public class DreamGifts extends javax.swing.JFrame {
         });
         jScrollPaneUsuarios.setViewportView(tablaUsuarios);
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("Usuarios Registrados");
-        jLabel5.setToolTipText("");
-
-        txfBuscar.setToolTipText("Ingrese nombre de usuario");
-
-        btnBuscar.setText("Buscar");
-
-        javax.swing.GroupLayout jPanelBuscarLayout = new javax.swing.GroupLayout(jPanelBuscar);
-        jPanelBuscar.setLayout(jPanelBuscarLayout);
-        jPanelBuscarLayout.setHorizontalGroup(
-            jPanelBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBuscarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(txfBuscar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnBuscar)
-                .addContainerGap())
-        );
-        jPanelBuscarLayout.setVerticalGroup(
-            jPanelBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelBuscarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txfBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        btnDesactivar.setText("Desactivar");
 
         btnActivar.setText("Activar");
 
-        btnDesactivar.setText("Desactivar");
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelBotonesTablaUsuariosLayout = new javax.swing.GroupLayout(jPanelBotonesTablaUsuarios);
+        jPanelBotonesTablaUsuarios.setLayout(jPanelBotonesTablaUsuariosLayout);
+        jPanelBotonesTablaUsuariosLayout.setHorizontalGroup(
+            jPanelBotonesTablaUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBotonesTablaUsuariosLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnDesactivar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnActivar)
                 .addContainerGap())
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
+        jPanelBotonesTablaUsuariosLayout.setVerticalGroup(
+            jPanelBotonesTablaUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelBotonesTablaUsuariosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelBotonesTablaUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnActivar)
                     .addComponent(btnDesactivar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -307,12 +308,12 @@ public class DreamGifts extends javax.swing.JFrame {
                 .addGroup(jPanelTablaUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPaneUsuarios)
                     .addGroup(jPanelTablaUsuariosLayout.createSequentialGroup()
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 447, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblTablaUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 447, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanelBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTablaUsuariosLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanelBotonesTablaUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanelTablaUsuariosLayout.setVerticalGroup(
@@ -321,11 +322,11 @@ public class DreamGifts extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanelTablaUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanelBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblTablaUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPaneUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelBotonesTablaUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -422,6 +423,10 @@ public class DreamGifts extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txfPasswordActionPerformed
 
+    private void txfRePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfRePasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfRePasswordActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -465,14 +470,10 @@ public class DreamGifts extends javax.swing.JFrame {
     private javax.swing.JToggleButton btnCancelar;
     private javax.swing.JButton btnDesactivar;
     private javax.swing.JToggleButton btnGuardar;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanelBotones;
+    private javax.swing.JPanel jPanelBotonesDatosUsuario;
+    private javax.swing.JPanel jPanelBotonesTablaUsuarios;
     private javax.swing.JPanel jPanelBuscar;
     private javax.swing.JPanel jPanelCampos;
     private javax.swing.JPanel jPanelDatosUsuario;
@@ -482,6 +483,10 @@ public class DreamGifts extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPaneUsuarios;
     private javax.swing.JTabbedPane jTabbedPaneAdmin;
     private javax.swing.JLabel lblEstado;
+    private javax.swing.JLabel lblNombreUsuario;
+    private javax.swing.JLabel lblPassword;
+    private javax.swing.JLabel lblRePassword;
+    private javax.swing.JLabel lblTablaUsuarios;
     private javax.swing.JLabel lblTienda;
     private javax.swing.JMenu menuAdmin;
     private javax.swing.JMenuBar menuBar;
