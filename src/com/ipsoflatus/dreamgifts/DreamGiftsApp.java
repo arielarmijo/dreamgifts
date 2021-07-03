@@ -16,6 +16,7 @@ public class DreamGiftsApp {
     
     public static void main(String[] args) {
        JFrame app = new Login();
+       app.setLocationRelativeTo(null);
        app.setVisible(true);
     }
     

@@ -166,6 +166,7 @@ public class Login extends javax.swing.JFrame {
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         JFrame app = new DreamGifts();
+        app.setLocationRelativeTo(null);
         app.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnIngresarActionPerformed

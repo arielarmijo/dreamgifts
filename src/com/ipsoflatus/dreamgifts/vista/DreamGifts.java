@@ -1,23 +1,92 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ipsoflatus.dreamgifts.vista;
 
+import com.ipsoflatus.dreamgifts.vista.admin.PanelArticulo;
+import com.ipsoflatus.dreamgifts.vista.admin.PanelBanco;
+import com.ipsoflatus.dreamgifts.vista.admin.PanelCategoriaArticulo;
+import com.ipsoflatus.dreamgifts.vista.admin.PanelCliente;
+import com.ipsoflatus.dreamgifts.vista.admin.PanelComuna;
+import com.ipsoflatus.dreamgifts.vista.admin.PanelEstadoVenta;
+import com.ipsoflatus.dreamgifts.vista.admin.PanelPack;
+import com.ipsoflatus.dreamgifts.vista.admin.PanelProveedor;
+import com.ipsoflatus.dreamgifts.vista.admin.PanelRRSS;
+import com.ipsoflatus.dreamgifts.vista.admin.PanelUsuario;
+import com.ipsoflatus.dreamgifts.vista.compras.PanelRegistroCompra;
+import com.ipsoflatus.dreamgifts.vista.compras.PanelRevisionFactura;
+import com.ipsoflatus.dreamgifts.vista.compras.PanelSolicitudPedido;
+import com.ipsoflatus.dreamgifts.vista.informes.PanelInformeClientes;
+import com.ipsoflatus.dreamgifts.vista.informes.PanelInformeDyC;
+import com.ipsoflatus.dreamgifts.vista.informes.PanelInformeInventario;
+import com.ipsoflatus.dreamgifts.vista.informes.PanelInformeVentas;
+import com.ipsoflatus.dreamgifts.vista.ventas.PanelActualizacionDespacho;
+import com.ipsoflatus.dreamgifts.vista.ventas.PanelConfirmcionPago;
+import com.ipsoflatus.dreamgifts.vista.ventas.PanelListaDestinos;
+import com.ipsoflatus.dreamgifts.vista.ventas.PanelVenta;
 import java.awt.CardLayout;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
-/**
- *
- * @author Usuario
- */
 public class DreamGifts extends javax.swing.JFrame {
 
-    /**
-     * Creates new form DreamGift
-     */
     public DreamGifts() {
         initComponents();
+        crearPanelVentas();
+        crearPanelCompras();
+        crearPanelInformes();
+        crearPanelAdmin();      
+    }
+    
+    private void crearPanelVentas() {
+        JPanel venta = new PanelVenta();
+        JPanel confirmacionPago = new PanelConfirmcionPago();
+        JPanel destinos = new PanelListaDestinos();
+        JPanel despachos = new PanelActualizacionDespacho();
+        jTabbedPaneVentas.addTab("Venta", venta);
+        jTabbedPaneVentas.addTab("Confirmación Pago", confirmacionPago);
+        jTabbedPaneVentas.addTab("Lista Destinos", destinos);
+        jTabbedPaneVentas.addTab("Actualización Despachos", despachos);
+    }
+    
+    private void crearPanelCompras() {
+        JPanel solicitudPedido = new PanelSolicitudPedido();
+        JPanel registroCompras = new PanelRegistroCompra();
+        JPanel revisionFactura = new PanelRevisionFactura();
+        jTabbedPaneCompras.addTab("Solicitud Pedido", solicitudPedido);
+        jTabbedPaneCompras.addTab("Registro Compra", registroCompras);
+        jTabbedPaneCompras.addTab("Revisión Facturas", revisionFactura);
+    }
+    
+    private void crearPanelInformes() {
+        JPanel informeVentas = new PanelInformeVentas();
+        JPanel informeInventario = new PanelInformeInventario();
+        JPanel informeClientes = new PanelInformeClientes();
+        JPanel informeDyC = new PanelInformeDyC();
+        jTabbedPaneInformes.addTab("Informe Ventas", informeVentas);
+        jTabbedPaneInformes.addTab("Informe Inventario", informeInventario);
+        jTabbedPaneInformes.addTab("Informe Clientes", informeClientes);
+        jTabbedPaneInformes.addTab("Informe Devoluciones y Cambios", informeDyC);
+    }
+        
+    private void crearPanelAdmin() {
+        JPanel cliente = new PanelCliente();
+        JPanel proveedor = new PanelProveedor();
+        JPanel articulo = new PanelArticulo();
+        JPanel pack = new PanelPack();
+        JPanel rrss = new PanelRRSS();
+        JPanel categoriaArticulo = new PanelCategoriaArticulo();
+        JPanel comuna = new PanelComuna();
+        JPanel banco = new PanelBanco();
+        JPanel estadoVenta = new PanelEstadoVenta();
+        JPanel usuario = new PanelUsuario();
+        jTabbedPaneAdmin.addTab("Clientes", cliente);
+        jTabbedPaneAdmin.addTab("Proveedores", proveedor);
+        jTabbedPaneAdmin.addTab("Articulos", articulo);
+        jTabbedPaneAdmin.addTab("Packs", pack);
+        jTabbedPaneAdmin.addTab("RRSS", rrss);
+        jTabbedPaneAdmin.addTab("Categoría Artículos", categoriaArticulo);
+        jTabbedPaneAdmin.addTab("Comunas", comuna);
+        jTabbedPaneAdmin.addTab("Bancos", banco);
+        jTabbedPaneAdmin.addTab("Estados Venta", estadoVenta);
+        jTabbedPaneAdmin.addTab("Usuarios", usuario);
     }
 
     /**
@@ -29,424 +98,61 @@ public class DreamGifts extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblTienda = new javax.swing.JLabel();
+        jLabelTienda = new javax.swing.JLabel();
         mainContainer = new javax.swing.JPanel();
         jTabbedPaneVentas = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
         jTabbedPaneCompras = new javax.swing.JTabbedPane();
-        jPanel5 = new javax.swing.JPanel();
         jTabbedPaneInformes = new javax.swing.JTabbedPane();
-        jPanel6 = new javax.swing.JPanel();
-        jPanel7 = new javax.swing.JPanel();
-        jPanel8 = new javax.swing.JPanel();
         jTabbedPaneAdmin = new javax.swing.JTabbedPane();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jPanelUsuario = new javax.swing.JPanel();
-        jPanelDatosUsuario = new javax.swing.JPanel();
-        jPanelCampos = new javax.swing.JPanel();
-        lblNombreUsuario = new javax.swing.JLabel();
-        txfNombreUsuario = new javax.swing.JTextField();
-        lblPassword = new javax.swing.JLabel();
-        txfPassword = new javax.swing.JPasswordField();
-        lblRePassword = new javax.swing.JLabel();
-        txfRePassword = new javax.swing.JPasswordField();
-        jPanelBotonesDatosUsuario = new javax.swing.JPanel();
-        btnCancelar = new javax.swing.JToggleButton();
-        btnGuardar = new javax.swing.JToggleButton();
-        jLabel1 = new javax.swing.JLabel();
-        jPanelTablaUsuarios = new javax.swing.JPanel();
-        lblTablaUsuarios = new javax.swing.JLabel();
-        jPanelBuscar = new javax.swing.JPanel();
-        txfBuscar = new javax.swing.JTextField();
-        btnBuscar = new javax.swing.JButton();
-        jScrollPaneUsuarios = new javax.swing.JScrollPane();
-        tablaUsuarios = new javax.swing.JTable();
-        jPanelBotonesTablaUsuarios = new javax.swing.JPanel();
-        btnDesactivar = new javax.swing.JButton();
-        btnActivar = new javax.swing.JButton();
         jPanelEstado = new javax.swing.JPanel();
-        lblEstado = new javax.swing.JLabel();
-        menuBar = new javax.swing.JMenuBar();
-        menuVentas = new javax.swing.JMenu();
-        menuCompras = new javax.swing.JMenu();
-        Informes = new javax.swing.JMenu();
-        menuAdmin = new javax.swing.JMenu();
+        jLabelEstado = new javax.swing.JLabel();
+        jMenuBar = new javax.swing.JMenuBar();
+        jMenuVentas = new javax.swing.JMenu();
+        jMenuItemVenta = new javax.swing.JMenuItem();
+        jMenuItemConfirmacionPago = new javax.swing.JMenuItem();
+        jMenuItemDespachos = new javax.swing.JMenuItem();
+        jMenuItemEstadoDespachos = new javax.swing.JMenuItem();
+        jMenuCompras = new javax.swing.JMenu();
+        jMenuItemSolicitudPedido = new javax.swing.JMenuItem();
+        jMenuItemRegistroCompra = new javax.swing.JMenuItem();
+        jMenuItemFactura = new javax.swing.JMenuItem();
+        jMenuInformes = new javax.swing.JMenu();
+        jMenuItemInformeVentas = new javax.swing.JMenuItem();
+        jMenuItemInformeInventario = new javax.swing.JMenuItem();
+        jMenuItemInformeClientes = new javax.swing.JMenuItem();
+        jMenuItemInformeDyC = new javax.swing.JMenuItem();
+        jMenuadmin = new javax.swing.JMenu();
+        jMenuItemClientes = new javax.swing.JMenuItem();
+        jMenuItemProveedores = new javax.swing.JMenuItem();
+        jMenuItemArticulos = new javax.swing.JMenuItem();
+        jMenuItemPacks = new javax.swing.JMenuItem();
+        jMenuItemRRSS = new javax.swing.JMenuItem();
+        jMenuItemCategoriaArticulos = new javax.swing.JMenuItem();
+        jMenuItemComunas = new javax.swing.JMenuItem();
+        jMenuItemBancos = new javax.swing.JMenuItem();
+        jMenuItemCategoriaVentas = new javax.swing.JMenuItem();
+        jMenuItemUsuarios = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Dream Gifts");
+        setMinimumSize(new java.awt.Dimension(870, 620));
+        setName("DreamGifts"); // NOI18N
 
-        lblTienda.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        lblTienda.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTienda.setText("Dream Gifts");
+        jLabelTienda.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jLabelTienda.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelTienda.setText("Dream Gifts");
 
+        mainContainer.setMinimumSize(new java.awt.Dimension(850, 500));
+        mainContainer.setPreferredSize(new java.awt.Dimension(800, 500));
         mainContainer.setLayout(new java.awt.CardLayout());
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 819, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 494, Short.MAX_VALUE)
-        );
-
-        jTabbedPaneVentas.addTab("tab1", jPanel1);
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 819, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 494, Short.MAX_VALUE)
-        );
-
-        jTabbedPaneVentas.addTab("tab2", jPanel4);
-
         mainContainer.add(jTabbedPaneVentas, "ventas");
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 819, Short.MAX_VALUE)
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 494, Short.MAX_VALUE)
-        );
-
-        jTabbedPaneCompras.addTab("tab1", jPanel5);
-
         mainContainer.add(jTabbedPaneCompras, "compras");
-
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 819, Short.MAX_VALUE)
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 494, Short.MAX_VALUE)
-        );
-
-        jTabbedPaneInformes.addTab("tab1", jPanel6);
-
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 819, Short.MAX_VALUE)
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 494, Short.MAX_VALUE)
-        );
-
-        jTabbedPaneInformes.addTab("tab2", jPanel7);
-
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 819, Short.MAX_VALUE)
-        );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 494, Short.MAX_VALUE)
-        );
-
-        jTabbedPaneInformes.addTab("tab3", jPanel8);
-
         mainContainer.add(jTabbedPaneInformes, "informes");
-
-        jTabbedPaneAdmin.setName(""); // NOI18N
-        jTabbedPaneAdmin.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jTabbedPaneAdminStateChanged(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 819, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 494, Short.MAX_VALUE)
-        );
-
-        jTabbedPaneAdmin.addTab("tab1", jPanel2);
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 819, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 494, Short.MAX_VALUE)
-        );
-
-        jTabbedPaneAdmin.addTab("tab2", jPanel3);
-
-        jPanelDatosUsuario.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        lblNombreUsuario.setText("Nombre Usuario:");
-
-        txfNombreUsuario.setToolTipText("Ingrese nombre de usuario");
-        txfNombreUsuario.setName(""); // NOI18N
-
-        lblPassword.setText("Contraseña:");
-
-        lblRePassword.setText("Confirme contraseña:");
-
-        txfRePassword.setToolTipText("");
-
-        javax.swing.GroupLayout jPanelCamposLayout = new javax.swing.GroupLayout(jPanelCampos);
-        jPanelCampos.setLayout(jPanelCamposLayout);
-        jPanelCamposLayout.setHorizontalGroup(
-            jPanelCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelCamposLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblNombreUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblRePassword, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
-                    .addComponent(lblPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(10, 10, 10)
-                .addGroup(jPanelCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txfNombreUsuario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
-                    .addComponent(txfPassword, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txfRePassword, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap())
-        );
-        jPanelCamposLayout.setVerticalGroup(
-            jPanelCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelCamposLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNombreUsuario)
-                    .addComponent(txfNombreUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanelCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblPassword)
-                    .addComponent(txfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanelCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblRePassword)
-                    .addComponent(txfRePassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
-
-        btnCancelar.setText("Cancelar");
-
-        btnGuardar.setText("Guardar");
-
-        javax.swing.GroupLayout jPanelBotonesDatosUsuarioLayout = new javax.swing.GroupLayout(jPanelBotonesDatosUsuario);
-        jPanelBotonesDatosUsuario.setLayout(jPanelBotonesDatosUsuarioLayout);
-        jPanelBotonesDatosUsuarioLayout.setHorizontalGroup(
-            jPanelBotonesDatosUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBotonesDatosUsuarioLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnCancelar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnGuardar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanelBotonesDatosUsuarioLayout.setVerticalGroup(
-            jPanelBotonesDatosUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBotonesDatosUsuarioLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanelBotonesDatosUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnGuardar)
-                    .addComponent(btnCancelar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Datos Usuario");
-
-        javax.swing.GroupLayout jPanelDatosUsuarioLayout = new javax.swing.GroupLayout(jPanelDatosUsuario);
-        jPanelDatosUsuario.setLayout(jPanelDatosUsuarioLayout);
-        jPanelDatosUsuarioLayout.setHorizontalGroup(
-            jPanelDatosUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelDatosUsuarioLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelDatosUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelCampos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanelBotonesDatosUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43))
-        );
-        jPanelDatosUsuarioLayout.setVerticalGroup(
-            jPanelDatosUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelDatosUsuarioLayout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanelDatosUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanelCampos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelDatosUsuarioLayout.createSequentialGroup()
-                        .addComponent(jPanelBotonesDatosUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)))
-                .addContainerGap())
-        );
-
-        jPanelTablaUsuarios.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        lblTablaUsuarios.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        lblTablaUsuarios.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTablaUsuarios.setText("Usuarios Registrados");
-        lblTablaUsuarios.setToolTipText("");
-
-        txfBuscar.setToolTipText("Ingrese nombre de usuario");
-
-        btnBuscar.setText("Buscar");
-
-        javax.swing.GroupLayout jPanelBuscarLayout = new javax.swing.GroupLayout(jPanelBuscar);
-        jPanelBuscar.setLayout(jPanelBuscarLayout);
-        jPanelBuscarLayout.setHorizontalGroup(
-            jPanelBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBuscarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(txfBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnBuscar)
-                .addContainerGap())
-        );
-        jPanelBuscarLayout.setVerticalGroup(
-            jPanelBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelBuscarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txfBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        tablaUsuarios.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"aarmijo", "ACTIVO", null},
-                {"afigueroa", "ACTIVO", null},
-                {"cgonzalez", "ACTIVO", null},
-                {"corellana", "ACTIVO", null},
-                {"psoto", "ACTIVO", null}
-            },
-            new String [] {
-                "Nombre", "Estado", "Selección"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, true
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPaneUsuarios.setViewportView(tablaUsuarios);
-
-        btnDesactivar.setText("Desactivar");
-
-        btnActivar.setText("Activar");
-
-        javax.swing.GroupLayout jPanelBotonesTablaUsuariosLayout = new javax.swing.GroupLayout(jPanelBotonesTablaUsuarios);
-        jPanelBotonesTablaUsuarios.setLayout(jPanelBotonesTablaUsuariosLayout);
-        jPanelBotonesTablaUsuariosLayout.setHorizontalGroup(
-            jPanelBotonesTablaUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBotonesTablaUsuariosLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnDesactivar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnActivar)
-                .addContainerGap())
-        );
-        jPanelBotonesTablaUsuariosLayout.setVerticalGroup(
-            jPanelBotonesTablaUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelBotonesTablaUsuariosLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelBotonesTablaUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnActivar)
-                    .addComponent(btnDesactivar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout jPanelTablaUsuariosLayout = new javax.swing.GroupLayout(jPanelTablaUsuarios);
-        jPanelTablaUsuarios.setLayout(jPanelTablaUsuariosLayout);
-        jPanelTablaUsuariosLayout.setHorizontalGroup(
-            jPanelTablaUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelTablaUsuariosLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelTablaUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPaneUsuarios)
-                    .addGroup(jPanelTablaUsuariosLayout.createSequentialGroup()
-                        .addComponent(lblTablaUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 447, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanelBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTablaUsuariosLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jPanelBotonesTablaUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-        );
-        jPanelTablaUsuariosLayout.setVerticalGroup(
-            jPanelTablaUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelTablaUsuariosLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelTablaUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanelBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblTablaUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPaneUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanelBotonesTablaUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        javax.swing.GroupLayout jPanelUsuarioLayout = new javax.swing.GroupLayout(jPanelUsuario);
-        jPanelUsuario.setLayout(jPanelUsuarioLayout);
-        jPanelUsuarioLayout.setHorizontalGroup(
-            jPanelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelUsuarioLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanelTablaUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelDatosUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanelUsuarioLayout.setVerticalGroup(
-            jPanelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelUsuarioLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanelDatosUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanelTablaUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        jTabbedPaneAdmin.addTab("Usuario", jPanelUsuario);
-
         mainContainer.add(jTabbedPaneAdmin, "admin");
-        jTabbedPaneAdmin.getAccessibleContext().setAccessibleName("Usuario");
 
-        lblEstado.setText("Estado");
+        jLabelEstado.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabelEstado.setText("Estado");
+        jLabelEstado.setName(""); // NOI18N
 
         javax.swing.GroupLayout jPanelEstadoLayout = new javax.swing.GroupLayout(jPanelEstado);
         jPanelEstado.setLayout(jPanelEstadoLayout);
@@ -454,76 +160,210 @@ public class DreamGifts extends javax.swing.JFrame {
             jPanelEstadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelEstadoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblEstado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabelEstado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelEstadoLayout.setVerticalGroup(
             jPanelEstadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelEstadoLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGroup(jPanelEstadoLayout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabelEstado)
+                .addGap(5, 5, 5))
         );
 
-        menuVentas.setText("Ventas");
-        menuVentas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menuVentasMouseClicked(evt);
-            }
-        });
-        menuVentas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuVentasActionPerformed(evt);
-            }
-        });
-        menuBar.add(menuVentas);
+        jMenuVentas.setText("Ventas");
 
-        menuCompras.setText("Compras");
-        menuCompras.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menuComprasMouseClicked(evt);
-            }
-        });
-        menuCompras.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemVenta.setText("Venta");
+        jMenuItemVenta.setInheritsPopupMenu(true);
+        jMenuItemVenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuComprasActionPerformed(evt);
+                jMenuItemVentaActionPerformed(evt);
             }
         });
-        menuBar.add(menuCompras);
+        jMenuVentas.add(jMenuItemVenta);
 
-        Informes.setText("Informes");
-        Informes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                InformesMouseClicked(evt);
-            }
-        });
-        Informes.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemConfirmacionPago.setText("Confirmación Pago");
+        jMenuItemConfirmacionPago.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                InformesActionPerformed(evt);
+                jMenuItemConfirmacionPagoActionPerformed(evt);
             }
         });
-        menuBar.add(Informes);
+        jMenuVentas.add(jMenuItemConfirmacionPago);
 
-        menuAdmin.setText("Administración");
-        menuAdmin.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menuAdminMouseClicked(evt);
-            }
-        });
-        menuAdmin.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemDespachos.setText("Lista Despachos");
+        jMenuItemDespachos.setToolTipText("");
+        jMenuItemDespachos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuAdminActionPerformed(evt);
+                jMenuItemDespachosActionPerformed(evt);
             }
         });
-        menuBar.add(menuAdmin);
+        jMenuVentas.add(jMenuItemDespachos);
 
-        setJMenuBar(menuBar);
+        jMenuItemEstadoDespachos.setText("Estado Despachos");
+        jMenuItemEstadoDespachos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemEstadoDespachosActionPerformed(evt);
+            }
+        });
+        jMenuVentas.add(jMenuItemEstadoDespachos);
+
+        jMenuBar.add(jMenuVentas);
+
+        jMenuCompras.setText("Compras");
+
+        jMenuItemSolicitudPedido.setText("Solicitud Pedido");
+        jMenuItemSolicitudPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemSolicitudPedidoActionPerformed(evt);
+            }
+        });
+        jMenuCompras.add(jMenuItemSolicitudPedido);
+
+        jMenuItemRegistroCompra.setText("Registro Compra");
+        jMenuItemRegistroCompra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemRegistroCompraActionPerformed(evt);
+            }
+        });
+        jMenuCompras.add(jMenuItemRegistroCompra);
+
+        jMenuItemFactura.setText("Revisión Factura");
+        jMenuItemFactura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemFacturaActionPerformed(evt);
+            }
+        });
+        jMenuCompras.add(jMenuItemFactura);
+
+        jMenuBar.add(jMenuCompras);
+
+        jMenuInformes.setText("Informes");
+
+        jMenuItemInformeVentas.setText("Informe Ventas");
+        jMenuItemInformeVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemInformeVentasActionPerformed(evt);
+            }
+        });
+        jMenuInformes.add(jMenuItemInformeVentas);
+
+        jMenuItemInformeInventario.setText("Informe Inventario");
+        jMenuItemInformeInventario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemInformeInventarioActionPerformed(evt);
+            }
+        });
+        jMenuInformes.add(jMenuItemInformeInventario);
+
+        jMenuItemInformeClientes.setText("Informe Clientes");
+        jMenuItemInformeClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemInformeClientesActionPerformed(evt);
+            }
+        });
+        jMenuInformes.add(jMenuItemInformeClientes);
+
+        jMenuItemInformeDyC.setText("Informe Camio y Devoluciones");
+        jMenuItemInformeDyC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemInformeDyCActionPerformed(evt);
+            }
+        });
+        jMenuInformes.add(jMenuItemInformeDyC);
+
+        jMenuBar.add(jMenuInformes);
+
+        jMenuadmin.setText("Administración");
+
+        jMenuItemClientes.setText("Clientes");
+        jMenuItemClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemClientesActionPerformed(evt);
+            }
+        });
+        jMenuadmin.add(jMenuItemClientes);
+
+        jMenuItemProveedores.setText("Proveedores");
+        jMenuItemProveedores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemProveedoresActionPerformed(evt);
+            }
+        });
+        jMenuadmin.add(jMenuItemProveedores);
+
+        jMenuItemArticulos.setText("Artículos");
+        jMenuItemArticulos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemArticulosActionPerformed(evt);
+            }
+        });
+        jMenuadmin.add(jMenuItemArticulos);
+
+        jMenuItemPacks.setText("Packs");
+        jMenuItemPacks.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemPacksActionPerformed(evt);
+            }
+        });
+        jMenuadmin.add(jMenuItemPacks);
+
+        jMenuItemRRSS.setText("RRSS");
+        jMenuItemRRSS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemRRSSActionPerformed(evt);
+            }
+        });
+        jMenuadmin.add(jMenuItemRRSS);
+
+        jMenuItemCategoriaArticulos.setText("Categoría Artículos");
+        jMenuItemCategoriaArticulos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemCategoriaArticulosActionPerformed(evt);
+            }
+        });
+        jMenuadmin.add(jMenuItemCategoriaArticulos);
+
+        jMenuItemComunas.setText("Comunas");
+        jMenuItemComunas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemComunasActionPerformed(evt);
+            }
+        });
+        jMenuadmin.add(jMenuItemComunas);
+
+        jMenuItemBancos.setText("Bancos");
+        jMenuItemBancos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemBancosActionPerformed(evt);
+            }
+        });
+        jMenuadmin.add(jMenuItemBancos);
+
+        jMenuItemCategoriaVentas.setText("Categoría Ventas");
+        jMenuItemCategoriaVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemCategoriaVentasActionPerformed(evt);
+            }
+        });
+        jMenuadmin.add(jMenuItemCategoriaVentas);
+
+        jMenuItemUsuarios.setText("Usuarios");
+        jMenuItemUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemUsuariosActionPerformed(evt);
+            }
+        });
+        jMenuadmin.add(jMenuItemUsuarios);
+
+        jMenuBar.add(jMenuadmin);
+
+        setJMenuBar(jMenuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblTienda, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabelTienda, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 870, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -533,11 +373,11 @@ public class DreamGifts extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(lblTienda, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(mainContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 522, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jLabelTienda, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(mainContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 481, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -545,52 +385,116 @@ public class DreamGifts extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTabbedPaneAdminStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPaneAdminStateChanged
-        lblEstado.setText("Tab selected: " + jTabbedPaneAdmin.getSelectedIndex());
-    }//GEN-LAST:event_jTabbedPaneAdminStateChanged
+    private void jMenuItemClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemClientesActionPerformed
+        showTabbedPaneAndTab(jTabbedPaneAdmin, "admin", 0);
+        jLabelEstado.setText("Administracón: Gestión de clientes.");
+    }//GEN-LAST:event_jMenuItemClientesActionPerformed
 
-    private void menuAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAdminActionPerformed
+    private void jMenuItemProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemProveedoresActionPerformed
+        showTabbedPaneAndTab(jTabbedPaneAdmin, "admin", 1);
+        jLabelEstado.setText("Administracón: Gestión de proveedores.");
+    }//GEN-LAST:event_jMenuItemProveedoresActionPerformed
+
+    private void jMenuItemArticulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemArticulosActionPerformed
+        showTabbedPaneAndTab(jTabbedPaneAdmin, "admin", 2);
+        jLabelEstado.setText("Administracón: Gestión de artículos.");
+    }//GEN-LAST:event_jMenuItemArticulosActionPerformed
+
+    private void jMenuItemPacksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPacksActionPerformed
+        showTabbedPaneAndTab(jTabbedPaneAdmin, "admin", 3);
+        jLabelEstado.setText("Administracón: Gestión de packs.");
+    }//GEN-LAST:event_jMenuItemPacksActionPerformed
+
+    private void jMenuItemRRSSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRRSSActionPerformed
+        showTabbedPaneAndTab(jTabbedPaneAdmin, "admin", 4);
+        jLabelEstado.setText("Administracón: Gestión de redes sociales.");
+    }//GEN-LAST:event_jMenuItemRRSSActionPerformed
+
+    private void jMenuItemCategoriaArticulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCategoriaArticulosActionPerformed
+        showTabbedPaneAndTab(jTabbedPaneAdmin, "admin", 5);
+        jLabelEstado.setText("Administracón: Gestión de categorías de artículos.");
+    }//GEN-LAST:event_jMenuItemCategoriaArticulosActionPerformed
+
+    private void jMenuItemComunasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemComunasActionPerformed
+        showTabbedPaneAndTab(jTabbedPaneAdmin, "admin", 6);
+        jLabelEstado.setText("Administracón: Gestión de comunas.");
+    }//GEN-LAST:event_jMenuItemComunasActionPerformed
+
+    private void jMenuItemBancosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemBancosActionPerformed
+        showTabbedPaneAndTab(jTabbedPaneAdmin, "admin", 7);
+        jLabelEstado.setText("Administracón: Gestión de bancos.");
+    }//GEN-LAST:event_jMenuItemBancosActionPerformed
+
+    private void jMenuItemCategoriaVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCategoriaVentasActionPerformed
+        showTabbedPaneAndTab(jTabbedPaneAdmin, "admin", 8);
+        jLabelEstado.setText("Administracón: Gestión de categoría ventas.");
+    }//GEN-LAST:event_jMenuItemCategoriaVentasActionPerformed
+
+    private void jMenuItemUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemUsuariosActionPerformed
+        showTabbedPaneAndTab(jTabbedPaneAdmin, "admin", 9);
+        jLabelEstado.setText("Administracón: Gestión de usuarios.");
+    }//GEN-LAST:event_jMenuItemUsuariosActionPerformed
+
+    private void jMenuItemVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemVentaActionPerformed
+        showTabbedPaneAndTab(jTabbedPaneVentas, "ventas", 0);
+        jLabelEstado.setText("Ventas: Registro de ventas.");
+    }//GEN-LAST:event_jMenuItemVentaActionPerformed
+
+    private void jMenuItemConfirmacionPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemConfirmacionPagoActionPerformed
+        showTabbedPaneAndTab(jTabbedPaneVentas, "ventas", 1);
+        jLabelEstado.setText("Ventas: Confirmación de pagos.");
+    }//GEN-LAST:event_jMenuItemConfirmacionPagoActionPerformed
+
+    private void jMenuItemDespachosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDespachosActionPerformed
+        showTabbedPaneAndTab(jTabbedPaneVentas, "ventas", 2);
+        jLabelEstado.setText("Ventas: Lista de destinos.");
+    }//GEN-LAST:event_jMenuItemDespachosActionPerformed
+
+    private void jMenuItemEstadoDespachosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEstadoDespachosActionPerformed
+        showTabbedPaneAndTab(jTabbedPaneVentas, "ventas", 3);
+        jLabelEstado.setText("Ventas: Actualización despachos.");
+    }//GEN-LAST:event_jMenuItemEstadoDespachosActionPerformed
+
+    private void jMenuItemSolicitudPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSolicitudPedidoActionPerformed
+        showTabbedPaneAndTab(jTabbedPaneCompras, "compras", 0);
+        jLabelEstado.setText("Compras: Solicitud de pedido.");
+    }//GEN-LAST:event_jMenuItemSolicitudPedidoActionPerformed
+
+    private void jMenuItemRegistroCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRegistroCompraActionPerformed
+        showTabbedPaneAndTab(jTabbedPaneCompras, "compras", 1);
+        jLabelEstado.setText("Compras: Registro compras.");
+    }//GEN-LAST:event_jMenuItemRegistroCompraActionPerformed
+
+    private void jMenuItemFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemFacturaActionPerformed
+        showTabbedPaneAndTab(jTabbedPaneCompras, "compras", 2);
+        jLabelEstado.setText("Compras: Revisión facturas.");
+    }//GEN-LAST:event_jMenuItemFacturaActionPerformed
+
+    private void jMenuItemInformeVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemInformeVentasActionPerformed
+        showTabbedPaneAndTab(jTabbedPaneInformes, "informes", 0);
+        jLabelEstado.setText("Informes: Informe de ventas.");
+    }//GEN-LAST:event_jMenuItemInformeVentasActionPerformed
+
+    private void jMenuItemInformeInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemInformeInventarioActionPerformed
+        showTabbedPaneAndTab(jTabbedPaneInformes, "informes", 1);
+        jLabelEstado.setText("Informes: Informe de inventario.");
+    }//GEN-LAST:event_jMenuItemInformeInventarioActionPerformed
+
+    private void jMenuItemInformeClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemInformeClientesActionPerformed
+        showTabbedPaneAndTab(jTabbedPaneInformes, "informes", 2);
+        jLabelEstado.setText("Informes: Informe de clientes.");
+    }//GEN-LAST:event_jMenuItemInformeClientesActionPerformed
+
+    private void jMenuItemInformeDyCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemInformeDyCActionPerformed
+        showTabbedPaneAndTab(jTabbedPaneInformes, "informes", 3);
+        jLabelEstado.setText("Informes: Informe de devoluciones y cambios.");
+    }//GEN-LAST:event_jMenuItemInformeDyCActionPerformed
+
+    private void showTabbedPaneAndTab(JTabbedPane pane, String card, int tab) {
         CardLayout c = (CardLayout) mainContainer.getLayout();
-        c.show(mainContainer, "admin");
-        lblEstado.setText("Administracion");
-    }//GEN-LAST:event_menuAdminActionPerformed
-
-    private void InformesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InformesActionPerformed
-        
-    }//GEN-LAST:event_InformesActionPerformed
-
-    private void menuVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuVentasActionPerformed
-        
-    }//GEN-LAST:event_menuVentasActionPerformed
-
-    private void menuComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuComprasActionPerformed
-        
-    }//GEN-LAST:event_menuComprasActionPerformed
-
-    private void menuAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAdminMouseClicked
-       CardLayout c = (CardLayout) mainContainer.getLayout();
-        c.show(mainContainer, "admin");
-        lblEstado.setText("Administracion");
-    }//GEN-LAST:event_menuAdminMouseClicked
-
-    private void InformesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_InformesMouseClicked
-        CardLayout c = (CardLayout) mainContainer.getLayout();
-        c.show(mainContainer, "informes");
-        lblEstado.setText("Informes");
-    }//GEN-LAST:event_InformesMouseClicked
-
-    private void menuComprasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuComprasMouseClicked
-        CardLayout c = (CardLayout) mainContainer.getLayout();
-        c.show(mainContainer, "compras");
-        lblEstado.setText("Compras");
-    }//GEN-LAST:event_menuComprasMouseClicked
-
-    private void menuVentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuVentasMouseClicked
-        CardLayout c = (CardLayout) mainContainer.getLayout();
-        c.show(mainContainer, "ventas");
-        lblEstado.setText("Ventas");
-    }//GEN-LAST:event_menuVentasMouseClicked
-
+        c.show(mainContainer, card);
+        pane.setSelectedIndex(tab);
+    }
     /**
      * @param args the command line arguments
      */
@@ -628,49 +532,39 @@ public class DreamGifts extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu Informes;
-    private javax.swing.JButton btnActivar;
-    private javax.swing.JButton btnBuscar;
-    private javax.swing.JToggleButton btnCancelar;
-    private javax.swing.JButton btnDesactivar;
-    private javax.swing.JToggleButton btnGuardar;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanelBotonesDatosUsuario;
-    private javax.swing.JPanel jPanelBotonesTablaUsuarios;
-    private javax.swing.JPanel jPanelBuscar;
-    private javax.swing.JPanel jPanelCampos;
-    private javax.swing.JPanel jPanelDatosUsuario;
+    private javax.swing.JLabel jLabelEstado;
+    private javax.swing.JLabel jLabelTienda;
+    private javax.swing.JMenuBar jMenuBar;
+    private javax.swing.JMenu jMenuCompras;
+    private javax.swing.JMenu jMenuInformes;
+    private javax.swing.JMenuItem jMenuItemArticulos;
+    private javax.swing.JMenuItem jMenuItemBancos;
+    private javax.swing.JMenuItem jMenuItemCategoriaArticulos;
+    private javax.swing.JMenuItem jMenuItemCategoriaVentas;
+    private javax.swing.JMenuItem jMenuItemClientes;
+    private javax.swing.JMenuItem jMenuItemComunas;
+    private javax.swing.JMenuItem jMenuItemConfirmacionPago;
+    private javax.swing.JMenuItem jMenuItemDespachos;
+    private javax.swing.JMenuItem jMenuItemEstadoDespachos;
+    private javax.swing.JMenuItem jMenuItemFactura;
+    private javax.swing.JMenuItem jMenuItemInformeClientes;
+    private javax.swing.JMenuItem jMenuItemInformeDyC;
+    private javax.swing.JMenuItem jMenuItemInformeInventario;
+    private javax.swing.JMenuItem jMenuItemInformeVentas;
+    private javax.swing.JMenuItem jMenuItemPacks;
+    private javax.swing.JMenuItem jMenuItemProveedores;
+    private javax.swing.JMenuItem jMenuItemRRSS;
+    private javax.swing.JMenuItem jMenuItemRegistroCompra;
+    private javax.swing.JMenuItem jMenuItemSolicitudPedido;
+    private javax.swing.JMenuItem jMenuItemUsuarios;
+    private javax.swing.JMenuItem jMenuItemVenta;
+    private javax.swing.JMenu jMenuVentas;
+    private javax.swing.JMenu jMenuadmin;
     private javax.swing.JPanel jPanelEstado;
-    private javax.swing.JPanel jPanelTablaUsuarios;
-    private javax.swing.JPanel jPanelUsuario;
-    private javax.swing.JScrollPane jScrollPaneUsuarios;
     private javax.swing.JTabbedPane jTabbedPaneAdmin;
     private javax.swing.JTabbedPane jTabbedPaneCompras;
     private javax.swing.JTabbedPane jTabbedPaneInformes;
     private javax.swing.JTabbedPane jTabbedPaneVentas;
-    private javax.swing.JLabel lblEstado;
-    private javax.swing.JLabel lblNombreUsuario;
-    private javax.swing.JLabel lblPassword;
-    private javax.swing.JLabel lblRePassword;
-    private javax.swing.JLabel lblTablaUsuarios;
-    private javax.swing.JLabel lblTienda;
     private javax.swing.JPanel mainContainer;
-    private javax.swing.JMenu menuAdmin;
-    private javax.swing.JMenuBar menuBar;
-    private javax.swing.JMenu menuCompras;
-    private javax.swing.JMenu menuVentas;
-    private javax.swing.JTable tablaUsuarios;
-    private javax.swing.JTextField txfBuscar;
-    private javax.swing.JTextField txfNombreUsuario;
-    private javax.swing.JPasswordField txfPassword;
-    private javax.swing.JPasswordField txfRePassword;
     // End of variables declaration//GEN-END:variables
 }
