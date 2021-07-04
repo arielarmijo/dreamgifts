@@ -5,17 +5,35 @@
  */
 package com.ipsoflatus.dreamgifts.vista.admin;
 
+import com.ipsoflatus.dreamgifts.dao.UsuarioDao;
+import com.ipsoflatus.dreamgifts.error.DreamGiftsException;
+import com.ipsoflatus.dreamgifts.modelo.Usuario;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Usuario
  */
 public class PanelUsuario extends javax.swing.JPanel {
 
+    
+    private final UsuarioDao usuarioDao = new UsuarioDao();
+    private Usuario usuarioActual;
+    private JLabel estado;
+    
     /**
      * Creates new form PanelUsuario
      */
-    public PanelUsuario() {
+    public PanelUsuario(JLabel estado) {
+        this.estado = estado;
         initComponents();
+        configurarTabla();
+        actualizarTabla(usuarioDao.findAll());
     }
 
     /**
@@ -49,6 +67,7 @@ public class PanelUsuario extends javax.swing.JPanel {
         jPanelBotonesTablaUsuarios = new javax.swing.JPanel();
         jButtonDesactivar = new javax.swing.JButton();
         jButtonActivar = new javax.swing.JButton();
+        jButtonEditar = new javax.swing.JButton();
 
         setMinimumSize(new java.awt.Dimension(850, 500));
 
@@ -105,8 +124,18 @@ public class PanelUsuario extends javax.swing.JPanel {
         );
 
         jButtonCancelar.setText("Cancelar");
+        jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelarActionPerformed(evt);
+            }
+        });
 
         jButtonGuardar.setText("Guardar");
+        jButtonGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGuardarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelBotonesRegistroLayout = new javax.swing.GroupLayout(jPanelBotonesRegistro);
         jPanelBotonesRegistro.setLayout(jPanelBotonesRegistroLayout);
@@ -134,12 +163,13 @@ public class PanelUsuario extends javax.swing.JPanel {
         jPanelRegistroLayout.setHorizontalGroup(
             jPanelRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelRegistroLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(jPanelRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jLabelTituloRegistro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanelCampos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(247, 247, 247)
-                .addComponent(jPanelBotonesRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanelBotonesRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanelRegistroLayout.setVerticalGroup(
             jPanelRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,8 +191,18 @@ public class PanelUsuario extends javax.swing.JPanel {
         jLabelTablaUsuarios.setToolTipText("");
 
         jTextFieldBuscar.setToolTipText("Ingrese nombre de usuario");
+        jTextFieldBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldBuscarActionPerformed(evt);
+            }
+        });
 
         jButtonBuscar.setText("Buscar");
+        jButtonBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBuscarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelBuscarLayout = new javax.swing.GroupLayout(jPanelBuscar);
         jPanelBuscar.setLayout(jPanelBuscarLayout);
@@ -170,7 +210,7 @@ public class PanelUsuario extends javax.swing.JPanel {
             jPanelBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBuscarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextFieldBuscar)
+                .addComponent(jTextFieldBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonBuscar)
                 .addContainerGap())
@@ -187,21 +227,17 @@ public class PanelUsuario extends javax.swing.JPanel {
 
         jTableUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"aarmijo", "ACTIVO", null},
-                {"afigueroa", "ACTIVO", null},
-                {"cgonzalez", "ACTIVO", null},
-                {"corellana", "ACTIVO", null},
-                {"psoto", "ACTIVO", null}
+
             },
             new String [] {
-                "Nombre", "Estado", "Selección"
+                "Id", "Nombre", "Estado", "Selección"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, true
+                false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -215,15 +251,34 @@ public class PanelUsuario extends javax.swing.JPanel {
         jScrollPaneUsuarios.setViewportView(jTableUsuarios);
 
         jButtonDesactivar.setText("Desactivar");
+        jButtonDesactivar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDesactivarActionPerformed(evt);
+            }
+        });
 
         jButtonActivar.setText("Activar");
+        jButtonActivar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonActivarActionPerformed(evt);
+            }
+        });
+
+        jButtonEditar.setText("Editar");
+        jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEditarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelBotonesTablaUsuariosLayout = new javax.swing.GroupLayout(jPanelBotonesTablaUsuarios);
         jPanelBotonesTablaUsuarios.setLayout(jPanelBotonesTablaUsuariosLayout);
         jPanelBotonesTablaUsuariosLayout.setHorizontalGroup(
             jPanelBotonesTablaUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBotonesTablaUsuariosLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jButtonEditar)
+                .addGap(30, 30, 30)
                 .addComponent(jButtonDesactivar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonActivar)
@@ -235,7 +290,8 @@ public class PanelUsuario extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanelBotonesTablaUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonActivar)
-                    .addComponent(jButtonDesactivar))
+                    .addComponent(jButtonDesactivar)
+                    .addComponent(jButtonEditar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -277,11 +333,9 @@ public class PanelUsuario extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanelRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 1, Short.MAX_VALUE))
-                    .addComponent(jPanelListado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(jPanelListado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelRegistro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(11, 11, 11))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -294,12 +348,146 @@ public class PanelUsuario extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
+        // Inicializa variables de estado
+        boolean esGuardar = (usuarioActual == null);
+        String mensaje = String.format("Usuario %s con éxito.", esGuardar ? "guardado" : "actualizado");
+        // Obtiene los datos del usuario
+        String nombre = jTextFieldNombreUsuario.getText();
+        String password = jTextFieldNuevoPassword.getText();
+        String rePassword = jTextFieldRePassword.getText();
+        // Verifica que los campos tengan información
+        if (nombre.isEmpty() || password.isEmpty() || rePassword.isEmpty()) {
+            mostrarError("Complete todos los campos.");
+            return;
+        }
+        // Verifica que los passwords coincidan
+        if (!password.equals(rePassword)) {
+            mostrarError("Las contraseñas no coinciden.");
+            return;
+        }
+        // Agrega usuario y actualiza la tabla
+        try {
+            if (esGuardar) {
+                usuarioActual = new Usuario(nombre, password);
+                usuarioDao.save(usuarioActual);
+            } else {
+                usuarioActual.setNombre(nombre);
+                usuarioActual.setClave(password);
+                usuarioDao.update(usuarioActual);
+            }
+            mostrarMensaje(mensaje);
+            actualizarTabla(usuarioDao.findAll());
+            limpiarCampos();
+            usuarioActual = null;
+        } catch (DreamGiftsException e) {
+            mostrarError(e.getMessage());
+        }
+    }//GEN-LAST:event_jButtonGuardarActionPerformed
+
+    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
+        limpiarCampos();
+        usuarioActual = null;
+    }//GEN-LAST:event_jButtonCancelarActionPerformed
+
+    private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
+        String nombre = jTextFieldBuscar.getText();
+        List<Usuario> usuarios;
+        if (!nombre.isEmpty()) {
+            usuarios = usuarioDao.findByName(nombre);
+            actualizarTabla(usuarios);
+            jTextFieldBuscar.setText("");
+        } else {
+            usuarios = usuarioDao.findAll();
+            actualizarTabla(usuarios);
+        }
+        estado.setText("Resultados de búsqueda.");
+    }//GEN-LAST:event_jButtonBuscarActionPerformed
+
+    private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
+        int row = jTableUsuarios.getSelectedRow();
+        int id = (int) jTableUsuarios.getValueAt(row, 0);
+        usuarioActual = usuarioDao.findById(id);
+        jTextFieldNombreUsuario.setText(usuarioActual.getNombre());
+        jTextFieldNuevoPassword.setText(usuarioActual.getClave());
+        jTextFieldRePassword.setText(usuarioActual.getClave());
+        estado.setText(String.format("Editando usuario %s", usuarioActual.getNombre()));
+    }//GEN-LAST:event_jButtonEditarActionPerformed
+
+    private void jTextFieldBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldBuscarActionPerformed
+        jButtonBuscarActionPerformed(evt);
+    }//GEN-LAST:event_jTextFieldBuscarActionPerformed
+
+    private void jButtonActivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActivarActionPerformed
+        activarUsuariosSeleccionados(true);
+    }//GEN-LAST:event_jButtonActivarActionPerformed
+
+    private void jButtonDesactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDesactivarActionPerformed
+        activarUsuariosSeleccionados(false);
+    }//GEN-LAST:event_jButtonDesactivarActionPerformed
+
+    private void activarUsuariosSeleccionados(boolean estado) {
+        String mensaje = String.format("Usuarios %s.", estado ? "activados" : "desactivados");
+        List<Integer> ids = obtenerIdUsuariosSeleccionados();
+        if (ids.isEmpty()) {
+            mostrarError("Seleccione usuarios.");
+        } else {
+            usuarioDao.activateUsersByIds(ids, estado);
+            actualizarTabla(usuarioDao.findAll());
+            mostrarMensaje(mensaje);
+        }
+    }
+    
+    private List<Integer> obtenerIdUsuariosSeleccionados() {
+        List<Integer> ids = new ArrayList<>();
+        DefaultTableModel tableModel = (DefaultTableModel) jTableUsuarios.getModel();
+        Vector<Vector<Object>> datos = tableModel.getDataVector();
+        for (Vector<Object> dato : datos) {
+            if ((boolean) dato.get(3)) {
+                ids.add((Integer) dato.get(0));
+            }
+        }
+        return ids;
+    }
+    
+    private void limpiarCampos() {
+        jTextFieldNombreUsuario.setText("");
+        jTextFieldNuevoPassword.setText("");
+        jTextFieldRePassword.setText("");
+        estado.setText("Administración: Gestión de usuarios.");
+    }
+    
+    private void configurarTabla() {
+    }
+    
+    private void actualizarTabla(List<Usuario> usuarios) {
+        DefaultTableModel modeloTabla = (DefaultTableModel) jTableUsuarios.getModel();
+        Object [] encabezados = {"Id", "Nombre", "Estado", "Selección" };
+        Object[][] datos = new Object[usuarios.size()][encabezados.length];
+        for (int i = 0; i < usuarios.size(); i++) {
+            Usuario u = usuarios.get(i);
+            datos[i][0] = u.getId();
+            datos[i][1] = u.getNombre();
+            datos[i][2] = u.isEstado();
+            datos[i][3] = false;
+        }
+        modeloTabla.setDataVector(datos, encabezados);
+    }
+    
+    private void mostrarError(String mensaje) {
+        JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    
+    private void mostrarMensaje(String mensaje) {
+        JOptionPane.showMessageDialog(null, mensaje, "Información", JOptionPane.INFORMATION_MESSAGE);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonActivar;
     private javax.swing.JButton jButtonBuscar;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonDesactivar;
+    private javax.swing.JButton jButtonEditar;
     private javax.swing.JButton jButtonGuardar;
     private javax.swing.JLabel jLabelNombreUsuario;
     private javax.swing.JLabel jLabelNuevoPassword;
