@@ -394,7 +394,7 @@ public class PanelUsuario extends javax.swing.JPanel {
         String nombre = jTextFieldBuscar.getText();
         List<Usuario> usuarios;
         if (!nombre.isEmpty()) {
-            usuarios = usuarioDao.findByName(nombre);
+            usuarios = usuarioDao.findByNameLike(nombre);
             actualizarTabla(usuarios);
             jTextFieldBuscar.setText("");
         } else {
@@ -468,7 +468,7 @@ public class PanelUsuario extends javax.swing.JPanel {
             Usuario u = usuarios.get(i);
             datos[i][0] = u.getId();
             datos[i][1] = u.getNombre();
-            datos[i][2] = u.isEstado();
+            datos[i][2] = u.isActive();
             datos[i][3] = false;
         }
         modeloTabla.setDataVector(datos, encabezados);

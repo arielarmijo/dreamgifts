@@ -5,13 +5,19 @@
  */
 package com.ipsoflatus.dreamgifts.vista;
 
+import com.ipsoflatus.dreamgifts.dao.UsuarioDao;
+import com.ipsoflatus.dreamgifts.modelo.Usuario;
+import java.awt.EventQueue;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Usuario
  */
 public class Login extends javax.swing.JFrame {
+    
+    UsuarioDao usuarioDao = new UsuarioDao();
 
     /**
      * Creates new form Login
@@ -33,9 +39,9 @@ public class Login extends javax.swing.JFrame {
         jLabelTitulo = new javax.swing.JLabel();
         jPanelCampos = new javax.swing.JPanel();
         lblUsuario = new javax.swing.JLabel();
-        txfUsuario = new javax.swing.JTextField();
+        jTextFieldUsuario = new javax.swing.JTextField();
         lblPassword = new javax.swing.JLabel();
-        txfPassword = new javax.swing.JPasswordField();
+        jTextFieldPassword = new javax.swing.JPasswordField();
         jPanelBotones = new javax.swing.JPanel();
         btnCancelar = new javax.swing.JButton();
         btnIngresar = new javax.swing.JButton();
@@ -64,8 +70,8 @@ public class Login extends javax.swing.JFrame {
                     .addComponent(lblPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txfPassword)
-                    .addComponent(txfUsuario))
+                    .addComponent(jTextFieldPassword)
+                    .addComponent(jTextFieldUsuario))
                 .addContainerGap())
         );
         jPanelCamposLayout.setVerticalGroup(
@@ -74,11 +80,11 @@ public class Login extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanelCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblUsuario)
-                    .addComponent(txfUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanelCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblPassword)
-                    .addComponent(txfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -165,10 +171,28 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-        JFrame app = new DreamGifts();
-        app.setLocationRelativeTo(null);
-        app.setVisible(true);
-        this.dispose();
+        String nombre = jTextFieldUsuario.getText();
+        String clave = jTextFieldPassword.getText();
+        if (nombre.isEmpty() || clave.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Complete todos los campos.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            
+            return;
+        }
+        Usuario usuario = usuarioDao.findByName(nombre);
+        if (usuario != null && !usuario.isActive()) {
+            JOptionPane.showMessageDialog(null, "Usuario desactivado.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            jTextFieldUsuario.setText("");
+            jTextFieldPassword.setText("");
+        }else if (usuario != null && usuario.getClave().equals(clave)) {
+            EventQueue.invokeLater(() -> {
+                new DreamGifts().setVisible(true);
+                this.dispose();
+            });
+        } else {
+            JOptionPane.showMessageDialog(null, "Usuario y/o contraseña inválida.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -203,10 +227,8 @@ public class Login extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Login().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Login().setVisible(true);
         });
     }
 
@@ -217,9 +239,9 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelBotones;
     private javax.swing.JPanel jPanelCampos;
     private javax.swing.JPanel jPanelPrincipal;
+    private javax.swing.JPasswordField jTextFieldPassword;
+    private javax.swing.JTextField jTextFieldUsuario;
     private javax.swing.JLabel lblPassword;
     private javax.swing.JLabel lblUsuario;
-    private javax.swing.JPasswordField txfPassword;
-    private javax.swing.JTextField txfUsuario;
     // End of variables declaration//GEN-END:variables
 }

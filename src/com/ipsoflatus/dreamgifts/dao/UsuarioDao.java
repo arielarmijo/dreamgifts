@@ -42,7 +42,7 @@ public class UsuarioDao {
             ps.setInt(1, id);
             System.out.println(ps);
             try (ResultSet rs = ps.executeQuery()) {
-               while (rs.next()) {
+               if (rs.next()) {
                    usuario = rowMapper(rs);
                }
             }
@@ -53,7 +53,7 @@ public class UsuarioDao {
         return usuario;
     }
     
-    public List<Usuario> findByName(String nombre) {
+    public List<Usuario> findByNameLike(String nombre) {
         List<Usuario> usuarios = new ArrayList<>();
         String sql = "SELECT id, nombre, clave, estado FROM usuarios WHERE nombre LIKE ?";
         try (Connection conn = MySQLConection.getConnection();
@@ -71,6 +71,26 @@ public class UsuarioDao {
             throw new DreamGiftsException(e.getMessage());
         }
         return usuarios;
+    }
+    
+    public Usuario findByName(String nombre) {
+        Usuario usuario = null;
+        String sql = "SELECT id, nombre, clave, estado FROM usuarios WHERE nombre = ?";
+        try (Connection conn = MySQLConection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            conn.setReadOnly(true);
+            ps.setString(1, nombre);
+            System.out.println(ps);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    usuario = rowMapper(rs);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+            throw new DreamGiftsException(e.getMessage());
+        }
+        return usuario;
     }
 
     public void save(Usuario usuario) {
@@ -96,7 +116,7 @@ public class UsuarioDao {
             conn.setAutoCommit(false);
             ps.setString(1, usuario.getNombre());
             ps.setString(2, usuario.getClave());
-            ps.setBoolean(3, usuario.isEstado());
+            ps.setBoolean(3, usuario.isActive());
             ps.setInt(4, usuario.getId());
             System.out.println(ps);
             ps.executeUpdate();
@@ -142,7 +162,7 @@ public class UsuarioDao {
         usuario.setId(rs.getInt(1));
         usuario.setNombre(rs.getString(2));
         usuario.setClave(rs.getString(3));
-        usuario.setEstado(rs.getBoolean(4));
+        usuario.setActive(rs.getBoolean(4));
         return usuario;
     }
     
