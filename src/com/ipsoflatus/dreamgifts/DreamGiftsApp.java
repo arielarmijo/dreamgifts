@@ -5,7 +5,7 @@
  */
 package com.ipsoflatus.dreamgifts;
 
-import com.ipsoflatus.dreamgifts.vista.DreamGifts;
+import com.ipsoflatus.dreamgifts.controlador.LoginController;
 import com.ipsoflatus.dreamgifts.vista.Login;
 import javax.swing.JFrame;
 
@@ -16,8 +16,8 @@ import javax.swing.JFrame;
 public class DreamGiftsApp {
     
     public static void main(String[] args) {
-       //JFrame app = new Login();
-       JFrame app = new DreamGifts();
+       JFrame app = new Login(new LoginController());
+       //JFrame app = new DreamGifts();
        app.setLocationRelativeTo(null);
        app.setVisible(true);
     }

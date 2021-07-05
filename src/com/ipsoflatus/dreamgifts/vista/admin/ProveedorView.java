@@ -9,12 +9,12 @@ package com.ipsoflatus.dreamgifts.vista.admin;
  *
  * @author Usuario
  */
-public class PanelProveedor extends javax.swing.JPanel {
+public class ProveedorView extends javax.swing.JPanel {
 
     /**
      * Creates new form PanelProveedor
      */
-    public PanelProveedor() {
+    public ProveedorView() {
         initComponents();
     }
 

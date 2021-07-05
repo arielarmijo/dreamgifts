@@ -18,13 +18,12 @@ public class UsuarioDao {
         List<Usuario> usuarios = new ArrayList<>();
         String sql = "SELECT id, nombre, clave, estado FROM usuarios";
         try (Connection conn = MySQLConection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
             conn.setReadOnly(true);
             System.out.println(ps);
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    usuarios.add(rowMapper(rs));
-                }
+            while (rs.next()) {
+                usuarios.add(rowMapper(rs));
             }
         } catch (SQLException e) {
             System.out.println(e);
@@ -34,7 +33,7 @@ public class UsuarioDao {
     }
     
     public Usuario findById(int id) {
-        Usuario usuario = new Usuario();
+        Usuario usuario = null;
         String sql = "SELECT id, nombre, clave, estado FROM usuarios WHERE id = ?";
         try (Connection conn = MySQLConection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -103,6 +102,7 @@ public class UsuarioDao {
             System.out.println(ps);
             ps.executeUpdate();
             conn.commit();
+            conn.setAutoCommit(true);
         } catch (SQLException e) {
             System.out.println(e);
             throw new DreamGiftsException(e.getMessage());
@@ -121,6 +121,7 @@ public class UsuarioDao {
             System.out.println(ps);
             ps.executeUpdate();
             conn.commit();
+            conn.setAutoCommit(true);
         } catch (SQLException e) {
             System.out.println(e);
             throw new DreamGiftsException(e.getMessage());
@@ -136,21 +137,22 @@ public class UsuarioDao {
             ps.executeUpdate();
             System.out.println(ps);
             conn.commit();
+            conn.setAutoCommit(true);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             throw new DreamGiftsException(e.getMessage());
         }
     }
     
-    public void activateUsersByIds(List<Integer> usuarios, boolean estado) {
-        String ids = usuarios.stream().map(u -> u.toString()).collect(Collectors.joining(", "));
+    public void activateUsersByIds(List<Integer> idUsuarios, boolean estado) {
+        String ids = idUsuarios.stream().map(id -> id.toString()).collect(Collectors.joining(", "));
         String sql = String.format("UPDATE usuarios SET estado = %s WHERE id IN (%s)", estado, ids);
         System.out.println(sql);
         try (Connection conn = MySQLConection.getConnection();
              Statement s = conn.createStatement()) {
             conn.setAutoCommit(false);
             s.executeUpdate(sql);
-            conn.commit();
+            conn.commit();conn.setAutoCommit(true);
         } catch (SQLException e) {
             System.out.println(e);
             throw new DreamGiftsException(e.getMessage());

@@ -9,12 +9,12 @@ package com.ipsoflatus.dreamgifts.vista.admin;
  *
  * @author Usuario
  */
-public class PanelRRSS extends javax.swing.JPanel {
+public class RRSSView extends javax.swing.JPanel {
 
     /**
      * Creates new form PanelRRSS
      */
-    public PanelRRSS() {
+    public RRSSView() {
         initComponents();
     }
 

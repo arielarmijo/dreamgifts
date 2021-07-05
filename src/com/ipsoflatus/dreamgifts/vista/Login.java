@@ -1,28 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ipsoflatus.dreamgifts.vista;
 
-import com.ipsoflatus.dreamgifts.dao.UsuarioDao;
-import com.ipsoflatus.dreamgifts.modelo.Usuario;
-import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+import com.ipsoflatus.dreamgifts.controlador.LoginController;
 
-/**
- *
- * @author Usuario
- */
 public class Login extends javax.swing.JFrame {
     
-    UsuarioDao usuarioDao = new UsuarioDao();
+    private final LoginController controller;
 
     /**
      * Creates new form Login
      */
-    public Login() {
+    public Login(LoginController controller) {
+        this.controller = controller;
+        this.controller.setView(this);
         initComponents();
     }
 
@@ -173,26 +162,7 @@ public class Login extends javax.swing.JFrame {
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         String nombre = jTextFieldUsuario.getText();
         String clave = jTextFieldPassword.getText();
-        if (nombre.isEmpty() || clave.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Complete todos los campos.", "Información", JOptionPane.INFORMATION_MESSAGE);
-            
-            return;
-        }
-        Usuario usuario = usuarioDao.findByName(nombre);
-        if (usuario != null && !usuario.isActive()) {
-            JOptionPane.showMessageDialog(null, "Usuario desactivado.", "Información", JOptionPane.INFORMATION_MESSAGE);
-            jTextFieldUsuario.setText("");
-            jTextFieldPassword.setText("");
-        }else if (usuario != null && usuario.getClave().equals(clave)) {
-            EventQueue.invokeLater(() -> {
-                new DreamGifts().setVisible(true);
-                this.dispose();
-            });
-        } else {
-            JOptionPane.showMessageDialog(null, "Usuario y/o contraseña inválida.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        
-        
+        controller.checkCredentials(nombre, clave);       
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -228,7 +198,7 @@ public class Login extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new Login().setVisible(true);
+            new Login(new LoginController()).setVisible(true);
         });
     }
 

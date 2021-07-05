@@ -9,12 +9,12 @@ package com.ipsoflatus.dreamgifts.vista.admin;
  *
  * @author Usuario
  */
-public class PanelCategoriaArticulo extends javax.swing.JPanel {
+public class CategoriaArticuloView extends javax.swing.JPanel {
 
     /**
      * Creates new form PanelCategoriaArticulo
      */
-    public PanelCategoriaArticulo() {
+    public CategoriaArticuloView() {
         initComponents();
     }
 

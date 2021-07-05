@@ -1,26 +1,27 @@
 package com.ipsoflatus.dreamgifts.vista;
 
-import com.ipsoflatus.dreamgifts.vista.admin.PanelArticulo;
-import com.ipsoflatus.dreamgifts.vista.admin.PanelBanco;
-import com.ipsoflatus.dreamgifts.vista.admin.PanelCategoriaArticulo;
-import com.ipsoflatus.dreamgifts.vista.admin.PanelCliente;
-import com.ipsoflatus.dreamgifts.vista.admin.PanelComuna;
-import com.ipsoflatus.dreamgifts.vista.admin.PanelEstadoVenta;
-import com.ipsoflatus.dreamgifts.vista.admin.PanelPack;
-import com.ipsoflatus.dreamgifts.vista.admin.PanelProveedor;
-import com.ipsoflatus.dreamgifts.vista.admin.PanelRRSS;
-import com.ipsoflatus.dreamgifts.vista.admin.PanelUsuario;
-import com.ipsoflatus.dreamgifts.vista.compras.PanelRegistroCompra;
-import com.ipsoflatus.dreamgifts.vista.compras.PanelRevisionFactura;
-import com.ipsoflatus.dreamgifts.vista.compras.PanelSolicitudPedido;
-import com.ipsoflatus.dreamgifts.vista.informes.PanelInformeClientes;
-import com.ipsoflatus.dreamgifts.vista.informes.PanelInformeDyC;
-import com.ipsoflatus.dreamgifts.vista.informes.PanelInformeInventario;
-import com.ipsoflatus.dreamgifts.vista.informes.PanelInformeVentas;
-import com.ipsoflatus.dreamgifts.vista.ventas.PanelActualizacionDespacho;
-import com.ipsoflatus.dreamgifts.vista.ventas.PanelConfirmcionPago;
-import com.ipsoflatus.dreamgifts.vista.ventas.PanelListaDestinos;
-import com.ipsoflatus.dreamgifts.vista.ventas.PanelVenta;
+import com.ipsoflatus.dreamgifts.controlador.admin.UsuarioController;
+import com.ipsoflatus.dreamgifts.vista.admin.ArticuloView;
+import com.ipsoflatus.dreamgifts.vista.admin.BancoView;
+import com.ipsoflatus.dreamgifts.vista.admin.CategoriaArticuloView;
+import com.ipsoflatus.dreamgifts.vista.admin.ClienteView;
+import com.ipsoflatus.dreamgifts.vista.admin.ComunaView;
+import com.ipsoflatus.dreamgifts.vista.admin.EstadoVentaView;
+import com.ipsoflatus.dreamgifts.vista.admin.PackView;
+import com.ipsoflatus.dreamgifts.vista.admin.ProveedorView;
+import com.ipsoflatus.dreamgifts.vista.admin.RRSSView;
+import com.ipsoflatus.dreamgifts.vista.admin.UsuarioView;
+import com.ipsoflatus.dreamgifts.vista.compras.RegistroCompraView;
+import com.ipsoflatus.dreamgifts.vista.compras.RevisionFacturaView;
+import com.ipsoflatus.dreamgifts.vista.compras.SolicitudPedidoView;
+import com.ipsoflatus.dreamgifts.vista.informes.InformeClientesView;
+import com.ipsoflatus.dreamgifts.vista.informes.InformeDyCView;
+import com.ipsoflatus.dreamgifts.vista.informes.InformeInventarioView;
+import com.ipsoflatus.dreamgifts.vista.informes.InformeVentasView;
+import com.ipsoflatus.dreamgifts.vista.ventas.ActualizacionDespachoView;
+import com.ipsoflatus.dreamgifts.vista.ventas.ConfirmcionPagoView;
+import com.ipsoflatus.dreamgifts.vista.ventas.ListaDestinosView;
+import com.ipsoflatus.dreamgifts.vista.ventas.VentaView;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
@@ -37,10 +38,10 @@ public class DreamGifts extends javax.swing.JFrame {
     }
     
     private void crearPanelVentas() {
-        JPanel venta = new PanelVenta();
-        JPanel confirmacionPago = new PanelConfirmcionPago();
-        JPanel destinos = new PanelListaDestinos();
-        JPanel despachos = new PanelActualizacionDespacho();
+        JPanel venta = new VentaView();
+        JPanel confirmacionPago = new ConfirmcionPagoView();
+        JPanel destinos = new ListaDestinosView();
+        JPanel despachos = new ActualizacionDespachoView();
         jTabbedPaneVentas.addTab("Venta", venta);
         jTabbedPaneVentas.addTab("Confirmación Pago", confirmacionPago);
         jTabbedPaneVentas.addTab("Lista Destinos", destinos);
@@ -48,19 +49,19 @@ public class DreamGifts extends javax.swing.JFrame {
     }
     
     private void crearPanelCompras() {
-        JPanel solicitudPedido = new PanelSolicitudPedido();
-        JPanel registroCompras = new PanelRegistroCompra();
-        JPanel revisionFactura = new PanelRevisionFactura();
+        JPanel solicitudPedido = new SolicitudPedidoView();
+        JPanel registroCompras = new RegistroCompraView();
+        JPanel revisionFactura = new RevisionFacturaView();
         jTabbedPaneCompras.addTab("Solicitud Pedido", solicitudPedido);
         jTabbedPaneCompras.addTab("Registro Compra", registroCompras);
         jTabbedPaneCompras.addTab("Revisión Facturas", revisionFactura);
     }
     
     private void crearPanelInformes() {
-        JPanel informeVentas = new PanelInformeVentas();
-        JPanel informeInventario = new PanelInformeInventario();
-        JPanel informeClientes = new PanelInformeClientes();
-        JPanel informeDyC = new PanelInformeDyC();
+        JPanel informeVentas = new InformeVentasView();
+        JPanel informeInventario = new InformeInventarioView();
+        JPanel informeClientes = new InformeClientesView();
+        JPanel informeDyC = new InformeDyCView();
         jTabbedPaneInformes.addTab("Informe Ventas", informeVentas);
         jTabbedPaneInformes.addTab("Informe Inventario", informeInventario);
         jTabbedPaneInformes.addTab("Informe Clientes", informeClientes);
@@ -68,16 +69,16 @@ public class DreamGifts extends javax.swing.JFrame {
     }
         
     private void crearPanelAdmin() {
-        JPanel cliente = new PanelCliente();
-        JPanel proveedor = new PanelProveedor();
-        JPanel articulo = new PanelArticulo();
-        JPanel pack = new PanelPack();
-        JPanel rrss = new PanelRRSS();
-        JPanel categoriaArticulo = new PanelCategoriaArticulo();
-        JPanel comuna = new PanelComuna();
-        JPanel banco = new PanelBanco();
-        JPanel estadoVenta = new PanelEstadoVenta();
-        JPanel usuario = new PanelUsuario(jLabelEstado);
+        JPanel cliente = new ClienteView();
+        JPanel proveedor = new ProveedorView();
+        JPanel articulo = new ArticuloView();
+        JPanel pack = new PackView();
+        JPanel rrss = new RRSSView();
+        JPanel categoriaArticulo = new CategoriaArticuloView();
+        JPanel comuna = new ComunaView();
+        JPanel banco = new BancoView();
+        JPanel estadoVenta = new EstadoVentaView();
+        JPanel usuario = new UsuarioView(new UsuarioController());
         jTabbedPaneAdmin.addTab("Clientes", cliente);
         jTabbedPaneAdmin.addTab("Proveedores", proveedor);
         jTabbedPaneAdmin.addTab("Articulos", articulo);

@@ -3,18 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ipsoflatus.dreamgifts.vista.ventas;
+package com.ipsoflatus.dreamgifts.vista.informes;
+
+import com.ipsoflatus.dreamgifts.vista.ventas.*;
 
 /**
  *
  * @author Usuario
  */
-public class PanelConfirmcionPago extends javax.swing.JPanel {
+public class InformeDyCView extends javax.swing.JPanel {
 
     /**
      * Creates new form PanelConfirmcionPago
      */
-    public PanelConfirmcionPago() {
+    public InformeDyCView() {
         initComponents();
     }
 

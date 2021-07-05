@@ -9,12 +9,12 @@ package com.ipsoflatus.dreamgifts.vista.ventas;
  *
  * @author Usuario
  */
-public class PanelVenta extends javax.swing.JPanel {
+public class VentaView extends javax.swing.JPanel {
 
     /**
      * Creates new form PanelVena
      */
-    public PanelVenta() {
+    public VentaView() {
         initComponents();
     }
 

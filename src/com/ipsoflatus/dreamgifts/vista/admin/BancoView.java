@@ -9,12 +9,12 @@ package com.ipsoflatus.dreamgifts.vista.admin;
  *
  * @author Usuario
  */
-public class PanelBanco extends javax.swing.JPanel {
+public class BancoView extends javax.swing.JPanel {
 
     /**
      * Creates new form PanelBancos
      */
-    public PanelBanco() {
+    public BancoView() {
         initComponents();
     }
 

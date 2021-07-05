@@ -5,35 +5,27 @@
  */
 package com.ipsoflatus.dreamgifts.vista.admin;
 
-import com.ipsoflatus.dreamgifts.dao.UsuarioDao;
-import com.ipsoflatus.dreamgifts.error.DreamGiftsException;
+import com.ipsoflatus.dreamgifts.controlador.admin.UsuarioController;
 import com.ipsoflatus.dreamgifts.modelo.Usuario;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Usuario
  */
-public class PanelUsuario extends javax.swing.JPanel {
+public class UsuarioView extends JPanel {
 
+    private final UsuarioController controller;
     
-    private final UsuarioDao usuarioDao = new UsuarioDao();
-    private Usuario usuarioActual;
-    private JLabel estado;
-    
-    /**
-     * Creates new form PanelUsuario
-     */
-    public PanelUsuario(JLabel estado) {
-        this.estado = estado;
+    public UsuarioView(UsuarioController controller) {
+        this.controller = controller;
+        this.controller.setView(this);
         initComponents();
-        configurarTabla();
-        actualizarTabla(usuarioDao.findAll());
+        actualizarTabla(controller.obtenerListadoUsuarios());
     }
 
     /**
@@ -349,69 +341,27 @@ public class PanelUsuario extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
-        // Inicializa variables de estado
-        boolean esGuardar = (usuarioActual == null);
-        String mensaje = String.format("Usuario %s con éxito.", esGuardar ? "guardado" : "actualizado");
-        // Obtiene los datos del usuario
         String nombre = jTextFieldNombreUsuario.getText();
         String password = jTextFieldNuevoPassword.getText();
         String rePassword = jTextFieldRePassword.getText();
-        // Verifica que los campos tengan información
-        if (nombre.isEmpty() || password.isEmpty() || rePassword.isEmpty()) {
-            mostrarError("Complete todos los campos.");
-            return;
-        }
-        // Verifica que los passwords coincidan
-        if (!password.equals(rePassword)) {
-            mostrarError("Las contraseñas no coinciden.");
-            return;
-        }
-        // Agrega usuario y actualiza la tabla
-        try {
-            if (esGuardar) {
-                usuarioActual = new Usuario(nombre, password);
-                usuarioDao.save(usuarioActual);
-            } else {
-                usuarioActual.setNombre(nombre);
-                usuarioActual.setClave(password);
-                usuarioDao.update(usuarioActual);
-            }
-            mostrarMensaje(mensaje);
-            actualizarTabla(usuarioDao.findAll());
-            limpiarCampos();
-            usuarioActual = null;
-        } catch (DreamGiftsException e) {
-            mostrarError(e.getMessage());
-        }
+        controller.guardarUsuario(nombre, password, rePassword);
+        
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
-        limpiarCampos();
-        usuarioActual = null;
+        controller.cancelarRegistro();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
-        String nombre = jTextFieldBuscar.getText();
-        List<Usuario> usuarios;
-        if (!nombre.isEmpty()) {
-            usuarios = usuarioDao.findByNameLike(nombre);
-            actualizarTabla(usuarios);
-            jTextFieldBuscar.setText("");
-        } else {
-            usuarios = usuarioDao.findAll();
-            actualizarTabla(usuarios);
-        }
-        estado.setText("Resultados de búsqueda.");
+        String nombreBuscado = jTextFieldBuscar.getText();
+        controller.buscarUsuario(nombreBuscado);
     }//GEN-LAST:event_jButtonBuscarActionPerformed
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
         int row = jTableUsuarios.getSelectedRow();
         int id = (int) jTableUsuarios.getValueAt(row, 0);
-        usuarioActual = usuarioDao.findById(id);
-        jTextFieldNombreUsuario.setText(usuarioActual.getNombre());
-        jTextFieldNuevoPassword.setText(usuarioActual.getClave());
-        jTextFieldRePassword.setText(usuarioActual.getClave());
-        estado.setText(String.format("Editando usuario %s", usuarioActual.getNombre()));
+        controller.buscarUsuarioPorId(id);
+        
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jTextFieldBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldBuscarActionPerformed
@@ -419,48 +369,30 @@ public class PanelUsuario extends javax.swing.JPanel {
     }//GEN-LAST:event_jTextFieldBuscarActionPerformed
 
     private void jButtonActivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActivarActionPerformed
-        activarUsuariosSeleccionados(true);
+        controller.activarUsuariosSeleccionados(obtenerIdUsuariosSeleccionados(), true);
     }//GEN-LAST:event_jButtonActivarActionPerformed
 
     private void jButtonDesactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDesactivarActionPerformed
-        activarUsuariosSeleccionados(false);
+        controller.activarUsuariosSeleccionados(obtenerIdUsuariosSeleccionados(), false);
     }//GEN-LAST:event_jButtonDesactivarActionPerformed
 
-    private void activarUsuariosSeleccionados(boolean estado) {
-        String mensaje = String.format("Usuarios %s.", estado ? "activados" : "desactivados");
-        List<Integer> ids = obtenerIdUsuariosSeleccionados();
-        if (ids.isEmpty()) {
-            mostrarError("Seleccione usuarios.");
-        } else {
-            usuarioDao.activateUsersByIds(ids, estado);
-            actualizarTabla(usuarioDao.findAll());
-            mostrarMensaje(mensaje);
-        }
-    }
-    
-    private List<Integer> obtenerIdUsuariosSeleccionados() {
-        List<Integer> ids = new ArrayList<>();
-        DefaultTableModel tableModel = (DefaultTableModel) jTableUsuarios.getModel();
-        Vector<Vector<Object>> datos = tableModel.getDataVector();
-        for (Vector<Object> dato : datos) {
-            if ((boolean) dato.get(3)) {
-                ids.add((Integer) dato.get(0));
-            }
-        }
-        return ids;
-    }
-    
-    private void limpiarCampos() {
+    public void limpiarCamposRegistro() {
         jTextFieldNombreUsuario.setText("");
         jTextFieldNuevoPassword.setText("");
         jTextFieldRePassword.setText("");
-        estado.setText("Administración: Gestión de usuarios.");
     }
     
-    private void configurarTabla() {
+    public void limpiarCampoBuscar() {
+        jTextFieldBuscar.setText("");
     }
     
-    private void actualizarTabla(List<Usuario> usuarios) {
+    public void actualizarCamposRegistro(Usuario usuario) {
+        jTextFieldNombreUsuario.setText(usuario.getNombre());
+        jTextFieldNuevoPassword.setText(usuario.getClave());
+        jTextFieldRePassword.setText(usuario.getClave());
+    }
+    
+    public void actualizarTabla(List<Usuario> usuarios) {
         DefaultTableModel modeloTabla = (DefaultTableModel) jTableUsuarios.getModel();
         Object [] encabezados = {"Id", "Nombre", "Estado", "Selección" };
         Object[][] datos = new Object[usuarios.size()][encabezados.length];
@@ -474,12 +406,16 @@ public class PanelUsuario extends javax.swing.JPanel {
         modeloTabla.setDataVector(datos, encabezados);
     }
     
-    private void mostrarError(String mensaje) {
-        JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
-    }
-    
-    private void mostrarMensaje(String mensaje) {
-        JOptionPane.showMessageDialog(null, mensaje, "Información", JOptionPane.INFORMATION_MESSAGE);
+     private List<Integer> obtenerIdUsuariosSeleccionados() {
+        List<Integer> ids = new ArrayList<>();
+        DefaultTableModel tableModel = (DefaultTableModel) jTableUsuarios.getModel();
+        Vector<Vector<Object>> datos = tableModel.getDataVector();
+        for (Vector<Object> dato : datos) {
+            if ((boolean) dato.get(3)) {
+                ids.add((Integer) dato.get(0));
+            }
+        }
+        return ids;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

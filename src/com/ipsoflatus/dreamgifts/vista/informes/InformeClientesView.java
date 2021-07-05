@@ -11,12 +11,12 @@ import com.ipsoflatus.dreamgifts.vista.ventas.*;
  *
  * @author Usuario
  */
-public class PanelInformeClientes extends javax.swing.JPanel {
+public class InformeClientesView extends javax.swing.JPanel {
 
     /**
      * Creates new form PanelConfirmcionPago
      */
-    public PanelInformeClientes() {
+    public InformeClientesView() {
         initComponents();
     }
 

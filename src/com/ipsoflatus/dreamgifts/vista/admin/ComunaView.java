@@ -9,12 +9,12 @@ package com.ipsoflatus.dreamgifts.vista.admin;
  *
  * @author Usuario
  */
-public class PanelComuna extends javax.swing.JPanel {
+public class ComunaView extends javax.swing.JPanel {
 
     /**
      * Creates new form PanelComunas
      */
-    public PanelComuna() {
+    public ComunaView() {
         initComponents();
     }
 
