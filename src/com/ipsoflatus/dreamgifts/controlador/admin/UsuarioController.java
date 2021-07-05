@@ -5,6 +5,7 @@ import com.ipsoflatus.dreamgifts.error.DreamGiftsException;
 import com.ipsoflatus.dreamgifts.modelo.Usuario;
 import com.ipsoflatus.dreamgifts.vista.admin.UsuarioView;
 import java.util.List;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 public class UsuarioController {
@@ -12,6 +13,11 @@ public class UsuarioController {
     private UsuarioView view;
     private UsuarioDao usuarioDao;
     private Usuario usuarioActual;
+    private JLabel estado;
+    
+    public UsuarioController(JLabel label) {
+        this.estado = label;
+    }
     
     public void setView(UsuarioView view) {
         this.view = view;
@@ -66,16 +72,18 @@ public class UsuarioController {
             usuarios = usuarioDao.findByNameLike(nombreBuscado);
             view.actualizarTabla(usuarios);
             view.limpiarCampoBuscar();
+            estado.setText(String.format("Resultado de búsqueda para %s", nombreBuscado));
         } else {
             usuarios = usuarioDao.findAll();
             view.actualizarTabla(usuarios);
+            estado.setText(String.format("Usuarios registrados %d", usuarios.size()));
         }
     }
 
     public void buscarUsuarioPorId(int id) {
         usuarioActual = usuarioDao.findById(id);
         view.actualizarCamposRegistro(usuarioActual);
-        
+        estado.setText(String.format("Editando datos de usuario %s", usuarioActual.getNombre()));
     }
     
     public void activarUsuariosSeleccionados(List<Integer> ids, boolean estado) {
@@ -84,8 +92,7 @@ public class UsuarioController {
         } else {
             usuarioDao.activateUsersByIds(ids, estado);
             view.actualizarTabla(usuarioDao.findAll());
-            //String mensaje = String.format("Usuarios %s.", estado ? "activados" : "desactivados");
-            //JOptionPane.showMessageDialog(null, mensaje, "Información", JOptionPane.INFORMATION_MESSAGE);
+            this.estado.setText(String.format("Usuario%1$s %2$s%1$s", ids.size() > 1 ? "s" : "", estado ? "activado" : "desactivado"));
         }
     }
     
