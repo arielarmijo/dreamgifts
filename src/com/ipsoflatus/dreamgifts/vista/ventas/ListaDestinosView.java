@@ -32,7 +32,7 @@ public class ListaDestinosView extends javax.swing.JPanel {
         setMinimumSize(new java.awt.Dimension(850, 500));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jLabel1.setText("En construcción...");
+        jLabel1.setText("Pablo");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
