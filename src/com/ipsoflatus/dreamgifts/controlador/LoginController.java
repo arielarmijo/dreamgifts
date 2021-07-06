@@ -26,19 +26,19 @@ public class LoginController {
     }
     
     public void checkCredentials(String nombre, String clave) {
-        if (nombre.isEmpty() || clave.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Complete todos los campos.", "Información", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-        Usuario usuario = usuarioDao.findByName(nombre);
-        if (usuario == null || !usuario.getClave().equals(clave)) {
-            JOptionPane.showMessageDialog(null, "Usuario y/o contraseña inválida.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        if (!usuario.isActive()) {
-            JOptionPane.showMessageDialog(null, "Usuario desactivado.", "Información", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        } 
+//        if (nombre.isEmpty() || clave.isEmpty()) {
+//            JOptionPane.showMessageDialog(null, "Complete todos los campos.", "Información", JOptionPane.INFORMATION_MESSAGE);
+//            return;
+//        }
+//        Usuario usuario = usuarioDao.findByName(nombre);
+//        if (usuario == null || !usuario.getClave().equals(clave)) {
+//            JOptionPane.showMessageDialog(null, "Usuario y/o contraseña inválida.", "Error", JOptionPane.ERROR_MESSAGE);
+//            return;
+//        }
+//        if (!usuario.isActive()) {
+//            JOptionPane.showMessageDialog(null, "Usuario desactivado.", "Información", JOptionPane.INFORMATION_MESSAGE);
+//            return;
+//        } 
         EventQueue.invokeLater(() -> {
             new DreamGifts().setVisible(true);
             login.dispose();
