@@ -14,7 +14,7 @@ public class UsuarioController {
     private UsuarioView view;
     private UsuarioDao usuarioDao;
     private Usuario usuarioActual;
-    private JLabel estado;
+    private final JLabel estado;
     
     public UsuarioController(JLabel label) {
         this.estado = label;
@@ -56,6 +56,7 @@ public class UsuarioController {
 //                usuarioDao.update(usuarioActual);
 //            }
 //            String mensaje = String.format("Usuario %s con éxito.", esGuardar ? "guardado" : "actualizado");
+//            estado.setText(mensaje);
 //            JOptionPane.showMessageDialog(null, mensaje, "Información", JOptionPane.INFORMATION_MESSAGE);
 //            view.actualizarTabla(usuarioDao.findAll());
 //            view.limpiarCamposRegistro();
@@ -85,9 +86,9 @@ public class UsuarioController {
     }
 
     public void buscarUsuarioPorId(int id) {
-        //usuarioActual = usuarioDao.findById(id);
-        //view.actualizarCamposRegistro(usuarioActual);
-        estado.setText(String.format("Editando datos de usuario %s", usuarioActual.getNombre()));
+//        usuarioActual = usuarioDao.findById(id);
+//        view.actualizarCamposRegistro(usuarioActual);
+//        estado.setText(String.format("Editando datos de usuario %s", usuarioActual.getNombre()));
     }
     
     public void activarUsuariosSeleccionados(List<Integer> ids, boolean estado) {
