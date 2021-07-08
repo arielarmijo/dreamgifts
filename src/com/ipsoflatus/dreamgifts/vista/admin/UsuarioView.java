@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ipsoflatus.dreamgifts.vista.admin;
 
 import com.ipsoflatus.dreamgifts.controlador.admin.UsuarioController;
@@ -13,10 +8,6 @@ import java.util.Vector;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Usuario
- */
 public class UsuarioView extends JPanel {
 
     private final UsuarioController controller;
@@ -25,7 +16,7 @@ public class UsuarioView extends JPanel {
         this.controller = controller;
         this.controller.setView(this);
         initComponents();
-        actualizarTabla(controller.obtenerListadoUsuarios());
+        actualizarTabla(this.controller.obtenerListadoUsuarios());
     }
 
     /**

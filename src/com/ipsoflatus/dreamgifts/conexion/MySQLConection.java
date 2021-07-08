@@ -10,7 +10,6 @@ public class MySQLConection {
     private static final String USUARIO = "dreamgifts";
     private static final String PASSWORD = "dreamgifts";
     
-    
     public static Connection getConnection() {
         Connection conn =  null;
         try{

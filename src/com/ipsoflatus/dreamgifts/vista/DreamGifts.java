@@ -1,5 +1,6 @@
 package com.ipsoflatus.dreamgifts.vista;
 
+import com.ipsoflatus.dreamgifts.controlador.admin.RRSSController;
 import com.ipsoflatus.dreamgifts.controlador.admin.UsuarioController;
 import com.ipsoflatus.dreamgifts.vista.admin.ArticuloView;
 import com.ipsoflatus.dreamgifts.vista.admin.BancoView;
@@ -73,7 +74,7 @@ public class DreamGifts extends javax.swing.JFrame {
         JPanel proveedor = new ProveedorView();
         JPanel articulo = new ArticuloView();
         JPanel pack = new PackView();
-        JPanel rrss = new RRSSView();
+        JPanel rrss = new RRSSView(new RRSSController(this.jLabelEstado));
         JPanel categoriaArticulo = new CategoriaArticuloView();
         JPanel comuna = new ComunaView();
         JPanel banco = new BancoView();

@@ -5,17 +5,27 @@
  */
 package com.ipsoflatus.dreamgifts.vista.admin;
 
+import com.ipsoflatus.dreamgifts.controlador.admin.RRSSController;
+import com.ipsoflatus.dreamgifts.modelo.RedSocial;
+import com.ipsoflatus.dreamgifts.modelo.Usuario;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Usuario
  */
 public class RRSSView extends javax.swing.JPanel {
 
-    /**
-     * Creates new form PanelRRSS
-     */
-    public RRSSView() {
+    private final RRSSController controller;
+    
+    public RRSSView(RRSSController controller) {
         initComponents();
+        this.controller = controller;
+        this.controller.setView(this);
+        actualizarTabla(this.controller.obtenerListadoRRSS());
     }
 
     /**
@@ -29,46 +39,43 @@ public class RRSSView extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTextFieldNombre = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        jTextFieldCodigo = new javax.swing.JTextField();
+        jButtonGuardar = new javax.swing.JButton();
+        jButtonCancelar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        jButton6 = new javax.swing.JButton();
+        jTableRRSS = new javax.swing.JTable();
+        jButtonEditar = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        jTextFieldBuscar = new javax.swing.JTextField();
+        jButtonBuscar = new javax.swing.JButton();
+        jButtonActivar = new javax.swing.JButton();
 
         setMinimumSize(new java.awt.Dimension(850, 500));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel10.setText("Nombre RRSS");
+        jLabel10.setText("Nombre Red Social:");
 
-        jTextField1.setText("Facebook");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        jLabel11.setText("Codigo Red Social:");
+
+        jButtonGuardar.setText("Guardar");
+        jButtonGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                jButtonGuardarActionPerformed(evt);
             }
         });
 
-        jLabel11.setText("Codigo RRSS");
-
-        jTextField2.setText("2");
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonCancelar.setText("Cancelar");
+        jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                jButtonCancelarActionPerformed(evt);
             }
         });
-
-        jButton4.setText("Guardar");
-
-        jButton5.setText("Cancelar");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Redes Sociales");
@@ -84,17 +91,17 @@ public class RRSSView extends javax.swing.JPanel {
                         .addComponent(jLabel1)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50)
+                        .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextFieldCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(29, 29, 29))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -104,46 +111,68 @@ public class RRSSView extends javax.swing.JPanel {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5)
-                    .addComponent(jButton4))
+                    .addComponent(jTextFieldCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonCancelar)
+                    .addComponent(jButtonGuardar))
                 .addGap(39, 39, 39))
         );
 
         jPanel11.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jTable2.setBackground(new java.awt.Color(240, 240, 240));
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jTableRRSS.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1", "Instagram", null},
-                {"2", "Facebook", null},
-                {"3", "Twitter", null}
+
             },
             new String [] {
-                "Codigo RRSS", "Nombre RRSS", "Accion"
+                "Código", "Nombre", "Selección"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
+                java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
-        });
-        jScrollPane2.setViewportView(jTable2);
 
-        jButton6.setText("Editar");
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(jTableRRSS);
+
+        jButtonEditar.setText("Editar");
+        jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEditarActionPerformed(evt);
+            }
+        });
 
         jButton7.setText("Desactivar");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel2.setText("Listado Redes Sociales");
 
-        jButton1.setText("Buscar");
+        jTextFieldBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldBuscarActionPerformed(evt);
+            }
+        });
+
+        jButtonBuscar.setText("Buscar");
+        jButtonBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBuscarActionPerformed(evt);
+            }
+        });
+
+        jButtonActivar.setText("Activar");
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
@@ -154,16 +183,18 @@ public class RRSSView extends javax.swing.JPanel {
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
+                        .addComponent(jButtonActivar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton7))
-                    .addComponent(jScrollPane2)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 806, Short.MAX_VALUE)
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)))
+                        .addComponent(jButtonBuscar)))
                 .addContainerGap())
         );
         jPanel11Layout.setVerticalGroup(
@@ -172,14 +203,15 @@ public class RRSSView extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(jTextFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonBuscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton6)
-                    .addComponent(jButton7))
+                    .addComponent(jButtonEditar)
+                    .addComponent(jButton7)
+                    .addComponent(jButtonActivar))
                 .addContainerGap())
         );
 
@@ -205,21 +237,80 @@ public class RRSSView extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
+        System.out.println(evt);
+        String nombre = jTextFieldNombre.getText();
+        String codigo = jTextFieldCodigo.getText();
+        controller.guardarRedSocial(nombre, codigo);
+    }//GEN-LAST:event_jButtonGuardarActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
+        System.out.println(evt);
+        controller.cancelarRegistro();
+    }//GEN-LAST:event_jButtonCancelarActionPerformed
 
+    private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
+        System.out.println(evt);
+        String terminoBuscado = jTextFieldBuscar.getText();
+        controller.buscarPorTermino(terminoBuscado);
+    }//GEN-LAST:event_jButtonBuscarActionPerformed
+
+    private void jTextFieldBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldBuscarActionPerformed
+        jButtonBuscarActionPerformed(evt);
+    }//GEN-LAST:event_jTextFieldBuscarActionPerformed
+
+    private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
+        int row = jTableRRSS.getSelectedRow();
+        String codigo = (String) jTableRRSS.getValueAt(row, 0);
+        controller.buscarRedSocalPorCodigo(codigo);
+    }//GEN-LAST:event_jButtonEditarActionPerformed
+   
+    public void actualizarTabla(List<RedSocial> rrss) {
+        DefaultTableModel modeloTabla = (DefaultTableModel) jTableRRSS.getModel();
+        Object [] encabezados = {"Código", "Nombre", "Selección" };
+        Object[][] datos = new Object[rrss.size()][encabezados.length];
+        for (int i = 0; i < rrss.size(); i++) {
+            RedSocial rs = rrss.get(i);
+            datos[i][0] = rs.getCodigo();
+            datos[i][1] = rs.getNombre();
+            datos[i][2] = false;
+        }
+        modeloTabla.setDataVector(datos, encabezados);
+    }
+    
+     private List<String> obtenerIdUsuariosSeleccionados() {
+        List<String> codigos = new ArrayList<>();
+        DefaultTableModel tableModel = (DefaultTableModel) jTableRRSS.getModel();
+        Vector<Vector<Object>> datos = tableModel.getDataVector();
+        for (Vector<Object> dato : datos) {
+            if ((boolean) dato.get(3)) {
+                codigos.add((String) dato.get(0));
+            }
+        }
+        return codigos;
+    }
+    
+    public void actualizarCamposRegistro(RedSocial rs) {
+        jTextFieldNombre.setText(rs.getNombre());
+        jTextFieldCodigo.setText(rs.getCodigo());
+    }
+     
+    public void limpiarCamposRegistro() {
+        jTextFieldCodigo.setText("");
+        jTextFieldNombre.setText("");
+    }
+    
+    public void limpiarCampoBuscar() {
+        jTextFieldBuscar.setText("");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButtonActivar;
+    private javax.swing.JButton jButtonBuscar;
+    private javax.swing.JButton jButtonCancelar;
+    private javax.swing.JButton jButtonEditar;
+    private javax.swing.JButton jButtonGuardar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -227,9 +318,10 @@ public class RRSSView extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTable jTableRRSS;
+    private javax.swing.JTextField jTextFieldBuscar;
+    private javax.swing.JTextField jTextFieldCodigo;
+    private javax.swing.JTextField jTextFieldNombre;
     // End of variables declaration//GEN-END:variables
+
 }
