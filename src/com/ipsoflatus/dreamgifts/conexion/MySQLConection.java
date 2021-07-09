@@ -9,7 +9,8 @@ public class MySQLConection {
     private static final String URL = "jdbc:mysql://localhost:3306/dreamgifts";
     private static final String USUARIO = "dreamgifts";
     private static final String PASSWORD = "dreamgifts";
-    
+  
+   
     public static Connection getConnection() {
         Connection conn =  null;
         try{
