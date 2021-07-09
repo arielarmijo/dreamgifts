@@ -2,7 +2,6 @@ package com.ipsoflatus.dreamgifts.vista.admin;
 
 import com.ipsoflatus.dreamgifts.controlador.admin.RRSSController;
 import com.ipsoflatus.dreamgifts.modelo.RedSocial;
-import com.ipsoflatus.dreamgifts.modelo.Usuario;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
