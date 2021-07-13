@@ -145,7 +145,7 @@ public class RedSocialDao {
             throw new DreamGiftsException(e.getMessage());
         }
     }
-    
+   
     public void activateRRSSByCodes(List<String> codigos, boolean estado) {
         String codes = codigos.stream().map(codigo -> "'" + codigo + "'").collect(Collectors.joining(", "));
         String sql = String.format("UPDATE rrss SET estado = %s WHERE codigo IN (%s)", estado, codes);
