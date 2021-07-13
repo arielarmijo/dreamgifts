@@ -4,12 +4,10 @@ import com.ipsoflatus.dreamgifts.controlador.admin.RRSSController;
 import com.ipsoflatus.dreamgifts.modelo.RedSocial;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -28,7 +26,7 @@ public final class RRSSView extends JPanel {
         this.jTableRRSS.getModel().addTableModelListener((TableModelEvent e) -> {
             int row = e.getFirstRow();
             int column = e.getColumn();
-            //System.out.println("row: " + row + ", column: " + column);
+            System.out.println("row: " + row + ", column: " + column + ", evento: " + e.getType());
             if (row >= 0 && column >= 0) {
                 TableModel model = (TableModel) e.getSource();
                 boolean seleccionado = (boolean) model.getValueAt(row, column);
