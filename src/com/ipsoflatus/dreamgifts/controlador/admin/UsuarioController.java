@@ -5,96 +5,102 @@ import com.ipsoflatus.dreamgifts.error.DreamGiftsException;
 import com.ipsoflatus.dreamgifts.modelo.Usuario;
 import com.ipsoflatus.dreamgifts.vista.admin.UsuarioView;
 import java.util.List;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 public class UsuarioController {
     
     private UsuarioView view;
     private UsuarioDao usuarioDao;
     private Usuario usuarioActual;
-    private final JLabel estado;
     
-    public UsuarioController(JLabel label) {
-        this.estado = label;
+    public UsuarioController() {
+        usuarioDao =  new UsuarioDao();
+        usuarioActual = null;
     }
     
     public void setView(UsuarioView view) {
         this.view = view;
-        usuarioDao =  new UsuarioDao();
-        usuarioActual = null;
     }
     
     public List<Usuario> obtenerListadoUsuarios() {
         return usuarioDao.findAll();
     }
-
-    public void guardarUsuario(String nombre, String password, String rePassword) {
-        // Verifica que los campos tengan información
-        if (nombre.isEmpty() || password.isEmpty() || rePassword.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        // Verifica que los passwords coincidan
-        if (!password.equals(rePassword)) {
-            JOptionPane.showMessageDialog(null, "Los passwords no coinciden.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        // Agrega usuario y actualiza la tabla
-        try {
-            boolean esGuardar = (usuarioActual == null);
-            if (esGuardar) {
-                usuarioActual = new Usuario(nombre, password);
-                usuarioDao.save(usuarioActual);
-            } else {
-                usuarioActual.setNombre(nombre);
-                usuarioActual.setClave(password);
-                usuarioDao.update(usuarioActual);
-            }
-            String mensaje = String.format("Usuario %s con éxito.", esGuardar ? "guardado" : "actualizado");
-            estado.setText(mensaje);
-            JOptionPane.showMessageDialog(null, mensaje, "Información", JOptionPane.INFORMATION_MESSAGE);
-            view.actualizarTabla(usuarioDao.findAll());
-            view.limpiarCamposRegistro();
-            usuarioActual = null;
-        } catch (DreamGiftsException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    public void cancelarRegistro() {
-        view.limpiarCamposRegistro();
-        usuarioActual = null;
-    }
-
-    public void buscarUsuario(String nombreBuscado) {
-        List<Usuario> usuarios;
-        if (!nombreBuscado.isEmpty()) {
-            usuarios = usuarioDao.findByNameLike(nombreBuscado);
-            view.actualizarTabla(usuarios);
-            view.limpiarCampoBuscar();
-            estado.setText(String.format("Resultado de búsqueda para %s", nombreBuscado));
-        } else {
-            usuarios = usuarioDao.findAll();
-            view.actualizarTabla(usuarios);
-            estado.setText(String.format("Usuarios registrados %d", usuarios.size()));
-        }
-    }
-
-    public void buscarUsuarioPorId(int id) {
-        usuarioActual = usuarioDao.findById(id);
-        view.actualizarCamposRegistro(usuarioActual);
-        estado.setText(String.format("Editando datos de usuario %s", usuarioActual.getNombre()));
+    
+    public void cancelar() {
+        reset();
     }
     
-    public void activarUsuariosSeleccionados(List<Integer> ids, boolean estado) {
-        if (ids.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Seleccione usuarios.", "Error", JOptionPane.ERROR_MESSAGE);
-        } else {
-            usuarioDao.activateUsersByIds(ids, estado);
-            view.actualizarTabla(usuarioDao.findAll());
-            this.estado.setText(String.format("Usuario%1$s %2$s%1$s", ids.size() > 1 ? "s" : "", estado ? "activado" : "desactivado"));
+    public void grabar(String nombre, String password, String rePassword) {
+        if (nombre.isEmpty() || password.isEmpty() || rePassword.isEmpty()) {
+            view.mostrarInformacion("Complete todos los campos.");
+            return;
         }
+        if (!password.equals(rePassword)) {
+            view.mostrarInformacion("Los passwords no coinciden.");
+            return;
+        }
+        if (usuarioActual == null) {
+            guardar(nombre, password);
+        } else {
+            actualizar(nombre, password);
+        }
+    }
+    
+    public void buscar(String nombreBuscado) {
+        List<Usuario> usuarios;
+        if (nombreBuscado.isEmpty()) {
+            usuarios = usuarioDao.findAll();
+        } else {
+            usuarios = usuarioDao.findByNameLike(nombreBuscado);
+            view.mostrarEstado("Resultados de búsqueda para " + nombreBuscado);
+            view.limpiarCampoBuscar();
+        }
+        view.actualizarTabla(usuarios);
+    }
+    
+    public void editar(String nombre) {
+        usuarioActual = usuarioDao.findByName(nombre);
+        view.actualizarCamposRegistro(usuarioActual);
+        view.mostrarEstado("Editando usuario " + nombre);
+    }
+
+    public void activarUsuariosSeleccionados(List<String> nombres, boolean estado) {
+        if (nombres.isEmpty()) {
+            view.mostrarError("Seleccione usuarios.");
+        } else {
+            usuarioDao.activateUsersByNames(nombres, estado);
+            view.actualizarTabla(usuarioDao.findAll());
+            view.mostrarEstado("Usuarios modificados.");
+        }
+    }
+    
+    private void guardar(String nombre, String password) {
+        try {
+            usuarioActual = new Usuario(nombre, password);
+            usuarioDao.save(usuarioActual);
+            view.mostrarEstado("Usuario guardado con éxito.");
+            view.actualizarTabla(usuarioDao.findAll());
+            reset();
+        } catch (DreamGiftsException e) {
+            view.mostrarError(e.getMessage());
+        }
+    }
+    
+    private void actualizar(String nombre, String password) {
+        try {
+            usuarioActual.setNombre(nombre);
+            usuarioActual.setClave(password);
+            usuarioDao.update(usuarioActual);
+            view.mostrarEstado("Usuario actualizado con éxito.");
+            view.actualizarTabla(usuarioDao.findAll());
+            reset();
+        } catch (DreamGiftsException e) {
+            view.mostrarError(e.getMessage());
+        }
+    }
+    
+    private void reset() {
+        view.limpiarCamposRegistro();
+        usuarioActual = null;
     }
     
 }

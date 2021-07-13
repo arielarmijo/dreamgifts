@@ -5,18 +5,25 @@ import com.ipsoflatus.dreamgifts.modelo.Usuario;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
 public class UsuarioView extends JPanel {
 
     private final UsuarioController controller;
+    private JLabel estado;
     
-    public UsuarioView(UsuarioController controller) {
+    public UsuarioView(UsuarioController controller, JLabel estado) {
         this.controller = controller;
         this.controller.setView(this);
+        this.estado = estado;
         initComponents();
-        actualizarTabla(this.controller.obtenerListadoUsuarios());
+        Thread initTable = new Thread(() -> {
+            actualizarTabla(this.controller.obtenerListadoUsuarios());
+        });
+        initTable.start();
     }
 
     /**
@@ -213,14 +220,14 @@ public class UsuarioView extends JPanel {
 
             },
             new String [] {
-                "Id", "Nombre", "Estado", "Selección"
+                "Nombre", "Estado", "Selección"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
+                java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, true
+                false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -335,24 +342,23 @@ public class UsuarioView extends JPanel {
         String nombre = jTextFieldNombreUsuario.getText();
         String password = jTextFieldNuevoPassword.getText();
         String rePassword = jTextFieldRePassword.getText();
-        controller.guardarUsuario(nombre, password, rePassword);
+        controller.grabar(nombre, password, rePassword);
         
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
-        controller.cancelarRegistro();
+        controller.cancelar();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
         String nombreBuscado = jTextFieldBuscar.getText();
-        controller.buscarUsuario(nombreBuscado);
+        controller.buscar(nombreBuscado);
     }//GEN-LAST:event_jButtonBuscarActionPerformed
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
         int row = jTableUsuarios.getSelectedRow();
-        int id = (int) jTableUsuarios.getValueAt(row, 0);
-        controller.buscarUsuarioPorId(id);
-        
+        String nombre = (String) jTableUsuarios.getValueAt(row, 0);
+        controller.editar(nombre);
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jTextFieldBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldBuscarActionPerformed
@@ -360,13 +366,13 @@ public class UsuarioView extends JPanel {
     }//GEN-LAST:event_jTextFieldBuscarActionPerformed
 
     private void jButtonActivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActivarActionPerformed
-        controller.activarUsuariosSeleccionados(obtenerIdUsuariosSeleccionados(), true);
+        controller.activarUsuariosSeleccionados(obtenerNombreUsuariosSeleccionados(), true);
     }//GEN-LAST:event_jButtonActivarActionPerformed
 
     private void jButtonDesactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDesactivarActionPerformed
-        controller.activarUsuariosSeleccionados(obtenerIdUsuariosSeleccionados(), false);
+        controller.activarUsuariosSeleccionados(obtenerNombreUsuariosSeleccionados(), false);
     }//GEN-LAST:event_jButtonDesactivarActionPerformed
-
+   
     public void limpiarCamposRegistro() {
         jTextFieldNombreUsuario.setText("");
         jTextFieldNuevoPassword.setText("");
@@ -385,28 +391,39 @@ public class UsuarioView extends JPanel {
     
     public void actualizarTabla(List<Usuario> usuarios) {
         DefaultTableModel modeloTabla = (DefaultTableModel) jTableUsuarios.getModel();
-        Object [] encabezados = {"Id", "Nombre", "Estado", "Selección" };
+        Object [] encabezados = {"Nombre", "Estado", "Selección"};
         Object[][] datos = new Object[usuarios.size()][encabezados.length];
         for (int i = 0; i < usuarios.size(); i++) {
             Usuario u = usuarios.get(i);
-            datos[i][0] = u.getId();
-            datos[i][1] = u.getNombre();
-            datos[i][2] = u.isActive();
-            datos[i][3] = false;
+            datos[i][0] = u.getNombre();
+            datos[i][1] = u.isActivo() ? "Activo" : "Inactivo";
+            datos[i][2] = false;
         }
         modeloTabla.setDataVector(datos, encabezados);
     }
     
-     private List<Integer> obtenerIdUsuariosSeleccionados() {
-        List<Integer> ids = new ArrayList<>();
+    public void mostrarInformacion(String mensaje) {
+        JOptionPane.showMessageDialog(null, mensaje, "Información", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    public void mostrarError(String mensaje) {
+        JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    
+    public void mostrarEstado(String mensaje) {
+        this.estado.setText(mensaje);
+    }
+
+    private List<String> obtenerNombreUsuariosSeleccionados() {
+        List<String> nombres = new ArrayList<>();
         DefaultTableModel tableModel = (DefaultTableModel) jTableUsuarios.getModel();
         Vector<Vector<Object>> datos = tableModel.getDataVector();
         for (Vector<Object> dato : datos) {
-            if ((boolean) dato.get(3)) {
-                ids.add((Integer) dato.get(0));
+            if ((boolean) dato.get(2)) {
+                nombres.add((String) dato.get(0));
             }
         }
-        return ids;
+        return nombres;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

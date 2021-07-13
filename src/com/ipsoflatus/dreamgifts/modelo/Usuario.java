@@ -14,7 +14,7 @@ public class Usuario {
     private Integer id;
     private String nombre;
     private String clave;
-    private boolean active;
+    private boolean activo;
 
     public Usuario() {
     }
@@ -23,11 +23,11 @@ public class Usuario {
         this(null, nombre, clave, false);
     }
     
-    public Usuario(Integer id, String nombre, String clave, boolean isActive) {
+    public Usuario(Integer id, String nombre, String clave, boolean estado) {
         this.id = id;
         this.nombre = nombre;
         this.clave = clave;
-        this.active = isActive;
+        this.activo = estado;
     }
 
     public Integer getId() {
@@ -54,17 +54,17 @@ public class Usuario {
         this.clave = clave;
     }
 
-    public boolean isActive() {
-        return active;
+    public boolean isActivo() {
+        return activo;
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 
     @Override
     public String toString() {
-        return "Usuario{" + "id=" + id + ", nombre=" + nombre + ", clave=" + clave + ", activo=" + active + '}';
+        return "Usuario{" + "id=" + id + ", nombre=" + nombre + ", clave=" + clave + ", activo=" + activo + '}';
     }
 
 }

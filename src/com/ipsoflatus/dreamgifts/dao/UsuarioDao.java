@@ -93,12 +93,13 @@ public class UsuarioDao {
     }
 
     public void save(Usuario usuario) {
-        String sql = "INSERT INTO usuarios (nombre, clave) VALUES (?, ?)";
+        String sql = "INSERT INTO usuarios (nombre, clave, estado) VALUES (?, ?, ?)";
         try (Connection conn = MySQLConection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             conn.setAutoCommit(false);
             ps.setString(1, usuario.getNombre());
             ps.setString(2, usuario.getClave());
+            ps.setBoolean(3, usuario.isActivo());
             System.out.println(ps);
             ps.executeUpdate();
             conn.commit();
@@ -116,7 +117,7 @@ public class UsuarioDao {
             conn.setAutoCommit(false);
             ps.setString(1, usuario.getNombre());
             ps.setString(2, usuario.getClave());
-            ps.setBoolean(3, usuario.isActive());
+            ps.setBoolean(3, usuario.isActivo());
             ps.setInt(4, usuario.getId());
             System.out.println(ps);
             ps.executeUpdate();
@@ -128,12 +129,12 @@ public class UsuarioDao {
         }
     }
 
-    public void delete(Usuario usuario) {
+    public void delete(int id) {
         String sql = "DELETE FROM usuarios WHERE id = ?";
         try (Connection conn = MySQLConection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             conn.setAutoCommit(false);
-            ps.setInt(1, usuario.getId());
+            ps.setInt(1, id);
             ps.executeUpdate();
             System.out.println(ps);
             conn.commit();
@@ -144,9 +145,9 @@ public class UsuarioDao {
         }
     }
     
-    public void activateUsersByIds(List<Integer> idUsuarios, boolean estado) {
-        String ids = idUsuarios.stream().map(id -> id.toString()).collect(Collectors.joining(", "));
-        String sql = String.format("UPDATE usuarios SET estado = %s WHERE id IN (%s)", estado, ids);
+    public void activateUsersByNames(List<String> nombreUsuarios, boolean estado) {
+        String nombres = nombreUsuarios.stream().map(nombre -> "'" + nombre + "'").collect(Collectors.joining(", "));
+        String sql = String.format("UPDATE usuarios SET estado = %s WHERE nombre IN (%s)", estado, nombres);
         System.out.println(sql);
         try (Connection conn = MySQLConection.getConnection();
              Statement s = conn.createStatement()) {
@@ -164,7 +165,7 @@ public class UsuarioDao {
         usuario.setId(rs.getInt(1));
         usuario.setNombre(rs.getString(2));
         usuario.setClave(rs.getString(3));
-        usuario.setActive(rs.getBoolean(4));
+        usuario.setActivo(rs.getBoolean(4));
         return usuario;
     }
     

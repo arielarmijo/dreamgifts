@@ -79,7 +79,7 @@ public class DreamGifts extends javax.swing.JFrame {
         JPanel comuna = new ComunaView();
         JPanel banco = new BancoView();
         JPanel estadoVenta = new EstadoVentaView();
-        JPanel usuario = new UsuarioView(new UsuarioController(this.jLabelEstado));
+        JPanel usuario = new UsuarioView(new UsuarioController(), jLabelEstado);
         jTabbedPaneAdmin.addTab("Clientes", cliente);
         jTabbedPaneAdmin.addTab("Proveedores", proveedor);
         jTabbedPaneAdmin.addTab("Articulos", articulo);
