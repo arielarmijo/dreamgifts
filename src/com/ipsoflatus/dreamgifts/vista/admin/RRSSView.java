@@ -51,6 +51,12 @@ public final class RRSSView extends javax.swing.JPanel {
 
         jLabel10.setText("Nombre Red Social:");
 
+        jTextFieldNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldNombreActionPerformed(evt);
+            }
+        });
+
         jLabel11.setText("Codigo Red Social:");
 
         jButtonGuardar.setText("Guardar");
@@ -275,6 +281,10 @@ public final class RRSSView extends javax.swing.JPanel {
         System.out.println(evt.getActionCommand());
         controller.activarSeleccionados(obtenerCodigosSeleccionados(), false);
     }//GEN-LAST:event_jButtonDesactivarActionPerformed
+
+    private void jTextFieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldNombreActionPerformed
       
     public void actualizarCamposRegistro(RedSocial rs) {
         jTextFieldNombre.setText(rs.getNombre());
