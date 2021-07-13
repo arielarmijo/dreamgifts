@@ -52,5 +52,9 @@ public class Banco {
     public String toString() {
         return "Banco{" + "nombre=" + nombre + ", codigo=" + codigo + ", estado=" + estado + '}';
     }
+
+    public int getId() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
