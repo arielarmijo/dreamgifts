@@ -74,7 +74,7 @@ public class DreamGifts extends javax.swing.JFrame {
         JPanel proveedor = new ProveedorView();
         JPanel articulo = new ArticuloView();
         JPanel pack = new PackView();
-        JPanel rrss = new RRSSView(new RRSSController(this.jLabelEstado));
+        JPanel rrss = new RRSSView(new RRSSController(), jLabelEstado);
         JPanel categoriaArticulo = new CategoriaArticuloView();
         JPanel comuna = new ComunaView();
         JPanel banco = new BancoView();

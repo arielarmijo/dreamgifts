@@ -5,17 +5,24 @@ import com.ipsoflatus.dreamgifts.modelo.RedSocial;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public final class RRSSView extends javax.swing.JPanel {
 
     private final RRSSController controller;
+    private final JLabel estado;
     
-    public RRSSView(RRSSController controller) {
+    public RRSSView(RRSSController controller, JLabel estado) {
         initComponents();
         this.controller = controller;
         this.controller.setView(this);
-        actualizarTabla(this.controller.obtenerListadoRRSS());
+        this.estado = estado;
+        Thread initTable = new Thread(() -> {
+            actualizarTabla(this.controller.obtenerListadoRRSS());
+        });
+        initTable.start();
     }
 
     /**
@@ -51,12 +58,6 @@ public final class RRSSView extends javax.swing.JPanel {
 
         jLabel10.setText("Nombre Red Social:");
 
-        jTextFieldNombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldNombreActionPerformed(evt);
-            }
-        });
-
         jLabel11.setText("Codigo Red Social:");
 
         jButtonGuardar.setText("Guardar");
@@ -81,7 +82,7 @@ public final class RRSSView extends javax.swing.JPanel {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -245,9 +246,9 @@ public final class RRSSView extends javax.swing.JPanel {
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         System.out.println(evt.getActionCommand());
-        String nombre = jTextFieldNombre.getText();
         String codigo = jTextFieldCodigo.getText();
-        controller.grabar(nombre, codigo);
+        String nombre = jTextFieldNombre.getText();
+        controller.grabar(codigo, nombre);
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
@@ -281,10 +282,6 @@ public final class RRSSView extends javax.swing.JPanel {
         System.out.println(evt.getActionCommand());
         controller.activarSeleccionados(obtenerCodigosSeleccionados(), false);
     }//GEN-LAST:event_jButtonDesactivarActionPerformed
-
-    private void jTextFieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNombreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldNombreActionPerformed
       
     public void actualizarCamposRegistro(RedSocial rs) {
         jTextFieldNombre.setText(rs.getNombre());
@@ -312,6 +309,18 @@ public final class RRSSView extends javax.swing.JPanel {
             datos[i][3] = false;
         }
         modeloTabla.setDataVector(datos, encabezados);
+    }
+    
+    public void mostrarInformacion(String mensaje) {
+        JOptionPane.showMessageDialog(null, mensaje, "Información", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    public void mostrarError(String mensaje) {
+        JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    
+    public void mostrarEstado(String mensaje) {
+        this.estado.setText(mensaje);
     }
     
     private List<String> obtenerCodigosSeleccionados() {

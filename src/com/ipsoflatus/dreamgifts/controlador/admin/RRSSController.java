@@ -11,14 +11,12 @@ import javax.swing.JOptionPane;
 public class RRSSController {
 
     private final RedSocialDao redSocialDao;
-    private final JLabel estado;
     private RRSSView view;
     private RedSocial redSocialActual;
 
-    public RRSSController(JLabel estado) {
+    public RRSSController() {
         redSocialDao = new RedSocialDao();
         redSocialActual = null;
-        this.estado = estado;
     }
 
     public void setView(RRSSView view) {
@@ -28,48 +26,22 @@ public class RRSSController {
     public List<RedSocial> obtenerListadoRRSS() {
         return redSocialDao.findAll();
     }
+    
+    public void cancelar() {
+        view.mostrarEstado("Administracón: Gestion de Redes Sociales.");
+        reset();
+    }
 
-    public void grabar(String nombre, String codigo) {
+    public void grabar(String codigo, String nombre) {
         if (nombre.isEmpty() || codigo.isEmpty()) {
-            mostrarInformacion("Complete todos los campos.");
+            view.mostrarInformacion("Complete todos los campos.");
             return;
         }
         if (redSocialActual == null) {
-            guardar(nombre, codigo);
+            guardar(codigo, nombre);
         } else {
-            actualizar(nombre, codigo);
+            actualizar(codigo, nombre);
         }
-    }
-
-    public void guardar(String nombre, String codigo) {
-        try {
-            redSocialActual = new RedSocial(nombre, codigo);
-            redSocialDao.save(redSocialActual);
-            mostrarInformacion("Red social guardada con éxito.");
-            view.actualizarTabla(redSocialDao.findAll());
-            reset();
-        } catch (DreamGiftsException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            estado.setText("Error al guardar red social.");
-        }
-    }
-
-    public void actualizar(String nombre, String codigo) {
-        try {
-            redSocialActual.setNombre(nombre);
-            redSocialActual.setCodigo(codigo);
-            redSocialDao.update(redSocialActual);
-            mostrarInformacion("Red social actualizada con éxito.");
-            view.actualizarTabla(redSocialDao.findAll());
-            reset();
-        } catch (DreamGiftsException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            estado.setText("Error al actualizar red social.");
-        }
-    }
-
-    public void cancelar() {
-        reset();
     }
 
     public void buscar(String terminoBuscado) {
@@ -84,22 +56,22 @@ public class RRSSController {
             mensaje = rrss.size() > 0 ? String.format("Resultado de búsqueda para %s", terminoBuscado) : "No se encontraron coincidencias.";
         }
         view.actualizarTabla(rrss);
-        estado.setText(mensaje);
+        view.mostrarEstado(mensaje);
     }
 
     public void editar(String codigo) {
         redSocialActual = redSocialDao.findByCode(codigo);
         view.actualizarCamposRegistro(redSocialActual);
-        estado.setText(String.format("Editando datos de red social %s", redSocialActual.getNombre()));
+        view.mostrarEstado("Editando datos de red social " + redSocialActual.getNombre());
     }
     
     public void activarSeleccionados(List<String> codigos, boolean estado) {
         if (codigos.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Seleccione redes sociales.", "Error", JOptionPane.ERROR_MESSAGE);
+            view.mostrarError("Seleccione redes sociales.");
         } else {
             redSocialDao.activateRRSSByCodes(codigos, estado);
             view.actualizarTabla(redSocialDao.findAll());
-            this.estado.setText(String.format("Redes sociales %s", estado ? "activadas" : "desactivadas"));
+            view.mostrarEstado(String.format("Redes sociales %s", estado ? "activadas" : "desactivadas"));
         }
     }
 
@@ -107,10 +79,32 @@ public class RRSSController {
         view.limpiarCamposRegistro();
         redSocialActual = null;
     }
+    
+    private void guardar(String codigo, String nombre) {
+        try {
+            redSocialActual = new RedSocial(codigo, nombre);
+            redSocialDao.save(redSocialActual);
+            view.mostrarEstado("Red social guardada con éxito.");
+            view.actualizarTabla(redSocialDao.findAll());
+            reset();
+        } catch (DreamGiftsException e) {
+            view.mostrarError(e.getMessage());
+            view.mostrarEstado(e.getMessage());
+        }
+    }
 
-    private void mostrarInformacion(String mensaje) {
-        estado.setText(mensaje);
-        JOptionPane.showMessageDialog(null, mensaje, "Información", JOptionPane.INFORMATION_MESSAGE);
+    private void actualizar(String codigo, String nombre) {
+        try {
+            redSocialActual.setCodigo(codigo);
+            redSocialActual.setNombre(nombre);
+            redSocialDao.update(redSocialActual);
+            view.mostrarEstado("Red social actualizada con éxito.");
+            view.actualizarTabla(redSocialDao.findAll());
+            reset();
+        } catch (DreamGiftsException e) {
+            view.mostrarError(e.getMessage());
+            view.mostrarEstado(e.getMessage());
+        }
     }
 
 }

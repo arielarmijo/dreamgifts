@@ -16,7 +16,7 @@ public class RedSocialDao {
     
     public List<RedSocial> findAll() {
         List<RedSocial> rrss = new ArrayList<>();
-        String sql = "SELECT id, nombre, codigo, estado FROM rrss";
+        String sql = "SELECT id, codigo, nombre, estado FROM rrss";
         try (Connection conn = MySQLConection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
@@ -34,7 +34,7 @@ public class RedSocialDao {
     
     public RedSocial findById(int id) {
         RedSocial redSocial = null;
-        String sql = "SELECT id, nombre, codigo, estado FROM rrss WHERE id = ?";
+        String sql = "SELECT id, codigo, nombre, estado FROM rrss WHERE id = ?";
         try (Connection conn = MySQLConection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             conn.setReadOnly(true);
@@ -54,11 +54,11 @@ public class RedSocialDao {
     
     public RedSocial findByCode(String codigo) {
         RedSocial redSocial = null;
-        String sql = "SELECT id, nombre, codigo, estado FROM rrss WHERE UPPER(codigo) = ?";
+        String sql = "SELECT id, codigo, nombre, estado FROM rrss WHERE UPPER(codigo) = UPPER(?)";
         try (Connection conn = MySQLConection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             conn.setReadOnly(true);
-            ps.setString(1, codigo.toUpperCase());
+            ps.setString(1, codigo);
             System.out.println(ps);
             try (ResultSet rs = ps.executeQuery()) {
                if (rs.next()) {
@@ -74,12 +74,12 @@ public class RedSocialDao {
     
     public List<RedSocial> findByTermLike(String terminoBuscado) {
         List<RedSocial> rrss = new ArrayList<>();
-        String sql = "SELECT id, nombre, codigo, estado FROM rrss WHERE UPPER(nombre) LIKE ? OR UPPER(codigo) LIKE ?";
+        String sql = "SELECT id, codigo, nombre, estado FROM rrss WHERE UPPER(nombre) LIKE UPPER(?) OR UPPER(codigo) LIKE UPPER(?)";
         try (Connection conn = MySQLConection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             conn.setReadOnly(true);
-            ps.setString(1, "%" + terminoBuscado.toUpperCase() + "%");
-            ps.setString(2, "%" + terminoBuscado.toUpperCase() + "%");
+            ps.setString(1, "%" + terminoBuscado + "%");
+            ps.setString(2, "%" + terminoBuscado + "%");
             System.out.println(ps);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -94,12 +94,12 @@ public class RedSocialDao {
     }
     
     public void save(RedSocial redSocial) {
-        String sql = "INSERT INTO rrss (nombre, codigo, estado) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO rrss (codigo, nombre, estado) VALUES (?, ?, ?)";
         try (Connection conn = MySQLConection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             conn.setAutoCommit(false);
-            ps.setString(1, redSocial.getNombre());
-            ps.setString(2, redSocial.getCodigo().toUpperCase());
+            ps.setString(1, redSocial.getCodigo().toUpperCase());
+            ps.setString(2, redSocial.getNombre());
             ps.setBoolean(3, redSocial.isEstado());
             System.out.println(ps);
             ps.executeUpdate();
@@ -112,12 +112,12 @@ public class RedSocialDao {
     }
     
     public void update(RedSocial redSocial) {
-        String sql = "UPDATE rrss SET nombre = ?, codigo = ?, estado = ? WHERE id = ?";
+        String sql = "UPDATE rrss SET codigo = UPPER(?), nombre = ?, estado = ? WHERE id = ?";
         try (Connection conn = MySQLConection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             conn.setAutoCommit(false);
-            ps.setString(1, redSocial.getNombre());
-            ps.setString(2, redSocial.getCodigo().toUpperCase());
+            ps.setString(1, redSocial.getCodigo());
+            ps.setString(2, redSocial.getNombre());
             ps.setBoolean(3, redSocial.isEstado());
             ps.setInt(4, redSocial.getId());
             System.out.println(ps);
@@ -130,12 +130,12 @@ public class RedSocialDao {
         }
     }
     
-    public void delete(RedSocial redSocial) {
+    public void delete(int id) {
         String sql = "DELETE FROM rrss WHERE id = ?";
         try (Connection conn = MySQLConection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             conn.setAutoCommit(false);
-            ps.setInt(1, redSocial.getId());
+            ps.setInt(1, id);
             ps.executeUpdate();
             System.out.println(ps);
             conn.commit();
@@ -164,8 +164,8 @@ public class RedSocialDao {
     private RedSocial rowMapper(ResultSet rs) throws SQLException {
         RedSocial redSocial = new RedSocial();
         redSocial.setId(rs.getInt(1));
-        redSocial.setNombre(rs.getString(2));
-        redSocial.setCodigo(rs.getString(3));
+        redSocial.setCodigo(rs.getString(2));
+        redSocial.setNombre(rs.getString(3));
         redSocial.setEstado(rs.getBoolean(4));
         return redSocial;
     }
