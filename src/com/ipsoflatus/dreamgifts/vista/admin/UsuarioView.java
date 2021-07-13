@@ -8,18 +8,38 @@ import java.util.Vector;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 public class UsuarioView extends JPanel {
 
     private final UsuarioController controller;
+    private final List<String> usuariosSeleccionados;
     private JLabel estado;
     
     public UsuarioView(UsuarioController controller, JLabel estado) {
         this.controller = controller;
         this.controller.setView(this);
+        this.usuariosSeleccionados = new ArrayList<>();
         this.estado = estado;
         initComponents();
+        this.jTableUsuarios.getModel().addTableModelListener((TableModelEvent e) -> {
+            int row = e.getFirstRow();
+            int column = e.getColumn();
+            //System.out.println("row: " + row + ", column: " + column);
+            if (row >= 0 && column >= 0) {
+                TableModel model = (TableModel) e.getSource();
+                boolean seleccionado = (boolean) model.getValueAt(row, column);
+                String codigo = (String) model.getValueAt(row, 0);
+                if (seleccionado) {
+                    usuariosSeleccionados.add(codigo);
+                } else {
+                    usuariosSeleccionados.remove(codigo);
+                }
+                System.out.println("Usuarios seleccionados: " + usuariosSeleccionados);
+            }
+        });
         Thread initTable = new Thread(() -> {
             actualizarTabla(this.controller.obtenerListadoUsuarios());
         });
@@ -366,11 +386,11 @@ public class UsuarioView extends JPanel {
     }//GEN-LAST:event_jTextFieldBuscarActionPerformed
 
     private void jButtonActivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActivarActionPerformed
-        controller.activarUsuariosSeleccionados(obtenerNombreUsuariosSeleccionados(), true);
+        controller.activarUsuariosSeleccionados(usuariosSeleccionados, true);
     }//GEN-LAST:event_jButtonActivarActionPerformed
 
     private void jButtonDesactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDesactivarActionPerformed
-        controller.activarUsuariosSeleccionados(obtenerNombreUsuariosSeleccionados(), false);
+        controller.activarUsuariosSeleccionados(usuariosSeleccionados, false);
     }//GEN-LAST:event_jButtonDesactivarActionPerformed
    
     public void limpiarCamposRegistro() {
@@ -400,6 +420,7 @@ public class UsuarioView extends JPanel {
             datos[i][2] = false;
         }
         modeloTabla.setDataVector(datos, encabezados);
+        usuariosSeleccionados.clear();
     }
     
     public void mostrarInformacion(String mensaje) {
@@ -412,18 +433,6 @@ public class UsuarioView extends JPanel {
     
     public void mostrarEstado(String mensaje) {
         this.estado.setText(mensaje);
-    }
-
-    private List<String> obtenerNombreUsuariosSeleccionados() {
-        List<String> nombres = new ArrayList<>();
-        DefaultTableModel tableModel = (DefaultTableModel) jTableUsuarios.getModel();
-        Vector<Vector<Object>> datos = tableModel.getDataVector();
-        for (Vector<Object> dato : datos) {
-            if ((boolean) dato.get(2)) {
-                nombres.add((String) dato.get(0));
-            }
-        }
-        return nombres;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
