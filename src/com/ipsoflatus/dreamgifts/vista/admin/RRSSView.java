@@ -25,7 +25,6 @@ public final class RRSSView extends JPanel {
         this.controller.setView(this);
         this.redesSocialesSeleccionadas = new ArrayList<>();
         this.estado = estado;
-        actualizarTabla(this.controller.obtenerListadoRRSS());
         this.jTableRRSS.getModel().addTableModelListener((TableModelEvent e) -> {
             int row = e.getFirstRow();
             int column = e.getColumn();
@@ -42,6 +41,10 @@ public final class RRSSView extends JPanel {
                 System.out.println("Redes sociales seleccionadas: " + redesSocialesSeleccionadas);
             }
         });
+        Thread initTable = new Thread(() -> {
+            actualizarTabla(this.controller.obtenerListadoRRSS());
+        });
+        initTable.start();
     }
 
     /**
