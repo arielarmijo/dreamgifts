@@ -7,22 +7,41 @@ import java.util.List;
 import java.util.Vector;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
-public final class RRSSView extends javax.swing.JPanel {
+public final class RRSSView extends JPanel {
 
     private final RRSSController controller;
+    private final List<String> redesSocialesSeleccionadas;
     private final JLabel estado;
-    
+
     public RRSSView(RRSSController controller, JLabel estado) {
         initComponents();
         this.controller = controller;
         this.controller.setView(this);
+        this.redesSocialesSeleccionadas = new ArrayList<>();
         this.estado = estado;
-        Thread initTable = new Thread(() -> {
-            actualizarTabla(this.controller.obtenerListadoRRSS());
+        actualizarTabla(this.controller.obtenerListadoRRSS());
+        this.jTableRRSS.getModel().addTableModelListener((TableModelEvent e) -> {
+            int row = e.getFirstRow();
+            int column = e.getColumn();
+            //System.out.println("row: " + row + ", column: " + column);
+            if (row >= 0 && column >= 0) {
+                TableModel model = (TableModel) e.getSource();
+                boolean seleccionado = (boolean) model.getValueAt(row, column);
+                String codigo = (String) model.getValueAt(row, 0);
+                if (seleccionado) {
+                    redesSocialesSeleccionadas.add(codigo);
+                } else {
+                    redesSocialesSeleccionadas.remove(codigo);
+                }
+                System.out.println("Redes sociales seleccionadas: " + redesSocialesSeleccionadas);
+            }
         });
-        initTable.start();
     }
 
     /**
@@ -275,31 +294,31 @@ public final class RRSSView extends javax.swing.JPanel {
 
     private void jButtonActivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActivarActionPerformed
         System.out.println(evt.getActionCommand());
-        controller.activarSeleccionados(obtenerCodigosSeleccionados(), true);
+        controller.activarSeleccionados(redesSocialesSeleccionadas, true);
     }//GEN-LAST:event_jButtonActivarActionPerformed
 
     private void jButtonDesactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDesactivarActionPerformed
         System.out.println(evt.getActionCommand());
-        controller.activarSeleccionados(obtenerCodigosSeleccionados(), false);
+        controller.activarSeleccionados(redesSocialesSeleccionadas, false);
     }//GEN-LAST:event_jButtonDesactivarActionPerformed
-      
+
     public void actualizarCamposRegistro(RedSocial rs) {
         jTextFieldNombre.setText(rs.getNombre());
         jTextFieldCodigo.setText(rs.getCodigo());
     }
-     
+
     public void limpiarCamposRegistro() {
         jTextFieldCodigo.setText("");
         jTextFieldNombre.setText("");
     }
-    
+
     public void limpiarCampoBuscar() {
         jTextFieldBuscar.setText("");
     }
-    
+
     public void actualizarTabla(List<RedSocial> rrss) {
         DefaultTableModel modeloTabla = (DefaultTableModel) jTableRRSS.getModel();
-        Object [] encabezados = {"Código", "Nombre", "Estado", "Selección" };
+        Object[] encabezados = {"Código", "Nombre", "Estado", "Selección"};
         Object[][] datos = new Object[rrss.size()][encabezados.length];
         for (int i = 0; i < rrss.size(); i++) {
             RedSocial rs = rrss.get(i);
@@ -309,30 +328,19 @@ public final class RRSSView extends javax.swing.JPanel {
             datos[i][3] = false;
         }
         modeloTabla.setDataVector(datos, encabezados);
+        redesSocialesSeleccionadas.clear();
     }
-    
+
     public void mostrarInformacion(String mensaje) {
         JOptionPane.showMessageDialog(null, mensaje, "Información", JOptionPane.INFORMATION_MESSAGE);
     }
-    
+
     public void mostrarError(String mensaje) {
         JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
     }
-    
+
     public void mostrarEstado(String mensaje) {
         this.estado.setText(mensaje);
-    }
-    
-    private List<String> obtenerCodigosSeleccionados() {
-        List<String> codigos = new ArrayList<>();
-        DefaultTableModel tableModel = (DefaultTableModel) jTableRRSS.getModel();
-        Vector<Vector<Object>> datos = tableModel.getDataVector();
-        for (Vector<Object> dato : datos) {
-            if ((boolean) dato.get(3)) {
-                codigos.add((String) dato.get(0));
-            }
-        }
-        return codigos;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
