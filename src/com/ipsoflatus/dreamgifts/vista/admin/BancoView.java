@@ -5,24 +5,26 @@
  */
 package com.ipsoflatus.dreamgifts.vista.admin;
 
+import com.ipsoflatus.dreamgifts.controlador.admin.BancoController;
 import com.ipsoflatus.dreamgifts.dao.BancoDao;
 import com.ipsoflatus.dreamgifts.modelo.Banco;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Usuario
- */
 public class BancoView extends javax.swing.JPanel {
-private BancoDao bancodao = new BancoDao();
+
+     private final BancoController controlador;
 
     /**
      * Creates new form PanelBancos
      */
     public BancoView() {
         initComponents();
-        actualizarTabla(bancodao.findAll());
+        controlador = new BancoController();
+        controlador.setView(this);
+        jTableBanco.getModel().addTableModelListener(controlador);
+        controlador.actualizarTabla();
         }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -48,6 +50,7 @@ private BancoDao bancodao = new BancoDao();
         jLabel4 = new javax.swing.JLabel();
         jTextFieldBuscar = new javax.swing.JTextField();
         jButtonBuscar = new javax.swing.JButton();
+        javax.swing.JButton jButtonActivar = new javax.swing.JButton();
 
         setMinimumSize(new java.awt.Dimension(850, 500));
 
@@ -56,6 +59,11 @@ private BancoDao bancodao = new BancoDao();
 
         jButtonDesactivar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButtonDesactivar.setText("Desactivar");
+        jButtonDesactivar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDesactivarActionPerformed(evt);
+            }
+        });
 
         jButtonEditar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButtonEditar.setText("Editar");
@@ -172,6 +180,13 @@ private BancoDao bancodao = new BancoDao();
             }
         });
 
+        jButtonActivar.setText("Activar");
+        jButtonActivar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonActivarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -193,6 +208,8 @@ private BancoDao bancodao = new BancoDao();
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButtonActivar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButtonDesactivar)
                         .addGap(18, 18, 18)
                         .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -222,8 +239,9 @@ private BancoDao bancodao = new BancoDao();
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonDesactivar)
-                    .addComponent(jButtonEditar))
-                .addContainerGap(27, Short.MAX_VALUE))
+                    .addComponent(jButtonEditar)
+                    .addComponent(jButtonActivar))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -234,25 +252,36 @@ private BancoDao bancodao = new BancoDao();
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         String nombre = jTextFieldNombre.getText();
         String codigo = jTextFieldCodigo.getText();
-        Banco banco = new Banco (nombre, codigo, true);        
-                bancodao.save(banco);        
-        jTextFieldNombre.setText("");
-        jTextFieldCodigo.setText("");
-        actualizarTabla(bancodao.findAll());
+        controlador.grabar(nombre, codigo);
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
-        // TODO add your handling code here:
+     controlador.cancelar();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
        String termino = jTextFieldBuscar.getText();
-       actualizarTabla(bancodao.findByTermLike(termino));
+      controlador.buscar(termino);
     }//GEN-LAST:event_jButtonBuscarActionPerformed
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
-     
+     System.out.println(evt.getActionCommand());
+        int row = jTableBanco.getSelectedRow();
+        if (row == -1) {
+            mostrarInformacion("Seleccione categoría.");
+            return;
+        }
+        String codigo = (String) jTableBanco.getValueAt(row, 0);
+        controlador.editar(codigo);
     }//GEN-LAST:event_jButtonEditarActionPerformed
+
+    private void jButtonActivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActivarActionPerformed
+        controlador.activarSeleccionado();
+    }//GEN-LAST:event_jButtonActivarActionPerformed
+
+    private void jButtonDesactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDesactivarActionPerformed
+   controlador.desactivarSeleccionados();
+    }//GEN-LAST:event_jButtonDesactivarActionPerformed
 
     public void actualizarTabla(List<Banco> bancos) {
         DefaultTableModel modeloTabla = (DefaultTableModel) jTableBanco.getModel();
@@ -268,6 +297,29 @@ private BancoDao bancodao = new BancoDao();
         modeloTabla.setDataVector(datos, encabezados);
     }
     
+    public void setCodigo(String codigo) {
+        jTextFieldCodigo.setText(codigo);
+    }
+    
+    public void setNombre(String nombre) {
+        jTextFieldNombre.setText(nombre);
+    }
+    
+    public void setBuscar(String termino) {
+        jTextFieldBuscar.setText(termino);
+    }
+    
+    public String getBuscar() {
+        return jTextFieldBuscar.getText();
+    }
+       
+    public void mostrarInformacion(String mensaje) {
+        JOptionPane.showMessageDialog(null, mensaje, "Información", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    public void mostrarError(String error) {
+        JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.ERROR_MESSAGE);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBuscar;

@@ -43,6 +43,8 @@
               <EmptySpace max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
+                      <Component id="jButtonActivar" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jButtonDesactivar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jButtonEditar" min="-2" pref="83" max="-2" attributes="0"/>
@@ -79,8 +81,9 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jButtonDesactivar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButtonEditar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButtonActivar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="27" max="32767" attributes="0"/>
+              <EmptySpace pref="26" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -101,6 +104,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Desactivar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonDesactivarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButtonEditar">
       <Properties>
@@ -264,6 +270,18 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonBuscarActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonActivar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Activar"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonActivarActionPerformed"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>

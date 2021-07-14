@@ -11,6 +11,7 @@ package com.ipsoflatus.dreamgifts.modelo;
  */
 public class Banco {
     
+    private Integer id;
     private String nombre;
     private String codigo;
     private boolean estado;
@@ -54,7 +55,11 @@ public class Banco {
     }
 
     public int getId() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
     
 }

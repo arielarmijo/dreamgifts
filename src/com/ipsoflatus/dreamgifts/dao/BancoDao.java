@@ -78,7 +78,7 @@ public class BancoDao {
     
     public List<Banco> findAll() {
         List<Banco> bancos = new ArrayList<>();
-        String sql = "SELECT nombre, codigo, estado FROM bancos";
+        String sql = "SELECT id, nombre, codigo, estado FROM bancos";
         try (Connection conn = MySQLConection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
@@ -96,7 +96,7 @@ public class BancoDao {
     
     public Banco findByCode(String codigo) {
         Banco bancos = null;
-        String sql = "SELECT nombre, codigo, estado FROM banco WHERE UPPER(codigo) = ?";
+        String sql = "SELECT id, nombre, codigo, estado FROM bancos WHERE UPPER(codigo) = ?";
         try (Connection conn = MySQLConection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             conn.setReadOnly(true);
@@ -116,7 +116,7 @@ public class BancoDao {
     
      public List<Banco> findByTermLike(String terminoBuscado) {
         List<Banco> bancos = new ArrayList<>();
-        String sql = "SELECT nombre, codigo, estado FROM bancos WHERE UPPER(nombre) LIKE ? OR UPPER(codigo) LIKE ?";
+        String sql = "SELECT id, nombre, codigo, estado FROM bancos WHERE UPPER(nombre) LIKE ? OR UPPER(codigo) LIKE ?";
         try (Connection conn = MySQLConection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             conn.setReadOnly(true);
@@ -151,9 +151,10 @@ public class BancoDao {
     }
     private Banco rowMapper(ResultSet rs) throws SQLException {
         Banco banco = new Banco();
-        banco.setNombre(rs.getString(1));
-        banco.setCodigo(rs.getString(2));
-        banco.setEstado(rs.getBoolean(3));
+        banco.setId(rs.getInt(1));
+        banco.setNombre(rs.getString(2));
+        banco.setCodigo(rs.getString(3));
+        banco.setEstado(rs.getBoolean(4));
         return banco;
     }
     
