@@ -249,7 +249,7 @@ public final class CategoriaArticuloView extends javax.swing.JPanel {
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
         System.out.println(evt.getActionCommand());
         String termino = jTextFieldBuscar.getText();
-        controlador.buscarTermino(termino);
+        controlador.buscar(termino);
     }//GEN-LAST:event_jButtonBuscarActionPerformed
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed

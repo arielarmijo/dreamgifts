@@ -13,36 +13,16 @@ import javax.swing.table.TableModel;
 
 public final class RRSSView extends JPanel {
 
-    private final RRSSController controller;
-    private final List<String> redesSocialesSeleccionadas;
+    private final RRSSController controlador;
     private final JLabel estado;
 
-    public RRSSView(RRSSController controller, JLabel estado) {
+    public RRSSView(JLabel estado) {
         initComponents();
-        this.controller = controller;
-        this.controller.setView(this);
-        this.redesSocialesSeleccionadas = new ArrayList<>();
+        this.controlador = new RRSSController();
+        this.controlador.setView(this);
         this.estado = estado;
-        this.jTableRRSS.getModel().addTableModelListener((TableModelEvent e) -> {
-            int row = e.getFirstRow();
-            int column = e.getColumn();
-            System.out.println("row: " + row + ", column: " + column + ", evento: " + e.getType());
-            if (row >= 0 && column >= 0) {
-                TableModel model = (TableModel) e.getSource();
-                boolean seleccionado = (boolean) model.getValueAt(row, column);
-                String codigo = (String) model.getValueAt(row, 0);
-                if (seleccionado) {
-                    redesSocialesSeleccionadas.add(codigo);
-                } else {
-                    redesSocialesSeleccionadas.remove(codigo);
-                }
-                System.out.println("Redes sociales seleccionadas: " + redesSocialesSeleccionadas);
-            }
-        });
-        Thread initTable = new Thread(() -> {
-            actualizarTabla(this.controller.obtenerListadoRRSS());
-        });
-        initTable.start();
+        this.jTableRRSS.getModel().addTableModelListener(controlador);
+        this.controlador.actualizarTabla();
     }
 
     /**
@@ -268,18 +248,18 @@ public final class RRSSView extends JPanel {
         System.out.println(evt.getActionCommand());
         String codigo = jTextFieldCodigo.getText();
         String nombre = jTextFieldNombre.getText();
-        controller.grabar(codigo, nombre);
+        controlador.grabar(codigo, nombre);
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
         System.out.println(evt.getActionCommand());
-        controller.cancelar();
+        controlador.cancelar();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
         System.out.println(evt.getActionCommand());
-        String terminoBuscado = jTextFieldBuscar.getText();
-        controller.buscar(terminoBuscado);
+        String termino = jTextFieldBuscar.getText();
+        controlador.buscar(termino);
     }//GEN-LAST:event_jButtonBuscarActionPerformed
 
     private void jTextFieldBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldBuscarActionPerformed
@@ -289,33 +269,23 @@ public final class RRSSView extends JPanel {
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
         System.out.println(evt.getActionCommand());
         int row = jTableRRSS.getSelectedRow();
-        String codigo = (String) jTableRRSS.getValueAt(row, 0);
-        controller.editar(codigo);
+        try {
+            String codigo = (String) jTableRRSS.getValueAt(row, 0);
+            controlador.editar(codigo);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            mostrarInformacion("Seleccione red social.");
+        }
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jButtonActivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActivarActionPerformed
         System.out.println(evt.getActionCommand());
-        controller.activarSeleccionados(redesSocialesSeleccionadas, true);
+        controlador.activarSeleccionados();
     }//GEN-LAST:event_jButtonActivarActionPerformed
 
     private void jButtonDesactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDesactivarActionPerformed
         System.out.println(evt.getActionCommand());
-        controller.activarSeleccionados(redesSocialesSeleccionadas, false);
+        controlador.desactivarSeleccionados();
     }//GEN-LAST:event_jButtonDesactivarActionPerformed
-
-    public void actualizarCamposRegistro(RedSocial rs) {
-        jTextFieldNombre.setText(rs.getNombre());
-        jTextFieldCodigo.setText(rs.getCodigo());
-    }
-
-    public void limpiarCamposRegistro() {
-        jTextFieldCodigo.setText("");
-        jTextFieldNombre.setText("");
-    }
-
-    public void limpiarCampoBuscar() {
-        jTextFieldBuscar.setText("");
-    }
 
     public void actualizarTabla(List<RedSocial> rrss) {
         DefaultTableModel modeloTabla = (DefaultTableModel) jTableRRSS.getModel();
@@ -329,7 +299,22 @@ public final class RRSSView extends JPanel {
             datos[i][3] = false;
         }
         modeloTabla.setDataVector(datos, encabezados);
-        redesSocialesSeleccionadas.clear();
+    }
+    
+    public void setCodigo(String codigo) {
+        jTextFieldCodigo.setText(codigo);
+    }
+    
+    public void setNombre(String nombre) {
+        jTextFieldNombre.setText(nombre);
+    }
+    
+    public void setBuscar(String termino) {
+        jTextFieldBuscar.setText(termino);
+    }
+    
+    public String getBuscar() {
+        return jTextFieldBuscar.getText();
     }
 
     public void mostrarInformacion(String mensaje) {
