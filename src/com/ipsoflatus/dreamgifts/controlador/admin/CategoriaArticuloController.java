@@ -1,33 +1,44 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ipsoflatus.dreamgifts.controlador.admin;
 
 import com.ipsoflatus.dreamgifts.dao.CategoriaArticuloDao;
 import com.ipsoflatus.dreamgifts.modelo.CategoriaArticulo;
 import java.util.List;
 
-/**
- *
- * @author Usuario
- */
 public class CategoriaArticuloController {
     
-    private CategoriaArticuloDao caDao = new CategoriaArticuloDao();
+    private final CategoriaArticuloDao caDao = new CategoriaArticuloDao();
+    private CategoriaArticulo categoriaActual;
     
-    public void guardar(String codigo, String nombre) {
-        CategoriaArticulo ca = new CategoriaArticulo(codigo, nombre);
-        caDao.save(ca);
-    }
-
     public List<CategoriaArticulo> obtenerListadoCategorias() {
         return caDao.findAll();
     }
-
+    
     public List<CategoriaArticulo> buscarPorTermino(String termino) {
         return caDao.findByTermLike(termino);
+    }
+    
+    public void grabar(String codigo, String nombre) {
+        if (categoriaActual == null) {
+            caDao.save(new CategoriaArticulo(codigo, nombre));
+        } else {
+            categoriaActual.setCodigo(codigo);
+            categoriaActual.setNombre(nombre);
+            caDao.update(categoriaActual);
+        }
+        categoriaActual = null;
+    }
+    
+    public CategoriaArticulo editar(String codigo) {
+        categoriaActual = caDao.findByCode(codigo);
+        return categoriaActual;
+    }
+
+    public void activarSeleccionados(List<String> categoriasSeleccionadas, boolean estado) {
+        caDao.activateByCodes(categoriasSeleccionadas, estado);
+    }
+
+    public void setCategoriaActual(CategoriaArticulo ca) {
+        categoriaActual = ca;
     }
     
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ipsoflatus.dreamgifts.dao;
 
 import com.ipsoflatus.dreamgifts.conexion.MySQLConection;
@@ -12,13 +7,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-/**
- *
- * @author Usuario
- */
 public class CategoriaArticuloDao {
 
     public void save(CategoriaArticulo ca) {
@@ -30,7 +23,21 @@ public class CategoriaArticuloDao {
             ps.setBoolean(3, ca.getEstado());
             ps.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new DreamGiftsException(e.getMessage());
+        }
+    }
+
+    public void update(CategoriaArticulo ca) {
+        String sql = "UPDATE categoria_articulo SET codigo = UPPER(?), nombre = ?, estado = ? WHERE id = ?";
+        try (Connection conn = MySQLConection.getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, ca.getCodigo());
+            ps.setString(2, ca.getNombre());
+            ps.setBoolean(3, ca.getEstado());
+            ps.setInt(4, ca.getId());
+            System.out.println(ps);
+            ps.executeUpdate();
+        } catch (SQLException e) {
             throw new DreamGiftsException(e.getMessage());
         }
     }
@@ -39,13 +46,12 @@ public class CategoriaArticuloDao {
         List<CategoriaArticulo> ccaa = new ArrayList<>();
         String sql = "SELECT id, codigo, nombre, estado FROM categoria_articulo";
         try (Connection conn = MySQLConection.getConnection();
-                PreparedStatement ps = conn.prepareStatement(sql);
-                ResultSet rs = ps.executeQuery()) {
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 ccaa.add(rowMapper(rs));
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
             throw new DreamGiftsException(e.getMessage());
         }
         return ccaa;
@@ -64,10 +70,38 @@ public class CategoriaArticuloDao {
                 }
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
             throw new DreamGiftsException(e.getMessage());
         }
         return ccaa;
+    }
+
+    public CategoriaArticulo findByCode(String codigo) {
+        CategoriaArticulo ca = null;
+        String sql = "SELECT id, codigo, nombre, estado FROM categoria_articulo WHERE UPPER(codigo) = UPPER(?)";
+        try (Connection conn = MySQLConection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, codigo);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    ca = rowMapper(rs);
+                }
+            }
+        } catch (SQLException e) {
+            throw new DreamGiftsException(e.getMessage());
+        }
+        return ca;
+    }
+
+    public void activateByCodes(List<String> codigos, boolean estado) {
+        String codes = codigos.stream().map(codigo -> "'" + codigo + "'").collect(Collectors.joining(", "));
+        String sql = String.format("UPDATE categoria_articulo SET estado = %s WHERE codigo IN (%s)", estado, codes);
+        System.out.println(sql);
+        try (Connection conn = MySQLConection.getConnection();
+             Statement s = conn.createStatement()) {
+            s.executeUpdate(sql);
+        } catch (SQLException e) {
+            throw new DreamGiftsException(e.getMessage());
+        }
     }
 
     private CategoriaArticulo rowMapper(ResultSet rs) throws SQLException {
@@ -77,11 +111,6 @@ public class CategoriaArticuloDao {
         ca.setNombre(rs.getString(3));
         ca.setEstado(rs.getBoolean(4));
         return ca;
-    }
-
-    public static void main(String[] args) {
-        CategoriaArticuloDao dao = new CategoriaArticuloDao();
-        dao.findByTermLike("ts").forEach(System.out::println);
     }
 
 }

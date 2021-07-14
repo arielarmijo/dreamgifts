@@ -67,6 +67,4 @@ public class CategoriaArticulo {
         return "CategoriaArticulo{" + "id=" + id + ", codigo=" + codigo + ", nombre=" + nombre + ", estado=" + estado + '}';
     }
     
-    
-    
 }
