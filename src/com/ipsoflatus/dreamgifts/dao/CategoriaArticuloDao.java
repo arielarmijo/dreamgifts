@@ -1,0 +1,87 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.ipsoflatus.dreamgifts.dao;
+
+import com.ipsoflatus.dreamgifts.conexion.MySQLConection;
+import com.ipsoflatus.dreamgifts.error.DreamGiftsException;
+import com.ipsoflatus.dreamgifts.modelo.CategoriaArticulo;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ *
+ * @author Usuario
+ */
+public class CategoriaArticuloDao {
+
+    public void save(CategoriaArticulo ca) {
+        String sql = "INSERT INTO categoria_articulo (codigo, nombre, estado) VALUES (?, ?, ?)";
+        try (Connection conn = MySQLConection.getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, ca.getCodigo());
+            ps.setString(2, ca.getNombre());
+            ps.setBoolean(3, ca.getEstado());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new DreamGiftsException(e.getMessage());
+        }
+    }
+
+    public List<CategoriaArticulo> findAll() {
+        List<CategoriaArticulo> ccaa = new ArrayList<>();
+        String sql = "SELECT id, codigo, nombre, estado FROM categoria_articulo";
+        try (Connection conn = MySQLConection.getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                ccaa.add(rowMapper(rs));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new DreamGiftsException(e.getMessage());
+        }
+        return ccaa;
+    }
+
+    public List<CategoriaArticulo> findByTermLike(String termino) {
+        List<CategoriaArticulo> ccaa = new ArrayList<>();
+        String sql = "SELECT id, codigo, nombre, estado FROM categoria_articulo WHERE UPPER(codigo) LIKE UPPER(?) OR UPPER(nombre) LIKE UPPER(?)";
+        try (Connection conn = MySQLConection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, "%" + termino + "%");
+            ps.setString(2, "%" + termino + "%");
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    ccaa.add(rowMapper(rs));
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new DreamGiftsException(e.getMessage());
+        }
+        return ccaa;
+    }
+
+    private CategoriaArticulo rowMapper(ResultSet rs) throws SQLException {
+        CategoriaArticulo ca = new CategoriaArticulo();
+        ca.setId(rs.getInt(1));
+        ca.setCodigo(rs.getString(2));
+        ca.setNombre(rs.getString(3));
+        ca.setEstado(rs.getBoolean(4));
+        return ca;
+    }
+
+    public static void main(String[] args) {
+        CategoriaArticuloDao dao = new CategoriaArticuloDao();
+        dao.findByTermLike("ts").forEach(System.out::println);
+    }
+
+}

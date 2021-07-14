@@ -5,17 +5,27 @@
  */
 package com.ipsoflatus.dreamgifts.vista.admin;
 
+import com.ipsoflatus.dreamgifts.controlador.admin.CategoriaArticuloController;
+import com.ipsoflatus.dreamgifts.modelo.CategoriaArticulo;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Usuario
  */
 public class CategoriaArticuloView extends javax.swing.JPanel {
 
+    
+    private CategoriaArticuloController controlador;
+    
     /**
      * Creates new form PanelCategoriaArticulo
      */
     public CategoriaArticuloView() {
         initComponents();
+        controlador = new CategoriaArticuloController();
+        actualizarTabla(controlador.obtenerListadoCategorias());
     }
 
     /**
@@ -28,32 +38,37 @@ public class CategoriaArticuloView extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jTextField3 = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
+        jTextFieldBuscar = new javax.swing.JTextField();
+        jButtonBuscar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableCA = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
+        jTextFieldNombre = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        jTextFieldCodigo = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        jButtonGuardar = new javax.swing.JButton();
 
         setMinimumSize(new java.awt.Dimension(850, 500));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jTextField3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jTextFieldBuscar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        jButton4.setText("Buscar");
+        jButtonBuscar.setText("Buscar");
+        jButtonBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBuscarActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableCA.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -76,14 +91,14 @@ public class CategoriaArticuloView extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setMinWidth(100);
-            jTable1.getColumnModel().getColumn(0).setMaxWidth(100);
-            jTable1.getColumnModel().getColumn(2).setMinWidth(150);
-            jTable1.getColumnModel().getColumn(2).setMaxWidth(150);
-            jTable1.getColumnModel().getColumn(3).setMinWidth(150);
-            jTable1.getColumnModel().getColumn(3).setMaxWidth(150);
+        jScrollPane1.setViewportView(jTableCA);
+        if (jTableCA.getColumnModel().getColumnCount() > 0) {
+            jTableCA.getColumnModel().getColumn(0).setMinWidth(100);
+            jTableCA.getColumnModel().getColumn(0).setMaxWidth(100);
+            jTableCA.getColumnModel().getColumn(2).setMinWidth(150);
+            jTableCA.getColumnModel().getColumn(2).setMaxWidth(150);
+            jTableCA.getColumnModel().getColumn(3).setMinWidth(150);
+            jTableCA.getColumnModel().getColumn(3).setMaxWidth(150);
         }
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -106,9 +121,9 @@ public class CategoriaArticuloView extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4))
+                        .addComponent(jButtonBuscar))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -123,8 +138,8 @@ public class CategoriaArticuloView extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4)
+                    .addComponent(jTextFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonBuscar)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
@@ -147,7 +162,12 @@ public class CategoriaArticuloView extends javax.swing.JPanel {
 
         jButton3.setText("Cancelar");
 
-        jButton5.setText("Guardar");
+        jButtonGuardar.setText("Guardar");
+        jButtonGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGuardarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -160,15 +180,15 @@ public class CategoriaArticuloView extends javax.swing.JPanel {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
+                        .addComponent(jTextFieldNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
                         .addGap(50, 50, 50)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextFieldCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(157, 157, 157)
                         .addComponent(jButton3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton5)
+                        .addComponent(jButtonGuardar)
                         .addGap(50, 50, 50)))
                 .addContainerGap())
         );
@@ -180,11 +200,11 @@ public class CategoriaArticuloView extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3)
-                    .addComponent(jButton5))
+                    .addComponent(jButtonGuardar))
                 .addGap(50, 50, 50))
         );
 
@@ -210,14 +230,39 @@ public class CategoriaArticuloView extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
+        String nombre = jTextFieldNombre.getText();
+        String codigo = jTextFieldCodigo.getText();
+        System.out.println(codigo + ", " + nombre);
+        controlador.guardar(codigo, nombre);
+        actualizarTabla(controlador.obtenerListadoCategorias());
+    }//GEN-LAST:event_jButtonGuardarActionPerformed
+
+    private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
+        String termino = jTextFieldBuscar.getText();
+        actualizarTabla(controlador.buscarPorTermino(termino));
+    }//GEN-LAST:event_jButtonBuscarActionPerformed
+
+    public void actualizarTabla(List<CategoriaArticulo> ccaa) {
+        DefaultTableModel modeloTabla = (DefaultTableModel) jTableCA.getModel();
+        Object[] encabezados = {"Código", "Nombre", "Estado", "Selección"};
+        Object[][] datos = new Object[ccaa.size()][encabezados.length];
+        for (int i = 0; i < ccaa.size(); i++) {
+            datos[i][0] = ccaa.get(i).getCodigo();
+            datos[i][1] = ccaa.get(i).getNombre();
+            datos[i][2] = ccaa.get(i).getEstado() ? "Activo" : "Inactivo";
+            datos[i][3] = false;
+        }
+        modeloTabla.setDataVector(datos, encabezados);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButtonBuscar;
+    private javax.swing.JButton jButtonGuardar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -225,9 +270,9 @@ public class CategoriaArticuloView extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTable jTableCA;
+    private javax.swing.JTextField jTextFieldBuscar;
+    private javax.swing.JTextField jTextFieldCodigo;
+    private javax.swing.JTextField jTextFieldNombre;
     // End of variables declaration//GEN-END:variables
 }
