@@ -1,40 +1,21 @@
 package com.ipsoflatus.dreamgifts.vista.admin;
 
 import com.ipsoflatus.dreamgifts.controlador.admin.CategoriaArticuloController;
-import com.ipsoflatus.dreamgifts.error.DreamGiftsException;
 import com.ipsoflatus.dreamgifts.modelo.CategoriaArticulo;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 public final class CategoriaArticuloView extends javax.swing.JPanel {
 
     private final CategoriaArticuloController controlador;
-    private final List<String> categoriasSeleccionadas;
 
     public CategoriaArticuloView() {
         initComponents();
         controlador = new CategoriaArticuloController();
-        this.categoriasSeleccionadas = new ArrayList<>();
-        this.jTableCA.getModel().addTableModelListener((TableModelEvent e) -> {
-            int row = e.getFirstRow();
-            int column = e.getColumn();
-            if (row >= 0 && column >= 0) {
-                TableModel model = (TableModel) e.getSource();
-                boolean seleccionado = (boolean) model.getValueAt(row, column);
-                String codigo = (String) model.getValueAt(row, 0);
-                if (seleccionado) {
-                    categoriasSeleccionadas.add(codigo);
-                } else {
-                    categoriasSeleccionadas.remove(codigo);
-                }
-                System.out.println("Categorías seleccionadas: " + categoriasSeleccionadas);
-            }
-        });
-        actualizarTabla(controlador.obtenerListadoCategorias());
+        controlador.setView(this);
+        this.jTableCA.getModel().addTableModelListener(controlador);
+        controlador.actualizarTabla();
     }
 
     /**
@@ -262,91 +243,76 @@ public final class CategoriaArticuloView extends javax.swing.JPanel {
         System.out.println(evt.getActionCommand());
         String codigo = jTextFieldCodigo.getText();
         String nombre = jTextFieldNombre.getText();
-        if (codigo.isEmpty() || nombre.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Complete todos los campos.", "Información", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-        try {
-            controlador.grabar(codigo, nombre);
-            actualizarTabla(controlador.obtenerListadoCategorias());
-            limpiarCamposRegistro();
-        } catch (DreamGiftsException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        controlador.grabar(codigo, nombre);
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
         System.out.println(evt.getActionCommand());
         String termino = jTextFieldBuscar.getText();
-        List<CategoriaArticulo> ccaa = termino.isEmpty() ? controlador.obtenerListadoCategorias() : controlador.buscarPorTermino(termino);
-        actualizarTabla(ccaa);
-        jTextFieldBuscar.setText("");
+        controlador.buscarTermino(termino);
     }//GEN-LAST:event_jButtonBuscarActionPerformed
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
         System.out.println(evt.getActionCommand());
         int row = jTableCA.getSelectedRow();
         if (row == -1) {
-            JOptionPane.showMessageDialog(null, "Seleccione categoría.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            mostrarInformacion("Seleccione categoría.");
             return;
         }
         String codigo = (String) jTableCA.getValueAt(row, 0);
-        CategoriaArticulo ca = controlador.editar(codigo);
-        jTextFieldCodigo.setText(ca.getCodigo());
-        jTextFieldNombre.setText(ca.getNombre());
+        controlador.editar(codigo);
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jButtonActivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActivarActionPerformed
         System.out.println(evt.getActionCommand());
-        if (categoriasSeleccionadas.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Seleccione categorías.", "Información", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-        controlador.activarSeleccionados(categoriasSeleccionadas, true);
-        actualizarTabla(controlador.obtenerListadoCategorias());
-        limpiarCamposRegistro();
-        controlador.setCategoriaActual(null);
+        controlador.activarSelecciondos();
     }//GEN-LAST:event_jButtonActivarActionPerformed
 
     private void jButtonDesactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDesactivarActionPerformed
         System.out.println(evt.getActionCommand());
-        if (categoriasSeleccionadas.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Seleccione categorías.", "Información", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-        controlador.activarSeleccionados(categoriasSeleccionadas, false);
-        actualizarTabla(controlador.obtenerListadoCategorias());
-        limpiarCamposRegistro();
-        controlador.setCategoriaActual(null);
+        controlador.desactivarSelecciondos();
     }//GEN-LAST:event_jButtonDesactivarActionPerformed
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
         System.out.println(evt.getActionCommand());
-        limpiarCamposRegistro();
-        controlador.setCategoriaActual(null);
+        controlador.cancelar();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
-    private void actualizarTabla(List<CategoriaArticulo> ccaa) {
-        if (ccaa.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Sin categorías registradas.", "Información", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            DefaultTableModel modeloTabla = (DefaultTableModel) jTableCA.getModel();
-            Object[] encabezados = {"Código", "Nombre", "Estado", "Selección"};
-            Object[][] datos = new Object[ccaa.size()][encabezados.length];
-            for (int i = 0; i < ccaa.size(); i++) {
-                datos[i][0] = ccaa.get(i).getCodigo();
-                datos[i][1] = ccaa.get(i).getNombre();
-                datos[i][2] = ccaa.get(i).getEstado() ? "Activo" : "Inactivo";
-                datos[i][3] = false;
-            }
-            modeloTabla.setDataVector(datos, encabezados);
-            categoriasSeleccionadas.clear();
+    public void actualizarTabla(List<CategoriaArticulo> ccaa) {
+        DefaultTableModel modeloTabla = (DefaultTableModel) jTableCA.getModel();
+        Object[] encabezados = {"Código", "Nombre", "Estado", "Selección"};
+        Object[][] datos = new Object[ccaa.size()][encabezados.length];
+        for (int i = 0; i < ccaa.size(); i++) {
+            datos[i][0] = ccaa.get(i).getCodigo();
+            datos[i][1] = ccaa.get(i).getNombre();
+            datos[i][2] = ccaa.get(i).getEstado() ? "Activo" : "Inactivo";
+            datos[i][3] = false;
         }
+        modeloTabla.setDataVector(datos, encabezados);
     }
     
-    private void limpiarCamposRegistro() {
-        jTextFieldCodigo.setText("");
-        jTextFieldNombre.setText("");
+    public void setCodigo(String codigo) {
+        jTextFieldCodigo.setText(codigo);
+    }
+    
+    public void setNombre(String nombre) {
+        jTextFieldNombre.setText(nombre);
+    }
+    
+    public void setBuscar(String termino) {
+        jTextFieldBuscar.setText(termino);
+    }
+    
+    public String getBuscar() {
+        return jTextFieldBuscar.getText();
+    }
+       
+    public void mostrarInformacion(String mensaje) {
+        JOptionPane.showMessageDialog(null, mensaje, "Información", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    public void mostrarError(String error) {
+        JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

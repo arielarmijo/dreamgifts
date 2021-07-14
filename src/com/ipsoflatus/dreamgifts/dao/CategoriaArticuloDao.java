@@ -18,9 +18,10 @@ public class CategoriaArticuloDao {
         String sql = "INSERT INTO categoria_articulo (codigo, nombre, estado) VALUES (?, ?, ?)";
         try (Connection conn = MySQLConection.getConnection();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, ca.getCodigo());
+            ps.setString(1, ca.getCodigo().toUpperCase());
             ps.setString(2, ca.getNombre());
             ps.setBoolean(3, ca.getEstado());
+            System.out.println(ps);
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new DreamGiftsException(e.getMessage());
@@ -28,10 +29,10 @@ public class CategoriaArticuloDao {
     }
 
     public void update(CategoriaArticulo ca) {
-        String sql = "UPDATE categoria_articulo SET codigo = UPPER(?), nombre = ?, estado = ? WHERE id = ?";
+        String sql = "UPDATE categoria_articulo SET codigo = ?, nombre = ?, estado = ? WHERE id = ?";
         try (Connection conn = MySQLConection.getConnection();
-                PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, ca.getCodigo());
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, ca.getCodigo().toUpperCase());
             ps.setString(2, ca.getNombre());
             ps.setBoolean(3, ca.getEstado());
             ps.setInt(4, ca.getId());
@@ -44,7 +45,8 @@ public class CategoriaArticuloDao {
 
     public List<CategoriaArticulo> findAll() {
         List<CategoriaArticulo> ccaa = new ArrayList<>();
-        String sql = "SELECT id, codigo, nombre, estado FROM categoria_articulo";
+        String sql = "SELECT id, codigo, nombre, estado FROM categoria_articulo ORDER BY codigo";
+        System.out.println(sql);
         try (Connection conn = MySQLConection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
@@ -64,6 +66,7 @@ public class CategoriaArticuloDao {
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, "%" + termino + "%");
             ps.setString(2, "%" + termino + "%");
+            System.out.println(ps);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     ccaa.add(rowMapper(rs));
@@ -81,6 +84,7 @@ public class CategoriaArticuloDao {
         try (Connection conn = MySQLConection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, codigo);
+            System.out.println(ps);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     ca = rowMapper(rs);

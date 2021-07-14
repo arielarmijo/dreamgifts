@@ -1,44 +1,118 @@
 package com.ipsoflatus.dreamgifts.controlador.admin;
 
 import com.ipsoflatus.dreamgifts.dao.CategoriaArticuloDao;
+import com.ipsoflatus.dreamgifts.error.DreamGiftsException;
 import com.ipsoflatus.dreamgifts.modelo.CategoriaArticulo;
+import com.ipsoflatus.dreamgifts.vista.admin.CategoriaArticuloView;
+import java.util.ArrayList;
 import java.util.List;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.TableModel;
 
-public class CategoriaArticuloController {
-    
-    private final CategoriaArticuloDao caDao = new CategoriaArticuloDao();
+public class CategoriaArticuloController implements TableModelListener {
+
+    private final CategoriaArticuloDao caDao;
+    private final List<String> categoriasSeleccionadas;
+    private List<CategoriaArticulo> categorias;
     private CategoriaArticulo categoriaActual;
-    
-    public List<CategoriaArticulo> obtenerListadoCategorias() {
-        return caDao.findAll();
-    }
-    
-    public List<CategoriaArticulo> buscarPorTermino(String termino) {
-        return caDao.findByTermLike(termino);
-    }
-    
-    public void grabar(String codigo, String nombre) {
-        if (categoriaActual == null) {
-            caDao.save(new CategoriaArticulo(codigo, nombre));
-        } else {
-            categoriaActual.setCodigo(codigo);
-            categoriaActual.setNombre(nombre);
-            caDao.update(categoriaActual);
-        }
+    private CategoriaArticuloView view;
+
+    public CategoriaArticuloController() {
+        caDao = new CategoriaArticuloDao();
+        categoriasSeleccionadas = new ArrayList<>();
+        categorias = caDao.findAll();
         categoriaActual = null;
     }
+
+    public void setView(CategoriaArticuloView view) {
+        this.view = view;
+    }
+
+    public void actualizarTabla() {
+        if (categorias.isEmpty()) {
+            view.mostrarInformacion("No se encontraron registros.");
+        } else {
+            view.actualizarTabla(categorias);
+        }
+    }
     
-    public CategoriaArticulo editar(String codigo) {
+    public void cancelar() {
+        categoriaActual = null;
+        view.setCodigo("");
+        view.setNombre("");
+    }
+
+    public void grabar(String codigo, String nombre) {
+
+        if (codigo.isEmpty() || nombre.isEmpty()) {
+            view.mostrarInformacion("Complete todos los campos.");
+            return;
+        }
+
+        try {
+            if (categoriaActual == null) {
+                caDao.save(new CategoriaArticulo(codigo, nombre));
+            } else {
+                categoriaActual.setCodigo(codigo);
+                categoriaActual.setNombre(nombre);
+                caDao.update(categoriaActual);
+            }
+            buscarTermino(view.getBuscar());
+            actualizarTabla();
+            categoriaActual = null;
+            view.setCodigo("");
+            view.setNombre("");
+        } catch (DreamGiftsException e) {
+            view.mostrarError(e.getMessage());
+        }
+        
+    }
+    
+    public void buscarTermino(String termino) {
+        categorias = termino.isEmpty() ? caDao.findAll() : caDao.findByTermLike(termino);
+        actualizarTabla();
+    }
+
+    public void editar(String codigo) {
         categoriaActual = caDao.findByCode(codigo);
-        return categoriaActual;
-    }
-
-    public void activarSeleccionados(List<String> categoriasSeleccionadas, boolean estado) {
-        caDao.activateByCodes(categoriasSeleccionadas, estado);
-    }
-
-    public void setCategoriaActual(CategoriaArticulo ca) {
-        categoriaActual = ca;
+        view.setCodigo(categoriaActual.getCodigo());
+        view.setNombre(categoriaActual.getNombre());
     }
     
+    public void activarSelecciondos() {
+        activarDesactivarSeleccionados(categoriasSeleccionadas, true);
+    }
+    
+    public void desactivarSelecciondos() {
+        activarDesactivarSeleccionados(categoriasSeleccionadas, false);
+    }
+    
+    public void activarDesactivarSeleccionados(List<String> categoriasSeleccionadas, boolean estado) {
+        if (categoriasSeleccionadas.isEmpty()) {
+            view.mostrarInformacion("Seleccione categorías.");
+            return;
+        }
+        caDao.activateByCodes(categoriasSeleccionadas, estado);
+        view.actualizarTabla(caDao.findAll());
+        categoriasSeleccionadas.clear();
+    }
+
+    @Override
+    public void tableChanged(TableModelEvent e) {
+        int row = e.getFirstRow();
+        int column = e.getColumn();
+        if (row >= 0 && column >= 0) {
+            TableModel model = (TableModel) e.getSource();
+            boolean seleccionado = (boolean) model.getValueAt(row, column);
+            String codigo = (String) model.getValueAt(row, 0);
+            if (seleccionado) {
+                categoriasSeleccionadas.add(codigo);
+            } else {
+                categoriasSeleccionadas.remove(codigo);
+            }
+            System.out.println("Categorías seleccionadas: " + categoriasSeleccionadas);
+        }
+    }
+
 }
