@@ -58,8 +58,7 @@ public class CategoriaArticuloController implements TableModelListener {
                 categoriaActual.setNombre(nombre);
                 caDao.update(categoriaActual);
             }
-            buscarTermino(view.getBuscar());
-            actualizarTabla();
+            buscar(view.getBuscar());
             categoriaActual = null;
             view.setCodigo("");
             view.setNombre("");
@@ -69,7 +68,7 @@ public class CategoriaArticuloController implements TableModelListener {
         
     }
     
-    public void buscarTermino(String termino) {
+    public void buscar(String termino) {
         categorias = termino.isEmpty() ? caDao.findAll() : caDao.findByTermLike(termino);
         actualizarTabla();
     }
@@ -81,21 +80,21 @@ public class CategoriaArticuloController implements TableModelListener {
     }
     
     public void activarSelecciondos() {
-        activarDesactivarSeleccionados(categoriasSeleccionadas, true);
+        activarDesactivarSeleccionados(true);
     }
     
     public void desactivarSelecciondos() {
-        activarDesactivarSeleccionados(categoriasSeleccionadas, false);
+        activarDesactivarSeleccionados(false);
     }
     
-    public void activarDesactivarSeleccionados(List<String> categoriasSeleccionadas, boolean estado) {
+    public void activarDesactivarSeleccionados(boolean estado) {
         if (categoriasSeleccionadas.isEmpty()) {
             view.mostrarInformacion("Seleccione categorías.");
-            return;
+        } else {
+            caDao.activateByCodes(categoriasSeleccionadas, estado);
+            buscar(view.getBuscar());
+            categoriasSeleccionadas.clear();
         }
-        caDao.activateByCodes(categoriasSeleccionadas, estado);
-        view.actualizarTabla(caDao.findAll());
-        categoriasSeleccionadas.clear();
     }
 
     @Override
