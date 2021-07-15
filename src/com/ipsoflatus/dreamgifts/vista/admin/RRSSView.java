@@ -2,14 +2,11 @@ package com.ipsoflatus.dreamgifts.vista.admin;
 
 import com.ipsoflatus.dreamgifts.controlador.admin.RRSSController;
 import com.ipsoflatus.dreamgifts.modelo.RedSocial;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 public final class RRSSView extends JPanel {
 

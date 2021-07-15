@@ -32,7 +32,7 @@ public class RRSSController implements TableModelListener {
 
     public void actualizarTabla() {
         if (rrss.isEmpty()) {
-            view.mostrarInformacion("No se encontraron registros.");
+            view.mostrarEstado("No se encontraron registros.");
         } else {
             view.actualizarTabla(rrss);
             view.mostrarEstado(String.format("Mostrando %d registros.", rrss.size()));
@@ -64,7 +64,7 @@ public class RRSSController implements TableModelListener {
                 redSocialDao.update(redSocialActual);
                 estado = "Red social actualizada con éxito.";
             }
-            buscar(view.getBuscar());
+            buscar("");
             redSocialActual = null;
             view.setCodigo("");
             view.setNombre("");
@@ -110,7 +110,6 @@ public class RRSSController implements TableModelListener {
     public void tableChanged(TableModelEvent e) {
         int row = e.getFirstRow();
         int column = e.getColumn();
-        System.out.println("row: " + row + ", column: " + column + ", tipo evento: " + e.getType());
         if (row >= 0 && column >= 0) {
             TableModel model = (TableModel) e.getSource();
             boolean seleccionado = (boolean) model.getValueAt(row, column);

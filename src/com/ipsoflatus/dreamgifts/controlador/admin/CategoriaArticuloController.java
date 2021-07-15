@@ -31,7 +31,7 @@ public class CategoriaArticuloController implements TableModelListener {
 
     public void actualizarTabla() {
         if (categorias.isEmpty()) {
-            view.mostrarInformacion("No se encontraron registros.");
+            //view.mostrarInformacion("No se encontraron registros.");
         } else {
             view.actualizarTabla(categorias);
         }
@@ -58,7 +58,7 @@ public class CategoriaArticuloController implements TableModelListener {
                 categoriaActual.setNombre(nombre);
                 caDao.update(categoriaActual);
             }
-            buscar(view.getBuscar());
+            buscar("");
             categoriaActual = null;
             view.setCodigo("");
             view.setNombre("");
