@@ -1,22 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ipsoflatus.dreamgifts.modelo;
 
-/**
- *
- * @author Usuario
- */
+import java.util.Objects;
+
 public class Usuario {
     
     private Integer id;
     private String nombre;
     private String clave;
-    private boolean activo;
+    private Boolean estado;
 
     public Usuario() {
+    }
+    
+    public Usuario(String nombre, String clave, boolean estado) {
+        this(null, nombre, clave, estado);
     }
 
     public Usuario(String nombre, String clave) {
@@ -27,7 +24,7 @@ public class Usuario {
         this.id = id;
         this.nombre = nombre;
         this.clave = clave;
-        this.activo = estado;
+        this.estado = estado;
     }
 
     public Integer getId() {
@@ -54,17 +51,42 @@ public class Usuario {
         this.clave = clave;
     }
 
-    public boolean isActivo() {
-        return activo;
+    public Boolean getEstado() {
+        return estado;
     }
 
-    public void setActivo(boolean activo) {
-        this.activo = activo;
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
     }
 
     @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 29 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Usuario other = (Usuario) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
+    }
+    
+    @Override
     public String toString() {
-        return "Usuario{" + "id=" + id + ", nombre=" + nombre + ", clave=" + clave + ", activo=" + activo + '}';
+        return "Usuario{" + "id=" + id + ", nombre=" + nombre + ", clave=" + clave + ", activo=" + estado + '}';
     }
 
 }

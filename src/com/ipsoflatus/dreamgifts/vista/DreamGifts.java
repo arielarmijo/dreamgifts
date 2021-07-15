@@ -1,7 +1,5 @@
 package com.ipsoflatus.dreamgifts.vista;
 
-import com.ipsoflatus.dreamgifts.controlador.admin.RRSSController;
-import com.ipsoflatus.dreamgifts.controlador.admin.UsuarioController;
 import com.ipsoflatus.dreamgifts.vista.admin.ArticuloView;
 import com.ipsoflatus.dreamgifts.vista.admin.BancoView;
 import com.ipsoflatus.dreamgifts.vista.admin.CategoriaArticuloView;
@@ -79,7 +77,7 @@ public class DreamGifts extends javax.swing.JFrame {
         JPanel comuna = new ComunaView();
         JPanel banco = new BancoView();
         JPanel estadoVenta = new EstadoVentaView();
-        JPanel usuario = new UsuarioView(new UsuarioController(), jLabelEstado);
+        JPanel usuario = new UsuarioView(jLabelEstado);
         jTabbedPaneAdmin.addTab("Clientes", cliente);
         jTabbedPaneAdmin.addTab("Proveedores", proveedor);
         jTabbedPaneAdmin.addTab("Articulos", articulo);
@@ -582,10 +580,8 @@ public class DreamGifts extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new DreamGifts().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new DreamGifts().setVisible(true);
         });
     }
 

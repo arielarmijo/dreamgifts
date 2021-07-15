@@ -2,48 +2,25 @@ package com.ipsoflatus.dreamgifts.vista.admin;
 
 import com.ipsoflatus.dreamgifts.controlador.admin.UsuarioController;
 import com.ipsoflatus.dreamgifts.modelo.Usuario;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.event.TableModelEvent;
+import javax.swing.JToggleButton;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 public class UsuarioView extends JPanel {
 
-    private final UsuarioController controller;
-    private final List<String> usuariosSeleccionados;
-    private JLabel estado;
+    private final UsuarioController controlador;
+    private final JLabel estado;
     
-    public UsuarioView(UsuarioController controller, JLabel estado) {
-        this.controller = controller;
-        this.controller.setView(this);
-        this.usuariosSeleccionados = new ArrayList<>();
-        this.estado = estado;
+    public UsuarioView(JLabel estado) {
         initComponents();
-        this.jTableUsuarios.getModel().addTableModelListener((TableModelEvent e) -> {
-            int row = e.getFirstRow();
-            int column = e.getColumn();
-            //System.out.println("row: " + row + ", column: " + column);
-            if (row >= 0 && column >= 0) {
-                TableModel model = (TableModel) e.getSource();
-                boolean seleccionado = (boolean) model.getValueAt(row, column);
-                String codigo = (String) model.getValueAt(row, 0);
-                if (seleccionado) {
-                    usuariosSeleccionados.add(codigo);
-                } else {
-                    usuariosSeleccionados.remove(codigo);
-                }
-                System.out.println("Usuarios seleccionados: " + usuariosSeleccionados);
-            }
-        });
-        Thread initTable = new Thread(() -> {
-            actualizarTabla(this.controller.obtenerListadoUsuarios());
-        });
-        initTable.start();
+        this.controlador = new UsuarioController();
+        this.controlador.setView(this);
+        this.estado = estado;
+        this.jTableUsuarios.getModel().addTableModelListener(controlador);
+        this.controlador.actualizarTabla();
     }
 
     /**
@@ -55,6 +32,7 @@ public class UsuarioView extends JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroupEstado = new javax.swing.ButtonGroup();
         jPanelRegistro = new javax.swing.JPanel();
         jLabelTituloRegistro = new javax.swing.JLabel();
         jPanelCampos = new javax.swing.JPanel();
@@ -64,6 +42,9 @@ public class UsuarioView extends JPanel {
         jTextFieldNuevoPassword = new javax.swing.JPasswordField();
         jLabelRePassword = new javax.swing.JLabel();
         jTextFieldRePassword = new javax.swing.JPasswordField();
+        jLabelEstado = new javax.swing.JLabel();
+        jRadioButtonActivo = new javax.swing.JRadioButton();
+        jRadioButtonInactivo = new javax.swing.JRadioButton();
         jPanelBotonesRegistro = new javax.swing.JPanel();
         jButtonCancelar = new javax.swing.JButton();
         jButtonGuardar = new javax.swing.JButton();
@@ -77,7 +58,10 @@ public class UsuarioView extends JPanel {
         jPanelBotonesTablaUsuarios = new javax.swing.JPanel();
         jButtonDesactivar = new javax.swing.JButton();
         jButtonActivar = new javax.swing.JButton();
+        jToggleButtonSeleccion = new javax.swing.JToggleButton();
+        jPanel1 = new javax.swing.JPanel();
         jButtonEditar = new javax.swing.JButton();
+        jButtonBorrar = new javax.swing.JButton();
 
         setMinimumSize(new java.awt.Dimension(850, 500));
 
@@ -98,6 +82,17 @@ public class UsuarioView extends JPanel {
 
         jTextFieldRePassword.setToolTipText("");
 
+        jLabelEstado.setText("Estado:");
+
+        buttonGroupEstado.add(jRadioButtonActivo);
+        jRadioButtonActivo.setSelected(true);
+        jRadioButtonActivo.setText("Activo");
+        jRadioButtonActivo.setActionCommand("Activo");
+
+        buttonGroupEstado.add(jRadioButtonInactivo);
+        jRadioButtonInactivo.setText("Inactivo");
+        jRadioButtonInactivo.setActionCommand("Inactivo");
+
         javax.swing.GroupLayout jPanelCamposLayout = new javax.swing.GroupLayout(jPanelCampos);
         jPanelCampos.setLayout(jPanelCamposLayout);
         jPanelCamposLayout.setHorizontalGroup(
@@ -110,9 +105,15 @@ public class UsuarioView extends JPanel {
                     .addComponent(jLabelNuevoPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(10, 10, 10)
                 .addGroup(jPanelCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldNombreUsuario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
+                    .addComponent(jTextFieldNombreUsuario, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jTextFieldNuevoPassword, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jTextFieldRePassword, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(18, 18, 18)
+                .addComponent(jLabelEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jRadioButtonActivo)
+                    .addComponent(jRadioButtonInactivo))
                 .addContainerGap())
         );
         jPanelCamposLayout.setVerticalGroup(
@@ -121,11 +122,14 @@ public class UsuarioView extends JPanel {
                 .addContainerGap()
                 .addGroup(jPanelCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelNombreUsuario)
-                    .addComponent(jTextFieldNombreUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jTextFieldNombreUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelEstado)
+                    .addComponent(jRadioButtonActivo))
+                .addGap(8, 8, 8)
                 .addGroup(jPanelCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelNuevoPassword)
-                    .addComponent(jTextFieldNuevoPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldNuevoPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jRadioButtonInactivo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelRePassword)
@@ -174,10 +178,12 @@ public class UsuarioView extends JPanel {
             jPanelRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelRegistroLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabelTituloRegistro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanelRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelRegistroLayout.createSequentialGroup()
+                        .addComponent(jLabelTituloRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jPanelCampos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jPanelBotonesRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -274,10 +280,10 @@ public class UsuarioView extends JPanel {
             }
         });
 
-        jButtonEditar.setText("Editar");
-        jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
+        jToggleButtonSeleccion.setText("Seleccionar todos");
+        jToggleButtonSeleccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonEditarActionPerformed(evt);
+                jToggleButtonSeleccionActionPerformed(evt);
             }
         });
 
@@ -287,10 +293,10 @@ public class UsuarioView extends JPanel {
             jPanelBotonesTablaUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBotonesTablaUsuariosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButtonEditar)
-                .addGap(30, 30, 30)
+                .addComponent(jToggleButtonSeleccion, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonDesactivar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonActivar)
                 .addContainerGap())
         );
@@ -301,7 +307,42 @@ public class UsuarioView extends JPanel {
                 .addGroup(jPanelBotonesTablaUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonActivar)
                     .addComponent(jButtonDesactivar)
-                    .addComponent(jButtonEditar))
+                    .addComponent(jToggleButtonSeleccion))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jButtonEditar.setText("Editar");
+        jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEditarActionPerformed(evt);
+            }
+        });
+
+        jButtonBorrar.setText("Borrar");
+        jButtonBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBorrarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButtonEditar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonBorrar)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonEditar)
+                    .addComponent(jButtonBorrar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -319,6 +360,8 @@ public class UsuarioView extends JPanel {
                         .addComponent(jPanelBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelListadoLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(jPanelBotonesTablaUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -332,7 +375,9 @@ public class UsuarioView extends JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPaneUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanelBotonesTablaUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanelListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanelBotonesTablaUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -359,26 +404,32 @@ public class UsuarioView extends JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
+        System.out.println(evt.getActionCommand());
         String nombre = jTextFieldNombreUsuario.getText();
         String password = jTextFieldNuevoPassword.getText();
         String rePassword = jTextFieldRePassword.getText();
-        controller.grabar(nombre, password, rePassword);
+        System.out.println(buttonGroupEstado.getSelection().getActionCommand().equals("Activo"));
+        boolean isActive = buttonGroupEstado.getSelection().getActionCommand().equals("Activo");
+        controlador.grabar(nombre, password, rePassword, isActive);
         
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
-        controller.cancelar();
+        System.out.println(evt.getActionCommand());
+        controlador.cancelar();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
-        String nombreBuscado = jTextFieldBuscar.getText();
-        controller.buscar(nombreBuscado);
+        System.out.println(evt.getActionCommand());
+        String nombre = jTextFieldBuscar.getText();
+        controlador.buscar(nombre);
     }//GEN-LAST:event_jButtonBuscarActionPerformed
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
+        System.out.println(evt.getActionCommand());
         int row = jTableUsuarios.getSelectedRow();
-        String nombre = (String) jTableUsuarios.getValueAt(row, 0);
-        controller.editar(nombre);
+        String nombre = obtenerNombreUsuarioSeleccionado(row);
+        controlador.editar(nombre);
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jTextFieldBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldBuscarActionPerformed
@@ -386,28 +437,31 @@ public class UsuarioView extends JPanel {
     }//GEN-LAST:event_jTextFieldBuscarActionPerformed
 
     private void jButtonActivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActivarActionPerformed
-        controller.activarUsuariosSeleccionados(usuariosSeleccionados, true);
+        System.out.println(evt.getActionCommand());
+        controlador.activarSeleccionados();
     }//GEN-LAST:event_jButtonActivarActionPerformed
 
     private void jButtonDesactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDesactivarActionPerformed
-        controller.activarUsuariosSeleccionados(usuariosSeleccionados, false);
+        System.out.println(evt.getActionCommand());
+        controlador.desactivarSeleccionados();
     }//GEN-LAST:event_jButtonDesactivarActionPerformed
-   
-    public void limpiarCamposRegistro() {
-        jTextFieldNombreUsuario.setText("");
-        jTextFieldNuevoPassword.setText("");
-        jTextFieldRePassword.setText("");
-    }
-    
-    public void limpiarCampoBuscar() {
-        jTextFieldBuscar.setText("");
-    }
-    
-    public void actualizarCamposRegistro(Usuario usuario) {
-        jTextFieldNombreUsuario.setText(usuario.getNombre());
-        jTextFieldNuevoPassword.setText(usuario.getClave());
-        jTextFieldRePassword.setText(usuario.getClave());
-    }
+
+    private void jToggleButtonSeleccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonSeleccionActionPerformed
+        boolean isSelected = ((JToggleButton) evt.getSource()).isSelected();
+        jToggleButtonSeleccion.setText(isSelected ? "Deseleccionar todos" : "Seleccionar todos");
+        DefaultTableModel modeloTabla = (DefaultTableModel) jTableUsuarios.getModel();
+        int rows = modeloTabla.getRowCount();
+        for (int i = 0; i < rows; i++) {
+                modeloTabla.setValueAt(isSelected, i, 2);
+        }
+    }//GEN-LAST:event_jToggleButtonSeleccionActionPerformed
+
+    private void jButtonBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarActionPerformed
+        System.out.println(evt.getActionCommand());
+        int row = jTableUsuarios.getSelectedRow();
+        String nombre = obtenerNombreUsuarioSeleccionado(row);
+        controlador.borrar(nombre);
+    }//GEN-LAST:event_jButtonBorrarActionPerformed
     
     public void actualizarTabla(List<Usuario> usuarios) {
         DefaultTableModel modeloTabla = (DefaultTableModel) jTableUsuarios.getModel();
@@ -416,11 +470,45 @@ public class UsuarioView extends JPanel {
         for (int i = 0; i < usuarios.size(); i++) {
             Usuario u = usuarios.get(i);
             datos[i][0] = u.getNombre();
-            datos[i][1] = u.isActivo() ? "Activo" : "Inactivo";
+            datos[i][1] = u.getEstado()? "Activo" : "Inactivo";
             datos[i][2] = false;
         }
         modeloTabla.setDataVector(datos, encabezados);
-        usuariosSeleccionados.clear();
+    }
+    
+    public void setNombre(String nombre) {
+        jTextFieldNombreUsuario.setText(nombre);
+    }
+    
+    public void setNuevoPassword(String password) {
+        jTextFieldNuevoPassword.setText(password);
+    }
+    
+    public void setRePassword(String password) {
+        jTextFieldRePassword.setText(password);
+    }
+    
+    public void setEstado(boolean estado) {
+        if (estado) {
+            setActivo(true);
+        } else {
+            setInactivo(true);
+        }
+    }
+    public void setActivo(boolean estado) {
+        jRadioButtonActivo.setSelected(estado);
+    }
+    
+    public void setInactivo(boolean estado) {
+        jRadioButtonInactivo.setSelected(estado);
+    }
+    
+    public void setBuscar(String termino) {
+        jTextFieldBuscar.setText(termino);
+    }
+    
+    public String getBuscar() {
+        return jTextFieldBuscar.getText();
     }
     
     public void mostrarInformacion(String mensaje) {
@@ -434,30 +522,52 @@ public class UsuarioView extends JPanel {
     public void mostrarEstado(String mensaje) {
         this.estado.setText(mensaje);
     }
+    
+    public void setSeleccionarTodos(boolean estado) {
+        jToggleButtonSeleccion.setText(estado ? "Deseleccionar todos" : "Seleccionar todos");
+        jToggleButtonSeleccion.setSelected(estado);
+    }
+    
+    private String obtenerNombreUsuarioSeleccionado(int row) {
+        String nombre = null;
+        try {
+            nombre = (String) jTableUsuarios.getValueAt(row, 0);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            mostrarInformacion("Seleccione usuario.");
+        }
+        return nombre;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroupEstado;
     private javax.swing.JButton jButtonActivar;
+    private javax.swing.JButton jButtonBorrar;
     private javax.swing.JButton jButtonBuscar;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonDesactivar;
     private javax.swing.JButton jButtonEditar;
     private javax.swing.JButton jButtonGuardar;
+    private javax.swing.JLabel jLabelEstado;
     private javax.swing.JLabel jLabelNombreUsuario;
     private javax.swing.JLabel jLabelNuevoPassword;
     private javax.swing.JLabel jLabelRePassword;
     private javax.swing.JLabel jLabelTablaUsuarios;
     private javax.swing.JLabel jLabelTituloRegistro;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelBotonesRegistro;
     private javax.swing.JPanel jPanelBotonesTablaUsuarios;
     private javax.swing.JPanel jPanelBuscar;
     private javax.swing.JPanel jPanelCampos;
     private javax.swing.JPanel jPanelListado;
     private javax.swing.JPanel jPanelRegistro;
+    private javax.swing.JRadioButton jRadioButtonActivo;
+    private javax.swing.JRadioButton jRadioButtonInactivo;
     private javax.swing.JScrollPane jScrollPaneUsuarios;
     private javax.swing.JTable jTableUsuarios;
     private javax.swing.JTextField jTextFieldBuscar;
     private javax.swing.JTextField jTextFieldNombreUsuario;
     private javax.swing.JPasswordField jTextFieldNuevoPassword;
     private javax.swing.JPasswordField jTextFieldRePassword;
+    private javax.swing.JToggleButton jToggleButtonSeleccion;
     // End of variables declaration//GEN-END:variables
 }
