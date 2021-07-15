@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class CategoriaArticuloDao {
 
     public void save(CategoriaArticulo ca) {
-        String sql = "INSERT INTO categoria_articulo (codigo, nombre, estado) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO categorias_articulo (codigo, nombre, estado) VALUES (?, ?, ?)";
         try (Connection conn = MySQLConection.getConnection();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, ca.getCodigo().toUpperCase());
@@ -29,7 +29,7 @@ public class CategoriaArticuloDao {
     }
 
     public void update(CategoriaArticulo ca) {
-        String sql = "UPDATE categoria_articulo SET codigo = ?, nombre = ?, estado = ? WHERE id = ?";
+        String sql = "UPDATE categorias_articulo SET codigo = ?, nombre = ?, estado = ? WHERE id = ?";
         try (Connection conn = MySQLConection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, ca.getCodigo().toUpperCase());
@@ -45,11 +45,11 @@ public class CategoriaArticuloDao {
 
     public List<CategoriaArticulo> findAll() {
         List<CategoriaArticulo> ccaa = new ArrayList<>();
-        String sql = "SELECT id, codigo, nombre, estado FROM categoria_articulo ORDER BY codigo";
-        System.out.println(sql);
+        String sql = "SELECT id, codigo, nombre, estado FROM categorias_articulo ORDER BY codigo";
         try (Connection conn = MySQLConection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
+            System.out.println(ps);
             while (rs.next()) {
                 ccaa.add(rowMapper(rs));
             }
@@ -61,7 +61,7 @@ public class CategoriaArticuloDao {
 
     public List<CategoriaArticulo> findByTermLike(String termino) {
         List<CategoriaArticulo> ccaa = new ArrayList<>();
-        String sql = "SELECT id, codigo, nombre, estado FROM categoria_articulo WHERE UPPER(codigo) LIKE UPPER(?) OR UPPER(nombre) LIKE UPPER(?)";
+        String sql = "SELECT id, codigo, nombre, estado FROM categorias_articulo WHERE UPPER(codigo) LIKE UPPER(?) OR UPPER(nombre) LIKE UPPER(?)";
         try (Connection conn = MySQLConection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, "%" + termino + "%");
@@ -80,7 +80,7 @@ public class CategoriaArticuloDao {
 
     public CategoriaArticulo findByCode(String codigo) {
         CategoriaArticulo ca = null;
-        String sql = "SELECT id, codigo, nombre, estado FROM categoria_articulo WHERE UPPER(codigo) = UPPER(?)";
+        String sql = "SELECT id, codigo, nombre, estado FROM categorias_articulo WHERE UPPER(codigo) = UPPER(?)";
         try (Connection conn = MySQLConection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, codigo);
@@ -98,7 +98,7 @@ public class CategoriaArticuloDao {
 
     public void activateByCodes(List<String> codigos, boolean estado) {
         String codes = codigos.stream().map(codigo -> "'" + codigo + "'").collect(Collectors.joining(", "));
-        String sql = String.format("UPDATE categoria_articulo SET estado = %s WHERE codigo IN (%s)", estado, codes);
+        String sql = String.format("UPDATE categorias_articulo SET estado = %s WHERE codigo IN (%s)", estado, codes);
         System.out.println(sql);
         try (Connection conn = MySQLConection.getConnection();
              Statement s = conn.createStatement()) {
