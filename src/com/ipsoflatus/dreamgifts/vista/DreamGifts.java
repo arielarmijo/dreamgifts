@@ -69,7 +69,7 @@ public class DreamGifts extends javax.swing.JFrame {
         
     private void crearPanelAdmin() {
         JPanel cliente = new ClienteView();
-        JPanel proveedor = new ProveedorView();
+        JPanel proveedor = new ProveedorView(jLabelEstado);
         JPanel articulo = new ArticuloView();
         JPanel pack = new PackView();
         JPanel rrss = new RRSSView(jLabelEstado);

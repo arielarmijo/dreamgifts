@@ -5,6 +5,7 @@
  */
 package com.ipsoflatus.dreamgifts.vista.admin;
 
+import com.ipsoflatus.dreamgifts.controlador.admin.ComunaController;
 import com.ipsoflatus.dreamgifts.dao.ComunaDao;
 import com.ipsoflatus.dreamgifts.modelo.CategoriaArticulo;
 import com.ipsoflatus.dreamgifts.modelo.Comuna;
@@ -17,15 +18,20 @@ import javax.swing.table.DefaultTableModel;
  * @author Usuario
  */
 public class ComunaView extends javax.swing.JPanel {
-    ComunaDao comunadao = new ComunaDao();
+    //ComunaDao comunadao = new ComunaDao();
     
+    private final ComunaController controlador;
 
     /**
      * Creates new form PanelComunas
      */
     public ComunaView() {
         initComponents();
-        actualizarTabla(comunadao.findAll());
+        //actualizarTabla(comunadao.findAll());
+        
+        this.controlador = new ComunaController();
+        this.controlador.setView(this);
+        this.controlador.actualizarComunas();
         
     }
 
@@ -213,10 +219,9 @@ public class ComunaView extends javax.swing.JPanel {
       String codigo = codigoComuna.getText();
       System.out.println(nombre);
       System.out.println(codigo);
-      Comuna comuna = new Comuna (nombre, codigo);
-      comunadao.save(comuna);
-      actualizarTabla(comunadao.findAll());
-      
+      //Comuna comuna = new Comuna (nombre, codigo);
+      //comunadao.save(comuna);
+      controlador.guardar(nombre, codigo); 
     }//GEN-LAST:event_guardarActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

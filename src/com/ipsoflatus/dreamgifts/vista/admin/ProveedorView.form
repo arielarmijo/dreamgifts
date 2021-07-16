@@ -61,43 +61,43 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace pref="30" max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="jPanelBotonesRegistro" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Group type="102" alignment="1" attributes="0">
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jLabelDireccion" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jLabelContacto" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jLabelRut" alignment="0" pref="90" max="32767" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabelTituloRegistro" min="-2" pref="528" max="-2" attributes="0"/>
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="jTextFieldRut" alignment="0" pref="225" max="32767" attributes="0"/>
-                                      <Component id="jTextFieldDireccion" alignment="0" pref="225" max="32767" attributes="0"/>
-                                      <Component id="jTextFieldContacto" alignment="0" pref="225" max="32767" attributes="0"/>
+                  <EmptySpace pref="29" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                      <Component id="jLabelComuna" max="32767" attributes="0"/>
+                      <Component id="jLabelDireccion" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jLabelContacto" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jLabelRut" alignment="0" pref="90" max="32767" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                          <Component id="jLabelTituloRegistro" min="-2" pref="528" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="jTextFieldRut" alignment="0" pref="225" max="32767" attributes="0"/>
+                                  <Component id="jTextFieldDireccion" alignment="0" pref="225" max="32767" attributes="0"/>
+                                  <Component id="jTextFieldContacto" alignment="0" pref="225" max="32767" attributes="0"/>
+                                  <Component id="jComboBoxComuna" alignment="0" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="jLabelEmail" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jLabelTelefono" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jLabelRazonSocial" alignment="0" min="-2" pref="90" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="jTextFieldRazonSocial" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jTextFieldEmail" alignment="0" min="-2" pref="225" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="jLabelEmail" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="jLabelTelefono" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="jLabelRazonSocial" alignment="0" min="-2" pref="90" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="jTextFieldRazonSocial" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="jTextFieldEmail" alignment="0" min="-2" pref="225" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Component id="jTextFieldTelefono" alignment="0" min="-2" pref="225" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="jTextFieldTelefono" alignment="0" min="-2" pref="225" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
+                      <Component id="jPanelBotonesRegistro" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="30" max="32767" attributes="0"/>
+                  <EmptySpace pref="31" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -142,7 +142,13 @@
                       </Group>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jPanelBotonesRegistro" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jPanelBotonesRegistro" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabelComuna" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jComboBoxComuna" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -199,6 +205,23 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldEmail">
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelComuna">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Comuna:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="jComboBoxComuna">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="1">
+                <StringItem index="0" value="Seleccione comuna"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
         </Component>
         <Container class="javax.swing.JPanel" name="jPanelBotonesRegistro">
 
