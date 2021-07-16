@@ -411,7 +411,6 @@ public class UsuarioView extends JPanel {
         System.out.println(buttonGroupEstado.getSelection().getActionCommand().equals("Activo"));
         boolean isActive = buttonGroupEstado.getSelection().getActionCommand().equals("Activo");
         controlador.grabar(nombre, password, rePassword, isActive);
-        
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
@@ -460,7 +459,11 @@ public class UsuarioView extends JPanel {
         System.out.println(evt.getActionCommand());
         int row = jTableUsuarios.getSelectedRow();
         String nombre = obtenerNombreUsuarioSeleccionado(row);
-        controlador.borrar(nombre);
+        String mensaje = String.format("¿Está seguro que quiere borrar al usuario %s?", nombre);
+        int response = JOptionPane.showConfirmDialog(null, mensaje, "Advertencia", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+        if (response == 0) {    
+            controlador.borrar(nombre);
+        }
     }//GEN-LAST:event_jButtonBorrarActionPerformed
     
     public void actualizarTabla(List<Usuario> usuarios) {
