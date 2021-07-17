@@ -1,10 +1,13 @@
 package com.ipsoflatus.dreamgifts.vista.admin;
 
 import com.ipsoflatus.dreamgifts.controlador.admin.ProveedorController;
-import javax.swing.DefaultComboBoxModel;
+import com.ipsoflatus.dreamgifts.modelo.Comuna;
+import com.ipsoflatus.dreamgifts.vista.ComunaComboBoxView;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
-public class ProveedorView extends javax.swing.JPanel {
+public class ProveedorView extends JPanel implements ComunaComboBoxView {
     
     private final ProveedorController controlador;
     private final JLabel estado;
@@ -14,8 +17,7 @@ public class ProveedorView extends javax.swing.JPanel {
      */
     public ProveedorView(JLabel label) {
         initComponents();
-        this.controlador = new ProveedorController();
-        this.controlador.setView(this);
+        this.controlador = new ProveedorController(this);
         this.controlador.actualizarComunas();
         this.estado = label;
     }
@@ -43,7 +45,7 @@ public class ProveedorView extends javax.swing.JPanel {
         jLabelEmail = new javax.swing.JLabel();
         jTextFieldEmail = new javax.swing.JTextField();
         jLabelComuna = new javax.swing.JLabel();
-        jComboBoxComuna = new javax.swing.JComboBox<>();
+        jComboBoxComunas = new javax.swing.JComboBox<>();
         jPanelBotonesRegistro = new javax.swing.JPanel();
         jButtonCancelar = new javax.swing.JButton();
         jButtonGuardar = new javax.swing.JButton();
@@ -84,7 +86,12 @@ public class ProveedorView extends javax.swing.JPanel {
 
         jLabelComuna.setText("Comuna:");
 
-        jComboBoxComuna.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione comuna" }));
+        jComboBoxComunas.setModel(new javax.swing.DefaultComboBoxModel<>());
+        jComboBoxComunas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxComunasActionPerformed(evt);
+            }
+        });
 
         jButtonCancelar.setText("Cancelar");
 
@@ -131,7 +138,7 @@ public class ProveedorView extends javax.swing.JPanel {
                                 .addComponent(jTextFieldRut, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
                                 .addComponent(jTextFieldDireccion, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
                                 .addComponent(jTextFieldContacto, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
-                                .addComponent(jComboBoxComuna, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jComboBoxComunas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGap(76, 76, 76)
                             .addGroup(jPanelRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jLabelEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -182,7 +189,7 @@ public class ProveedorView extends javax.swing.JPanel {
                     .addComponent(jPanelBotonesRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanelRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabelComuna)
-                        .addComponent(jComboBoxComuna, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jComboBoxComunas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -329,12 +336,18 @@ public class ProveedorView extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    public void setComboBoxComunaModel(Object[] comunas) {
-        DefaultComboBoxModel model = (DefaultComboBoxModel) jComboBoxComuna.getModel();
-        model.removeAllElements();
-        for (Object comuna : comunas) {
-            model.addElement(comuna);
+    private void jComboBoxComunasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxComunasActionPerformed
+        Comuna c = (Comuna) ((JComboBox) evt.getSource()).getSelectedItem();
+        try {
+            System.out.println(String.format("id: %d, nombre: %s, código: %s, estado: %s", c.getId(), c.getNombre(), c.getCodigo(), c.getEstado() ? "Activo" : "Inactivo"));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
+    }//GEN-LAST:event_jComboBoxComunasActionPerformed
+
+    @Override
+    public void setComboBoxComunaModel(Object[] items) {
+        setComboBoxModel(jComboBoxComunas, items);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -345,7 +358,7 @@ public class ProveedorView extends javax.swing.JPanel {
     private javax.swing.JButton jButtonDesactivar;
     private javax.swing.JButton jButtonEditar;
     private javax.swing.JButton jButtonGuardar;
-    private javax.swing.JComboBox<String> jComboBoxComuna;
+    private javax.swing.JComboBox<String> jComboBoxComunas;
     private javax.swing.JLabel jLabelComuna;
     private javax.swing.JLabel jLabelContacto;
     private javax.swing.JLabel jLabelDireccion;

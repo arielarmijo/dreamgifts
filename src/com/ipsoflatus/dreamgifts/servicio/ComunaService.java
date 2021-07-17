@@ -9,8 +9,8 @@ import java.util.List;
 public class ComunaService {
     
     private final ComunaDao comunaDao;
-    private List<ComunaObserver> obs;
-    private static final ComunaService instance = new ComunaService();
+    private final List<ComunaObserver> obs;
+    private static ComunaService instance;
     
     private ComunaService() {
         comunaDao = new ComunaDao();
@@ -18,19 +18,18 @@ public class ComunaService {
     }
     
     public static ComunaService getInstance() {
+        if (instance == null)
+            instance = new ComunaService();
         return instance;
     }
     
     public void addObserver(ComunaObserver o) {
-        System.out.println("Agregando observador...");
         obs.add(o);
-        System.out.println("Observadores: " + obs.size());
     }
     
     public void notifyObservers() {
         obs.forEach(o -> {
             o.actualizarComunas(comunaDao.findAll());
-            System.out.println(o);
         });
     }
 
@@ -38,9 +37,22 @@ public class ComunaService {
         return comunaDao.findAll();
     }
     
+    public Comuna buscarComuna(String codigo) {
+        return comunaDao.findByCode(codigo);
+    }
+    
     public void guardarComuna(Comuna comuna) {
         comunaDao.save(comuna);
         notifyObservers();
     }
     
+    public void editarComuna(Integer id, Comuna c) {
+        Comuna comuna = comunaDao.findById(id);
+        comuna.setCodigo(c.getCodigo());
+        comuna.setNombre(c.getNombre());
+        comuna.setEstado(c.getEstado());
+        comunaDao.update(comuna);
+        notifyObservers();
+    }
+
 }

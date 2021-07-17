@@ -2,18 +2,16 @@ package com.ipsoflatus.dreamgifts.controlador.admin;
 
 import com.ipsoflatus.dreamgifts.controlador.ComunaObserverController;
 import com.ipsoflatus.dreamgifts.modelo.Comuna;
-import com.ipsoflatus.dreamgifts.modelo.ComunaObserver;
 import com.ipsoflatus.dreamgifts.servicio.ComunaService;
-import com.ipsoflatus.dreamgifts.vista.admin.ProveedorView;
+import com.ipsoflatus.dreamgifts.vista.admin.ClienteView;
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class ProveedorController implements ComunaObserverController {
-
-    private final ComunaService comunaSrv;
-    private ProveedorView view;
+public class ClienteController implements ComunaObserverController {
     
-    public ProveedorController(ProveedorView view) {
+    private final ComunaService comunaSrv;
+    private final ClienteView view;
+    
+    public ClienteController(ClienteView view) {
         this.view = view;
         this.comunaSrv = ComunaService.getInstance();
         this.comunaSrv.addObserver(this);
@@ -28,5 +26,5 @@ public class ProveedorController implements ComunaObserverController {
     public void actualizarComunas(List<Comuna> comunas) {
         actualizarComunas(view, comunas);
     }
-
+    
 }

@@ -9,11 +9,13 @@ import java.util.List;
 public class ComunaController implements ComunaObserver {
 
     private final ComunaService comunaSrv;
+    private Comuna comunaActual;
     private ComunaView view;
 
     public ComunaController() {
         this.comunaSrv = ComunaService.getInstance();
         this.comunaSrv.addObserver(this);
+        comunaActual = null;
     }
 
     public void setView(ComunaView view) {
@@ -21,7 +23,17 @@ public class ComunaController implements ComunaObserver {
     }
 
     public void guardar(String nombre, String codigo) {
-        comunaSrv.guardarComuna(new Comuna(nombre, codigo));
+        if (comunaActual == null) {
+            comunaSrv.guardarComuna(new Comuna(nombre, codigo));
+        } else {
+            comunaActual.setNombre(nombre);
+            comunaActual.setCodigo(codigo);
+            comunaSrv.editarComuna(comunaActual.getId(), comunaActual);
+        }
+    }
+    
+    public void editar(String codigo) {
+        comunaActual = comunaSrv.buscarComuna(codigo);
     }
     
     public void actualizarComunas() {

@@ -508,41 +508,37 @@ public class DreamGifts extends javax.swing.JFrame {
 
     private void jTabbedPaneAdminStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPaneAdminStateChanged
         int selectedTab = jTabbedPaneAdmin.getSelectedIndex();
-        System.out.println("Selected tab: " + selectedTab);
         jLabelEstado.setText("Administración: " + jTabbedPaneAdmin.getTitleAt(selectedTab));
     }//GEN-LAST:event_jTabbedPaneAdminStateChanged
 
     private void jTabbedPaneVentasStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPaneVentasStateChanged
         int selectedTab = jTabbedPaneVentas.getSelectedIndex();
-        System.out.println("Selected tab: " + selectedTab);
         jLabelEstado.setText("Ventas: " + jTabbedPaneVentas.getTitleAt(selectedTab));
     }//GEN-LAST:event_jTabbedPaneVentasStateChanged
 
     private void jTabbedPaneComprasStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPaneComprasStateChanged
         int selectedTab = jTabbedPaneCompras.getSelectedIndex();
-        System.out.println("Selected tab: " + selectedTab);
         jLabelEstado.setText("Compras: " + jTabbedPaneCompras.getTitleAt(selectedTab));
     }//GEN-LAST:event_jTabbedPaneComprasStateChanged
 
     private void jTabbedPaneInformesStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPaneInformesStateChanged
         int selectedTab = jTabbedPaneInformes.getSelectedIndex();
-        System.out.println("Selected tab: " + selectedTab);
         jLabelEstado.setText("Informes: " + jTabbedPaneInformes.getTitleAt(selectedTab));
     }//GEN-LAST:event_jTabbedPaneInformesStateChanged
 
-    private void showAdminTab(int tabIndex) {
+    public void showAdminTab(int tabIndex) {
         showTabbedPaneAndTab(jTabbedPaneAdmin, "admin", tabIndex);
     }
     
-    private void showVentasTab(int tabIndex) {
+    public void showVentasTab(int tabIndex) {
         showTabbedPaneAndTab(jTabbedPaneVentas, "ventas", tabIndex);
     }
     
-    private void showComprasTab(int tabIndex) {
+    public void showComprasTab(int tabIndex) {
         showTabbedPaneAndTab(jTabbedPaneCompras, "compras", tabIndex);
     }
     
-    private void showInformesTab(int tabIndex) {
+    public void showInformesTab(int tabIndex) {
         showTabbedPaneAndTab(jTabbedPaneInformes, "informes", tabIndex);
     }
     

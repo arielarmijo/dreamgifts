@@ -7,7 +7,6 @@ package com.ipsoflatus.dreamgifts.dao;
 
 import com.ipsoflatus.dreamgifts.conexion.MySQLConection;
 import com.ipsoflatus.dreamgifts.error.DreamGiftsException;
-import com.ipsoflatus.dreamgifts.modelo.CategoriaArticulo;
 import com.ipsoflatus.dreamgifts.modelo.Comuna;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -57,6 +56,18 @@ public class ComunaDao {
         c.setNombre(rs.getString(3));
         c.setEstado(rs.getBoolean(4));
         return c;
+    }
+
+    public Comuna findByCode(String codigo) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Comuna findById(Integer id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void update(Comuna comuna) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
 
