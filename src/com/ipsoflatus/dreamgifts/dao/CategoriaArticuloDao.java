@@ -2,7 +2,7 @@ package com.ipsoflatus.dreamgifts.dao;
 
 import com.ipsoflatus.dreamgifts.conexion.MySQLConection;
 import com.ipsoflatus.dreamgifts.error.DreamGiftsException;
-import com.ipsoflatus.dreamgifts.modelo.CategoriaArticulo;
+import com.ipsoflatus.dreamgifts.entidad.CategoriaArticulo;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -1,12 +1,10 @@
 package com.ipsoflatus.dreamgifts.controlador.admin;
 
 import com.ipsoflatus.dreamgifts.controlador.ComunaObserverController;
-import com.ipsoflatus.dreamgifts.modelo.Comuna;
-import com.ipsoflatus.dreamgifts.modelo.ComunaObserver;
+import com.ipsoflatus.dreamgifts.entidad.Comuna;
 import com.ipsoflatus.dreamgifts.servicio.ComunaService;
 import com.ipsoflatus.dreamgifts.vista.admin.ProveedorView;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ProveedorController implements ComunaObserverController {
 

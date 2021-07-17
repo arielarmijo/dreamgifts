@@ -1,7 +1,7 @@
 package com.ipsoflatus.dreamgifts.vista.admin;
 
 import com.ipsoflatus.dreamgifts.controlador.admin.RRSSController;
-import com.ipsoflatus.dreamgifts.modelo.RedSocial;
+import com.ipsoflatus.dreamgifts.entidad.RedSocial;
 import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;

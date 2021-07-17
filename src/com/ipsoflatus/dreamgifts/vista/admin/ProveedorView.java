@@ -1,7 +1,7 @@
 package com.ipsoflatus.dreamgifts.vista.admin;
 
 import com.ipsoflatus.dreamgifts.controlador.admin.ProveedorController;
-import com.ipsoflatus.dreamgifts.modelo.Comuna;
+import com.ipsoflatus.dreamgifts.entidad.Comuna;
 import com.ipsoflatus.dreamgifts.vista.ComunaComboBoxView;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;

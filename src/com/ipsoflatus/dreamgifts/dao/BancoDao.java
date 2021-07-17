@@ -7,7 +7,7 @@ package com.ipsoflatus.dreamgifts.dao;
 
 import com.ipsoflatus.dreamgifts.conexion.MySQLConection;
 import com.ipsoflatus.dreamgifts.error.DreamGiftsException;
-import com.ipsoflatus.dreamgifts.modelo.Banco;
+import com.ipsoflatus.dreamgifts.entidad.Banco;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -6,7 +6,7 @@
 package com.ipsoflatus.dreamgifts.controlador.admin;
 
 import com.ipsoflatus.dreamgifts.dao.BancoDao;
-import com.ipsoflatus.dreamgifts.modelo.Banco;
+import com.ipsoflatus.dreamgifts.entidad.Banco;
 import com.ipsoflatus.dreamgifts.vista.admin.BancoView;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;

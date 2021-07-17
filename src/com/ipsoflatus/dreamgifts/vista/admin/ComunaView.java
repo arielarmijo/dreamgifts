@@ -7,8 +7,8 @@ package com.ipsoflatus.dreamgifts.vista.admin;
 
 import com.ipsoflatus.dreamgifts.controlador.admin.ComunaController;
 import com.ipsoflatus.dreamgifts.dao.ComunaDao;
-import com.ipsoflatus.dreamgifts.modelo.CategoriaArticulo;
-import com.ipsoflatus.dreamgifts.modelo.Comuna;
+import com.ipsoflatus.dreamgifts.entidad.CategoriaArticulo;
+import com.ipsoflatus.dreamgifts.entidad.Comuna;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;

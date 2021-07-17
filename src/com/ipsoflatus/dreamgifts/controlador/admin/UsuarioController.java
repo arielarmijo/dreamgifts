@@ -2,7 +2,7 @@ package com.ipsoflatus.dreamgifts.controlador.admin;
 
 import com.ipsoflatus.dreamgifts.dao.UsuarioDao;
 import com.ipsoflatus.dreamgifts.error.DreamGiftsException;
-import com.ipsoflatus.dreamgifts.modelo.Usuario;
+import com.ipsoflatus.dreamgifts.entidad.Usuario;
 import com.ipsoflatus.dreamgifts.vista.admin.UsuarioView;
 import java.util.ArrayList;
 import java.util.List;

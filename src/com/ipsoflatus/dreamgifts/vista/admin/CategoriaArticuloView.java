@@ -1,7 +1,7 @@
 package com.ipsoflatus.dreamgifts.vista.admin;
 
 import com.ipsoflatus.dreamgifts.controlador.admin.CategoriaArticuloController;
-import com.ipsoflatus.dreamgifts.modelo.CategoriaArticulo;
+import com.ipsoflatus.dreamgifts.entidad.CategoriaArticulo;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;

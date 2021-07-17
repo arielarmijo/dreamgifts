@@ -1,7 +1,7 @@
 package com.ipsoflatus.dreamgifts.controlador.ventas;
 
 import com.ipsoflatus.dreamgifts.controlador.ComunaObserverController;
-import com.ipsoflatus.dreamgifts.modelo.Comuna;
+import com.ipsoflatus.dreamgifts.entidad.Comuna;
 import com.ipsoflatus.dreamgifts.servicio.ComunaService;
 import com.ipsoflatus.dreamgifts.vista.ventas.VentaView;
 import java.util.List;

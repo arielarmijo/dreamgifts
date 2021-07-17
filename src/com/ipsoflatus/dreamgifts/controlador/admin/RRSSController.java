@@ -2,7 +2,7 @@ package com.ipsoflatus.dreamgifts.controlador.admin;
 
 import com.ipsoflatus.dreamgifts.dao.RedSocialDao;
 import com.ipsoflatus.dreamgifts.error.DreamGiftsException;
-import com.ipsoflatus.dreamgifts.modelo.RedSocial;
+import com.ipsoflatus.dreamgifts.entidad.RedSocial;
 import com.ipsoflatus.dreamgifts.vista.admin.RRSSView;
 import java.util.ArrayList;
 import java.util.List;

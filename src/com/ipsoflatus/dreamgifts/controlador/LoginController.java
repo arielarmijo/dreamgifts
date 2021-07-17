@@ -6,7 +6,7 @@
 package com.ipsoflatus.dreamgifts.controlador;
 
 import com.ipsoflatus.dreamgifts.dao.UsuarioDao;
-import com.ipsoflatus.dreamgifts.modelo.Usuario;
+import com.ipsoflatus.dreamgifts.entidad.Usuario;
 import com.ipsoflatus.dreamgifts.vista.DreamGifts;
 import com.ipsoflatus.dreamgifts.vista.Login;
 import java.awt.EventQueue;

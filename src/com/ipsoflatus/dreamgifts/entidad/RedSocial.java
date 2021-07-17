@@ -1,29 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package com.ipsoflatus.dreamgifts.modelo;
+package com.ipsoflatus.dreamgifts.entidad;
 
-/**
- *
- * @author Usuario
- */
-public class CategoriaArticulo {
-    
+public class RedSocial {
+   
     private Integer id;
     private String codigo;
     private String nombre;
-    private Boolean estado;
+    private boolean estado;
 
-    public CategoriaArticulo() {
+    public RedSocial() {
     }
     
-    public CategoriaArticulo(String codigo, String nombre) {
+    public RedSocial(String codigo, String nombre) {
         this(null, codigo, nombre, true);
     }
-    
-    public CategoriaArticulo(Integer id, String codigo, String nombre, Boolean estado) {
+
+    public RedSocial(Integer id, String codigo, String nombre, boolean estado) {
         this.id = id;
         this.codigo = codigo;
         this.nombre = nombre;
@@ -37,7 +28,7 @@ public class CategoriaArticulo {
     public void setId(Integer id) {
         this.id = id;
     }
-
+    
     public String getCodigo() {
         return codigo;
     }
@@ -54,17 +45,17 @@ public class CategoriaArticulo {
         this.nombre = nombre;
     }
 
-    public Boolean getEstado() {
+    public boolean isEstado() {
         return estado;
     }
 
-    public void setEstado(Boolean estado) {
+    public void setEstado(boolean estado) {
         this.estado = estado;
     }
-
+    
     @Override
     public String toString() {
-        return "CategoriaArticulo{" + "id=" + id + ", codigo=" + codigo + ", nombre=" + nombre + ", estado=" + estado + '}';
+        return "RRSS{" + "id=" + id + ", codigo=" + codigo + ", nombre=" + nombre  + '}';
     }
     
 }

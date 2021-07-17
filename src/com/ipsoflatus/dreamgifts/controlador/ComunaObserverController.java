@@ -1,8 +1,8 @@
 package com.ipsoflatus.dreamgifts.controlador;
 
-import com.ipsoflatus.dreamgifts.modelo.Comuna;
-import com.ipsoflatus.dreamgifts.vista.ComunaComboBoxView;
+import com.ipsoflatus.dreamgifts.entidad.Comuna;
 import com.ipsoflatus.dreamgifts.modelo.ComunaObserver;
+import com.ipsoflatus.dreamgifts.vista.ComunaComboBoxView;
 import java.util.List;
 import java.util.stream.Collectors;
 
