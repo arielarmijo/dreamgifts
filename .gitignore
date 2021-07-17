@@ -12,6 +12,7 @@ nb-configuration.xml
 
 # Package Files #
 *.jar
+!lib/*.jar
 *.war
 *.ear
 
