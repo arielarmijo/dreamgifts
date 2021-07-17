@@ -1,4 +1,4 @@
-package com.ipsoflatus.dreamgifts.entidad;
+package com.ipsoflatus.dreamgifts.modelo.entidad;
 
 public class Comuna {
     private Integer id;

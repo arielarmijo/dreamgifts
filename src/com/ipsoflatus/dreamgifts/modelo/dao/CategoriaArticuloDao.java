@@ -1,8 +1,8 @@
-package com.ipsoflatus.dreamgifts.dao;
+package com.ipsoflatus.dreamgifts.modelo.dao;
 
-import com.ipsoflatus.dreamgifts.conexion.MySQLConection;
-import com.ipsoflatus.dreamgifts.error.DreamGiftsException;
-import com.ipsoflatus.dreamgifts.entidad.CategoriaArticulo;
+import com.ipsoflatus.dreamgifts.modelo.conexion.MySQLConection;
+import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
+import com.ipsoflatus.dreamgifts.modelo.entidad.CategoriaArticulo;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -1,8 +1,8 @@
 package com.ipsoflatus.dreamgifts.controlador.admin;
 
-import com.ipsoflatus.dreamgifts.dao.CategoriaArticuloDao;
-import com.ipsoflatus.dreamgifts.error.DreamGiftsException;
-import com.ipsoflatus.dreamgifts.entidad.CategoriaArticulo;
+import com.ipsoflatus.dreamgifts.modelo.dao.CategoriaArticuloDao;
+import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
+import com.ipsoflatus.dreamgifts.modelo.entidad.CategoriaArticulo;
 import com.ipsoflatus.dreamgifts.vista.admin.CategoriaArticuloView;
 import java.util.ArrayList;
 import java.util.List;

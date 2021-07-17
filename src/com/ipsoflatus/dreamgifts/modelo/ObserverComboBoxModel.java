@@ -1,6 +1,6 @@
 package com.ipsoflatus.dreamgifts.modelo;
 
-import com.ipsoflatus.dreamgifts.servicio.ObservableService;
+import com.ipsoflatus.dreamgifts.modelo.servicio.ObservableService;
 import javax.swing.DefaultComboBoxModel;
 
 public abstract class ObserverComboBoxModel<T> extends DefaultComboBoxModel<T> implements Observer<T> {

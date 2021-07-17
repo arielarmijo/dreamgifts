@@ -1,6 +1,6 @@
 package com.ipsoflatus.dreamgifts.controlador.ventas;
 
-import com.ipsoflatus.dreamgifts.servicio.ComunaService;
+import com.ipsoflatus.dreamgifts.modelo.servicio.ComunaService;
 import com.ipsoflatus.dreamgifts.vista.ventas.VentaView;
 
 public class VentaController {

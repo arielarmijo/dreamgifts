@@ -1,4 +1,4 @@
-package com.ipsoflatus.dreamgifts.servicio;
+package com.ipsoflatus.dreamgifts.modelo.servicio;
 
 import java.util.List;
 

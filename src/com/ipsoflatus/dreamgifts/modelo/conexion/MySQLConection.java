@@ -1,4 +1,4 @@
-package com.ipsoflatus.dreamgifts.conexion;
+package com.ipsoflatus.dreamgifts.modelo.conexion;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

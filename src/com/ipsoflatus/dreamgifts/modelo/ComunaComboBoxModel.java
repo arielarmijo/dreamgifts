@@ -1,7 +1,7 @@
 package com.ipsoflatus.dreamgifts.modelo;
 
-import com.ipsoflatus.dreamgifts.entidad.Comuna;
-import com.ipsoflatus.dreamgifts.servicio.ObservableService;
+import com.ipsoflatus.dreamgifts.modelo.entidad.Comuna;
+import com.ipsoflatus.dreamgifts.modelo.servicio.ObservableService;
 import java.util.List;
 
 public class ComunaComboBoxModel extends ObserverComboBoxModel<Comuna> {

@@ -1,7 +1,7 @@
-package com.ipsoflatus.dreamgifts.servicio;
+package com.ipsoflatus.dreamgifts.modelo.servicio;
 
-import com.ipsoflatus.dreamgifts.dao.ComunaDao;
-import com.ipsoflatus.dreamgifts.entidad.Comuna;
+import com.ipsoflatus.dreamgifts.modelo.dao.ComunaDao;
+import com.ipsoflatus.dreamgifts.modelo.entidad.Comuna;
 import java.util.ArrayList;
 import java.util.List;
 import com.ipsoflatus.dreamgifts.modelo.Observer;
