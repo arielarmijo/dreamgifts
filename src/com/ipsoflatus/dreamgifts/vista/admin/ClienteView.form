@@ -253,11 +253,11 @@
         <Component class="javax.swing.JComboBox" name="jComboBoxComunas">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;()" type="code"/>
+              <Connection code="new ComunaComboBoxModel(ComunaService.getInstance())" type="code"/>
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
           </AuxValues>
         </Component>
       </SubComponents>

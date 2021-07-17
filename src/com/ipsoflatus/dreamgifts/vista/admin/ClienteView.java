@@ -1,10 +1,11 @@
 package com.ipsoflatus.dreamgifts.vista.admin;
 
 import com.ipsoflatus.dreamgifts.controlador.admin.ClienteController;
-import com.ipsoflatus.dreamgifts.vista.ComunaComboBoxView;
+import com.ipsoflatus.dreamgifts.modelo.ComunaComboBoxModel;
+import com.ipsoflatus.dreamgifts.servicio.ComunaService;
 import javax.swing.JPanel;
 
-public class ClienteView extends JPanel implements ComunaComboBoxView {
+public class ClienteView extends JPanel {
 
     private final ClienteController controlador;
     
@@ -14,7 +15,6 @@ public class ClienteView extends JPanel implements ComunaComboBoxView {
     public ClienteView() {
         initComponents();
         controlador = new ClienteController(this);
-        controlador.actualizarComunas();
     }
 
     /**
@@ -41,7 +41,7 @@ public class ClienteView extends JPanel implements ComunaComboBoxView {
         jButton2 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jComboBoxComunas = new javax.swing.JComboBox<>();
+        jComboBoxComunas = new javax.swing.JComboBox();
         jPanelListado = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -95,7 +95,7 @@ public class ClienteView extends JPanel implements ComunaComboBoxView {
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel9.setText("Comuna");
 
-        jComboBoxComunas.setModel(new javax.swing.DefaultComboBoxModel<>());
+        jComboBoxComunas.setModel(new ComunaComboBoxModel(ComunaService.getInstance()));
 
         javax.swing.GroupLayout jPanelRegistroLayout = new javax.swing.GroupLayout(jPanelRegistro);
         jPanelRegistro.setLayout(jPanelRegistroLayout);
@@ -296,11 +296,6 @@ public class ClienteView extends JPanel implements ComunaComboBoxView {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    @Override
-    public void setComboBoxComunaModel(Object[] items) {
-        setComboBoxModel(jComboBoxComunas, items);
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -308,7 +303,7 @@ public class ClienteView extends JPanel implements ComunaComboBoxView {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JComboBox<String> jComboBoxComunas;
+    private javax.swing.JComboBox jComboBoxComunas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -9,6 +9,9 @@ public class Comuna {
     public Comuna() {
     }
     
+    public Comuna(String nombre) {
+        this(null, nombre, null, null);
+    }
 
     public Comuna(Integer id, String nombre, String codigo, Boolean estado) {
         this.id = id;

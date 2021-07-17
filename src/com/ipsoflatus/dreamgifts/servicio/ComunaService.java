@@ -2,14 +2,15 @@ package com.ipsoflatus.dreamgifts.servicio;
 
 import com.ipsoflatus.dreamgifts.dao.ComunaDao;
 import com.ipsoflatus.dreamgifts.entidad.Comuna;
-import com.ipsoflatus.dreamgifts.modelo.ComunaObserver;
 import java.util.ArrayList;
 import java.util.List;
+import com.ipsoflatus.dreamgifts.modelo.Observer;
+import java.util.stream.Collectors;
 
-public class ComunaService {
+public class ComunaService implements Service<Comuna>, ObservableService<Observer> {
     
     private final ComunaDao comunaDao;
-    private final List<ComunaObserver> obs;
+    private final List<Observer> obs;
     private static ComunaService instance;
     
     private ComunaService() {
@@ -22,37 +23,43 @@ public class ComunaService {
             instance = new ComunaService();
         return instance;
     }
-    
-    public void addObserver(ComunaObserver o) {
-        obs.add(o);
-    }
-    
-    public void notifyObservers() {
-        obs.forEach(o -> {
-            o.actualizarComunas(comunaDao.findAll());
-        });
-    }
 
-    public List<Comuna> buscarComunas() {
+    @Override
+    public List<Comuna> buscar() {
         return comunaDao.findAll();
     }
     
-    public Comuna buscarComuna(String codigo) {
+    @Override
+    public Comuna buscar(String codigo) {
         return comunaDao.findByCode(codigo);
     }
     
-    public void guardarComuna(Comuna comuna) {
+    @Override
+    public void guardar(Comuna comuna) {
         comunaDao.save(comuna);
         notifyObservers();
     }
     
-    public void editarComuna(Integer id, Comuna c) {
+    @Override
+    public void editar(Integer id, Comuna c) {
         Comuna comuna = comunaDao.findById(id);
         comuna.setCodigo(c.getCodigo());
         comuna.setNombre(c.getNombre());
         comuna.setEstado(c.getEstado());
         comunaDao.update(comuna);
         notifyObservers();
+    }
+    
+    @Override
+    public void addObserver(Observer o) {
+        obs.add(o);
+    }
+    
+    @Override
+    public void notifyObservers() {
+        obs.forEach(o -> {
+            o.actualizar(comunaDao.findAll());
+        });
     }
 
 }

@@ -1,19 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ipsoflatus.dreamgifts.vista.ventas;
 
 import com.ipsoflatus.dreamgifts.controlador.ventas.VentaController;
-import com.ipsoflatus.dreamgifts.vista.ComunaComboBoxView;
+import com.ipsoflatus.dreamgifts.modelo.ComunaComboBoxModel;
+import com.ipsoflatus.dreamgifts.servicio.ComunaService;
 import javax.swing.JPanel;
 
-/**
- *
- * @author Usuario
- */
-public class VentaView extends JPanel implements ComunaComboBoxView {
+public class VentaView extends JPanel {
 
     private final VentaController controlador;
     /**
@@ -22,7 +14,6 @@ public class VentaView extends JPanel implements ComunaComboBoxView {
     public VentaView() {
         initComponents();
         this.controlador = new VentaController(this);
-        this.controlador.actualizarComunas();
     }
 
     /**
@@ -46,7 +37,7 @@ public class VentaView extends JPanel implements ComunaComboBoxView {
         jPanel3 = new javax.swing.JPanel();
         jTextFieldNombreDestinatario = new javax.swing.JTextField();
         jTextFieldDireccionDestinatario = new javax.swing.JTextField();
-        jComboBoxComunas = new javax.swing.JComboBox<>();
+        jComboBoxComunas = new javax.swing.JComboBox();
         jComboBoxPacks = new javax.swing.JComboBox<>();
         label6 = new java.awt.Label();
         label8 = new java.awt.Label();
@@ -73,9 +64,9 @@ public class VentaView extends JPanel implements ComunaComboBoxView {
 
         jTextFieldRunCliente.setText("17621783-9");
 
-        jButtonBuscar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jButtonBuscar.setText("Buscar");
         jButtonBuscar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButtonBuscar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         label3.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         label3.setText("Email");
@@ -136,6 +127,8 @@ public class VentaView extends JPanel implements ComunaComboBoxView {
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), "Datos Destinatario", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial Rounded MT Bold", 0, 14))); // NOI18N
+
+        jComboBoxComunas.setModel(new ComunaComboBoxModel(ComunaService.getInstance()));
 
         jComboBoxPacks.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pack-01 Navidad", "Pack-02 Cumpleaños", " " }));
         jComboBoxPacks.setName("asd"); // NOI18N
@@ -316,17 +309,12 @@ public class VentaView extends JPanel implements ComunaComboBoxView {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    @Override
-    public void setComboBoxComunaModel(Object[] items) {
-        setComboBoxModel(jComboBoxComunas, items);
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.github.lgooddatepicker.components.DatePicker datePicker1;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButtonBuscar;
-    private javax.swing.JComboBox<String> jComboBoxComunas;
+    private javax.swing.JComboBox jComboBoxComunas;
     private javax.swing.JComboBox<String> jComboBoxPacks;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

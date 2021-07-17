@@ -157,11 +157,11 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabelTituloRegistro">
           <Properties>
-            <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Datos Proveedor"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="18" style="1"/>
             </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="text" type="java.lang.String" value="Datos Proveedor"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelRut">
@@ -214,14 +214,11 @@
         <Component class="javax.swing.JComboBox" name="jComboBoxComunas">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;()" type="code"/>
+              <Connection code="new ComunaComboBoxModel(ComunaService.getInstance())" type="code"/>
             </Property>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBoxComunasActionPerformed"/>
-          </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
           </AuxValues>
         </Component>
         <Container class="javax.swing.JPanel" name="jPanelBotonesRegistro">
@@ -316,11 +313,11 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabelTituloListado">
           <Properties>
-            <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Proveedores Registrados"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="18" style="1"/>
             </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="text" type="java.lang.String" value="Proveedores Registrados"/>
           </Properties>
         </Component>
         <Container class="javax.swing.JPanel" name="jPanelBuscador">

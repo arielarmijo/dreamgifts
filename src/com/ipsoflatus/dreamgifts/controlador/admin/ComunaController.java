@@ -1,12 +1,12 @@
 package com.ipsoflatus.dreamgifts.controlador.admin;
 
 import com.ipsoflatus.dreamgifts.entidad.Comuna;
-import com.ipsoflatus.dreamgifts.modelo.ComunaObserver;
 import com.ipsoflatus.dreamgifts.servicio.ComunaService;
 import com.ipsoflatus.dreamgifts.vista.admin.ComunaView;
 import java.util.List;
+import com.ipsoflatus.dreamgifts.modelo.Observer;
 
-public class ComunaController implements ComunaObserver {
+public class ComunaController implements Observer<Comuna> {
 
     private final ComunaService comunaSrv;
     private Comuna comunaActual;
@@ -24,24 +24,24 @@ public class ComunaController implements ComunaObserver {
 
     public void guardar(String nombre, String codigo) {
         if (comunaActual == null) {
-            comunaSrv.guardarComuna(new Comuna(nombre, codigo));
+            comunaSrv.guardar(new Comuna(nombre, codigo));
         } else {
             comunaActual.setNombre(nombre);
             comunaActual.setCodigo(codigo);
-            comunaSrv.editarComuna(comunaActual.getId(), comunaActual);
+            comunaSrv.editar(comunaActual.getId(), comunaActual);
         }
     }
     
     public void editar(String codigo) {
-        comunaActual = comunaSrv.buscarComuna(codigo);
+        comunaActual = comunaSrv.buscar(codigo);
     }
     
     public void actualizarComunas() {
-        actualizarComunas(comunaSrv.buscarComunas());
+        actualizar(comunaSrv.buscar());
     }
 
     @Override
-    public void actualizarComunas(List<Comuna> comunas) {
+    public void actualizar(List<Comuna> comunas) {
         view.actualizarTabla(comunas);
     }
 
