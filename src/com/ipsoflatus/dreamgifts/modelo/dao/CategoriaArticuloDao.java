@@ -78,6 +78,24 @@ public class CategoriaArticuloDao {
         return ccaa;
     }
 
+    public CategoriaArticulo findById(Integer id) {
+        CategoriaArticulo ca = null;
+        String sql = "SELECT id, codigo, nombre, estado FROM categorias_articulo WHERE id = ?";
+        try (Connection conn = MySQLConection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            System.out.println(ps);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    ca = rowMapper(rs);
+                }
+            }
+        } catch (SQLException e) {
+            throw new DreamGiftsException(e.getMessage());
+        }
+        return ca;
+    }
+
     public CategoriaArticulo findByCode(String codigo) {
         CategoriaArticulo ca = null;
         String sql = "SELECT id, codigo, nombre, estado FROM categorias_articulo WHERE UPPER(codigo) = UPPER(?)";
@@ -96,9 +114,9 @@ public class CategoriaArticuloDao {
         return ca;
     }
 
-    public void activateByCodes(List<String> codigos, boolean estado) {
-        String codes = codigos.stream().map(codigo -> "'" + codigo + "'").collect(Collectors.joining(", "));
-        String sql = String.format("UPDATE categorias_articulo SET estado = %s WHERE codigo IN (%s)", estado, codes);
+    public void updateStateByIds(List<Integer> ids, Boolean estado) {
+        String in = ids.stream().map(id -> id.toString()).collect(Collectors.joining(", "));
+        String sql = String.format("UPDATE categorias_articulo SET estado = %s WHERE id IN (%s)", estado, in);
         System.out.println(sql);
         try (Connection conn = MySQLConection.getConnection();
              Statement s = conn.createStatement()) {

@@ -1,117 +1,111 @@
 package com.ipsoflatus.dreamgifts.controlador.admin;
 
-import com.ipsoflatus.dreamgifts.modelo.dao.CategoriaArticuloDao;
+import com.ipsoflatus.dreamgifts.modelo.CategoriaArticuloTableModel;
+import com.ipsoflatus.dreamgifts.modelo.Controller;
 import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
 import com.ipsoflatus.dreamgifts.modelo.entidad.CategoriaArticulo;
+import com.ipsoflatus.dreamgifts.modelo.servicio.CategoriaArticuloService;
 import com.ipsoflatus.dreamgifts.vista.admin.CategoriaArticuloView;
-import java.util.ArrayList;
 import java.util.List;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.TableModel;
+import java.util.stream.Collectors;
 
-public class CategoriaArticuloController implements TableModelListener {
+public class CategoriaArticuloController implements Controller<CategoriaArticuloView> {
 
-    private final CategoriaArticuloDao caDao;
-    private final List<String> categoriasSeleccionadas;
-    private List<CategoriaArticulo> categorias;
+    private final CategoriaArticuloService service;
     private CategoriaArticulo categoriaActual;
+    private CategoriaArticuloTableModel tableModel;
     private CategoriaArticuloView view;
 
     public CategoriaArticuloController() {
-        caDao = new CategoriaArticuloDao();
-        categoriasSeleccionadas = new ArrayList<>();
-        categorias = caDao.findAll();
+        service = CategoriaArticuloService.getInstance();
         categoriaActual = null;
     }
 
+    @Override
     public void setView(CategoriaArticuloView view) {
         this.view = view;
-    }
-
-    public void actualizarTabla() {
-        if (categorias.isEmpty()) {
-            //view.mostrarInformacion("No se encontraron registros.");
-        } else {
-            view.actualizarTabla(categorias);
-        }
+        this.tableModel = (CategoriaArticuloTableModel) view.getjTableCA().getModel();
     }
     
+    @Override
     public void cancelar() {
         categoriaActual = null;
-        view.setCodigo("");
-        view.setNombre("");
+        view.getjTextFieldCodigo().setText("");
+        view.getjTextFieldNombre().setText("");
     }
 
-    public void grabar(String codigo, String nombre) {
-
+    @Override
+    public void grabar() {
+        
+        String codigo = view.getjTextFieldCodigo().getText();
+        String nombre = view.getjTextFieldNombre().getText();
+        Boolean estado = view.getButtonGroupEstado().getSelection().getActionCommand().equals("Activo");
+                
         if (codigo.isEmpty() || nombre.isEmpty()) {
-            view.mostrarInformacion("Complete todos los campos.");
+            mostrarInformacion("Complete todos los campos.");
             return;
         }
 
         try {
             if (categoriaActual == null) {
-                caDao.save(new CategoriaArticulo(codigo, nombre));
+                service.guardar(new CategoriaArticulo(codigo, nombre, estado));
             } else {
                 categoriaActual.setCodigo(codigo);
                 categoriaActual.setNombre(nombre);
-                caDao.update(categoriaActual);
+                categoriaActual.setEstado(estado);
+                service.editar(categoriaActual);
             }
-            buscar("");
-            categoriaActual = null;
-            view.setCodigo("");
-            view.setNombre("");
+            cancelar();
         } catch (DreamGiftsException e) {
-            view.mostrarError(e.getMessage());
+            mostrarError(e.getMessage());
         }
         
     }
     
-    public void buscar(String termino) {
-        categorias = termino.isEmpty() ? caDao.findAll() : caDao.findByTermLike(termino);
-        actualizarTabla();
-    }
-
-    public void editar(String codigo) {
-        categoriaActual = caDao.findByCode(codigo);
-        view.setCodigo(categoriaActual.getCodigo());
-        view.setNombre(categoriaActual.getNombre());
-    }
-    
-    public void activarSelecciondos() {
-        activarDesactivarSeleccionados(true);
-    }
-    
-    public void desactivarSelecciondos() {
-        activarDesactivarSeleccionados(false);
-    }
-    
-    public void activarDesactivarSeleccionados(boolean estado) {
-        if (categoriasSeleccionadas.isEmpty()) {
-            view.mostrarInformacion("Seleccione categorías.");
-        } else {
-            caDao.activateByCodes(categoriasSeleccionadas, estado);
-            buscar(view.getBuscar());
-            categoriasSeleccionadas.clear();
-        }
+    @Override
+    public void buscar() {
+        String termino = view.getjTextFieldBuscar().getText();
+        List<CategoriaArticulo> ccaa = termino.isEmpty() ? service.buscar(): service.buscar(termino);
+        tableModel.actualizar(ccaa);
     }
 
     @Override
-    public void tableChanged(TableModelEvent e) {
-        int row = e.getFirstRow();
-        int column = e.getColumn();
-        if (row >= 0 && column >= 0) {
-            TableModel model = (TableModel) e.getSource();
-            boolean seleccionado = (boolean) model.getValueAt(row, column);
-            String codigo = (String) model.getValueAt(row, 0);
-            if (seleccionado) {
-                categoriasSeleccionadas.add(codigo);
-            } else {
-                categoriasSeleccionadas.remove(codigo);
-            }
-            System.out.println("Categorías seleccionadas: " + categoriasSeleccionadas);
+    public void editar() {      
+        int row = view.getjTableCA().getSelectedRow();
+        if (row == -1) {
+            mostrarInformacion("Seleccione categoría.");
+            return;
         }
+        categoriaActual = tableModel.getCategoriaArticulo(row);
+        view.getjTextFieldCodigo().setText(categoriaActual.getCodigo());
+        view.getjTextFieldNombre().setText(categoriaActual.getNombre());
+        
+        if (categoriaActual.getEstado())
+            view.getjRadioButtonActivo().setSelected(true);
+        else
+            view.getjRadioButtonInactivo().setSelected(true);
+    }
+    
+    @Override
+    public void activarDesactivarSeleccionados(Boolean estado) {
+        List<Integer> ids = tableModel.getSelected().stream().map(ca -> ca.getId()).collect(Collectors.toList());
+        if (ids.isEmpty()) {
+            mostrarInformacion("Selecciones categorías");
+            return;
+        }
+        service.cambiarEstado(ids, estado);
+        tableModel.selectAll(false);
+        view.getjToggleButton().setText("Seleccionar todos");
+        view.getjToggleButton().setSelected(false);
+        
+    }
+
+    @Override
+    public void seleccionarTodos() {
+        boolean select = view.getjToggleButton().isSelected();
+        tableModel.selectAll(select);
+        String text = select ? "Deseleccionar todos" : "Seleccionar todos";
+        view.getjToggleButton().setText(text);
     }
 
 }

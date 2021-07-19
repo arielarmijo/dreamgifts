@@ -1,12 +1,10 @@
-package com.ipsoflatus.dreamgifts.controlador.admin;
+ package com.ipsoflatus.dreamgifts.controlador.admin;
 
 import com.ipsoflatus.dreamgifts.modelo.entidad.Comuna;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ComunaService;
 import com.ipsoflatus.dreamgifts.vista.admin.ComunaView;
-import java.util.List;
-import com.ipsoflatus.dreamgifts.modelo.Observer;
 
-public class ComunaController implements Observer<Comuna> {
+public class ComunaController {
 
     private final ComunaService comunaSrv;
     private Comuna comunaActual;
@@ -14,7 +12,6 @@ public class ComunaController implements Observer<Comuna> {
 
     public ComunaController() {
         this.comunaSrv = ComunaService.getInstance();
-        this.comunaSrv.addObserver(this);
         comunaActual = null;
     }
 
@@ -28,21 +25,16 @@ public class ComunaController implements Observer<Comuna> {
         } else {
             comunaActual.setNombre(nombre);
             comunaActual.setCodigo(codigo);
-            comunaSrv.editar(comunaActual.getId(), comunaActual);
+            comunaSrv.editar(comunaActual);
         }
     }
     
     public void editar(String codigo) {
-        comunaActual = comunaSrv.buscar(codigo);
+        throw new UnsupportedOperationException();
     }
     
     public void actualizarComunas() {
-        actualizar(comunaSrv.buscar());
-    }
 
-    @Override
-    public void actualizar(List<Comuna> comunas) {
-        view.actualizarTabla(comunas);
     }
 
 }

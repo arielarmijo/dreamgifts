@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ipsoflatus.dreamgifts.modelo.entidad;
 
-/**
- *
- * @author Usuario
- */
 public class CategoriaArticulo {
     
     private Integer id;
@@ -21,6 +12,10 @@ public class CategoriaArticulo {
     
     public CategoriaArticulo(String codigo, String nombre) {
         this(null, codigo, nombre, true);
+    }
+    
+    public CategoriaArticulo(String codigo, String nombre, Boolean estado) {
+        this(null, codigo, nombre, estado);
     }
     
     public CategoriaArticulo(Integer id, String codigo, String nombre, Boolean estado) {
