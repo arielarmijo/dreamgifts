@@ -11,7 +11,6 @@ public abstract class ObserverComboBoxModel<T> extends DefaultComboBoxModel<T> i
         super();
         this.service = service;
         this.service.addObserver(this);
-        this.service.notifyObservers();
     }
     
     public void updateModel(Object[] items) {

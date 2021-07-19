@@ -5,16 +5,15 @@ import com.ipsoflatus.dreamgifts.modelo.entidad.Comuna;
 import java.util.ArrayList;
 import java.util.List;
 import com.ipsoflatus.dreamgifts.modelo.Observer;
-import java.util.stream.Collectors;
 
-public class ComunaService implements Service<Comuna>, ObservableService<Observer> {
+public class ComunaService implements Service<Comuna>, ObservableService<Observer<Comuna>> {
     
-    private final ComunaDao comunaDao;
-    private final List<Observer> obs;
+    private final ComunaDao dao;
+    private final List<Observer<Comuna>> obs;
     private static ComunaService instance;
     
     private ComunaService() {
-        comunaDao = new ComunaDao();
+        dao = new ComunaDao();
         obs = new ArrayList<>();
     }
     
@@ -26,40 +25,47 @@ public class ComunaService implements Service<Comuna>, ObservableService<Observe
 
     @Override
     public List<Comuna> buscar() {
-        return comunaDao.findAll();
+        return dao.findAll();
     }
     
     @Override
-    public Comuna buscar(String codigo) {
-        return comunaDao.findByCode(codigo);
+    public Comuna buscar(Integer id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    public List<Comuna> buscar(String text) {
+        return dao.findByTermLike(text);
     }
     
     @Override
     public void guardar(Comuna comuna) {
-        comunaDao.save(comuna);
+        dao.save(comuna);
         notifyObservers();
     }
     
     @Override
-    public void editar(Integer id, Comuna c) {
-        Comuna comuna = comunaDao.findById(id);
-        comuna.setCodigo(c.getCodigo());
-        comuna.setNombre(c.getNombre());
-        comuna.setEstado(c.getEstado());
-        comunaDao.update(comuna);
+    public void editar(Comuna c) {
+        dao.update(c);
         notifyObservers();
     }
     
     @Override
-    public void addObserver(Observer o) {
+    public void addObserver(Observer<Comuna> o) {
         obs.add(o);
+        o.actualizar(dao.findAll());
     }
     
     @Override
     public void notifyObservers() {
         obs.forEach(o -> {
-            o.actualizar(comunaDao.findAll());
+            o.actualizar(dao.findAll());
         });
+    }
+
+    @Override
+    public void cambiarEstado(List<Integer> ids, Boolean estado) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

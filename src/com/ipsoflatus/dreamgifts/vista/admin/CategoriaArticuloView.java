@@ -1,10 +1,13 @@
 package com.ipsoflatus.dreamgifts.vista.admin;
 
 import com.ipsoflatus.dreamgifts.controlador.admin.CategoriaArticuloController;
-import com.ipsoflatus.dreamgifts.modelo.entidad.CategoriaArticulo;
-import java.util.List;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
+import com.ipsoflatus.dreamgifts.modelo.CategoriaArticuloTableModel;
+import com.ipsoflatus.dreamgifts.modelo.servicio.CategoriaArticuloService;
+import javax.swing.ButtonGroup;
+import javax.swing.JRadioButton;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 
 public final class CategoriaArticuloView extends javax.swing.JPanel {
 
@@ -14,8 +17,6 @@ public final class CategoriaArticuloView extends javax.swing.JPanel {
         initComponents();
         controlador = new CategoriaArticuloController();
         controlador.setView(this);
-        this.jTableCA.getModel().addTableModelListener(controlador);
-        controlador.actualizarTabla();
     }
 
     /**
@@ -26,6 +27,7 @@ public final class CategoriaArticuloView extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroupEstado = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jTextFieldBuscar = new javax.swing.JTextField();
         jButtonBuscar = new javax.swing.JButton();
@@ -35,6 +37,7 @@ public final class CategoriaArticuloView extends javax.swing.JPanel {
         jButtonEditar = new javax.swing.JButton();
         jButtonDesactivar = new javax.swing.JButton();
         jButtonActivar = new javax.swing.JButton();
+        jToggleButton = new javax.swing.JToggleButton();
         jPanel2 = new javax.swing.JPanel();
         jTextFieldNombre = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -43,6 +46,9 @@ public final class CategoriaArticuloView extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jButtonCancelar = new javax.swing.JButton();
         jButtonGuardar = new javax.swing.JButton();
+        jLabelLabel = new javax.swing.JLabel();
+        jRadioButtonActivo = new javax.swing.JRadioButton();
+        jRadioButtonInactivo = new javax.swing.JRadioButton();
 
         setMinimumSize(new java.awt.Dimension(850, 500));
 
@@ -57,29 +63,7 @@ public final class CategoriaArticuloView extends javax.swing.JPanel {
             }
         });
 
-        jTableCA.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Código", "Nombre", "Estado", "Selección"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, true
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        jTableCA.setModel(new CategoriaArticuloTableModel(CategoriaArticuloService.getInstance()));
         jScrollPane1.setViewportView(jTableCA);
         if (jTableCA.getColumnModel().getColumnCount() > 0) {
             jTableCA.getColumnModel().getColumn(0).setMinWidth(100);
@@ -114,6 +98,13 @@ public final class CategoriaArticuloView extends javax.swing.JPanel {
             }
         });
 
+        jToggleButton.setText("Seleccionar todos");
+        jToggleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -121,7 +112,7 @@ public final class CategoriaArticuloView extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 806, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -131,6 +122,8 @@ public final class CategoriaArticuloView extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(38, 38, 38)
+                        .addComponent(jToggleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButtonActivar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -146,12 +139,13 @@ public final class CategoriaArticuloView extends javax.swing.JPanel {
                     .addComponent(jButtonBuscar)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonDesactivar)
                     .addComponent(jButtonEditar)
-                    .addComponent(jButtonActivar))
+                    .addComponent(jButtonActivar)
+                    .addComponent(jToggleButton))
                 .addContainerGap())
         );
 
@@ -178,6 +172,17 @@ public final class CategoriaArticuloView extends javax.swing.JPanel {
             }
         });
 
+        jLabelLabel.setText("Estado:");
+
+        buttonGroupEstado.add(jRadioButtonActivo);
+        jRadioButtonActivo.setSelected(true);
+        jRadioButtonActivo.setText("Activo");
+        jRadioButtonActivo.setActionCommand("Activo");
+
+        buttonGroupEstado.add(jRadioButtonInactivo);
+        jRadioButtonInactivo.setText("Inactivo");
+        jRadioButtonInactivo.setActionCommand("Inactivo");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -186,18 +191,25 @@ public final class CategoriaArticuloView extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextFieldNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
-                        .addGap(50, 50, 50)
+                        .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextFieldCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(157, 157, 157)
-                        .addComponent(jButtonCancelar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonGuardar)
+                        .addComponent(jTextFieldCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabelLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jRadioButtonInactivo)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jRadioButtonActivo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButtonCancelar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonGuardar)))
                         .addGap(50, 50, 50)))
                 .addContainerGap())
         );
@@ -213,8 +225,12 @@ public final class CategoriaArticuloView extends javax.swing.JPanel {
                     .addComponent(jLabel3)
                     .addComponent(jTextFieldCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonCancelar)
-                    .addComponent(jButtonGuardar))
-                .addGap(50, 50, 50))
+                    .addComponent(jButtonGuardar)
+                    .addComponent(jLabelLabel)
+                    .addComponent(jRadioButtonActivo))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jRadioButtonInactivo)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -241,36 +257,27 @@ public final class CategoriaArticuloView extends javax.swing.JPanel {
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         System.out.println(evt.getActionCommand());
-        String codigo = jTextFieldCodigo.getText();
-        String nombre = jTextFieldNombre.getText();
-        controlador.grabar(codigo, nombre);
+        controlador.grabar();
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
         System.out.println(evt.getActionCommand());
-        String termino = jTextFieldBuscar.getText();
-        controlador.buscar(termino);
+        controlador.buscar();
     }//GEN-LAST:event_jButtonBuscarActionPerformed
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
         System.out.println(evt.getActionCommand());
-        int row = jTableCA.getSelectedRow();
-        if (row == -1) {
-            mostrarInformacion("Seleccione categoría.");
-            return;
-        }
-        String codigo = (String) jTableCA.getValueAt(row, 0);
-        controlador.editar(codigo);
+        controlador.editar();
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jButtonActivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActivarActionPerformed
         System.out.println(evt.getActionCommand());
-        controlador.activarSelecciondos();
+        controlador.activarSeleccionados();
     }//GEN-LAST:event_jButtonActivarActionPerformed
 
     private void jButtonDesactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDesactivarActionPerformed
         System.out.println(evt.getActionCommand());
-        controlador.desactivarSelecciondos();
+        controlador.desactivarSeleccionados();
     }//GEN-LAST:event_jButtonDesactivarActionPerformed
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
@@ -278,44 +285,45 @@ public final class CategoriaArticuloView extends javax.swing.JPanel {
         controlador.cancelar();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
-    public void actualizarTabla(List<CategoriaArticulo> ccaa) {
-        DefaultTableModel modeloTabla = (DefaultTableModel) jTableCA.getModel();
-        Object[] encabezados = {"Código", "Nombre", "Estado", "Selección"};
-        Object[][] datos = new Object[ccaa.size()][encabezados.length];
-        for (int i = 0; i < ccaa.size(); i++) {
-            datos[i][0] = ccaa.get(i).getCodigo();
-            datos[i][1] = ccaa.get(i).getNombre();
-            datos[i][2] = ccaa.get(i).getEstado() ? "Activo" : "Inactivo";
-            datos[i][3] = false;
-        }
-        modeloTabla.setDataVector(datos, encabezados);
+    private void jToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonActionPerformed
+        System.out.println(evt.getActionCommand());
+        controlador.seleccionarTodos();
+    }//GEN-LAST:event_jToggleButtonActionPerformed
+
+    public JRadioButton getjRadioButtonActivo() {
+        return jRadioButtonActivo;
     }
-    
-    public void setCodigo(String codigo) {
-        jTextFieldCodigo.setText(codigo);
+
+    public JRadioButton getjRadioButtonInactivo() {
+        return jRadioButtonInactivo;
     }
-    
-    public void setNombre(String nombre) {
-        jTextFieldNombre.setText(nombre);
+
+    public JTable getjTableCA() {
+        return jTableCA;
     }
-    
-    public void setBuscar(String termino) {
-        jTextFieldBuscar.setText(termino);
+
+    public JTextField getjTextFieldBuscar() {
+        return jTextFieldBuscar;
     }
-    
-    public String getBuscar() {
-        return jTextFieldBuscar.getText();
+
+    public JTextField getjTextFieldCodigo() {
+        return jTextFieldCodigo;
     }
-       
-    public void mostrarInformacion(String mensaje) {
-        JOptionPane.showMessageDialog(null, mensaje, "Información", JOptionPane.INFORMATION_MESSAGE);
+
+    public JTextField getjTextFieldNombre() {
+        return jTextFieldNombre;
     }
-    
-    public void mostrarError(String error) {
-        JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.ERROR_MESSAGE);
+
+    public JToggleButton getjToggleButton() {
+        return jToggleButton;
+    }
+
+    public ButtonGroup getButtonGroupEstado() {
+        return buttonGroupEstado;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroupEstado;
     private javax.swing.JButton jButtonActivar;
     private javax.swing.JButton jButtonBuscar;
     private javax.swing.JButton jButtonCancelar;
@@ -326,12 +334,16 @@ public final class CategoriaArticuloView extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabelLabel;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JRadioButton jRadioButtonActivo;
+    private javax.swing.JRadioButton jRadioButtonInactivo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableCA;
     private javax.swing.JTextField jTextFieldBuscar;
     private javax.swing.JTextField jTextFieldCodigo;
     private javax.swing.JTextField jTextFieldNombre;
+    private javax.swing.JToggleButton jToggleButton;
     // End of variables declaration//GEN-END:variables
 }
