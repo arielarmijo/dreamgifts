@@ -23,7 +23,10 @@ import com.ipsoflatus.dreamgifts.vista.ventas.ConfirmcionPagoView;
 import com.ipsoflatus.dreamgifts.vista.ventas.ListaDestinosView;
 import com.ipsoflatus.dreamgifts.vista.ventas.VentaView;
 import java.awt.CardLayout;
+import java.awt.event.ActionEvent;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JTabbedPane;
 
 public class DreamGifts extends javax.swing.JFrame {
@@ -34,7 +37,6 @@ public class DreamGifts extends javax.swing.JFrame {
         crearPanelCompras();
         crearPanelInformes();
         crearPanelAdmin();   
-        showTabbedPaneAndTab(jTabbedPaneAdmin, "admin", 9);
     }
     
     private void crearPanelVentas() {
@@ -131,7 +133,7 @@ public class DreamGifts extends javax.swing.JFrame {
         jMenuItemProveedores = new javax.swing.JMenuItem();
         jMenuItemArticulos = new javax.swing.JMenuItem();
         jMenuItemPacks = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItemArmadoPacks = new javax.swing.JMenuItem();
         jMenuItemRRSS = new javax.swing.JMenuItem();
         jMenuItemCategoriaArticulos = new javax.swing.JMenuItem();
         jMenuItemComunas = new javax.swing.JMenuItem();
@@ -316,11 +318,6 @@ public class DreamGifts extends javax.swing.JFrame {
         jMenuBar.add(jMenuInformes);
 
         jMenuadmin.setText("Administración");
-        jMenuadmin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuadminActionPerformed(evt);
-            }
-        });
 
         jMenuItemClientes.setText("Clientes");
         jMenuItemClientes.addActionListener(new java.awt.event.ActionListener() {
@@ -354,13 +351,13 @@ public class DreamGifts extends javax.swing.JFrame {
         });
         jMenuadmin.add(jMenuItemPacks);
 
-        jMenuItem1.setText("Armado Packs");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemArmadoPacks.setText("Armado Packs");
+        jMenuItemArmadoPacks.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                jMenuItemArmadoPacksActionPerformed(evt);
             }
         });
-        jMenuadmin.add(jMenuItem1);
+        jMenuadmin.add(jMenuItemArmadoPacks);
 
         jMenuItemRRSS.setText("RRSS");
         jMenuItemRRSS.addActionListener(new java.awt.event.ActionListener() {
@@ -441,87 +438,87 @@ public class DreamGifts extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItemClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemClientesActionPerformed
-        showAdminTab(0);
+        showAdminTab(evt);
     }//GEN-LAST:event_jMenuItemClientesActionPerformed
 
     private void jMenuItemProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemProveedoresActionPerformed
-        showAdminTab(1);
+        showAdminTab(evt);
     }//GEN-LAST:event_jMenuItemProveedoresActionPerformed
 
     private void jMenuItemArticulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemArticulosActionPerformed
-        showAdminTab(2);
+        showAdminTab(evt);
     }//GEN-LAST:event_jMenuItemArticulosActionPerformed
 
     private void jMenuItemPacksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPacksActionPerformed
-        showAdminTab(3);
+        showAdminTab(evt);
     }//GEN-LAST:event_jMenuItemPacksActionPerformed
 
     private void jMenuItemRRSSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRRSSActionPerformed
-        showAdminTab(5);
+        showAdminTab(evt);
     }//GEN-LAST:event_jMenuItemRRSSActionPerformed
 
     private void jMenuItemCategoriaArticulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCategoriaArticulosActionPerformed
-        showAdminTab(6);
+        showAdminTab(evt);
     }//GEN-LAST:event_jMenuItemCategoriaArticulosActionPerformed
 
     private void jMenuItemComunasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemComunasActionPerformed
-        showAdminTab(7);
+        showAdminTab(evt);
     }//GEN-LAST:event_jMenuItemComunasActionPerformed
 
     private void jMenuItemBancosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemBancosActionPerformed
-        showAdminTab(8);
+        showAdminTab(evt);
     }//GEN-LAST:event_jMenuItemBancosActionPerformed
 
     private void jMenuItemCategoriaVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCategoriaVentasActionPerformed
-        showAdminTab(9);
+        showAdminTab(evt);
     }//GEN-LAST:event_jMenuItemCategoriaVentasActionPerformed
 
     private void jMenuItemUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemUsuariosActionPerformed
-        showAdminTab(10);
+        showAdminTab(evt);
     }//GEN-LAST:event_jMenuItemUsuariosActionPerformed
 
     private void jMenuItemVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemVentaActionPerformed
-        showVentasTab(0);
+        showVentasTab(evt);
     }//GEN-LAST:event_jMenuItemVentaActionPerformed
 
     private void jMenuItemConfirmacionPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemConfirmacionPagoActionPerformed
-        showVentasTab(1);
+        showVentasTab(evt);
     }//GEN-LAST:event_jMenuItemConfirmacionPagoActionPerformed
 
     private void jMenuItemDespachosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDespachosActionPerformed
-        showVentasTab(2);
+        showVentasTab(evt);
     }//GEN-LAST:event_jMenuItemDespachosActionPerformed
 
     private void jMenuItemEstadoDespachosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEstadoDespachosActionPerformed
-        showVentasTab(3);
+        showVentasTab(evt);
     }//GEN-LAST:event_jMenuItemEstadoDespachosActionPerformed
 
     private void jMenuItemSolicitudPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSolicitudPedidoActionPerformed
-        showComprasTab(0);
+        showComprasTab(evt);
     }//GEN-LAST:event_jMenuItemSolicitudPedidoActionPerformed
 
     private void jMenuItemRegistroCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRegistroCompraActionPerformed
-        showComprasTab(1);
+        showComprasTab(evt);
     }//GEN-LAST:event_jMenuItemRegistroCompraActionPerformed
 
     private void jMenuItemFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemFacturaActionPerformed
-        showComprasTab(2);
+        showComprasTab(evt);
     }//GEN-LAST:event_jMenuItemFacturaActionPerformed
 
     private void jMenuItemInformeVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemInformeVentasActionPerformed
-        showInformesTab(0);
+        showInformesTab(evt);
     }//GEN-LAST:event_jMenuItemInformeVentasActionPerformed
 
     private void jMenuItemInformeInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemInformeInventarioActionPerformed
-        showInformesTab(1);
+        showInformesTab(evt);
     }//GEN-LAST:event_jMenuItemInformeInventarioActionPerformed
 
     private void jMenuItemInformeClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemInformeClientesActionPerformed
-        showInformesTab(2);
+        showInformesTab(evt);
     }//GEN-LAST:event_jMenuItemInformeClientesActionPerformed
 
     private void jMenuItemInformeDyCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemInformeDyCActionPerformed
-        showInformesTab(3);
+        showInformesTab(evt);
     }//GEN-LAST:event_jMenuItemInformeDyCActionPerformed
 
     private void jTabbedPaneAdminStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPaneAdminStateChanged
@@ -544,34 +541,33 @@ public class DreamGifts extends javax.swing.JFrame {
         jLabelEstado.setText("Informes: " + jTabbedPaneInformes.getTitleAt(selectedTab));
     }//GEN-LAST:event_jTabbedPaneInformesStateChanged
 
-    private void jMenuadminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuadminActionPerformed
- 
-    }//GEN-LAST:event_jMenuadminActionPerformed
+    private void jMenuItemArmadoPacksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemArmadoPacksActionPerformed
+       showAdminTab(evt);
+    }//GEN-LAST:event_jMenuItemArmadoPacksActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-       showAdminTab(4);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
-
-    public void showAdminTab(int tabIndex) {
-        showTabbedPaneAndTab(jTabbedPaneAdmin, "admin", tabIndex);
+    public void showAdminTab(ActionEvent evt) {
+        showTabbedPaneAndTab(jTabbedPaneAdmin, "admin", evt);
     }
     
-    public void showVentasTab(int tabIndex) {
-        showTabbedPaneAndTab(jTabbedPaneVentas, "ventas", tabIndex);
+    public void showVentasTab(ActionEvent evt) {
+        showTabbedPaneAndTab(jTabbedPaneVentas, "ventas", evt);
     }
     
-    public void showComprasTab(int tabIndex) {
-        showTabbedPaneAndTab(jTabbedPaneCompras, "compras", tabIndex);
+    public void showComprasTab(ActionEvent evt) {
+        showTabbedPaneAndTab(jTabbedPaneCompras, "compras", evt);
     }
     
-    public void showInformesTab(int tabIndex) {
-        showTabbedPaneAndTab(jTabbedPaneInformes, "informes", tabIndex);
+    public void showInformesTab(ActionEvent evt) {
+        showTabbedPaneAndTab(jTabbedPaneInformes, "informes", evt);
     }
     
-    private void showTabbedPaneAndTab(JTabbedPane pane, String card, int tab) {
+    private void showTabbedPaneAndTab(JTabbedPane pane, String card, ActionEvent evt) {
+        JMenuItem menuItem = (JMenuItem) evt.getSource(); 
+        JPopupMenu popupMenu = (JPopupMenu) menuItem.getParent(); 
+        int tabIndex = popupMenu.getComponentZOrder(menuItem);
         CardLayout c = (CardLayout) mainContainer.getLayout();
         c.show(mainContainer, card);
-        pane.setSelectedIndex(tab);
+        pane.setSelectedIndex(tabIndex);
     }
     /**
      * @param args the command line arguments
@@ -613,7 +609,7 @@ public class DreamGifts extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar;
     private javax.swing.JMenu jMenuCompras;
     private javax.swing.JMenu jMenuInformes;
-    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItemArmadoPacks;
     private javax.swing.JMenuItem jMenuItemArticulos;
     private javax.swing.JMenuItem jMenuItemBancos;
     private javax.swing.JMenuItem jMenuItemCategoriaArticulos;
