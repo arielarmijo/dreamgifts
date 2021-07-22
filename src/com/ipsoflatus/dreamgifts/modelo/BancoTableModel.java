@@ -7,6 +7,7 @@ package com.ipsoflatus.dreamgifts.modelo;
 
 import com.ipsoflatus.dreamgifts.modelo.entidad.Banco;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ObservableService;
+import com.ipsoflatus.dreamgifts.modelo.table.ObservableTableModel;
 
 /**
  *
@@ -20,7 +21,7 @@ public class BancoTableModel  extends ObservableTableModel<Banco> {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-Banco item = items.get(rowIndex);
+        Banco item = items.get(rowIndex);
         if (columnIndex == 0)
             return item.getCodigo();
         if (columnIndex == 1)

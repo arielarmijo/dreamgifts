@@ -1,23 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ipsoflatus.dreamgifts.controlador.admin;
 
 import com.ipsoflatus.dreamgifts.modelo.BancoTableModel;
 import com.ipsoflatus.dreamgifts.modelo.Controller;
-import com.ipsoflatus.dreamgifts.modelo.dao.BancoDao;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Banco;
 import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
 import com.ipsoflatus.dreamgifts.modelo.servicio.BancoService;
 import com.ipsoflatus.dreamgifts.vista.admin.BancoView;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-
-
 
 public class BancoController implements Controller<BancoView> {
     private BancoView view;
@@ -90,7 +80,7 @@ public class BancoController implements Controller<BancoView> {
     public void activarDesactivarSeleccionados(Boolean estado) {
         List<Integer> ids = tableModel.getSelected().stream().map(b -> b.getId()).collect(Collectors.toList());
         if (ids.isEmpty()) {
-            mostrarInformacion("Selecciones categorías");
+            mostrarInformacion("Seleccione banco");
             return;
         }
         service.cambiarEstado(ids, estado);
