@@ -1,6 +1,6 @@
  package com.ipsoflatus.dreamgifts.controlador.admin;
 
-import com.ipsoflatus.dreamgifts.modelo.ComunaTableModel;
+import com.ipsoflatus.dreamgifts.modelo.table.ComunaTableModel;
 import com.ipsoflatus.dreamgifts.modelo.Controller;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Comuna;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ComunaService;

@@ -16,41 +16,42 @@ import javax.swing.event.TableModelListener;
  * @author Usuario
  */
 public class BancoController implements TableModelListener {
+
     private BancoView view;
-      private BancoDao bancoDao = new BancoDao();
-      private Banco bancoActual = null;
-   
+    private BancoDao bancoDao = new BancoDao();
+    private Banco bancoActual = null;
+
     public void grabar(String nombre, String codigo) {
-    if (bancoActual==null){
-           Banco banco = new Banco(nombre, codigo, true);
-    bancoDao.save(banco);
-      
-    } else {
-        bancoActual.setNombre(nombre);
-        bancoActual.setCodigo(codigo);
-        bancoDao.update(bancoActual);
-    }
-    bancoActual = null;
-    view.setNombre("");
-    view.setCodigo("");
-     actualizarTabla();
-      
+        if (bancoActual == null) {
+            Banco banco = new Banco(nombre, codigo, true);
+            bancoDao.save(banco);
+
+        } else {
+            bancoActual.setNombre(nombre);
+            bancoActual.setCodigo(codigo);
+            bancoDao.update(bancoActual);
+        }
+        bancoActual = null;
+        view.setNombre("");
+        view.setCodigo("");
+        actualizarTabla();
+
     }
 
     public void cancelar() {
-    view.setNombre("");
-    view.setCodigo("");
+        view.setNombre("");
+        view.setCodigo("");
     }
 
     public void buscar(String termino) {
-    view.actualizarTabla(bancoDao.findByTermLike(termino));
+        view.actualizarTabla(bancoDao.findByTermLike(termino));
     }
 
     public void editar(String codigo) {
-Banco banco = bancoDao.findByCode(codigo);
-view.setNombre(banco.getNombre());
-view.setCodigo(banco.getCodigo());
-bancoActual = banco;
+        Banco banco = bancoDao.findByCode(codigo);
+        view.setNombre(banco.getNombre());
+        view.setCodigo(banco.getCodigo());
+        bancoActual = banco;
     }
 
     public void activarSeleccionado() {
@@ -62,16 +63,16 @@ bancoActual = banco;
     }
 
     public void actualizarTabla() {
-    view.actualizarTabla(bancoDao.findAll());
+        view.actualizarTabla(bancoDao.findAll());
     }
 
     public void setView(BancoView vista) {
-    view = vista;
+        view = vista;
     }
 
     @Override
     public void tableChanged(TableModelEvent e) {
-    System.out.println("probandooooo");
+        System.out.println("probandooooo");
     }
-    
+
 }

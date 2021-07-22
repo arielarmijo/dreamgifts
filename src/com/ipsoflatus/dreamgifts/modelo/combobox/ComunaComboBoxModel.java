@@ -1,4 +1,4 @@
-package com.ipsoflatus.dreamgifts.modelo;
+package com.ipsoflatus.dreamgifts.modelo.combobox;
 
 import com.ipsoflatus.dreamgifts.modelo.entidad.Comuna;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ObservableService;

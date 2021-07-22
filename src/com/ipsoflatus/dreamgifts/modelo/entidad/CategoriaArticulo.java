@@ -59,7 +59,7 @@ public class CategoriaArticulo {
 
     @Override
     public String toString() {
-        return "CategoriaArticulo{" + "id=" + id + ", codigo=" + codigo + ", nombre=" + nombre + ", estado=" + estado + '}';
+        return nombre;
     }
     
 }

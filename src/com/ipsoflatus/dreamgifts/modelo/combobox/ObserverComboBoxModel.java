@@ -1,5 +1,6 @@
-package com.ipsoflatus.dreamgifts.modelo;
+package com.ipsoflatus.dreamgifts.modelo.combobox;
 
+import com.ipsoflatus.dreamgifts.modelo.Observer;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ObservableService;
 import javax.swing.DefaultComboBoxModel;
 
