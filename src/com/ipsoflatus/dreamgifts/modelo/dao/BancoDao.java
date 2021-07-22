@@ -135,7 +135,7 @@ public class BancoDao {
         return bancos;
     }
      
-      public void activateByCodes(List<Integer> ids, boolean estado) {
+    public void activateByCodes(List<Integer> ids, boolean estado) {
         String idsText = ids.stream().map(id -> id.toString()).collect(Collectors.joining(", "));
         String sql = String.format("UPDATE banco SET estado = %s WHERE codigo IN (%s)", estado, idsText);
         System.out.println(sql);
@@ -149,6 +149,7 @@ public class BancoDao {
             throw new DreamGiftsException(e.getMessage());
         }
     }
+    
     private Banco rowMapper(ResultSet rs) throws SQLException {
         Banco banco = new Banco();
         banco.setId(rs.getInt(1));
@@ -168,6 +169,36 @@ public class BancoDao {
         
         bancoDao.findAll().forEach(System.out::println);
         
+    }
+
+    public Banco findById(Integer id) {
+        Banco banco = null;
+        String sql = "SELECT id, codigo, nombre, estado FROM bancos WHERE id = ?";
+        try (Connection conn = MySQLConection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            System.out.println(ps);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    banco = rowMapper(rs);
+                }
+            }
+        } catch (SQLException e) {
+            throw new DreamGiftsException(e.getMessage());
+        }
+        return banco;
+    }
+
+    public void updateStateByIds(List<Integer> ids, Boolean estado) {
+        String in = ids.stream().map(id -> id.toString()).collect(Collectors.joining(", "));
+        String sql = String.format("UPDATE bancos SET estado = %s WHERE id IN (%s)", estado, in);
+        System.out.println(sql);
+        try (Connection conn = MySQLConection.getConnection();
+             Statement s = conn.createStatement()) {
+            s.executeUpdate(sql);
+        } catch (SQLException e) {
+            throw new DreamGiftsException(e.getMessage());
+        }
     }
     
 }
