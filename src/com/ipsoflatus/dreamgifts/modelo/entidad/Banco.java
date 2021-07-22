@@ -19,7 +19,7 @@ public class Banco {
     public Banco() {
     }
 
-    public Banco(String nombre, String codigo, boolean estado) {
+    public Banco(String codigo, String nombre, boolean estado) {
         this.nombre = nombre;
         this.codigo = codigo;
         this.estado = estado;

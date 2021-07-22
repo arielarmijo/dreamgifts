@@ -18,7 +18,7 @@ public class CategoriaArticuloController implements Controller<CategoriaArticulo
 
     public CategoriaArticuloController() {
         service = CategoriaArticuloService.getInstance();
-        categoriaActual = null;
+        categoriaActual = null; 
     }
 
     @Override
