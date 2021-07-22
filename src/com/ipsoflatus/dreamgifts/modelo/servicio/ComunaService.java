@@ -45,8 +45,8 @@ public class ComunaService implements Service<Comuna>, ObservableService<Observe
     }
     
     @Override
-    public void editar(Comuna c) {
-        dao.update(c);
+    public void editar(Comuna comuna) {
+        dao.update(comuna);
         notifyObservers();
     }
     
@@ -65,7 +65,8 @@ public class ComunaService implements Service<Comuna>, ObservableService<Observe
 
     @Override
     public void cambiarEstado(List<Integer> ids, Boolean estado) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        dao.activateByCodes(ids, estado);
+        notifyObservers();
     }
 
 }

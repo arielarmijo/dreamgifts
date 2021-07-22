@@ -135,9 +135,9 @@ public class BancoDao {
         return bancos;
     }
      
-      public void activateBANCOByCodes(List<String> codigos, boolean estado) {
-        String codes = codigos.stream().map(codigo -> "'" + codigo + "'").collect(Collectors.joining(", "));
-        String sql = String.format("UPDATE banco SET estado = %s WHERE codigo IN (%s)", estado, codes);
+      public void activateByCodes(List<Integer> ids, boolean estado) {
+        String idsText = ids.stream().map(id -> id.toString()).collect(Collectors.joining(", "));
+        String sql = String.format("UPDATE banco SET estado = %s WHERE codigo IN (%s)", estado, idsText);
         System.out.println(sql);
         try (Connection conn = MySQLConection.getConnection();
              Statement s = conn.createStatement()) {

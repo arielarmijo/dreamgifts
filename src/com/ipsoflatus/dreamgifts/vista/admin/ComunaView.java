@@ -6,11 +6,15 @@
 package com.ipsoflatus.dreamgifts.vista.admin;
 
 import com.ipsoflatus.dreamgifts.controlador.admin.ComunaController;
+import com.ipsoflatus.dreamgifts.modelo.ComunaTableModel;
 import com.ipsoflatus.dreamgifts.modelo.dao.ComunaDao;
 import com.ipsoflatus.dreamgifts.modelo.entidad.CategoriaArticulo;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Comuna;
+import com.ipsoflatus.dreamgifts.modelo.servicio.ComunaService;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,7 +22,6 @@ import javax.swing.table.DefaultTableModel;
  * @author Usuario
  */
 public class ComunaView extends javax.swing.JPanel {
-    //ComunaDao comunadao = new ComunaDao();
     
     private final ComunaController controlador;
 
@@ -26,12 +29,9 @@ public class ComunaView extends javax.swing.JPanel {
      * Creates new form PanelComunas
      */
     public ComunaView() {
-        initComponents();
-        //actualizarTabla(comunadao.findAll());
-        
+        initComponents();    
         this.controlador = new ComunaController();
         this.controlador.setView(this);
-        this.controlador.actualizarComunas();
         
     }
 
@@ -52,10 +52,13 @@ public class ComunaView extends javax.swing.JPanel {
         guardar = new javax.swing.JButton();
         nombreComuna = new javax.swing.JTextField();
         label15 = new java.awt.Label();
-        jButton3 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        editar = new javax.swing.JButton();
+        desactvar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
+        activar = new javax.swing.JButton();
+        buscar = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
 
         setMinimumSize(new java.awt.Dimension(850, 500));
 
@@ -70,6 +73,11 @@ public class ComunaView extends javax.swing.JPanel {
 
         cancelar.setText("Cancelar");
         cancelar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelarActionPerformed(evt);
+            }
+        });
 
         label1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         label1.setText("Nombre de Comuna");
@@ -133,65 +141,70 @@ public class ComunaView extends javax.swing.JPanel {
         label15.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 14)); // NOI18N
         label15.setText("Comunas registradas");
 
-        jButton3.setText("Editar");
-        jButton3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        editar.setText("Editar");
+        editar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        editar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                editarActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Desactivar");
-        jButton2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        jTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Codigo", "Nombre", "Estado", "Seleccion"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, true
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+        desactvar.setText("Desactivar");
+        desactvar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        desactvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                desactvarActionPerformed(evt);
             }
         });
+
+        jTable.setModel(new ComunaTableModel(ComunaService.getInstance()));
         jScrollPane1.setViewportView(jTable);
+
+        activar.setText("Activar");
+        activar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                activarActionPerformed(evt);
+            }
+        });
+
+        buscar.setText("jTextField1");
+
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(label15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(8, 8, 8)))
-                .addGap(63, 63, 63))
             .addGroup(layout.createSequentialGroup()
                 .addGap(48, 48, 48)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 741, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(20, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(label15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(editar, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(33, 33, 33)
+                                .addComponent(activar)
+                                .addGap(18, 18, 18)
+                                .addComponent(desactvar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(8, 8, 8)))
+                        .addGap(63, 63, 63))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnBuscar)
+                        .addGap(103, 103, 103))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -200,13 +213,18 @@ public class ComunaView extends javax.swing.JPanel {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24)
                 .addComponent(label15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addGap(4, 4, 4)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
-                .addGap(19, 19, 19))
+                    .addComponent(buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(desactvar)
+                    .addComponent(editar)
+                    .addComponent(activar))
+                .addGap(17, 17, 17))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -215,45 +233,56 @@ public class ComunaView extends javax.swing.JPanel {
     }//GEN-LAST:event_codigoComunaActionPerformed
 
     private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
-      String nombre = nombreComuna.getText();
-      String codigo = codigoComuna.getText();
-      System.out.println(nombre);
-      System.out.println(codigo);
-      //Comuna comuna = new Comuna (nombre, codigo);
-      //comunadao.save(comuna);
-      controlador.guardar(nombre, codigo); 
+      controlador.grabar(); 
     }//GEN-LAST:event_guardarActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        int row = jTable.getSelectedRow();
-        if (row == -1) {
-            mostrarInformacion("Seleccione categoría.");
-            return;
-        }
-        String codigo = (String) jTable.getValueAt(row, 0);
-        System.out.println(codigo);
-    }//GEN-LAST:event_jButton3ActionPerformed
-public void mostrarInformacion(String mensaje) {
-        JOptionPane.showMessageDialog(null, mensaje, "Información", JOptionPane.INFORMATION_MESSAGE);
+    private void editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarActionPerformed
+        controlador.editar();
+    }//GEN-LAST:event_editarActionPerformed
+
+    private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
+        controlador.cancelar();
+    }//GEN-LAST:event_cancelarActionPerformed
+
+    private void desactvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desactvarActionPerformed
+        controlador.activarDesactivarSeleccionados(false);
+    }//GEN-LAST:event_desactvarActionPerformed
+
+    private void activarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_activarActionPerformed
+        controlador.activarDesactivarSeleccionados(true);
+    }//GEN-LAST:event_activarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        controlador.buscar();
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    public JTextField getCodigoComuna() {
+        return codigoComuna;
     }
-public void actualizarTabla(List<Comuna> comunas) {
-        DefaultTableModel modeloTabla = (DefaultTableModel) jTable.getModel();
-        Object[] encabezados = {"Código", "Nombre", "Estado", "Selección"};
-        Object[][] datos = new Object[comunas .size()][encabezados.length];
-        for (int i = 0; i < comunas .size(); i++) {
-            datos[i][0] = comunas .get(i).getCodigo();
-            datos[i][1] = comunas .get(i).getNombre();
-            datos[i][2] = comunas .get(i).getEstado() ? "Activo" : "Inactivo";
-            datos[i][3] = false;
-        }
-        modeloTabla.setDataVector(datos, encabezados);
+
+    public JTable getjTable() {
+        return jTable;
     }
+
+    public JTextField getNombreComuna() {
+        return nombreComuna;
+    }
+
+    public JTextField getBuscar() {
+        return buscar;
+    }
+    
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton activar;
+    private javax.swing.JButton btnBuscar;
+    private javax.swing.JTextField buscar;
     private javax.swing.JButton cancelar;
     private javax.swing.JTextField codigoComuna;
+    private javax.swing.JButton desactvar;
+    private javax.swing.JButton editar;
     private javax.swing.JButton guardar;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable;

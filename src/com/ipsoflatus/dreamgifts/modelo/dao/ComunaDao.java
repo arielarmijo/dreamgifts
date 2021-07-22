@@ -12,8 +12,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -67,11 +69,59 @@ public class ComunaDao {
     }
 
     public void update(Comuna comuna) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "UPDATE comunas SET nombre = ?, codigo = ?, estado = ? WHERE id = ?";
+        try (Connection conn = MySQLConection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            conn.setAutoCommit(false);
+            ps.setString(1, comuna.getNombre());
+            ps.setString(2, comuna.getCodigo().toUpperCase());
+            ps.setBoolean(3, comuna.getEstado());
+            ps.setInt(4, comuna.getId());
+            System.out.println(ps);
+            ps.executeUpdate();
+            conn.commit();
+            conn.setAutoCommit(true);
+        } catch (SQLException e) {
+            System.out.println(e);
+            throw new DreamGiftsException(e.getMessage());
+        }
     }
 
-    public List<Comuna> findByTermLike(String text) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Comuna> findByTermLike(String terminoBuscado) {
+        List<Comuna> comunas = new ArrayList<>();
+        String sql = "SELECT id, codigo, nombre, estado FROM comunas WHERE UPPER(nombre) LIKE ? OR UPPER(codigo) LIKE ?";
+        try (Connection conn = MySQLConection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            conn.setReadOnly(true);
+            ps.setString(1, "%" + terminoBuscado.toUpperCase() + "%");
+            ps.setString(2, "%" + terminoBuscado.toUpperCase() + "%");
+            System.out.println(ps);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    comunas.add(rowMapper(rs));
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+            throw new DreamGiftsException(e.getMessage());
+        }
+        return comunas;
     }
+    
+   public void activateByCodes(List<Integer> ids, boolean estado) {
+        String idsText = ids.stream().map(id -> id.toString()).collect(Collectors.joining(", "));
+        String sql = String.format("UPDATE comunas SET estado = %s WHERE id IN (%s)", estado, idsText);
+        System.out.println(sql);
+        try (Connection conn = MySQLConection.getConnection();
+             Statement s = conn.createStatement()) {
+            conn.setAutoCommit(false);
+            s.executeUpdate(sql);
+            conn.commit();conn.setAutoCommit(true);
+        } catch (SQLException e) {
+            System.out.println(e);
+            throw new DreamGiftsException(e.getMessage());
+        }
+    }
+
 }
 
