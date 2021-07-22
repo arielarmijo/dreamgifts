@@ -12,37 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CategoriaArticuloDao {
+public class CategoriaArticuloDao implements DAO<CategoriaArticulo> {
 
-    public void save(CategoriaArticulo ca) {
-        String sql = "INSERT INTO categorias_articulo (codigo, nombre, estado) VALUES (?, ?, ?)";
-        try (Connection conn = MySQLConection.getConnection();
-                PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, ca.getCodigo().toUpperCase());
-            ps.setString(2, ca.getNombre());
-            ps.setBoolean(3, ca.getEstado());
-            System.out.println(ps);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new DreamGiftsException(e.getMessage());
-        }
-    }
-
-    public void update(CategoriaArticulo ca) {
-        String sql = "UPDATE categorias_articulo SET codigo = ?, nombre = ?, estado = ? WHERE id = ?";
-        try (Connection conn = MySQLConection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, ca.getCodigo().toUpperCase());
-            ps.setString(2, ca.getNombre());
-            ps.setBoolean(3, ca.getEstado());
-            ps.setInt(4, ca.getId());
-            System.out.println(ps);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new DreamGiftsException(e.getMessage());
-        }
-    }
-
+    @Override
     public List<CategoriaArticulo> findAll() {
         List<CategoriaArticulo> ccaa = new ArrayList<>();
         String sql = "SELECT id, codigo, nombre, estado FROM categorias_articulo ORDER BY codigo";
@@ -59,6 +31,7 @@ public class CategoriaArticuloDao {
         return ccaa;
     }
 
+    @Override
     public List<CategoriaArticulo> findByTermLike(String termino) {
         List<CategoriaArticulo> ccaa = new ArrayList<>();
         String sql = "SELECT id, codigo, nombre, estado FROM categorias_articulo WHERE UPPER(codigo) LIKE UPPER(?) OR UPPER(nombre) LIKE UPPER(?)";
@@ -78,7 +51,8 @@ public class CategoriaArticuloDao {
         return ccaa;
     }
 
-    public CategoriaArticulo findById(Integer id) {
+    @Override
+    public CategoriaArticulo findById(int id) {
         CategoriaArticulo ca = null;
         String sql = "SELECT id, codigo, nombre, estado FROM categorias_articulo WHERE id = ?";
         try (Connection conn = MySQLConection.getConnection();
@@ -113,8 +87,40 @@ public class CategoriaArticuloDao {
         }
         return ca;
     }
+    
+    @Override
+    public void save(CategoriaArticulo ca) {
+        String sql = "INSERT INTO categorias_articulo (codigo, nombre, estado) VALUES (?, ?, ?)";
+        try (Connection conn = MySQLConection.getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, ca.getCodigo().toUpperCase());
+            ps.setString(2, ca.getNombre());
+            ps.setBoolean(3, ca.getEstado());
+            System.out.println(ps);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new DreamGiftsException(e.getMessage());
+        }
+    }
 
-    public void updateStateByIds(List<Integer> ids, Boolean estado) {
+    @Override
+    public void update(CategoriaArticulo ca) {
+        String sql = "UPDATE categorias_articulo SET codigo = ?, nombre = ?, estado = ? WHERE id = ?";
+        try (Connection conn = MySQLConection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, ca.getCodigo().toUpperCase());
+            ps.setString(2, ca.getNombre());
+            ps.setBoolean(3, ca.getEstado());
+            ps.setInt(4, ca.getId());
+            System.out.println(ps);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new DreamGiftsException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void updateStateByIds(List<Integer> ids, boolean estado) {
         String in = ids.stream().map(id -> id.toString()).collect(Collectors.joining(", "));
         String sql = String.format("UPDATE categorias_articulo SET estado = %s WHERE id IN (%s)", estado, in);
         System.out.println(sql);

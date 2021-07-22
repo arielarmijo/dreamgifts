@@ -36,7 +36,8 @@ public class DreamGifts extends javax.swing.JFrame {
         crearPanelVentas();
         crearPanelCompras();
         crearPanelInformes();
-        crearPanelAdmin();   
+        crearPanelAdmin();
+        showTabbedPaneAndTab(jTabbedPaneAdmin, "admin", 2);
     }
     
     private void crearPanelVentas() {
@@ -568,6 +569,12 @@ public class DreamGifts extends javax.swing.JFrame {
         CardLayout c = (CardLayout) mainContainer.getLayout();
         c.show(mainContainer, card);
         pane.setSelectedIndex(tabIndex);
+    }
+    
+    private void showTabbedPaneAndTab(JTabbedPane pane, String card, int tab) {
+        CardLayout c = (CardLayout) mainContainer.getLayout();
+        c.show(mainContainer, card);
+        pane.setSelectedIndex(tab);
     }
     /**
      * @param args the command line arguments

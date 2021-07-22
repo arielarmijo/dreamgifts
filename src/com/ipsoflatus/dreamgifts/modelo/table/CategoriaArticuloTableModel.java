@@ -1,4 +1,4 @@
-package com.ipsoflatus.dreamgifts.modelo;
+package com.ipsoflatus.dreamgifts.modelo.table;
 
 import com.ipsoflatus.dreamgifts.modelo.entidad.CategoriaArticulo;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ObservableService;

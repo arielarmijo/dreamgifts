@@ -1,6 +1,6 @@
 package com.ipsoflatus.dreamgifts.controlador.admin;
 
-import com.ipsoflatus.dreamgifts.modelo.CategoriaArticuloTableModel;
+import com.ipsoflatus.dreamgifts.modelo.table.CategoriaArticuloTableModel;
 import com.ipsoflatus.dreamgifts.modelo.Controller;
 import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
 import com.ipsoflatus.dreamgifts.modelo.entidad.CategoriaArticulo;
@@ -17,6 +17,7 @@ public class CategoriaArticuloController implements Controller<CategoriaArticulo
     private CategoriaArticuloView view;
 
     public CategoriaArticuloController() {
+        
         service = CategoriaArticuloService.getInstance();
         categoriaActual = null; 
     }

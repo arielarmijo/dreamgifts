@@ -1,7 +1,7 @@
 package com.ipsoflatus.dreamgifts.vista.ventas;
 
 import com.ipsoflatus.dreamgifts.controlador.ventas.VentaController;
-import com.ipsoflatus.dreamgifts.modelo.ComunaComboBoxModel;
+import com.ipsoflatus.dreamgifts.modelo.combobox.ComunaComboBoxModel;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ComunaService;
 import javax.swing.JPanel;
 

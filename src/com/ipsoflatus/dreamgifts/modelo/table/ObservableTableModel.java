@@ -1,5 +1,6 @@
-package com.ipsoflatus.dreamgifts.modelo;
+package com.ipsoflatus.dreamgifts.modelo.table;
 
+import com.ipsoflatus.dreamgifts.modelo.Observer;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ObservableService;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,7 @@ public abstract class ObservableTableModel<T> extends AbstractTableModel impleme
     private final ObservableService service;
     protected String[] columnNames = {"Código", "Nombre", "Estado", "Selección"};
     protected Class[] columnClases = {String.class, String.class, String.class, Boolean.class};
+    protected boolean[] isEditable = {false, false, false, true};
     protected List<T> items = new ArrayList<>();
     protected final List<Boolean> seleccionados = new ArrayList<>();
 
@@ -55,13 +57,13 @@ public abstract class ObservableTableModel<T> extends AbstractTableModel impleme
     
     @Override
     public void setValueAt(Object value, int rowIndex, int columnIndex) {
-        if (columnIndex == 3)
+        if (columnIndex == columnNames.length - 1)
             seleccionados.set(rowIndex, (boolean) value);
     }
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return columnIndex == 3;
+        return isEditable[columnIndex];
     }
 
     @Override
