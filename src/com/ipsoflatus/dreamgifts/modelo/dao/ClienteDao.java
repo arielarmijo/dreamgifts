@@ -12,7 +12,6 @@ public class ClienteDao extends AbstractDao<Cliente> {
         super("clientes");
         setAtributos("id, rut, nombre, apellido, correo, direccion, comuna_id, telefono, celular, fecha_nacimiento, estado");
         setAtributosBusqueda("rut, nombre, apellido");
-
     }
     
     @Override

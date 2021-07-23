@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.ipsoflatus.dreamgifts.modelo.dao;
 
 import com.ipsoflatus.dreamgifts.modelo.conexion.MySQLConection;
@@ -38,10 +32,6 @@ public abstract class AbstractDao<T> implements DAO<T> {
         this.atributosInsert = atributos.replaceFirst("id,\\ ", "");
         insertValues = attributes2values(atributosInsert, s -> "?");
         setValues = attributes2values(atributosInsert, s -> s + " = ?");
-    }
-    
-    private String attributes2values(String atributos, Function<String, String> mapper) {
-        return Stream.of(atributos.split(", ")).map(mapper).collect(Collectors.joining(", "));
     }
 
     public void setAtributosBusqueda(String atributosBusqueda) {
@@ -156,5 +146,9 @@ public abstract class AbstractDao<T> implements DAO<T> {
     protected abstract void seInsertPS(PreparedStatement ps, T t) throws SQLException;
     protected abstract void setUpdatePS(PreparedStatement ps, T t) throws SQLException;
     protected abstract T rowMapper(ResultSet rs) throws SQLException;
+    
+    private String attributes2values(String atributos, Function<String, String> mapper) {
+        return Stream.of(atributos.split(", ")).map(mapper).collect(Collectors.joining(", "));
+    }
 
 }
