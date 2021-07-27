@@ -7,7 +7,7 @@ import java.util.List;
 
 public abstract class AbstractService<T> implements Service<T>, ObservableService<Observer<T>> {
 
-    private DAO<T> dao;
+    protected DAO<T> dao;
     private final List<Observer<T>> obs;
     
     public AbstractService(DAO dao) {

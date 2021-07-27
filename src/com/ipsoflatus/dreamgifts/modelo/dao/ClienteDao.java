@@ -15,7 +15,7 @@ public class ClienteDao extends AbstractDao<Cliente> {
     }
     
     @Override
-    protected void seInsertPS(PreparedStatement ps, Cliente c) throws SQLException {
+    protected void setInsertPS(PreparedStatement ps, Cliente c) throws SQLException {
         ps.setString(1, c.getRut());
         ps.setString(2, c.getNombre());
         ps.setString(3, c.getApellido());

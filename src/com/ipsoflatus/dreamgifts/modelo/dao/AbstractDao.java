@@ -15,8 +15,8 @@ import java.util.stream.Stream;
 
 public abstract class AbstractDao<T> implements DAO<T> {
 
-    private final String tableName;
-    private String atributos;
+    protected final String tableName;
+    protected String atributos;
     private String atributosInsert;
     private String atributosBusqueda;
     private String insertValues;
@@ -106,7 +106,7 @@ public abstract class AbstractDao<T> implements DAO<T> {
         String sql = String.format("INSERT INTO %s (%s) VALUES (%s)", tableName, atributosInsert, insertValues);
         try (Connection conn = MySQLConection.getConnection();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
-            seInsertPS(ps, t);
+            setInsertPS(ps, t);
             System.out.println(ps);
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -143,7 +143,7 @@ public abstract class AbstractDao<T> implements DAO<T> {
         }
     }
     
-    protected abstract void seInsertPS(PreparedStatement ps, T t) throws SQLException;
+    protected abstract void setInsertPS(PreparedStatement ps, T t) throws SQLException;
     protected abstract void setUpdatePS(PreparedStatement ps, T t) throws SQLException;
     protected abstract T rowMapper(ResultSet rs) throws SQLException;
     

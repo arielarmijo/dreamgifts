@@ -6,7 +6,7 @@ import com.ipsoflatus.dreamgifts.modelo.servicio.CategoriaArticuloService;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ObservableService;
 import java.sql.Date;
 
-public class ArticuloTableModel extends ObservableTableModel<Articulo>{
+public class ArticuloTableModel extends ObservableTableModel<Articulo> {
     
     private final CategoriaArticuloService caService = CategoriaArticuloService.getInstance();
 

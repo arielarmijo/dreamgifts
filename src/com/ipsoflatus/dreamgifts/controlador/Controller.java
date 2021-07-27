@@ -1,4 +1,4 @@
-package com.ipsoflatus.dreamgifts.modelo;
+package com.ipsoflatus.dreamgifts.controlador;
 
 import javax.swing.JOptionPane;
 

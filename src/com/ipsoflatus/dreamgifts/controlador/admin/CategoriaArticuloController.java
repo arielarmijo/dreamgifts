@@ -1,7 +1,7 @@
 package com.ipsoflatus.dreamgifts.controlador.admin;
 
 import com.ipsoflatus.dreamgifts.modelo.table.CategoriaArticuloTableModel;
-import com.ipsoflatus.dreamgifts.modelo.Controller;
+import com.ipsoflatus.dreamgifts.controlador.Controller;
 import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
 import com.ipsoflatus.dreamgifts.modelo.entidad.CategoriaArticulo;
 import com.ipsoflatus.dreamgifts.modelo.servicio.CategoriaArticuloService;
