@@ -1,12 +1,11 @@
 package com.ipsoflatus.dreamgifts.modelo.list;
 
-import com.ipsoflatus.dreamgifts.modelo.Observer;
 import com.ipsoflatus.dreamgifts.modelo.entidad.PackHasArticulo;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.AbstractListModel;
 
-public class PackHasArticuloListModel extends AbstractListModel<PackHasArticulo> implements Observer<PackHasArticulo> {
+public class PackHasArticuloListModel extends AbstractListModel<PackHasArticulo> {
 
     private List<PackHasArticulo> items;
     
@@ -43,7 +42,6 @@ public class PackHasArticuloListModel extends AbstractListModel<PackHasArticulo>
         return items.get(index);
     }
 
-    @Override
     public void actualizar(List<PackHasArticulo> items) {
         this.items = items;
         fireContentsChanged(this, 0, items.size());
