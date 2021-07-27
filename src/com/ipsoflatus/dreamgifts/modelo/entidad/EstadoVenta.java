@@ -16,6 +16,16 @@ public class EstadoVenta {
     private Boolean estado;
     private String descripcion;
 
+    public EstadoVenta(String codigo, String nombre, String descripcion, boolean b) {
+   this.codigo = codigo;
+   this.nombre = nombre;
+   this.descripcion = descripcion;
+   this.estado = b;
+   }
+
+    public EstadoVenta() {
+    }
+
     public Integer getId() {
         return id;
     }

@@ -16,7 +16,7 @@ public class EVTableModel extends ObservableTableModel<EstadoVenta> {
 
     public EVTableModel(ObservableService service) {
         super(service);
-         columnNames = new String[] {"Nombre", "Codigo", "Descripción", "Estado", "Selección"};
+         columnNames = new String[] {"Codigo", "Nombre", "Descripción", "Estado", "Selección"};
         columnClases = new Class[] {String.class, String.class, String.class, String.class, Boolean.class};
         isEditable = new boolean[] {false, false, false, false, true};
     }
@@ -25,9 +25,9 @@ public class EVTableModel extends ObservableTableModel<EstadoVenta> {
     public Object getValueAt(int rowIndex, int columnIndex) {
         EstadoVenta item = items.get(rowIndex);
         if (columnIndex == 0)
-            return item.getNombre();
-        if (columnIndex == 1)
             return item.getCodigo();
+        if (columnIndex == 1)
+            return item.getNombre();
         if (columnIndex == 2)
             return item.getDescripcion();
         if (columnIndex == 3)
