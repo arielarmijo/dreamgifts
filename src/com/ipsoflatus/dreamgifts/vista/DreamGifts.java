@@ -52,9 +52,11 @@ public class DreamGifts extends javax.swing.JFrame {
     }
     
     private void crearPanelCompras() {
+        JPanel armadoPacks = new ArmadoPackView();
         JPanel solicitudPedido = new SolicitudPedidoView();
         JPanel registroCompras = new RegistroCompraView();
         JPanel revisionFactura = new RevisionFacturaView();
+        jTabbedPaneCompras.addTab("Armado Packs",armadoPacks);
         jTabbedPaneCompras.addTab("Solicitud Pedido", solicitudPedido);
         jTabbedPaneCompras.addTab("Registro Compra", registroCompras);
         jTabbedPaneCompras.addTab("Revisión Facturas", revisionFactura);
@@ -82,12 +84,10 @@ public class DreamGifts extends javax.swing.JFrame {
         JPanel banco = new BancoView();
         JPanel estadoVenta = new EstadoVentaView();
         JPanel usuario = new UsuarioView(jLabelEstado);
-        JPanel armadoPacks = new ArmadoPackView();
         jTabbedPaneAdmin.addTab("Clientes", cliente);
         jTabbedPaneAdmin.addTab("Proveedores", proveedor);
         jTabbedPaneAdmin.addTab("Articulos", articulo);
         jTabbedPaneAdmin.addTab("Packs", pack);
-        jTabbedPaneAdmin.addTab("Armado Packs",armadoPacks);
         jTabbedPaneAdmin.addTab("RRSS", rrss);
         jTabbedPaneAdmin.addTab("Categoría Artículos", categoriaArticulo);
         jTabbedPaneAdmin.addTab("Comunas", comuna);
@@ -121,6 +121,7 @@ public class DreamGifts extends javax.swing.JFrame {
         jMenuItemDespachos = new javax.swing.JMenuItem();
         jMenuItemEstadoDespachos = new javax.swing.JMenuItem();
         jMenuCompras = new javax.swing.JMenu();
+        jMenuItemArmadoPacks = new javax.swing.JMenuItem();
         jMenuItemSolicitudPedido = new javax.swing.JMenuItem();
         jMenuItemRegistroCompra = new javax.swing.JMenuItem();
         jMenuItemFactura = new javax.swing.JMenuItem();
@@ -134,7 +135,6 @@ public class DreamGifts extends javax.swing.JFrame {
         jMenuItemProveedores = new javax.swing.JMenuItem();
         jMenuItemArticulos = new javax.swing.JMenuItem();
         jMenuItemPacks = new javax.swing.JMenuItem();
-        jMenuItemArmadoPacks = new javax.swing.JMenuItem();
         jMenuItemRRSS = new javax.swing.JMenuItem();
         jMenuItemCategoriaArticulos = new javax.swing.JMenuItem();
         jMenuItemComunas = new javax.swing.JMenuItem();
@@ -256,6 +256,14 @@ public class DreamGifts extends javax.swing.JFrame {
 
         jMenuCompras.setText("Compras");
 
+        jMenuItemArmadoPacks.setText("Armado Packs");
+        jMenuItemArmadoPacks.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemArmadoPacksActionPerformed(evt);
+            }
+        });
+        jMenuCompras.add(jMenuItemArmadoPacks);
+
         jMenuItemSolicitudPedido.setText("Solicitud Pedido");
         jMenuItemSolicitudPedido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -351,14 +359,6 @@ public class DreamGifts extends javax.swing.JFrame {
             }
         });
         jMenuadmin.add(jMenuItemPacks);
-
-        jMenuItemArmadoPacks.setText("Armado Packs");
-        jMenuItemArmadoPacks.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemArmadoPacksActionPerformed(evt);
-            }
-        });
-        jMenuadmin.add(jMenuItemArmadoPacks);
 
         jMenuItemRRSS.setText("RRSS");
         jMenuItemRRSS.addActionListener(new java.awt.event.ActionListener() {
@@ -543,7 +543,7 @@ public class DreamGifts extends javax.swing.JFrame {
     }//GEN-LAST:event_jTabbedPaneInformesStateChanged
 
     private void jMenuItemArmadoPacksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemArmadoPacksActionPerformed
-       showAdminTab(evt);
+       showComprasTab(evt);
     }//GEN-LAST:event_jMenuItemArmadoPacksActionPerformed
 
     public void showAdminTab(ActionEvent evt) {
