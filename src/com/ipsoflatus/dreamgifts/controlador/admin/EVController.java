@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  */
 public class EVController implements Controller<EstadoVentaView>{
     
-    private EstadoVentaView view;
+      private EstadoVentaView view;
       private EstadoVenta evActual = null;
       private EVTableModel tableModel;
       private final EVService service = EVService.getInstance();

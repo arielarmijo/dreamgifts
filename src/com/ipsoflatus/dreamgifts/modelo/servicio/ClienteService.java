@@ -7,7 +7,7 @@ public class ClienteService extends AbstractService<Cliente> {
 
     private static ClienteService instance;
     
-    public ClienteService() {
+    private ClienteService() {
         super(new ClienteDao());
     }
     
@@ -15,6 +15,6 @@ public class ClienteService extends AbstractService<Cliente> {
         if (instance == null)
             instance = new ClienteService();
         return instance;
-    }
+    } 
 
 }

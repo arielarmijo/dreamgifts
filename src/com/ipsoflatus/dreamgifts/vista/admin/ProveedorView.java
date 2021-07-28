@@ -4,21 +4,25 @@ import com.ipsoflatus.dreamgifts.controlador.admin.ProveedorController;
 import com.ipsoflatus.dreamgifts.modelo.combobox.ComunaComboBoxModel;
 import com.ipsoflatus.dreamgifts.modelo.combobox.ObserverComboBoxModel;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ComunaService;
+import com.ipsoflatus.dreamgifts.modelo.servicio.ProveedorService;
+import com.ipsoflatus.dreamgifts.modelo.table.ProveedorTableModel;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 
 public class ProveedorView extends JPanel {
     
     private final ProveedorController controlador;
-    private final JLabel estado;
 
     /**
      * Creates new form PanelProveedor
      */
-    public ProveedorView(JLabel label) {
+    public ProveedorView() {
         initComponents();
-        this.controlador = new ProveedorController(this);
-        this.estado = label;
+        this.controlador = new ProveedorController();
+        this.controlador.setView(this);
     }
 
     /**
@@ -50,16 +54,14 @@ public class ProveedorView extends JPanel {
         jButtonGuardar = new javax.swing.JButton();
         jPanelListado = new javax.swing.JPanel();
         jLabelTituloListado = new javax.swing.JLabel();
-        jPanelBuscador = new javax.swing.JPanel();
-        jTextFieldBuscar = new javax.swing.JTextField();
-        jButtonBuscar = new javax.swing.JButton();
         jScrollPaneProveedores = new javax.swing.JScrollPane();
         jTableProveedores = new javax.swing.JTable();
-        jPanelBotonesListado = new javax.swing.JPanel();
-        jButtonComprar = new javax.swing.JButton();
+        jTextFieldBuscar = new javax.swing.JTextField();
+        jButtonBuscar = new javax.swing.JButton();
         jButtonActivar = new javax.swing.JButton();
         jButtonDesactivar = new javax.swing.JButton();
         jButtonEditar = new javax.swing.JButton();
+        jButtonComprar = new javax.swing.JButton();
 
         setMinimumSize(new java.awt.Dimension(800, 500));
         setName(""); // NOI18N
@@ -88,8 +90,18 @@ public class ProveedorView extends JPanel {
         jComboBoxComunas.setModel(new ComunaComboBoxModel(ComunaService.getInstance()));
 
         jButtonCancelar.setText("Cancelar");
+        jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelarActionPerformed(evt);
+            }
+        });
 
         jButtonGuardar.setText("Guardar");
+        jButtonGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGuardarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelBotonesRegistroLayout = new javax.swing.GroupLayout(jPanelBotonesRegistro);
         jPanelBotonesRegistro.setLayout(jPanelBotonesRegistroLayout);
@@ -125,26 +137,27 @@ public class ProveedorView extends JPanel {
                     .addComponent(jLabelRut, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabelTituloRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanelRegistroLayout.createSequentialGroup()
-                            .addGroup(jPanelRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTextFieldRut, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
-                                .addComponent(jTextFieldDireccion, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
-                                .addComponent(jTextFieldContacto, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
-                                .addComponent(jComboBoxComunas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGap(76, 76, 76)
-                            .addGroup(jPanelRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabelEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabelTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabelRazonSocial, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanelRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelTituloRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanelRegistroLayout.createSequentialGroup()
+                        .addGroup(jPanelRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextFieldRut, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
+                            .addComponent(jTextFieldDireccion, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
+                            .addComponent(jTextFieldContacto, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
+                            .addComponent(jComboBoxComunas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(76, 76, 76)
+                        .addGroup(jPanelRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanelRegistroLayout.createSequentialGroup()
                                 .addGroup(jPanelRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextFieldRazonSocial)
-                                    .addComponent(jTextFieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jTextFieldTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(jPanelBotonesRegistro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabelEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabelTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabelRazonSocial, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanelRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanelRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jTextFieldRazonSocial)
+                                        .addComponent(jTextFieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jTextFieldTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jPanelBotonesRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(31, Short.MAX_VALUE))
         );
         jPanelRegistroLayout.setVerticalGroup(
@@ -178,13 +191,13 @@ public class ProveedorView extends JPanel {
                         .addGroup(jPanelRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelEmail)
                             .addComponent(jTextFieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanelBotonesRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanelRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabelComuna)
-                        .addComponent(jComboBoxComunas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addComponent(jComboBoxComunas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanelBotonesRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16))
         );
 
         jPanelListado.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -193,89 +206,50 @@ public class ProveedorView extends JPanel {
         jLabelTituloListado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelTituloListado.setText("Proveedores Registrados");
 
-        jButtonBuscar.setText("Buscar");
-
-        javax.swing.GroupLayout jPanelBuscadorLayout = new javax.swing.GroupLayout(jPanelBuscador);
-        jPanelBuscador.setLayout(jPanelBuscadorLayout);
-        jPanelBuscadorLayout.setHorizontalGroup(
-            jPanelBuscadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelBuscadorLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTextFieldBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonBuscar)
-                .addContainerGap())
-        );
-        jPanelBuscadorLayout.setVerticalGroup(
-            jPanelBuscadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelBuscadorLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelBuscadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonBuscar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jTableProveedores.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"111.111.111-1", "Empresa 1", "Juan Pérez", "11111111", "empresa@email.com", "ACTIVO", null}
-            },
-            new String [] {
-                "RUT", "Razón Social", "Contacto", "Teléfono", "Email", "Estado", "Selección"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        jTableProveedores.setModel(new ProveedorTableModel(ProveedorService.getInstance()));
         jScrollPaneProveedores.setViewportView(jTableProveedores);
 
-        jButtonComprar.setLabel("Comprar");
+        jTextFieldBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldBuscarActionPerformed(evt);
+            }
+        });
+
+        jButtonBuscar.setText("Buscar");
+        jButtonBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBuscarActionPerformed(evt);
+            }
+        });
 
         jButtonActivar.setLabel("Activar");
+        jButtonActivar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonActivarActionPerformed(evt);
+            }
+        });
 
         jButtonDesactivar.setLabel("Desactivar");
+        jButtonDesactivar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDesactivarActionPerformed(evt);
+            }
+        });
 
         jButtonEditar.setText("Editar");
         jButtonEditar.setToolTipText("");
+        jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEditarActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jPanelBotonesListadoLayout = new javax.swing.GroupLayout(jPanelBotonesListado);
-        jPanelBotonesListado.setLayout(jPanelBotonesListadoLayout);
-        jPanelBotonesListadoLayout.setHorizontalGroup(
-            jPanelBotonesListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelBotonesListadoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButtonComprar)
-                .addGap(18, 18, 18)
-                .addComponent(jButtonEditar)
-                .addGap(18, 18, 18)
-                .addComponent(jButtonActivar)
-                .addGap(18, 18, 18)
-                .addComponent(jButtonDesactivar)
-                .addContainerGap())
-        );
-        jPanelBotonesListadoLayout.setVerticalGroup(
-            jPanelBotonesListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelBotonesListadoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelBotonesListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonActivar)
-                    .addComponent(jButtonDesactivar)
-                    .addComponent(jButtonComprar)
-                    .addComponent(jButtonEditar))
-                .addContainerGap())
-        );
+        jButtonComprar.setLabel("Comprar");
+        jButtonComprar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonComprarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelListadoLayout = new javax.swing.GroupLayout(jPanelListado);
         jPanelListado.setLayout(jPanelListadoLayout);
@@ -284,27 +258,40 @@ public class ProveedorView extends JPanel {
             .addGroup(jPanelListadoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPaneProveedores)
-                    .addGroup(jPanelListadoLayout.createSequentialGroup()
-                        .addComponent(jLabelTituloListado, javax.swing.GroupLayout.DEFAULT_SIZE, 502, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanelBuscador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPaneProveedores, javax.swing.GroupLayout.DEFAULT_SIZE, 756, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelListadoLayout.createSequentialGroup()
+                        .addComponent(jLabelTituloListado)
+                        .addGap(321, 321, 321)
+                        .addComponent(jTextFieldBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonBuscar))
+                    .addGroup(jPanelListadoLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jPanelBotonesListado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButtonComprar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonEditar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonDesactivar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonActivar)))
                 .addContainerGap())
         );
         jPanelListadoLayout.setVerticalGroup(
             jPanelListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelListadoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanelBuscador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabelTituloListado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanelListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelTituloListado)
+                    .addComponent(jTextFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonBuscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPaneProveedores, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanelBotonesListado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPaneProveedores, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonActivar)
+                    .addComponent(jButtonDesactivar)
+                    .addComponent(jButtonEditar)
+                    .addComponent(jButtonComprar))
                 .addContainerGap())
         );
 
@@ -329,6 +316,83 @@ public class ProveedorView extends JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
+        System.out.println(evt.getActionCommand());
+        controlador.grabar();
+    }//GEN-LAST:event_jButtonGuardarActionPerformed
+
+    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
+        System.out.println(evt.getActionCommand());
+        controlador.cancelar();
+    }//GEN-LAST:event_jButtonCancelarActionPerformed
+
+    private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
+        System.out.println(evt.getActionCommand());
+        controlador.buscar();
+    }//GEN-LAST:event_jButtonBuscarActionPerformed
+
+    private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
+        System.out.println(evt.getActionCommand());
+        controlador.editar();
+    }//GEN-LAST:event_jButtonEditarActionPerformed
+
+    private void jButtonActivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActivarActionPerformed
+        System.out.println(evt.getActionCommand());
+        controlador.activarSeleccionados();
+    }//GEN-LAST:event_jButtonActivarActionPerformed
+
+    private void jButtonDesactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDesactivarActionPerformed
+        System.out.println(evt.getActionCommand());
+        controlador.desactivarSeleccionados();
+    }//GEN-LAST:event_jButtonDesactivarActionPerformed
+
+    private void jButtonComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonComprarActionPerformed
+        System.out.println(evt.getActionCommand());
+        controlador.comprar();
+    }//GEN-LAST:event_jButtonComprarActionPerformed
+
+    private void jTextFieldBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldBuscarActionPerformed
+        System.out.println(evt.getActionCommand());
+        controlador.buscar();
+    }//GEN-LAST:event_jTextFieldBuscarActionPerformed
+    
+    public JComboBox getjComboBoxComunas() {
+        return jComboBoxComunas;
+    }
+
+    public JTable getjTableProveedores() {
+        return jTableProveedores;
+    }
+
+    public JTextField getjTextFieldBuscar() {
+        return jTextFieldBuscar;
+    }
+
+    public JTextField getjTextFieldContacto() {
+        return jTextFieldContacto;
+    }
+
+    public JTextField getjTextFieldDireccion() {
+        return jTextFieldDireccion;
+    }
+
+    public JTextField getjTextFieldEmail() {
+        return jTextFieldEmail;
+    }
+
+    public JTextField getjTextFieldRazonSocial() {
+        return jTextFieldRazonSocial;
+    }
+
+    public JTextField getjTextFieldRut() {
+        return jTextFieldRut;
+    }
+
+    public JTextField getjTextFieldTelefono() {
+        return jTextFieldTelefono;
+    }
+    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonActivar;
@@ -348,9 +412,7 @@ public class ProveedorView extends JPanel {
     private javax.swing.JLabel jLabelTelefono;
     private javax.swing.JLabel jLabelTituloListado;
     private javax.swing.JLabel jLabelTituloRegistro;
-    private javax.swing.JPanel jPanelBotonesListado;
     private javax.swing.JPanel jPanelBotonesRegistro;
-    private javax.swing.JPanel jPanelBuscador;
     private javax.swing.JPanel jPanelListado;
     private javax.swing.JPanel jPanelRegistro;
     private javax.swing.JScrollPane jScrollPaneProveedores;

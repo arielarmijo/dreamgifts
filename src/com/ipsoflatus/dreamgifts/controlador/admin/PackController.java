@@ -112,6 +112,7 @@ public class PackController implements Controller<PackView> {
         } catch (DreamGiftsException e) {
             mostrarError(e.getMessage());
         }
+        
     }
 
     @Override
