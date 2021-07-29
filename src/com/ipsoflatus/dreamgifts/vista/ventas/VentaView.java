@@ -11,7 +11,6 @@ import com.ipsoflatus.dreamgifts.modelo.servicio.ComunaService;
 import com.ipsoflatus.dreamgifts.modelo.servicio.PackService;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import javax.swing.ImageIcon;

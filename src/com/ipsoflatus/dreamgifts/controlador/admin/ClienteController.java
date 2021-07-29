@@ -10,12 +10,14 @@ import com.ipsoflatus.dreamgifts.modelo.table.ClienteTableModel;
 import com.ipsoflatus.dreamgifts.vista.admin.ClienteView;
 import com.ipsoflatus.dreamgifts.vista.ventas.VentaView;
 import java.sql.Date;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ClienteController implements Controller<ClienteView>{
-    
+public class ClienteController implements Controller<ClienteView> {
+
     private final ClienteService clienteSrv = ClienteService.getInstance();
     private ClienteView view;
     private ClienteTableModel tableModel;
@@ -34,7 +36,7 @@ public class ClienteController implements Controller<ClienteView>{
 
     @Override
     public void cancelar() {
-         clienteActual = null;
+        clienteActual = null;
         view.getjTextFieldRut().setText("");
         view.getjTextFieldNombre().setText("");
         view.getjTextFieldApellido().setText("");
@@ -54,27 +56,27 @@ public class ClienteController implements Controller<ClienteView>{
         String correo = view.getjTextFieldEmail().getText();
         String direccion = view.getjTextFieldDireccion().getText();
         Comuna comuna = (Comuna) view.getjComboBoxComuna().getSelectedItem();
-        
+
         String telefono = view.getjTextFieldTelefono().getText();
         String celular = view.getjTextFieldCelular().getText();
-                
+
         if (rut.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || correo.isEmpty() || direccion.isEmpty() || celular.isEmpty()) {
             mostrarInformacion("Complete todos los campos.");
             return;
         }
-        
+
         LocalDate fecha = view.getDatePicker().getDate();
-       
-       if (fecha == null){
-           mostrarInformacion("Ingrese Fecha de Nacimiento.");
-           return;
-       }
-            Date fechaNac = Date.valueOf(fecha);
+
+        if (fecha == null) {
+            mostrarInformacion("Ingrese Fecha de Nacimiento.");
+            return;
+        }
+        Date fechaNac = Date.valueOf(fecha);
         try {
             if (clienteActual == null) {
-               clienteSrv.guardar(new Cliente(rut, nombre, apellido, correo, direccion, comuna.getId(), fechaNac, telefono, celular, true));
-            
-            }else{
+                clienteSrv.guardar(new Cliente(rut, nombre, apellido, correo, direccion, comuna.getId(), fechaNac, telefono, celular, true));
+
+            } else {
                 clienteActual.setRut(rut);
                 clienteActual.setNombre(nombre);
                 clienteActual.setApellido(apellido);
@@ -95,14 +97,14 @@ public class ClienteController implements Controller<ClienteView>{
     @Override
     public void buscar() {
         String termino = view.getjTextFieldBuscar().getText();
-        List<Cliente> cliente = termino.isEmpty() ? clienteSrv.buscar(): clienteSrv.buscar(termino);
+        List<Cliente> cliente = termino.isEmpty() ? clienteSrv.buscar() : clienteSrv.buscar(termino);
         tableModel.actualizar(cliente);
         view.getjTextFieldBuscar().setText("");
     }
 
     @Override
     public void editar() {
-       int row = view.getjTable2().getSelectedRow();
+        int row = view.getjTable2().getSelectedRow();
         if (row == -1) {
             mostrarInformacion("Seleccione cliente.");
             return;
@@ -117,22 +119,24 @@ public class ClienteController implements Controller<ClienteView>{
         view.getjTextFieldTelefono().setText(clienteActual.getTelefono());
         Comuna comuna = comunaService.buscar(clienteActual.getComunaId());
         view.getjComboBoxComuna().getModel().setSelectedItem(comuna);
-        
-       // view.getDatePicker().setDate(LocalDate.of(clienteActual.getFechaNacimiento()));
-        
+
+        Date date = clienteActual.getFechaNacimiento();
+        LocalDate localDate = Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+        view.getDatePicker().setDate(localDate);
+
     }
 
     @Override
     public void activarDesactivarSeleccionados(Boolean estado) {
-  List<Integer> ids = tableModel.getSelected().stream().map(b -> b.getId()).collect(Collectors.toList());
+        List<Integer> ids = tableModel.getSelected().stream().map(b -> b.getId()).collect(Collectors.toList());
         if (ids.isEmpty()) {
             mostrarInformacion("Seleccione Cliente");
             return;
         }
         clienteSrv.cambiarEstado(ids, estado);
-        tableModel.selectAll(false);  
+        tableModel.selectAll(false);
     }
-    
+
     @Override
     public void seleccionarTodos() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -148,8 +152,7 @@ public class ClienteController implements Controller<ClienteView>{
             vv.getTxfTelefonoCliente().setText(c.getTelefono());
             vv.getTxfEmailCliente().setText(c.getCorreo());
         }
-        
         view.getRoot().showVentasTab(0);
     }
-    
+
 }

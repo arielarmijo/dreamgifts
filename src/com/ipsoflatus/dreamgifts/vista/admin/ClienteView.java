@@ -1,12 +1,16 @@
 package com.ipsoflatus.dreamgifts.vista.admin;
 
 import com.github.lgooddatepicker.components.DatePicker;
+import com.github.lgooddatepicker.components.DatePickerSettings;
 import com.ipsoflatus.dreamgifts.controlador.admin.ClienteController;
 import com.ipsoflatus.dreamgifts.modelo.combobox.ComunaComboBoxModel;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ClienteService;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ComunaService;
 import com.ipsoflatus.dreamgifts.modelo.table.ClienteTableModel;
 import com.ipsoflatus.dreamgifts.vista.DreamGifts;
+import java.awt.Image;
+import java.awt.Toolkit;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
@@ -26,6 +30,16 @@ public class ClienteView extends JPanel {
         initComponents();
         controlador = new ClienteController();
         controlador.setView(this); 
+        // Configura el date picker
+        DatePickerSettings dateSettings = new DatePickerSettings();
+        dateSettings.setFormatForDatesCommonEra("dd/MM/yyyy");
+        dateSettings.setFormatForDatesBeforeCommonEra("dd/MM/uuuu");
+        datePicker.setSettings(dateSettings);
+        Image dateImage = Toolkit.getDefaultToolkit().getImage("images/datepickerbutton.png");
+        ImageIcon dateExampleIcon = new ImageIcon(dateImage);
+        JButton datePickerButton = datePicker.getComponentToggleCalendarButton();
+        datePickerButton.setText("");
+        datePickerButton.setIcon(dateExampleIcon);
     }
     
     /**
