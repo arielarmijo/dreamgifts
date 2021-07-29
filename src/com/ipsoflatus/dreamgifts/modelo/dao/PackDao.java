@@ -106,7 +106,22 @@ public class PackDao implements DAO<Pack> {
 
     @Override
     public Pack findById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Pack result = null;
+        String sql = "SELECT id, nombre, stock, costo, estado FROM packs WHERE id = ?";
+        try (Connection conn = MySQLConection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            System.out.println(ps);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    result = rowMapper(rs);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DreamGiftsException(e.getMessage());
+        }
+        return result;
     }
 
     @Override

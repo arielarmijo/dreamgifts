@@ -5,7 +5,9 @@ import com.ipsoflatus.dreamgifts.modelo.entidad.Venta;
 import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -23,7 +25,21 @@ public class VentaDao implements DAO<Venta> {
     
     @Override
     public List<Venta> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Venta> results = new ArrayList<>();
+        String sql = String.format("SELECT %s FROM %s", atributos, tableName);
+        try (Connection conn = MySQLConection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            conn.setReadOnly(true);
+            System.out.println(ps);
+            while (rs.next()) {
+                results.add(rowMapper(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DreamGiftsException(e.getMessage());
+        }
+        return results;
     }
 
     @Override
@@ -59,6 +75,30 @@ public class VentaDao implements DAO<Venta> {
     @Override
     public void updateStateByIds(List<Integer> ids, boolean estado) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    private Venta rowMapper(ResultSet rs) throws SQLException {
+        Venta v = new Venta();
+        v.setId(rs.getInt(1));
+        v.setClienteId(rs.getInt(2));
+        v.setTotal(rs.getInt(3));
+        v.setFechaVenta(rs.getDate(4));
+        v.setFechaTransferencia(rs.getDate(5));
+        v.setCodigoTransferencia(rs.getInt(6));
+        v.setBancoId(rs.getInt(7));
+        v.setNombreDestinatario(rs.getString(8));
+        v.setApellidoDestinatario(rs.getString(9));
+        v.setDireccionDestinatario(rs.getString(10));
+        v.setComunaId(rs.getInt(11));
+        v.setTelefonoDestinatario(rs.getString(12));
+        v.setFechaEntrega(rs.getDate(13));
+        v.setHoraEntregaInicial(rs.getTime(14));
+        v.setHoraEntregaFinal(rs.getTime(15));
+        v.setSaludo(rs.getString(16));
+        v.setRrssId(rs.getInt(17));
+        v.setEstadoVentaId(rs.getInt(18));
+        v.setPackId(rs.getInt(19));
+        return v;
     }
 
     private void setInsertPS(PreparedStatement ps, Venta v) throws SQLException {

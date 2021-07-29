@@ -6,6 +6,8 @@ import com.ipsoflatus.dreamgifts.controlador.ventas.ConfirmacionPagoController;
 import com.ipsoflatus.dreamgifts.modelo.combobox.BancoComboBoxModel;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Banco;
 import com.ipsoflatus.dreamgifts.modelo.servicio.BancoService;
+import com.ipsoflatus.dreamgifts.modelo.servicio.VentaService;
+import com.ipsoflatus.dreamgifts.modelo.table.ConfirmacionPagoTableModel;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.time.LocalDate;
@@ -71,36 +73,36 @@ public class ConfirmacionPagoView extends javax.swing.JPanel {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Confirmación de pago", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setText("Numero Pedido");
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText("Rut");
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText("Banco");
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         cbxBancos.setModel(new BancoComboBoxModel(BancoService.getInstance()));
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel5.setText("Nombre Cliente");
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel6.setText("Fecha Pago");
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel7.setText("Codigo Transacción");
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        btnCancelar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnCancelar.setText("Cancelar");
+        btnCancelar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
             }
         });
 
-        btnConfirmarPago.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnConfirmarPago.setText("Confirmar Pago");
+        btnConfirmarPago.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnConfirmarPago.setToolTipText("");
         btnConfirmarPago.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -177,50 +179,28 @@ public class ConfirmacionPagoView extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnConfirmarPago)
                     .addComponent(btnCancelar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "N° Pedido", "Fecha Pago", "Nombre Cliente", "Telefono", "Valor", "Pack", "Selección"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        jTable.setModel(new ConfirmacionPagoTableModel(VentaService.getInstance()));
         jScrollPane1.setViewportView(jTable);
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setText("Ventar por pagar");
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setToolTipText("");
 
-        btnBuscar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnBuscar.setText("Buscar");
+        btnBuscar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);
             }
         });
 
-        btnSeleccionar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnSeleccionar.setText("Seleccionar");
+        btnSeleccionar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnSeleccionar.setToolTipText("");
         btnSeleccionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

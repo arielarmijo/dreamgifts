@@ -31,9 +31,12 @@ public class ConfirmacionPagoTableModel extends ObservableTableModel<Venta> {
             return cliente.getNombre() + " " + cliente.getApellido();
         if (columnIndex == 2)
             return cliente.getCelular();
-
-
-
+        if (columnIndex == 3)
+            return pack.getNombre();
+        if (columnIndex == 4)
+            return item.getTotal();
+        if (columnIndex == 5)
+            return item.getFechaVenta();
         return null;
     }
 

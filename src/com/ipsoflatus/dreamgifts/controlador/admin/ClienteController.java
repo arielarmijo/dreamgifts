@@ -119,11 +119,9 @@ public class ClienteController implements Controller<ClienteView> {
         view.getjTextFieldTelefono().setText(clienteActual.getTelefono());
         Comuna comuna = comunaService.buscar(clienteActual.getComunaId());
         view.getjComboBoxComuna().getModel().setSelectedItem(comuna);
-
         Date date = clienteActual.getFechaNacimiento();
         LocalDate localDate = Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
         view.getDatePicker().setDate(localDate);
-
     }
 
     @Override
