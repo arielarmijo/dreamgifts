@@ -13,6 +13,13 @@ public class Pack {
     private Boolean estado;
     private List<PackHasArticulo> articulos = new ArrayList<>();
 
+    public Pack() {
+        
+    }
+    
+    public Pack(String nombre) {
+        this.nombre = nombre;
+    }
     public Integer getId() {
         return id;
     }
@@ -85,5 +92,12 @@ public class Pack {
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return nombre;
+    }
+    
+    
     
 }

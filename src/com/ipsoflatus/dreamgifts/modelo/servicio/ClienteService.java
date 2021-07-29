@@ -17,4 +17,8 @@ public class ClienteService extends AbstractService<Cliente> {
         return instance;
     } 
 
+    public Cliente buscarPorRut(String rut) {
+        return ((ClienteDao) dao).findByRut(rut);
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.ipsoflatus.dreamgifts.modelo.dao;
 
+import com.ipsoflatus.dreamgifts.modelo.entidad.Cliente;
 import java.util.List;
 
 public interface DAO<T> {

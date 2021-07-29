@@ -19,7 +19,7 @@ import com.ipsoflatus.dreamgifts.vista.informes.InformeDyCView;
 import com.ipsoflatus.dreamgifts.vista.informes.InformeInventarioView;
 import com.ipsoflatus.dreamgifts.vista.informes.InformeVentasView;
 import com.ipsoflatus.dreamgifts.vista.ventas.ActualizacionDespachoView;
-import com.ipsoflatus.dreamgifts.vista.ventas.ConfirmcionPagoView;
+import com.ipsoflatus.dreamgifts.vista.ventas.ConfirmacionPagoView;
 import com.ipsoflatus.dreamgifts.vista.ventas.ListaDestinosView;
 import com.ipsoflatus.dreamgifts.vista.ventas.VentaView;
 import java.awt.CardLayout;
@@ -37,12 +37,12 @@ public class DreamGifts extends javax.swing.JFrame {
         crearPanelCompras();
         crearPanelInformes();
         crearPanelAdmin();
-        showTabbedPaneAndTab(jTabbedPaneAdmin, "admin", 3);
+        showTabbedPaneAndTab(jTabbedPaneVentas, "ventas", 0);
     }
     
     private void crearPanelVentas() {
         JPanel venta = new VentaView();
-        JPanel confirmacionPago = new ConfirmcionPagoView();
+        JPanel confirmacionPago = new ConfirmacionPagoView();
         JPanel destinos = new ListaDestinosView();
         JPanel despachos = new ActualizacionDespachoView();
         jTabbedPaneVentas.addTab("Venta", venta);
@@ -94,6 +94,7 @@ public class DreamGifts extends javax.swing.JFrame {
         jTabbedPaneAdmin.addTab("Bancos", banco);
         jTabbedPaneAdmin.addTab("Estados Venta", estadoVenta);
         jTabbedPaneAdmin.addTab("Usuarios", usuario);
+        ((ClienteView)cliente).setRoot(this);
         
     }
 
@@ -571,7 +572,7 @@ public class DreamGifts extends javax.swing.JFrame {
         pane.setSelectedIndex(tabIndex);
     }
     
-    private void showTabbedPaneAndTab(JTabbedPane pane, String card, int tab) {
+    public void showTabbedPaneAndTab(JTabbedPane pane, String card, int tab) {
         CardLayout c = (CardLayout) mainContainer.getLayout();
         c.show(mainContainer, card);
         pane.setSelectedIndex(tab);
@@ -644,7 +645,7 @@ public class DreamGifts extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPaneAdmin;
     private javax.swing.JTabbedPane jTabbedPaneCompras;
     private javax.swing.JTabbedPane jTabbedPaneInformes;
-    private javax.swing.JTabbedPane jTabbedPaneVentas;
+    public javax.swing.JTabbedPane jTabbedPaneVentas;
     private javax.swing.JPanel mainContainer;
     // End of variables declaration//GEN-END:variables
 }

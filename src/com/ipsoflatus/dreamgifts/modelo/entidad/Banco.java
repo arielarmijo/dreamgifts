@@ -9,11 +9,23 @@ public class Banco {
 
     public Banco() {
     }
+    
+    public Banco(String nombre) {
+        this.nombre = nombre;
+    }
 
     public Banco(String codigo, String nombre, boolean estado) {
         this.nombre = nombre;
         this.codigo = codigo;
         this.estado = estado;
+    }
+    
+    public int getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNombre() {
@@ -42,15 +54,9 @@ public class Banco {
 
     @Override
     public String toString() {
-        return "Banco{" + "nombre=" + nombre + ", codigo=" + codigo + ", estado=" + estado + '}';
+        return nombre;
     }
 
-    public int getId() {
-return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    
     
 }

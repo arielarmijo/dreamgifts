@@ -28,10 +28,13 @@ public class PackController implements Controller<PackView> {
     
     public void filtrarArticulo() {
         CategoriaArticulo ca = (CategoriaArticulo) view.getCbxCategoriaArticulo().getSelectedItem();
-        System.out.println(ca.getId());
-        List<Articulo> articulos = articuloService.buscarPorCategoria(ca.getId());
-        System.out.println(articulos);
-        articuloListModel.actualizar(articulos);
+        if (ca != null) {
+           System.out.println(ca.getId());
+           List<Articulo> articulos = articuloService.buscarPorCategoria(ca.getId());
+           System.out.println(articulos);
+           articuloListModel.actualizar(articulos);
+        }
+        
     }
     
     public void agregarArticuloPack() {

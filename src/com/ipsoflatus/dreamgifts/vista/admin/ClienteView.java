@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 public class ClienteView extends JPanel {
 
     private final ClienteController controlador;
+    private DreamGifts root;
     
     /**
      * Creates new form PanelCliente
@@ -91,6 +92,10 @@ public class ClienteView extends JPanel {
 
     public void setjButtondesactivar(JButton jButtondesactivar) {
         this.jButtondesactivar = jButtondesactivar;
+    }
+    
+    public void setRoot(DreamGifts root){
+        this.root = root;
     }
 
     /**

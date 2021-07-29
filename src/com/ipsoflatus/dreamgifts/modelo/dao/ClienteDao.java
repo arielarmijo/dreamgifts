@@ -1,6 +1,9 @@
 package com.ipsoflatus.dreamgifts.modelo.dao;
 
+import com.ipsoflatus.dreamgifts.modelo.conexion.MySQLConection;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Cliente;
+import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -79,6 +82,25 @@ public class ClienteDao extends AbstractDao<Cliente> {
         dao.findAll().forEach(c -> {
             dao.update(c);
         });
+    }
+
+    public Cliente findByRut(String rut) {
+        Cliente result = null;
+        String sql = String.format("SELECT %s FROM %s WHERE rut = ?", atributos, tableName);
+        try (Connection conn = MySQLConection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, rut);
+            System.out.println(ps);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    result = rowMapper(rs);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DreamGiftsException(e.getMessage());
+        }
+        return result;
     }
     
 }

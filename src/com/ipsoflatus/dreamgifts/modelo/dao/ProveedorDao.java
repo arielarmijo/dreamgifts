@@ -9,7 +9,7 @@ public class ProveedorDao extends AbstractDao<Proveedor> {
 
     public ProveedorDao() {
         super("proveedores");
-        setAtributos("id, rut, razon_social, contacto, direccion, comunas_id, telefono, email, estado");
+        setAtributos("id, rut, razon_social, contacto, direccion, comuna_id, telefono, email, estado");
         setAtributosBusqueda("rut, razon_social, contacto");
     }
     
