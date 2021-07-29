@@ -25,6 +25,19 @@ public class Cliente {
     public Cliente() {
     }
 
+    public Cliente(String rut, String nombre, String apellido, String correo, String direccion, Integer id, Date fechaNac, String telefono, String celular, boolean b) {
+    this.rut = rut;
+    this.nombre = nombre;
+    this.comunaId = id;
+    this.apellido = apellido;
+    this.correo = correo;
+    this.direccion = direccion;
+    this.fechaNacimiento = fechaNac;
+    this.celular = celular;
+    this.telefono = telefono;
+    this.estado = b;
+    }
+
     public Integer getId() {
         return id;
     }
