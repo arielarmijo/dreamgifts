@@ -31,6 +31,8 @@ import javax.swing.JTabbedPane;
 
 public class DreamGifts extends javax.swing.JFrame {
 
+    public JPanel venta;
+    
     public DreamGifts() {
         initComponents();
         crearPanelVentas();
@@ -41,7 +43,7 @@ public class DreamGifts extends javax.swing.JFrame {
     }
     
     private void crearPanelVentas() {
-        JPanel venta = new VentaView();
+        venta = new VentaView();
         JPanel confirmacionPago = new ConfirmacionPagoView();
         JPanel destinos = new ListaDestinosView();
         JPanel despachos = new ActualizacionDespachoView();
@@ -74,7 +76,7 @@ public class DreamGifts extends javax.swing.JFrame {
     }
         
     private void crearPanelAdmin() {
-        JPanel cliente = new ClienteView();
+        JPanel cliente = new ClienteView(this);
         JPanel proveedor = new ProveedorView();
         JPanel articulo = new ArticuloView();
         JPanel pack = new PackView();
@@ -94,7 +96,6 @@ public class DreamGifts extends javax.swing.JFrame {
         jTabbedPaneAdmin.addTab("Bancos", banco);
         jTabbedPaneAdmin.addTab("Estados Venta", estadoVenta);
         jTabbedPaneAdmin.addTab("Usuarios", usuario);
-        
     }
 
     /**
@@ -562,6 +563,10 @@ public class DreamGifts extends javax.swing.JFrame {
         showTabbedPaneAndTab(jTabbedPaneInformes, "informes", evt);
     }
     
+    public void showVentasTab(int tab) {
+        showTabbedPaneAndTab(jTabbedPaneVentas, "ventas", tab);
+    }
+    
     private void showTabbedPaneAndTab(JTabbedPane pane, String card, ActionEvent evt) {
         JMenuItem menuItem = (JMenuItem) evt.getSource(); 
         JPopupMenu popupMenu = (JPopupMenu) menuItem.getParent(); 
@@ -571,7 +576,7 @@ public class DreamGifts extends javax.swing.JFrame {
         pane.setSelectedIndex(tabIndex);
     }
     
-    public void showTabbedPaneAndTab(JTabbedPane pane, String card, int tab) {
+    private void showTabbedPaneAndTab(JTabbedPane pane, String card, int tab) {
         CardLayout c = (CardLayout) mainContainer.getLayout();
         c.show(mainContainer, card);
         pane.setSelectedIndex(tab);

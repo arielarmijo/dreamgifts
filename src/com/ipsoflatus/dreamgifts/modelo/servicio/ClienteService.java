@@ -19,6 +19,6 @@ public class ClienteService extends AbstractService<Cliente> {
 
     public Cliente buscarPorRut(String rut) {
         return ((ClienteDao) dao).findByRut(rut);
-    }
-
+    }  
+    
 }

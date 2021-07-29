@@ -6,6 +6,7 @@ import com.ipsoflatus.dreamgifts.modelo.combobox.ComunaComboBoxModel;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ClienteService;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ComunaService;
 import com.ipsoflatus.dreamgifts.modelo.table.ClienteTableModel;
+import com.ipsoflatus.dreamgifts.vista.DreamGifts;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
@@ -15,11 +16,13 @@ import javax.swing.JTextField;
 public class ClienteView extends JPanel {
 
     private final ClienteController controlador;
+    private DreamGifts root;
     
     /**
      * Creates new form PanelCliente
      */
-    public ClienteView() {
+    public ClienteView(DreamGifts root) {
+        this.root = root;
         initComponents();
         controlador = new ClienteController();
         controlador.setView(this); 
@@ -369,7 +372,7 @@ controlador.grabar();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void jButtonVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVentaActionPerformed
-    
+    controlador.vender();
     }//GEN-LAST:event_jButtonVentaActionPerformed
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
@@ -387,6 +390,10 @@ controlador.activarSeleccionados();
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
    controlador.buscar();
     }//GEN-LAST:event_jButtonBuscarActionPerformed
+
+    public DreamGifts getRoot() {
+        return root;
+    }
 
     public JComboBox getjComboBoxComuna() {
         return jComboBoxComuna;

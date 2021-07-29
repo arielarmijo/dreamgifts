@@ -8,6 +8,7 @@ import com.ipsoflatus.dreamgifts.modelo.servicio.ClienteService;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ComunaService;
 import com.ipsoflatus.dreamgifts.modelo.table.ClienteTableModel;
 import com.ipsoflatus.dreamgifts.vista.admin.ClienteView;
+import com.ipsoflatus.dreamgifts.vista.ventas.VentaView;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
@@ -135,6 +136,20 @@ public class ClienteController implements Controller<ClienteView>{
     @Override
     public void seleccionarTodos() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void vender() {
+        int row = view.getjTable2().getSelectedRow();
+        if (row != -1) {
+            Cliente c = tableModel.getItem(row);
+            VentaView vv = ((VentaView) view.getRoot().venta);
+            vv.getTxfRut().setText(c.getRut());
+            vv.getTxfNombreCliente().setText(c.getNombre());
+            vv.getTxfTelefonoCliente().setText(c.getTelefono());
+            vv.getTxfEmailCliente().setText(c.getCorreo());
+        }
+        
+        view.getRoot().showVentasTab(0);
     }
     
 }
