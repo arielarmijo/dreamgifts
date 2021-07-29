@@ -94,7 +94,6 @@ public class DreamGifts extends javax.swing.JFrame {
         jTabbedPaneAdmin.addTab("Bancos", banco);
         jTabbedPaneAdmin.addTab("Estados Venta", estadoVenta);
         jTabbedPaneAdmin.addTab("Usuarios", usuario);
-        ((ClienteView)cliente).setRoot(this);
         
     }
 

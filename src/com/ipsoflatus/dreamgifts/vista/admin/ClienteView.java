@@ -15,7 +15,6 @@ import javax.swing.JTextField;
 public class ClienteView extends JPanel {
 
     private final ClienteController controlador;
-    private DreamGifts root;
     
     /**
      * Creates new form PanelCliente
@@ -25,79 +24,7 @@ public class ClienteView extends JPanel {
         controlador = new ClienteController();
         controlador.setView(this); 
     }
-
-    public JComboBox getjComboBoxComuna() {
-        return jComboBoxComuna;
-    }
-
-    public DatePicker getDatePicker() {
-        return datePicker;
-    }
-
-    public JTable getjTable2() {
-        return jTable2;
-    }
-
-    public JTextField getjTextFieldBuscar() {
-        return jTextFieldBuscar;
-    }
-
-    public JTextField getjTextFieldApellido() {
-        return jTextFieldApellido;
-    }
-
-    public JTextField getjTextFieldCelular() {
-        return jTextFieldCelular;
-    }
-
-    public JTextField getjTextFieldDireccion() {
-        return jTextFieldDireccion;
-    }
-
-    public JTextField getjTextFieldEmail() {
-        return jTextFieldEmail;
-    }
-
-    public JTextField getjTextFieldNombre() {
-        return jTextFieldNombre;
-    }
-
-    public JTextField getjTextFieldRut() {
-        return jTextFieldRut;
-    }
-
-    public JTextField getjTextFieldTelefono() {
-        return jTextFieldTelefono;
-    }
-
-    public void setjButtonActivar(JButton jButtonActivar) {
-        this.jButtonActivar = jButtonActivar;
-    }
-
-    public void setjButtonCancelar(JButton jButtonCancelar) {
-        this.jButtonCancelar = jButtonCancelar;
-    }
-
-    public void setjButtonEditar(JButton jButtonEditar) {
-        this.jButtonEditar = jButtonEditar;
-    }
-
-    public void setjButtonGuardar(JButton jButtonGuardar) {
-        this.jButtonGuardar = jButtonGuardar;
-    }
-
-    public void setjButtonVenta(JButton jButtonVenta) {
-        this.jButtonVenta = jButtonVenta;
-    }
-
-    public void setjButtondesactivar(JButton jButtondesactivar) {
-        this.jButtondesactivar = jButtondesactivar;
-    }
     
-    public void setRoot(DreamGifts root){
-        this.root = root;
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -461,6 +388,74 @@ controlador.activarSeleccionados();
    controlador.buscar();
     }//GEN-LAST:event_jButtonBuscarActionPerformed
 
+    public JComboBox getjComboBoxComuna() {
+        return jComboBoxComuna;
+    }
+
+    public DatePicker getDatePicker() {
+        return datePicker;
+    }
+
+    public JTable getjTable2() {
+        return jTable2;
+    }
+
+    public JTextField getjTextFieldBuscar() {
+        return jTextFieldBuscar;
+    }
+
+    public JTextField getjTextFieldApellido() {
+        return jTextFieldApellido;
+    }
+
+    public JTextField getjTextFieldCelular() {
+        return jTextFieldCelular;
+    }
+
+    public JTextField getjTextFieldDireccion() {
+        return jTextFieldDireccion;
+    }
+
+    public JTextField getjTextFieldEmail() {
+        return jTextFieldEmail;
+    }
+
+    public JTextField getjTextFieldNombre() {
+        return jTextFieldNombre;
+    }
+
+    public JTextField getjTextFieldRut() {
+        return jTextFieldRut;
+    }
+
+    public JTextField getjTextFieldTelefono() {
+        return jTextFieldTelefono;
+    }
+
+    public void setjButtonActivar(JButton jButtonActivar) {
+        this.jButtonActivar = jButtonActivar;
+    }
+
+    public void setjButtonCancelar(JButton jButtonCancelar) {
+        this.jButtonCancelar = jButtonCancelar;
+    }
+
+    public void setjButtonEditar(JButton jButtonEditar) {
+        this.jButtonEditar = jButtonEditar;
+    }
+
+    public void setjButtonGuardar(JButton jButtonGuardar) {
+        this.jButtonGuardar = jButtonGuardar;
+    }
+
+    public void setjButtonVenta(JButton jButtonVenta) {
+        this.jButtonVenta = jButtonVenta;
+    }
+
+    public void setjButtondesactivar(JButton jButtondesactivar) {
+        this.jButtondesactivar = jButtondesactivar;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.github.lgooddatepicker.components.DatePicker datePicker;
     private javax.swing.JButton jButtonActivar;

@@ -56,7 +56,13 @@ public class VentaController {
         Integer clienteId = cliente.getId();
         
         String nombreDestinatario = view.getTxfNombreDestinatario().getText().split("\\ ")[0];
-        String apellidoDestinatario = view.getTxfNombreDestinatario().getText().split("\\ ")[1];
+        String apellidoDestinatario = "";
+        try {
+            apellidoDestinatario = view.getTxfNombreDestinatario().getText().split("\\ ")[1];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            mostrarInformacion("Ingrese nombre y apellido.");
+        }
+        
         String telefonoDestinatario = view.getTxfTelefonoDestinatario().getText();
         String direccionDestinatario = view.getTxfDireccionDestinatario().getText();
         if (nombreDestinatario.isEmpty() || apellidoDestinatario.isEmpty() ||
@@ -100,6 +106,7 @@ public class VentaController {
         venta.setHoraEntregaInicial(horaEntregaInicial);
         venta.setHoraEntregaFinal(horaEntregaFinal);
         venta.setSaludo(saludo);
+        venta.setPackId(packId);
         
         ventaSrv.guardar(venta);
         

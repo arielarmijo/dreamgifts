@@ -18,7 +18,7 @@ public class VentaDao implements DAO<Venta> {
     
     public VentaDao() {
         this.tableName = "ventas";
-        this.atributos = "cliente_id, total, fecha_venta, fecha_transferencia, codigo_transferencia, banco_id, nombre_destinatario, apellido_destinatario, direccion_destinatario, comuna_id, telefono_destinatario, fecha_entrga, hora_entrega_inicial, hora_entrega_final, saludo, rrss_id, estado_venta_id";
+        this.atributos = "id, cliente_id, total, fecha_venta, fecha_transferencia, codigo_transferencia, banco_id, nombre_destinatario, apellido_destinatario, direccion_destinatario, comuna_id, telefono_destinatario, fecha_entrega, hora_entrega_inicial, hora_entrega_final, saludo, rrss_id, estado_venta_id, pack_id";
     }
     
     @Override
@@ -66,8 +66,8 @@ public class VentaDao implements DAO<Venta> {
         ps.setInt(2, v.getTotal());
         ps.setDate(3, v.getFechaVenta());
         ps.setDate(4, v.getFechaTransferencia());
-        ps.setInt(5, v.getCodigoTransferencia());
-        ps.setInt(6, v.getBancoId());
+        ps.setObject(5, v.getCodigoTransferencia());
+        ps.setObject(6, v.getBancoId());
         ps.setString(7, v.getNombreDestinatario());
         ps.setString(8, v.getApellidoDestinatario());
         ps.setString(9, v.getDireccionDestinatario());
@@ -77,8 +77,9 @@ public class VentaDao implements DAO<Venta> {
         ps.setTime(13, v.getHoraEntregaInicial());
         ps.setTime(14, v.getHoraEntregaFinal());
         ps.setString(15, v.getSaludo());
-        ps.setInt(16, v.getRrssId());
-        ps.setInt(17, v.getEstadoVentaId());
+        ps.setObject(16, v.getRrssId());
+        ps.setObject(17, v.getEstadoVentaId());
+        ps.setInt(18, v.getPackId());
         System.out.println(ps);
     }
     
