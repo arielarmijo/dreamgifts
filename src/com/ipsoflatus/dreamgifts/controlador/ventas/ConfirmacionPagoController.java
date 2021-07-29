@@ -1,10 +1,13 @@
 package com.ipsoflatus.dreamgifts.controlador.ventas;
 
+import com.ipsoflatus.dreamgifts.modelo.entidad.Banco;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Cliente;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Venta;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ClienteService;
+import com.ipsoflatus.dreamgifts.modelo.servicio.VentaService;
 import com.ipsoflatus.dreamgifts.modelo.table.ConfirmacionPagoTableModel;
 import com.ipsoflatus.dreamgifts.vista.ventas.ConfirmacionPagoView;
+import java.sql.Date;
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
 
@@ -12,12 +15,15 @@ public class ConfirmacionPagoController {
 
     private final ConfirmacionPagoView view;
     private final ClienteService clienteSrv = ClienteService.getInstance();
+    private final VentaService ventaSrv = VentaService.getInstance();
+    private Venta ventaActual;
     
     public ConfirmacionPagoController(ConfirmacionPagoView view) {
         this.view = view;
     }
     
     public void cancelar() {
+        ventaActual = null;
         view.getTxfVentaId().setText("");
         view.getTxfNombreCliente().setText("");
         view.getTxfRut().setText("");
@@ -27,7 +33,42 @@ public class ConfirmacionPagoController {
     }
 
     public void confirmarPago() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        if (ventaActual == null) {
+           mostrarInformacion("Seleccione venta a actualizar.");
+            return; 
+        }
+        
+        LocalDate date = view.getDpFechaPago().getDate();
+        Date fechaPago = Date.valueOf(date);
+        
+        Banco banco = (Banco) view.getCbxBancos().getSelectedItem();
+        Integer bancoId = banco.getId();
+        if (bancoId == null) {
+            mostrarInformacion("Seleccione banco.");
+            return;
+        }
+        
+        String codigoTransaccion = view.getTxfCodigoTransaccion().getText();
+        if (codigoTransaccion.isEmpty()) {
+            mostrarInformacion("Ingrese código de transacción.");
+            return;
+        }
+        
+        Integer codigo = null;
+        try {
+            codigo = Integer.valueOf(codigoTransaccion);
+        } catch (Exception e) {
+            mostrarInformacion("Ingrese un código numérico.");
+            return;
+        }
+        
+        ventaActual.setBancoId(bancoId);
+        ventaActual.setFechaTransferencia(fechaPago);
+        ventaActual.setCodigoTransferencia(codigo);
+        ventaSrv.editar(ventaActual);
+        cancelar();
+        
     }
 
     public void buscarVenta() {
@@ -41,12 +82,11 @@ public class ConfirmacionPagoController {
             return;
         }
         ConfirmacionPagoTableModel tableModel = (ConfirmacionPagoTableModel) this.view.getjTable().getModel();
-        Venta v = tableModel.getItem(row);
-        view.getTxfVentaId().setText(v.getId().toString());
-        Cliente c = clienteSrv.buscar(v.getClienteId());
+        ventaActual = tableModel.getItem(row);
+        view.getTxfVentaId().setText(ventaActual.getId().toString());
+        Cliente c = clienteSrv.buscar(ventaActual.getClienteId());
         view.getTxfNombreCliente().setText(c.getNombre() + " " + c.getApellido());
         view.getTxfRut().setText(c.getRut());
-
     }
     
     private void mostrarInformacion(String mensaje) {

@@ -20,7 +20,7 @@ public class Banco {
         this.estado = estado;
     }
     
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

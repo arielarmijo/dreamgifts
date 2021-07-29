@@ -21,6 +21,10 @@ public class RedSocial {
         this.estado = estado;
     }
 
+    public RedSocial(String nombre) {
+        this(null, null, nombre, false);
+    }
+
     public Integer getId() {
         return id;
     }
@@ -55,7 +59,7 @@ public class RedSocial {
     
     @Override
     public String toString() {
-        return "RRSS{" + "id=" + id + ", codigo=" + codigo + ", nombre=" + nombre  + '}';
+        return nombre;
     }
     
 }

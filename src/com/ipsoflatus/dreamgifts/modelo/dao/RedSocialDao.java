@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class RedSocialDao {
+public class RedSocialDao implements DAO<RedSocial> {
     
     public List<RedSocial> findAll() {
         List<RedSocial> rrss = new ArrayList<>();
@@ -168,6 +168,11 @@ public class RedSocialDao {
         redSocial.setNombre(rs.getString(3));
         redSocial.setEstado(rs.getBoolean(4));
         return redSocial;
+    }
+
+    @Override
+    public void updateStateByIds(List<Integer> ids, boolean estado) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
    
 }

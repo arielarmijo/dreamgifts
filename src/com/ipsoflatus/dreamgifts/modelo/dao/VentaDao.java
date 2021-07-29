@@ -60,6 +60,7 @@ public class VentaDao implements DAO<Venta> {
         try (Connection conn = MySQLConection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             setInsertPS(ps, c);
+            System.out.println(ps);
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -68,8 +69,19 @@ public class VentaDao implements DAO<Venta> {
     }
 
     @Override
-    public void update(Venta t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void update(Venta v) {
+        String setValues = mapAttributes(atributos.replaceFirst("id,\\ ", ""), s -> s + " = ?");
+        String sql = String.format("UPDATE %s SET %s WHERE id = ?", tableName, setValues);
+        try (Connection conn = MySQLConection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            setInsertPS(ps, v);
+            ps.setInt(19, v.getId());
+            System.out.println(ps);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DreamGiftsException(e.getMessage());
+        }
     }
 
     @Override
@@ -120,7 +132,6 @@ public class VentaDao implements DAO<Venta> {
         ps.setObject(16, v.getRrssId());
         ps.setObject(17, v.getEstadoVentaId());
         ps.setInt(18, v.getPackId());
-        System.out.println(ps);
     }
     
     private String mapAttributes(String atributos, Function<String, String> mapper) {

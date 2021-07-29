@@ -108,6 +108,7 @@ public class VentaController {
         venta.setSaludo(saludo);
         venta.setPackId(packId);
         venta.setEstadoVentaId(1);
+        venta.setRrssId(1);
         
         ventaSrv.guardar(venta);
         
