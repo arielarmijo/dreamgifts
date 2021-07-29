@@ -3,6 +3,7 @@ package com.ipsoflatus.dreamgifts.controlador.ventas;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Cliente;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Comuna;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Pack;
+import com.ipsoflatus.dreamgifts.modelo.entidad.RedSocial;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Venta;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ClienteService;
 import com.ipsoflatus.dreamgifts.modelo.servicio.VentaService;
@@ -42,6 +43,7 @@ public class VentaController {
         view.getTxaSaludo().setText("");
         view.getCbxComunas().setSelectedIndex(0);
         view.getCbxPacks().setSelectedIndex(0);
+        view.getCbxRRSS().setSelectedIndex(0);
         view.getDpFechaEntrega().setDate(LocalDate.now());
         view.getTpHoraInicio().setTime(LocalTime.of(8,0,0));
         view.getTpHoraTermino().setTime(LocalTime.of(20,0,0));
@@ -49,25 +51,35 @@ public class VentaController {
 
     public void grabar() {
         
+         buscar();
+         
         if (cliente == null) {
-            mostrarInformacion("La venta debe estar asociada a un cliente.");
-            return;
+           return;
         }
         Integer clienteId = cliente.getId();
         
         String nombreDestinatario = view.getTxfNombreDestinatario().getText().split("\\ ")[0];
-        String apellidoDestinatario = "";
+        String apellidoDestinatario;
         try {
             apellidoDestinatario = view.getTxfNombreDestinatario().getText().split("\\ ")[1];
         } catch (ArrayIndexOutOfBoundsException e) {
             mostrarInformacion("Ingrese nombre y apellido.");
+            return;
+        }
+        
+        if(nombreDestinatario.isEmpty() || apellidoDestinatario.isEmpty()) {
+           mostrarInformacion("Ingrese nombre destinatario.");
+            return; 
         }
         
         String telefonoDestinatario = view.getTxfTelefonoDestinatario().getText();
+        if (telefonoDestinatario.isEmpty()) {
+            mostrarInformacion("Ingrese teléfono destinatario.");
+            return;
+        }
         String direccionDestinatario = view.getTxfDireccionDestinatario().getText();
-        if (nombreDestinatario.isEmpty() || apellidoDestinatario.isEmpty() ||
-            telefonoDestinatario.isEmpty() || direccionDestinatario.isEmpty()) {
-            mostrarInformacion("Complete los datos del destinatario.");
+        if (direccionDestinatario.isEmpty()) {
+            mostrarInformacion("Ingrese dirección del destinatario.");
             return;
         }
         
@@ -76,7 +88,7 @@ public class VentaController {
         Comuna comuna = (Comuna) view.getCbxComunas().getSelectedItem();
         Integer comunaId = comuna.getId();
         if (comunaId == null) {
-            mostrarInformacion("Selecciones comuna.");
+            mostrarInformacion("Seleccione comuna.");
             return;
         }
         
@@ -93,6 +105,13 @@ public class VentaController {
         Time horaEntregaInicial = Time.valueOf(view.getTpHoraInicio().getTime());
         Time horaEntregaFinal = Time.valueOf(view.getTpHoraTermino().getTime());
         
+        RedSocial rs = (RedSocial) view.getCbxRRSS().getSelectedItem();
+        Integer rsId = rs.getId();
+        if (rsId == null) {
+            mostrarInformacion("Selecciones red social.");
+            return;
+        }
+        
         Venta venta = new Venta();
         venta.setClienteId(clienteId);
         venta.setTotal(total);
@@ -108,10 +127,10 @@ public class VentaController {
         venta.setSaludo(saludo);
         venta.setPackId(packId);
         venta.setEstadoVentaId(1);
-        venta.setRrssId(1);
+        venta.setRrssId(rsId);
         
         ventaSrv.guardar(venta);
-        
+        cancelar();
     }
 
     public void buscar() {
