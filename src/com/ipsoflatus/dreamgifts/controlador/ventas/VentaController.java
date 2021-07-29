@@ -107,6 +107,7 @@ public class VentaController {
         venta.setHoraEntregaFinal(horaEntregaFinal);
         venta.setSaludo(saludo);
         venta.setPackId(packId);
+        venta.setEstadoVentaId(1);
         
         ventaSrv.guardar(venta);
         
