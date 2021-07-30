@@ -159,6 +159,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txfVentaId">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
@@ -169,6 +172,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txfRut">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
@@ -197,6 +203,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txfNombreCliente">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">
           <Properties>

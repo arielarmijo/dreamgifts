@@ -76,8 +76,12 @@ public class ConfirmacionPagoView extends javax.swing.JPanel {
         jLabel1.setText("Numero Pedido");
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
+        txfVentaId.setEditable(false);
+
         jLabel2.setText("Rut");
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        txfRut.setEditable(false);
 
         jLabel4.setText("Banco");
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -86,6 +90,8 @@ public class ConfirmacionPagoView extends javax.swing.JPanel {
 
         jLabel5.setText("Nombre Cliente");
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        txfNombreCliente.setEditable(false);
 
         jLabel6.setText("Fecha Pago");
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N

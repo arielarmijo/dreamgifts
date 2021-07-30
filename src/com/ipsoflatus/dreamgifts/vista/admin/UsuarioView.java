@@ -58,10 +58,10 @@ public class UsuarioView extends JPanel {
         jPanelBotonesTablaUsuarios = new javax.swing.JPanel();
         jButtonDesactivar = new javax.swing.JButton();
         jButtonActivar = new javax.swing.JButton();
-        jToggleButtonSeleccion = new javax.swing.JToggleButton();
-        jPanel1 = new javax.swing.JPanel();
         jButtonEditar = new javax.swing.JButton();
         jButtonBorrar = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jToggleButtonSeleccion = new javax.swing.JToggleButton();
 
         setMinimumSize(new java.awt.Dimension(850, 500));
 
@@ -226,7 +226,7 @@ public class UsuarioView extends JPanel {
             jPanelBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBuscarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextFieldBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
+                .addComponent(jTextFieldBuscar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonBuscar)
                 .addContainerGap())
@@ -280,37 +280,6 @@ public class UsuarioView extends JPanel {
             }
         });
 
-        jToggleButtonSeleccion.setText("Seleccionar todos");
-        jToggleButtonSeleccion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButtonSeleccionActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanelBotonesTablaUsuariosLayout = new javax.swing.GroupLayout(jPanelBotonesTablaUsuarios);
-        jPanelBotonesTablaUsuarios.setLayout(jPanelBotonesTablaUsuariosLayout);
-        jPanelBotonesTablaUsuariosLayout.setHorizontalGroup(
-            jPanelBotonesTablaUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBotonesTablaUsuariosLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jToggleButtonSeleccion, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonDesactivar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonActivar)
-                .addContainerGap())
-        );
-        jPanelBotonesTablaUsuariosLayout.setVerticalGroup(
-            jPanelBotonesTablaUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelBotonesTablaUsuariosLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelBotonesTablaUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonActivar)
-                    .addComponent(jButtonDesactivar)
-                    .addComponent(jToggleButtonSeleccion))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
         jButtonEditar.setText("Editar");
         jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -325,25 +294,52 @@ public class UsuarioView extends JPanel {
             }
         });
 
+        javax.swing.GroupLayout jPanelBotonesTablaUsuariosLayout = new javax.swing.GroupLayout(jPanelBotonesTablaUsuarios);
+        jPanelBotonesTablaUsuarios.setLayout(jPanelBotonesTablaUsuariosLayout);
+        jPanelBotonesTablaUsuariosLayout.setHorizontalGroup(
+            jPanelBotonesTablaUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBotonesTablaUsuariosLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButtonActivar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButtonDesactivar)
+                .addContainerGap())
+        );
+        jPanelBotonesTablaUsuariosLayout.setVerticalGroup(
+            jPanelBotonesTablaUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelBotonesTablaUsuariosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelBotonesTablaUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonActivar)
+                    .addComponent(jButtonDesactivar)
+                    .addComponent(jButtonEditar)
+                    .addComponent(jButtonBorrar))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jToggleButtonSeleccion.setText("Seleccionar todos");
+        jToggleButtonSeleccion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButtonSeleccionActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButtonEditar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonBorrar)
-                .addContainerGap())
+            .addComponent(jToggleButtonSeleccion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonEditar)
-                    .addComponent(jButtonBorrar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jToggleButtonSeleccion)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanelListadoLayout = new javax.swing.GroupLayout(jPanelListado);
@@ -359,7 +355,7 @@ public class UsuarioView extends JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanelBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelListadoLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(85, 264, Short.MAX_VALUE)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jPanelBotonesTablaUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))

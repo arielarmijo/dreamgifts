@@ -254,7 +254,6 @@ public class ClienteView extends JPanel {
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
 
         jButtonActivar.setText("Activar");
-        jButtonActivar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButtonActivar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonActivarActionPerformed(evt);
@@ -262,7 +261,6 @@ public class ClienteView extends JPanel {
         });
 
         jButtondesactivar.setText("Desactivar");
-        jButtondesactivar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButtondesactivar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtondesactivarActionPerformed(evt);
@@ -270,7 +268,6 @@ public class ClienteView extends JPanel {
         });
 
         jButtonEditar.setText("Editar");
-        jButtonEditar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonEditarActionPerformed(evt);
@@ -278,7 +275,6 @@ public class ClienteView extends JPanel {
         });
 
         jButtonVenta.setText("Venta");
-        jButtonVenta.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButtonVenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonVentaActionPerformed(evt);
@@ -291,11 +287,11 @@ public class ClienteView extends JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButtonVenta)
+                .addComponent(jButtonVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButtonEditar)
+                .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButtonActivar)
+                .addComponent(jButtonActivar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButtondesactivar)
                 .addContainerGap())
@@ -312,8 +308,8 @@ public class ClienteView extends JPanel {
                 .addContainerGap())
         );
 
-        jButtonBuscar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButtonBuscar.setText("Buscar");
+        jButtonBuscar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButtonBuscar.setToolTipText("");
         jButtonBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -349,7 +345,7 @@ public class ClienteView extends JPanel {
                     .addComponent(jButtonBuscar)
                     .addComponent(jTextFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(17, 17, 17)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
