@@ -164,7 +164,15 @@ public class VentaController {
     
     private Integer obtenerTotal() {
         Pack pack = (Pack) view.getCbxPacks().getSelectedItem();
-        return pack.getCosto() == null ? 0 : pack.getCosto();
+        Integer costo;      
+        try {
+            costo = pack.getCosto();
+            return costo;
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            return 0;
+        }
+        
     }
 
 }
