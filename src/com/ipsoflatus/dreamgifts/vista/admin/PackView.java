@@ -13,7 +13,6 @@ import com.ipsoflatus.dreamgifts.modelo.list.ArticuloListModel;
 import com.ipsoflatus.dreamgifts.modelo.list.PackHasArticuloCellRenderer;
 import com.ipsoflatus.dreamgifts.modelo.servicio.CategoriaArticuloService;
 import com.ipsoflatus.dreamgifts.modelo.table.PackTableModel;
-import com.ipsoflatus.dreamgifts.modelo.textfield.NumberVerifier;
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
 import javax.swing.JList;

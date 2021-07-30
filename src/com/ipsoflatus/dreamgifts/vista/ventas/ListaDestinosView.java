@@ -6,7 +6,7 @@
 package com.ipsoflatus.dreamgifts.vista.ventas;
 
 import com.ipsoflatus.dreamgifts.modelo.servicio.VentaService;
-import com.ipsoflatus.dreamgifts.modelo.table.ListaDestinoTableModel;
+import com.ipsoflatus.dreamgifts.modelo.table.ventas.ListaDestinoTableModel;
 
 /**
  *

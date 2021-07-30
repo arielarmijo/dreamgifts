@@ -5,7 +5,7 @@ import com.ipsoflatus.dreamgifts.modelo.entidad.Cliente;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Venta;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ClienteService;
 import com.ipsoflatus.dreamgifts.modelo.servicio.VentaService;
-import com.ipsoflatus.dreamgifts.modelo.table.ConfirmacionPagoTableModel;
+import com.ipsoflatus.dreamgifts.modelo.table.ventas.ConfirmacionPagoTableModel;
 import com.ipsoflatus.dreamgifts.vista.ventas.ConfirmacionPagoView;
 import java.sql.Date;
 import java.time.LocalDate;

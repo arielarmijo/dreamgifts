@@ -2,22 +2,27 @@ package com.ipsoflatus.dreamgifts.controlador.ventas;
 
 import com.ipsoflatus.dreamgifts.modelo.entidad.Cliente;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Comuna;
+import com.ipsoflatus.dreamgifts.modelo.entidad.EstadoVenta;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Pack;
 import com.ipsoflatus.dreamgifts.modelo.entidad.RedSocial;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Venta;
+import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ClienteService;
+import com.ipsoflatus.dreamgifts.modelo.servicio.EVService;
 import com.ipsoflatus.dreamgifts.modelo.servicio.VentaService;
 import com.ipsoflatus.dreamgifts.vista.ventas.VentaView;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 public class VentaController {
     
     private final ClienteService clienteSrv;
     private final VentaService ventaSrv;
+    private final EVService evSrv;
     private final VentaView view;
     private Cliente cliente;
     
@@ -25,6 +30,7 @@ public class VentaController {
         this.view = view;
         this.clienteSrv = ClienteService.getInstance();
         this.ventaSrv = VentaService.getInstance();
+        this.evSrv = EVService.getInstance();
     }
 
     public void limpiar() {
@@ -59,17 +65,17 @@ public class VentaController {
         Integer clienteId = cliente.getId();
         
         String nombreDestinatario = view.getTxfNombreDestinatario().getText().split("\\ ")[0];
+         if(nombreDestinatario.isEmpty()) {
+           mostrarInformacion("Ingrese nombre destinatario.");
+            return; 
+        }
+         
         String apellidoDestinatario;
         try {
             apellidoDestinatario = view.getTxfNombreDestinatario().getText().split("\\ ")[1];
         } catch (ArrayIndexOutOfBoundsException e) {
-            mostrarInformacion("Ingrese nombre y apellido.");
+            mostrarInformacion("Ingrese apellido destinatario.");
             return;
-        }
-        
-        if(nombreDestinatario.isEmpty() || apellidoDestinatario.isEmpty()) {
-           mostrarInformacion("Ingrese nombre destinatario.");
-            return; 
         }
         
         String telefonoDestinatario = view.getTxfTelefonoDestinatario().getText();
@@ -126,11 +132,21 @@ public class VentaController {
         venta.setHoraEntregaFinal(horaEntregaFinal);
         venta.setSaludo(saludo);
         venta.setPackId(packId);
-        venta.setEstadoVentaId(1);
         venta.setRrssId(rsId);
         
-        ventaSrv.guardar(venta);
-        cancelar();
+        try {
+            List<EstadoVenta> eevv = evSrv.buscar();
+            if (eevv.isEmpty())
+               throw new DreamGiftsException("No hay estados de ventas creados.");
+            EstadoVenta ev = eevv.get(0);    
+            venta.setEstadoVentaId(ev.getId());
+            ventaSrv.guardar(venta);
+            mostrarInformacion("Venta creada exitosamente.");
+            cancelar();
+        } catch (DreamGiftsException e) {
+            mostrarError(e.getMessage());
+        }
+        
     }
 
     public void buscar() {
