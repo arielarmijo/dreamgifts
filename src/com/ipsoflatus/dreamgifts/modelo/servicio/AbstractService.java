@@ -4,17 +4,20 @@ import com.ipsoflatus.dreamgifts.modelo.Observer;
 import com.ipsoflatus.dreamgifts.modelo.dao.DAO;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public abstract class AbstractService<T> implements Service<T>, ObservableService<Observer<T>> {
 
     protected DAO<T> dao;
     private final List<Observer<T>> obs;
-    
+    private final ExecutorService executor = Executors.newFixedThreadPool(10);
+
     public AbstractService(DAO dao) {
         this.dao = dao;
         this.obs = new ArrayList<>();
     }
-    
+
     @Override
     public List<T> buscar() {
         return dao.findAll();
@@ -51,14 +54,18 @@ public abstract class AbstractService<T> implements Service<T>, ObservableServic
     @Override
     public void addObserver(Observer<T> o) {
         this.obs.add(o);
-        o.actualizar(dao.findAll());
+        executor.execute(() -> {
+            o.actualizar(dao.findAll());
+        });
     }
 
     @Override
     public void notifyObservers() {
-        obs.forEach(o -> {
-            o.actualizar(dao.findAll());
+        executor.execute(() -> {
+            obs.forEach(o -> {
+                o.actualizar(dao.findAll());
+            });
         });
     }
-    
+
 }
