@@ -45,7 +45,6 @@ public class BancoController implements Controller<BancoView> {
             if (bancoActual == null) {
                service.guardar(new Banco(codigo, nombre, true));
             }else{
-        
                 bancoActual.setCodigo(codigo);
                 bancoActual.setNombre(nombre);
                 service.editar(bancoActual);
