@@ -2,18 +2,23 @@ package com.ipsoflatus.dreamgifts.controlador.ventas;
 
 import com.ipsoflatus.dreamgifts.modelo.entidad.Banco;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Cliente;
+import com.ipsoflatus.dreamgifts.modelo.entidad.EstadoVenta;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Venta;
+import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ClienteService;
+import com.ipsoflatus.dreamgifts.modelo.servicio.EVService;
 import com.ipsoflatus.dreamgifts.modelo.servicio.VentaService;
 import com.ipsoflatus.dreamgifts.modelo.table.ventas.ConfirmacionPagoTableModel;
 import com.ipsoflatus.dreamgifts.vista.ventas.ConfirmacionPagoView;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 public class ConfirmacionPagoController {
 
     private final ConfirmacionPagoView view;
+    private final EVService evSrv = EVService.getInstance();
     private final ClienteService clienteSrv = ClienteService.getInstance();
     private final VentaService ventaSrv = VentaService.getInstance();
     private Venta ventaActual;
@@ -66,8 +71,22 @@ public class ConfirmacionPagoController {
         ventaActual.setBancoId(bancoId);
         ventaActual.setFechaTransferencia(fechaPago);
         ventaActual.setCodigoTransferencia(codigo);
-        ventaSrv.editar(ventaActual);
-        cancelar();
+        
+        
+        try {
+            List<EstadoVenta> eevv = evSrv.buscar();
+            eevv.forEach(System.out::println);
+            if (eevv.size() < 2)
+               throw new DreamGiftsException("No hay suficientes estados de ventas creados.");
+            EstadoVenta ev = eevv.get(1);
+            System.out.println(ev.getNombre());
+            ventaActual.setEstadoVentaId(ev.getId());
+            ventaSrv.editar(ventaActual);
+            mostrarInformacion("Pago registrado.");
+            cancelar();
+        } catch (DreamGiftsException e) {
+            mostrarError(e.getMessage());
+        }
         
     }
 
@@ -91,6 +110,10 @@ public class ConfirmacionPagoController {
     
     private void mostrarInformacion(String mensaje) {
         JOptionPane.showMessageDialog(null, mensaje, "Información", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    private void mostrarError(String error) {
+        JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
 }

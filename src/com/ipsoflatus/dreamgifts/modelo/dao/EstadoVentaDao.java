@@ -26,7 +26,7 @@ public class EstadoVentaDao implements DAO<EstadoVenta> {
     @Override
     public List<EstadoVenta> findAll() {
     List<EstadoVenta> eevv = new ArrayList<>();
-        String sql = "SELECT id, codigo, nombre, descripcion, estado FROM estados_venta ORDER BY codigo";
+        String sql = "SELECT id, codigo, nombre, descripcion, estado FROM estados_venta";
         try (Connection conn = MySQLConection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
