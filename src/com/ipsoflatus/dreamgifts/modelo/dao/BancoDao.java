@@ -129,7 +129,7 @@ public class BancoDao implements DAO<Banco> {
             conn.setAutoCommit(true);
         } catch (SQLException e) {
             e.printStackTrace();
-            //throw new DreamGiftsException(e.getMessage());
+            throw new DreamGiftsException(e.getMessage());
         }
     }
     
