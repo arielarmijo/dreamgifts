@@ -169,7 +169,7 @@ public class VentaController {
             costo = pack.getCosto();
             return costo;
         } catch (NullPointerException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             return 0;
         }
         

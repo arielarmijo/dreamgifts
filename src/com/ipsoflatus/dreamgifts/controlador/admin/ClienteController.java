@@ -146,7 +146,7 @@ public class ClienteController implements Controller<ClienteView> {
             Cliente c = tableModel.getItem(row);
             VentaView vv = ((VentaView) view.getRoot().venta);
             vv.getTxfRut().setText(c.getRut());
-            vv.getTxfNombreCliente().setText(c.getNombre());
+            vv.getTxfNombreCliente().setText(c.getNombre() + " " + c.getApellido());
             vv.getTxfTelefonoCliente().setText(c.getTelefono());
             vv.getTxfEmailCliente().setText(c.getCorreo());
         }
