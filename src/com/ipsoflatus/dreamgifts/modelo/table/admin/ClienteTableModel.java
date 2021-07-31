@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ipsoflatus.dreamgifts.modelo.table;
+package com.ipsoflatus.dreamgifts.modelo.table.admin;
 
 import com.ipsoflatus.dreamgifts.modelo.entidad.Cliente;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ObservableService;
+import com.ipsoflatus.dreamgifts.modelo.table.ObservableTableModel;
 import java.sql.Date;
 
 /**

@@ -1,7 +1,7 @@
 package com.ipsoflatus.dreamgifts.vista.admin;
 
 import com.ipsoflatus.dreamgifts.controlador.admin.CategoriaArticuloController;
-import com.ipsoflatus.dreamgifts.modelo.table.CategoriaArticuloTableModel;
+import com.ipsoflatus.dreamgifts.modelo.table.admin.CategoriaArticuloTableModel;
 import com.ipsoflatus.dreamgifts.modelo.servicio.CategoriaArticuloService;
 import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;

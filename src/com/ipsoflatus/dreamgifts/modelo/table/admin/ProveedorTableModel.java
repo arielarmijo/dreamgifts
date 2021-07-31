@@ -1,9 +1,10 @@
-package com.ipsoflatus.dreamgifts.modelo.table;
+package com.ipsoflatus.dreamgifts.modelo.table.admin;
 
 import com.ipsoflatus.dreamgifts.modelo.entidad.Comuna;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Proveedor;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ComunaService;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ObservableService;
+import com.ipsoflatus.dreamgifts.modelo.table.ObservableTableModel;
 
 public class ProveedorTableModel extends ObservableTableModel<Proveedor> {
     

@@ -1,26 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package com.ipsoflatus.dreamgifts.modelo.table;
+package com.ipsoflatus.dreamgifts.modelo.table.admin;
 
-import com.ipsoflatus.dreamgifts.modelo.entidad.Comuna;
+import com.ipsoflatus.dreamgifts.modelo.entidad.CategoriaArticulo;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ObservableService;
+import com.ipsoflatus.dreamgifts.modelo.table.ObservableTableModel;
 
-/**
- *
- * @author Usuario
- */
-public class ComunaTableModel extends ObservableTableModel<Comuna> {
-
-    public ComunaTableModel(ObservableService service) {
+public class CategoriaArticuloTableModel extends ObservableTableModel<CategoriaArticulo> {
+    
+    public CategoriaArticuloTableModel(ObservableService service) {
         super(service);
     }
-
+    
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Comuna item = items.get(rowIndex);
+        CategoriaArticulo item = items.get(rowIndex);
         if (columnIndex == 0)
             return item.getCodigo();
         if (columnIndex == 1)
@@ -31,5 +23,5 @@ public class ComunaTableModel extends ObservableTableModel<Comuna> {
             return seleccionados.get(rowIndex);
         return null;
     }
-    
+
 }

@@ -6,7 +6,7 @@ import com.ipsoflatus.dreamgifts.modelo.entidad.Comuna;
 import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ClienteService;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ComunaService;
-import com.ipsoflatus.dreamgifts.modelo.table.ClienteTableModel;
+import com.ipsoflatus.dreamgifts.modelo.table.admin.ClienteTableModel;
 import com.ipsoflatus.dreamgifts.vista.admin.ClienteView;
 import com.ipsoflatus.dreamgifts.vista.ventas.VentaView;
 import java.sql.Date;

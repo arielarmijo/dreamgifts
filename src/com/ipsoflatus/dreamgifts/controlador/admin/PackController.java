@@ -10,7 +10,7 @@ import com.ipsoflatus.dreamgifts.modelo.list.ArticuloListModel;
 import com.ipsoflatus.dreamgifts.modelo.list.PackHasArticuloListModel;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ArticuloService;
 import com.ipsoflatus.dreamgifts.modelo.servicio.PackService;
-import com.ipsoflatus.dreamgifts.modelo.table.PackTableModel;
+import com.ipsoflatus.dreamgifts.modelo.table.admin.PackTableModel;
 import com.ipsoflatus.dreamgifts.vista.admin.PackView;
 import java.util.ArrayList;
 import java.util.List;
