@@ -27,8 +27,8 @@ public class PackController implements Controller<PackView> {
     private Pack packActual;
     
     public void filtrarArticulo() {
-        CategoriaArticulo ca = (CategoriaArticulo) view.getCbxCategoriaArticulo().getSelectedItem();
-        List<Articulo> articulos = ca.getId() == null ? articuloService.buscar() : ca.getArticulos();
+        //CategoriaArticulo ca = (CategoriaArticulo) view.getCbxCategoriaArticulo().getSelectedItem();
+        List<Articulo> articulos = articuloService.buscar();
         articuloListModel.actualizar(articulos);
     }
     

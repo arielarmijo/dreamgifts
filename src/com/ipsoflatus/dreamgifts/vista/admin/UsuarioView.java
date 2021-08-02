@@ -2,25 +2,22 @@ package com.ipsoflatus.dreamgifts.vista.admin;
 
 import com.ipsoflatus.dreamgifts.controlador.admin.UsuarioController;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Usuario;
+import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
+import com.ipsoflatus.dreamgifts.modelo.table.admin.UsuarioTableModel;
 import java.util.List;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JToggleButton;
 import javax.swing.table.DefaultTableModel;
 
 public class UsuarioView extends JPanel {
 
     private final UsuarioController controlador;
-    private final JLabel estado;
     
-    public UsuarioView(JLabel estado) {
+    public UsuarioView() {
         initComponents();
-        this.controlador = new UsuarioController();
-        this.controlador.setView(this);
-        this.estado = estado;
-        this.jTableUsuarios.getModel().addTableModelListener(controlador);
-        this.controlador.actualizarTabla();
+        this.controlador = new UsuarioController(this);
     }
 
     /**
@@ -50,18 +47,15 @@ public class UsuarioView extends JPanel {
         jButtonGuardar = new javax.swing.JButton();
         jPanelListado = new javax.swing.JPanel();
         jLabelTablaUsuarios = new javax.swing.JLabel();
-        jPanelBuscar = new javax.swing.JPanel();
-        jTextFieldBuscar = new javax.swing.JTextField();
-        jButtonBuscar = new javax.swing.JButton();
         jScrollPaneUsuarios = new javax.swing.JScrollPane();
         jTableUsuarios = new javax.swing.JTable();
-        jPanelBotonesTablaUsuarios = new javax.swing.JPanel();
-        jButtonDesactivar = new javax.swing.JButton();
-        jButtonActivar = new javax.swing.JButton();
-        jButtonEditar = new javax.swing.JButton();
-        jButtonBorrar = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
         jToggleButtonSeleccion = new javax.swing.JToggleButton();
+        jButtonBorrar = new javax.swing.JButton();
+        jButtonEditar = new javax.swing.JButton();
+        jButtonActivar = new javax.swing.JButton();
+        jButtonDesactivar = new javax.swing.JButton();
+        jTextFieldBuscar = new javax.swing.JTextField();
+        jButtonBuscar = new javax.swing.JButton();
 
         setMinimumSize(new java.awt.Dimension(850, 500));
 
@@ -181,7 +175,7 @@ public class UsuarioView extends JPanel {
                 .addGroup(jPanelRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelRegistroLayout.createSequentialGroup()
                         .addComponent(jLabelTituloRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 219, Short.MAX_VALUE))
                     .addComponent(jPanelCampos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jPanelBotonesRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -202,9 +196,47 @@ public class UsuarioView extends JPanel {
         jPanelListado.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabelTablaUsuarios.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabelTablaUsuarios.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelTablaUsuarios.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabelTablaUsuarios.setText("Usuarios Registrados");
         jLabelTablaUsuarios.setToolTipText("");
+
+        jTableUsuarios.setModel(new UsuarioTableModel());
+        jScrollPaneUsuarios.setViewportView(jTableUsuarios);
+
+        jToggleButtonSeleccion.setText("Seleccionar todos");
+        jToggleButtonSeleccion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButtonSeleccionActionPerformed(evt);
+            }
+        });
+
+        jButtonBorrar.setText("Borrar");
+        jButtonBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBorrarActionPerformed(evt);
+            }
+        });
+
+        jButtonEditar.setText("Editar");
+        jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEditarActionPerformed(evt);
+            }
+        });
+
+        jButtonActivar.setText("Activar");
+        jButtonActivar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonActivarActionPerformed(evt);
+            }
+        });
+
+        jButtonDesactivar.setText("Desactivar");
+        jButtonDesactivar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDesactivarActionPerformed(evt);
+            }
+        });
 
         jTextFieldBuscar.setToolTipText("Ingrese nombre de usuario");
         jTextFieldBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -220,128 +252,6 @@ public class UsuarioView extends JPanel {
             }
         });
 
-        javax.swing.GroupLayout jPanelBuscarLayout = new javax.swing.GroupLayout(jPanelBuscar);
-        jPanelBuscar.setLayout(jPanelBuscarLayout);
-        jPanelBuscarLayout.setHorizontalGroup(
-            jPanelBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBuscarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTextFieldBuscar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonBuscar)
-                .addContainerGap())
-        );
-        jPanelBuscarLayout.setVerticalGroup(
-            jPanelBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelBuscarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonBuscar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jTableUsuarios.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Nombre", "Estado", "Selección"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, true
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPaneUsuarios.setViewportView(jTableUsuarios);
-
-        jButtonDesactivar.setText("Desactivar");
-        jButtonDesactivar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonDesactivarActionPerformed(evt);
-            }
-        });
-
-        jButtonActivar.setText("Activar");
-        jButtonActivar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonActivarActionPerformed(evt);
-            }
-        });
-
-        jButtonEditar.setText("Editar");
-        jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonEditarActionPerformed(evt);
-            }
-        });
-
-        jButtonBorrar.setText("Borrar");
-        jButtonBorrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonBorrarActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanelBotonesTablaUsuariosLayout = new javax.swing.GroupLayout(jPanelBotonesTablaUsuarios);
-        jPanelBotonesTablaUsuarios.setLayout(jPanelBotonesTablaUsuariosLayout);
-        jPanelBotonesTablaUsuariosLayout.setHorizontalGroup(
-            jPanelBotonesTablaUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBotonesTablaUsuariosLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButtonBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButtonActivar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButtonDesactivar)
-                .addContainerGap())
-        );
-        jPanelBotonesTablaUsuariosLayout.setVerticalGroup(
-            jPanelBotonesTablaUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelBotonesTablaUsuariosLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelBotonesTablaUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonActivar)
-                    .addComponent(jButtonDesactivar)
-                    .addComponent(jButtonEditar)
-                    .addComponent(jButtonBorrar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jToggleButtonSeleccion.setText("Seleccionar todos");
-        jToggleButtonSeleccion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButtonSeleccionActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToggleButtonSeleccion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jToggleButtonSeleccion)
-                .addContainerGap())
-        );
-
         javax.swing.GroupLayout jPanelListadoLayout = new javax.swing.GroupLayout(jPanelListado);
         jPanelListado.setLayout(jPanelListadoLayout);
         jPanelListadoLayout.setHorizontalGroup(
@@ -350,30 +260,42 @@ public class UsuarioView extends JPanel {
                 .addContainerGap()
                 .addGroup(jPanelListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPaneUsuarios)
-                    .addGroup(jPanelListadoLayout.createSequentialGroup()
-                        .addComponent(jLabelTablaUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 447, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanelBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelListadoLayout.createSequentialGroup()
-                        .addGap(85, 264, Short.MAX_VALUE)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jPanelBotonesTablaUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jToggleButtonSeleccion)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonDesactivar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonActivar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelListadoLayout.createSequentialGroup()
+                        .addComponent(jLabelTablaUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonBuscar)))
                 .addContainerGap())
         );
         jPanelListadoLayout.setVerticalGroup(
             jPanelListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelListadoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanelBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabelTablaUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPaneUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanelBotonesTablaUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanelListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelTablaUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonBuscar)
+                    .addComponent(jTextFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPaneUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonActivar)
+                    .addComponent(jButtonDesactivar)
+                    .addComponent(jToggleButtonSeleccion)
+                    .addComponent(jButtonEditar)
+                    .addComponent(jButtonBorrar))
                 .addContainerGap())
         );
 
@@ -422,9 +344,7 @@ public class UsuarioView extends JPanel {
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
         System.out.println(evt.getActionCommand());
-        int row = jTableUsuarios.getSelectedRow();
-        String nombre = obtenerNombreUsuarioSeleccionado(row);
-        controlador.editar(nombre);
+        controlador.editar();
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jTextFieldBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldBuscarActionPerformed
@@ -442,39 +362,15 @@ public class UsuarioView extends JPanel {
     }//GEN-LAST:event_jButtonDesactivarActionPerformed
 
     private void jToggleButtonSeleccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonSeleccionActionPerformed
-        boolean isSelected = ((JToggleButton) evt.getSource()).isSelected();
-        jToggleButtonSeleccion.setText(isSelected ? "Deseleccionar todos" : "Seleccionar todos");
-        DefaultTableModel modeloTabla = (DefaultTableModel) jTableUsuarios.getModel();
-        int rows = modeloTabla.getRowCount();
-        for (int i = 0; i < rows; i++) {
-                modeloTabla.setValueAt(isSelected, i, 2);
-        }
+        System.out.println(evt.getActionCommand());
+        controlador.seleccionarTodos();
     }//GEN-LAST:event_jToggleButtonSeleccionActionPerformed
 
     private void jButtonBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarActionPerformed
         System.out.println(evt.getActionCommand());
-        int row = jTableUsuarios.getSelectedRow();
-        String nombre = obtenerNombreUsuarioSeleccionado(row);
-        String mensaje = String.format("¿Está seguro que quiere borrar al usuario %s?", nombre);
-        int response = JOptionPane.showConfirmDialog(null, mensaje, "Advertencia", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
-        if (response == 0) {    
-            controlador.borrar(nombre);
-        }
+        controlador.borrar();
     }//GEN-LAST:event_jButtonBorrarActionPerformed
-    
-    public void actualizarTabla(List<Usuario> usuarios) {
-        DefaultTableModel modeloTabla = (DefaultTableModel) jTableUsuarios.getModel();
-        Object [] encabezados = {"Nombre", "Estado", "Selección"};
-        Object[][] datos = new Object[usuarios.size()][encabezados.length];
-        for (int i = 0; i < usuarios.size(); i++) {
-            Usuario u = usuarios.get(i);
-            datos[i][0] = u.getNombre();
-            datos[i][1] = u.getEstado()? "Activo" : "Inactivo";
-            datos[i][2] = false;
-        }
-        modeloTabla.setDataVector(datos, encabezados);
-    }
-    
+        
     public void setNombre(String nombre) {
         jTextFieldNombreUsuario.setText(nombre);
     }
@@ -517,26 +413,28 @@ public class UsuarioView extends JPanel {
     public void mostrarError(String mensaje) {
         JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
     }
-    
-    public void mostrarEstado(String mensaje) {
-        this.estado.setText(mensaje);
-    }
-    
-    public void setSeleccionarTodos(boolean estado) {
-        jToggleButtonSeleccion.setText(estado ? "Deseleccionar todos" : "Seleccionar todos");
-        jToggleButtonSeleccion.setSelected(estado);
-    }
-    
-    private String obtenerNombreUsuarioSeleccionado(int row) {
-        String nombre = null;
-        try {
-            nombre = (String) jTableUsuarios.getValueAt(row, 0);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            mostrarInformacion("Seleccione usuario.");
-        }
-        return nombre;
+
+    public JToggleButton getjToggleButtonSeleccion() {
+        return jToggleButtonSeleccion;
     }
 
+    public void setjToggleButtonSeleccion(JToggleButton jToggleButtonSeleccion) {
+        this.jToggleButtonSeleccion = jToggleButtonSeleccion;
+    }
+    
+    public JTable getjTableUsuarios() {
+        return jTableUsuarios;
+    }
+    
+    public int getSelectedRow() {
+        int row = jTableUsuarios.getSelectedRow();
+        if (row == -1) {
+            mostrarInformacion("Seleccione usuario.");
+            throw new DreamGiftsException("No se ha seleccionado usaurio");
+        }
+        return row;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroupEstado;
     private javax.swing.JButton jButtonActivar;
@@ -552,10 +450,7 @@ public class UsuarioView extends JPanel {
     private javax.swing.JLabel jLabelRePassword;
     private javax.swing.JLabel jLabelTablaUsuarios;
     private javax.swing.JLabel jLabelTituloRegistro;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelBotonesRegistro;
-    private javax.swing.JPanel jPanelBotonesTablaUsuarios;
-    private javax.swing.JPanel jPanelBuscar;
     private javax.swing.JPanel jPanelCampos;
     private javax.swing.JPanel jPanelListado;
     private javax.swing.JPanel jPanelRegistro;

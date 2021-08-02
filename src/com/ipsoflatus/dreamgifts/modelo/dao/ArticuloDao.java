@@ -19,8 +19,6 @@ public class ArticuloDao implements DAO<Articulo> {
         this.emf = emf;
     }
     
-    
-    
     @Override
     public List<Articulo> findAll() {
         EntityManager em = emf.createEntityManager();

@@ -65,14 +65,6 @@ public final class CategoriaArticuloView extends javax.swing.JPanel {
 
         jTableCA.setModel(new CategoriaArticuloTableModel(CategoriaArticuloService.getInstance()));
         jScrollPane1.setViewportView(jTableCA);
-        if (jTableCA.getColumnModel().getColumnCount() > 0) {
-            jTableCA.getColumnModel().getColumn(0).setMinWidth(100);
-            jTableCA.getColumnModel().getColumn(0).setMaxWidth(100);
-            jTableCA.getColumnModel().getColumn(2).setMinWidth(150);
-            jTableCA.getColumnModel().getColumn(2).setMaxWidth(150);
-            jTableCA.getColumnModel().getColumn(3).setMinWidth(150);
-            jTableCA.getColumnModel().getColumn(3).setMaxWidth(150);
-        }
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel4.setText("Listado Categorías");
