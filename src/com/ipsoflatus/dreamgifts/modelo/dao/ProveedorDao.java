@@ -1,67 +1,90 @@
 package com.ipsoflatus.dreamgifts.modelo.dao;
 
 import com.ipsoflatus.dreamgifts.modelo.entidad.Proveedor;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 
-public class ProveedorDao extends AbstractDao<Proveedor> {
+public class ProveedorDao implements DAO<Proveedor> {
+
+    private final EntityManagerFactory emf;
 
     public ProveedorDao() {
-        super("proveedores");
-        setAtributos("id, rut, razon_social, contacto, direccion, comuna_id, telefono, email, estado");
-        setAtributosBusqueda("rut, razon_social, contacto");
+        this(Persistence.createEntityManagerFactory("dreamgifts"));
     }
-    
-    @Override
-    protected void setInsertPS(PreparedStatement ps, Proveedor p) throws SQLException {
-        ps.setString(1, p.getRut());
-        ps.setString(2, p.getRazonSocial());
-        ps.setString(3, p.getContacto());
-        ps.setString(4, p.getDireccion());
-        ps.setInt(5, p.getComunaId());
-        ps.setString(6, p.getTelefono());
-        ps.setString(7, p.getEmail());
-        ps.setBoolean(8, p.getEstado());
+
+    public ProveedorDao(EntityManagerFactory emf) {
+        this.emf = emf;
     }
 
     @Override
-    protected void setUpdatePS(PreparedStatement ps, Proveedor p) throws SQLException {
-        setInsertPS(ps, p);
-        ps.setInt(9, p.getId());
+    public List<Proveedor> findAll() {
+        EntityManager em = emf.createEntityManager();
+        List<Proveedor> proveedores;
+        Query query = em.createQuery("SELECT p FROM Proveedor p");
+        proveedores = query.getResultList();
+        em.close();
+        return proveedores;
     }
 
     @Override
-    protected Proveedor rowMapper(ResultSet rs) throws SQLException {
-        Proveedor p = new Proveedor();
-        p.setId(rs.getInt(1));
-        p.setRut(rs.getString(2));
-        p.setRazonSocial(rs.getString(3));
-        p.setContacto(rs.getString(4));
-        p.setDireccion(rs.getString(5));
-        p.setComunaId(rs.getInt(6));
-        p.setTelefono(rs.getString(7));
-        p.setEmail(rs.getString(8));
-        p.setEstado(rs.getBoolean(9));
-        return p;
+    public List<Proveedor> findByTermLike(String term) {
+        EntityManager em = emf.createEntityManager();
+        Query query = em.createQuery("SELECT p FROM Proveedor p WHERE UPPER(p.rut) LIKE UPPER(:term) OR UPPER(p.razonSocial) LIKE UPPER(:term)");
+        query.setParameter("term", "%" + term + "%");
+        List<Proveedor> proveedores = query.getResultList();
+        em.close();
+        return proveedores;
     }
-    
-    public static void main(String[] args) {
-        ProveedorDao dao = new ProveedorDao();
-        Proveedor p = new Proveedor();
-        p.setRut("11-3");
-        p.setRazonSocial("Testing");
-        p.setContacto("juan");
-        p.setDireccion("test 1234");
-        p.setComunaId(1);
-        p.setTelefono("5555");
-        p.setEmail("email@com");
-        p.setEstado(Boolean.TRUE);
-        dao.save(p);
-        dao.findAll().forEach(proveedor -> {
-            System.out.println(proveedor);
+
+    @Override
+    public Proveedor findById(int id) {
+        EntityManager em = emf.createEntityManager();
+        Proveedor proveedor = em.find(Proveedor.class, id);
+        em.close();
+        return proveedor;
+    }
+
+    @Override
+    public void save(Proveedor p) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();  
+        em.persist(p);
+        em.getTransaction().commit();
+        em.close();
+    }
+
+    @Override
+    public void update(Proveedor p) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin(); 
+        Proveedor proveedor = em.find(Proveedor.class, p.getId());
+        proveedor.setRut(p.getRut());
+        proveedor.setRazonSocial(p.getRazonSocial());
+        proveedor.setContacto(p.getContacto());
+        proveedor.setDireccion(p.getDireccion());
+        proveedor.setComuna(p.getComuna());
+        proveedor.setTelefono(p.getTelefono());
+        proveedor.setEmail(p.getEmail());
+        proveedor.setEstado(p.getEstado());
+        em.getTransaction().commit();
+        em.close();
+    }
+
+    @Override
+    public void updateStateByIds(List<Integer> ids, boolean estado) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin(); 
+        Query query = em.createQuery("SELECT p FROM Proveedor p WHERE p.id IN :ids");
+        query.setParameter("ids", ids);
+        List<Proveedor> proveedores = query.getResultList();
+        proveedores.forEach(p -> {
+            p.setEstado(estado);
         });
+        em.getTransaction().commit();
+        em.close();
     }
-           
 
 }

@@ -4,6 +4,7 @@ import com.ipsoflatus.dreamgifts.modelo.Observer;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Articulo;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ArticuloService;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ObservableService;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.AbstractListModel;
 
@@ -15,6 +16,7 @@ public class ArticuloListModel extends AbstractListModel<Articulo> implements Ob
     public ArticuloListModel() {
         this.service = ArticuloService.getInstance();
         this.service.addObserver(this);
+        this.items = new ArrayList<>();
     }
 
     @Override

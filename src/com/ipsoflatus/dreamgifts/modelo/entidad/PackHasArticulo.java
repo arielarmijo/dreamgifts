@@ -1,73 +1,110 @@
 package com.ipsoflatus.dreamgifts.modelo.entidad;
 
-import java.util.Objects;
+import java.io.Serializable;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
-public class PackHasArticulo {
+@Entity
+@Table(name = "pack_has_articulo")
+@NamedQueries({
+    @NamedQuery(name = "PackHasArticulo.findAll", query = "SELECT p FROM PackHasArticulo p")})
+public class PackHasArticulo implements Serializable {
 
-    private Integer packId;
-    private Integer articuloId;
-    private Integer cantidad;
+    private static final long serialVersionUID = 1L;
+    
+    @EmbeddedId
+    protected PackHasArticuloPK packHasArticuloPK;
+    
+    @Basic(optional = false)
+    @Column(name = "cantidad")
+    private int cantidad;
+    
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "articulo_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private Articulo articulo;
+    
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "pack_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private Pack pack;
 
     public PackHasArticulo() {
     }
-    
-    public PackHasArticulo(Integer packId, Integer articuloId, Integer cantidad) {
-        this.packId = packId;
-        this.articuloId = articuloId;
+
+    public PackHasArticulo(PackHasArticuloPK packHasArticuloPK) {
+        this.packHasArticuloPK = packHasArticuloPK;
+    }
+
+    public PackHasArticulo(PackHasArticuloPK packHasArticuloPK, int cantidad) {
+        this.packHasArticuloPK = packHasArticuloPK;
         this.cantidad = cantidad;
     }
-    
-    public Integer getPackId() {
-        return packId;
+
+    public PackHasArticulo(int packId, int articuloId) {
+        this.packHasArticuloPK = new PackHasArticuloPK(packId, articuloId);
     }
 
-    public void setPackId(Integer packId) {
-        this.packId = packId;
+    public PackHasArticuloPK getPackHasArticuloPK() {
+        return packHasArticuloPK;
     }
 
-    public Integer getArticuloId() {
-        return articuloId;
+    public void setPackHasArticuloPK(PackHasArticuloPK packHasArticuloPK) {
+        this.packHasArticuloPK = packHasArticuloPK;
     }
 
-    public void setArticuloId(Integer articuloId) {
-        this.articuloId = articuloId;
-    }
-
-    public Integer getCantidad() {
+    public int getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(Integer cantidad) {
+    public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
+    }
+
+    public Articulo getArticulo() {
+        return articulo;
+    }
+
+    public void setArticulo(Articulo articulo) {
+        this.articulo = articulo;
+    }
+
+    public Pack getPack() {
+        return pack;
+    }
+
+    public void setPack(Pack pack) {
+        this.pack = pack;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 79 * hash + Objects.hashCode(this.packId);
-        hash = 79 * hash + Objects.hashCode(this.articuloId);
+        int hash = 0;
+        hash += (packHasArticuloPK != null ? packHasArticuloPK.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof PackHasArticulo)) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final PackHasArticulo other = (PackHasArticulo) obj;
-        if (!Objects.equals(this.packId, other.packId)) {
-            return false;
-        }
-        if (!Objects.equals(this.articuloId, other.articuloId)) {
+        PackHasArticulo other = (PackHasArticulo) object;
+        if ((this.packHasArticuloPK == null && other.packHasArticuloPK != null) || (this.packHasArticuloPK != null && !this.packHasArticuloPK.equals(other.packHasArticuloPK))) {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.ipsoflatus.dreamgifts.modelo.entidad.PackHasArticulo[ packHasArticuloPK=" + packHasArticuloPK + " ]";
     }
     
 }

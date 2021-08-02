@@ -14,7 +14,8 @@ public class PackComboBoxModel extends ObserverComboBoxModel<Pack> {
     @Override
     public void actualizar(List<Pack> items) {
         List<Pack> packs = items.stream().filter(p -> p.getEstado()).collect(Collectors.toList());
-        Pack seleccionePack = new Pack("Seleccione pack");
+        Pack seleccionePack = new Pack();
+        seleccionePack.setNombre("Seleccione pack");
         packs.add(0, seleccionePack);
         updateModel(packs.toArray());
     }

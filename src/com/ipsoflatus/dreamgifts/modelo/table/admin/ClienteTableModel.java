@@ -1,19 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ipsoflatus.dreamgifts.modelo.table.admin;
 
 import com.ipsoflatus.dreamgifts.modelo.entidad.Cliente;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ObservableService;
 import com.ipsoflatus.dreamgifts.modelo.table.ObservableTableModel;
-import java.sql.Date;
 
-/**
- *
- * @author Usuario
- */
 public class ClienteTableModel extends ObservableTableModel<Cliente> {
 
     public ClienteTableModel(ObservableService service) {
@@ -37,7 +27,7 @@ public class ClienteTableModel extends ObservableTableModel<Cliente> {
         if (columnIndex == 4)
             return item.getCelular();
         if (columnIndex == 5)
-            return item.getEstado() ? "Activo" : "Inactivo";
+            return item.getEstado() == 1 ? "Activo" : "Inactivo";
         if (columnIndex == 6)
             return seleccionados.get(rowIndex);
         return null;

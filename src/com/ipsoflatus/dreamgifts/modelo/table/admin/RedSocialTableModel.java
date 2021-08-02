@@ -1,18 +1,18 @@
 package com.ipsoflatus.dreamgifts.modelo.table.admin;
 
-import com.ipsoflatus.dreamgifts.modelo.entidad.Comuna;
+import com.ipsoflatus.dreamgifts.modelo.entidad.RedSocial;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ObservableService;
 import com.ipsoflatus.dreamgifts.modelo.table.ObservableTableModel;
 
-public class ComunaTableModel extends ObservableTableModel<Comuna> {
+public class RedSocialTableModel extends ObservableTableModel<RedSocial> {
 
-    public ComunaTableModel(ObservableService service) {
+    public RedSocialTableModel(ObservableService service) {
         super(service);
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Comuna item = items.get(rowIndex);
+        RedSocial item = items.get(rowIndex);
         if (columnIndex == 0)
             return item.getCodigo();
         if (columnIndex == 1)

@@ -53,7 +53,12 @@ public class EVController implements Controller<EstadoVentaView>{
 
         try {
             if (evActual == null) {
-               service.guardar(new EstadoVenta(codigo, nombre, descripcion, true));
+                EstadoVenta ev = new EstadoVenta();
+                ev.setCodigo(codigo);
+                ev.setNombre(nombre);
+                ev.setDescripcion(descripcion);
+                ev.setEstado(Boolean.TRUE);
+                service.guardar(ev);
             }else{
                 evActual.setCodigo(codigo);
                 evActual.setNombre(nombre);

@@ -14,8 +14,9 @@ public class CategoriaArticuloComboBoxModel extends ObserverComboBoxModel<Catego
     @Override
     public void actualizar(List<CategoriaArticulo> items) {
         List<CategoriaArticulo> categoriasActivas = items.stream().filter(c -> c.getEstado()).collect(Collectors.toList());
-        CategoriaArticulo seleccioneComuna = new CategoriaArticulo(null, "Seleccione categoría");
-        categoriasActivas.add(0, seleccioneComuna);
+        CategoriaArticulo seleccioneCategoria = new CategoriaArticulo();
+        seleccioneCategoria.setNombre("Seleccione categoría");
+        categoriasActivas.add(0, seleccioneCategoria);
         updateModel(categoriasActivas.toArray());
     }
     

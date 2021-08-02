@@ -13,8 +13,9 @@ public class BancoComboBoxModel extends ObserverComboBoxModel<Banco> {
 
     @Override
     public void actualizar(List<Banco> items) {
-        List<Banco> bancos = items.stream().filter(b -> b.isEstado()).collect(Collectors.toList());
-        Banco seleccioneBanco = new Banco("Seleccione banco");
+        List<Banco> bancos = items.stream().filter(b -> b.getEstado()).collect(Collectors.toList());
+        Banco seleccioneBanco = new Banco();
+        seleccioneBanco.setNombre("Seleccione banco");
         bancos.add(0, seleccioneBanco);
         updateModel(bancos.toArray());
     }

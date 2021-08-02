@@ -9,8 +9,6 @@ import java.sql.Date;
 
 public class ArticuloTableModel extends ObservableTableModel<Articulo> {
     
-    private final CategoriaArticuloService caService = CategoriaArticuloService.getInstance();
-
     public ArticuloTableModel(ObservableService service) {
         super(service);
         columnNames = new String[] {"Nombre", "Marca", "Categoría", "Stock", "Fecha Vencimiento", "Estado", "Selección"};
@@ -25,10 +23,8 @@ public class ArticuloTableModel extends ObservableTableModel<Articulo> {
             return item.getNombre();
         if (columnIndex == 1)
             return item.getMarca();
-        if (columnIndex == 2) {
-            CategoriaArticulo ca = caService.buscar(item.getCategoriaId());
-            return ca.getNombre();
-        }
+        if (columnIndex == 2) 
+            return item.getCategoriaArticulo().getNombre();
         if (columnIndex == 3)
             return item.getStock();
         if (columnIndex == 4)

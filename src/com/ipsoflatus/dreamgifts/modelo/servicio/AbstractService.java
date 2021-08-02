@@ -11,11 +11,13 @@ public abstract class AbstractService<T> implements Service<T>, ObservableServic
 
     protected DAO<T> dao;
     private final List<Observer<T>> obs;
+    private List<T> items = new ArrayList<>();
     private final ExecutorService executor = Executors.newCachedThreadPool();
 
     public AbstractService(DAO dao) {
         this.dao = dao;
         this.obs = new ArrayList<>();
+        this.items = dao.findAll();
     }
 
     @Override
@@ -55,15 +57,16 @@ public abstract class AbstractService<T> implements Service<T>, ObservableServic
     @Override
     public void addObserver(Observer<T> o) {
         this.obs.add(o);
-        o.actualizar(dao.findAll());
+        o.actualizar(items);
     }
 
     @Override
     public void notifyObservers() {
+        items = dao.findAll();
         obs.forEach(o -> {
             executor.execute(() -> {
                 System.out.println("Start thread " + Thread.currentThread().getName());
-                o.actualizar(dao.findAll());
+                o.actualizar(items);
                 System.out.println("End thread " + Thread.currentThread().getName());
             });
         });

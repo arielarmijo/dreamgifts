@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 public class ArticuloController implements Controller<ArticuloView> {
 
     private final ArticuloService articuloService = ArticuloService.getInstance();
-    private final CategoriaArticuloService categoriaArticuloService = CategoriaArticuloService.getInstance();
     private ArticuloTableModel tableModel;
     private Articulo articuloActual;
     private ArticuloView view;
@@ -30,7 +29,7 @@ public class ArticuloController implements Controller<ArticuloView> {
         articuloActual = null;
         view.getTxfNombre().setText("");
         view.getTxfMarca().setText("");
-        view.getCbxComuna().setSelectedIndex(0);
+        view.getCbxCategoria().setSelectedIndex(0);
         view.getjRadioButtonActivo().setSelected(true);
     }
 
@@ -39,27 +38,31 @@ public class ArticuloController implements Controller<ArticuloView> {
         
         String nombre = view.getTxfNombre().getText();
         String marca = view.getTxfMarca().getText();
-        Boolean estado = view.getButtonGroup().getSelection().getActionCommand().equals("Activo");
-        CategoriaArticulo categoria = (CategoriaArticulo) view.getCbxComuna().getSelectedItem();
-        System.out.println("Categoria id: " + categoria.getId());
-                
         if (nombre.isEmpty() || marca.isEmpty()) {
             mostrarInformacion("Complete todos los campos.");
             return;
         }
         
+        CategoriaArticulo categoria = (CategoriaArticulo) view.getCbxCategoria().getSelectedItem();
         if (categoria.getId() == null) {
             mostrarInformacion("Seleccione categoría.");
             return;
         }
+        
+        Boolean estado = view.getButtonGroup().getSelection().getActionCommand().equals("Activo");
 
         try {
             if (articuloActual == null) {
-                articuloService.guardar(new Articulo(nombre, marca, categoria.getId(), estado));
+                Articulo articulo = new Articulo();
+                articulo.setNombre(nombre);
+                articulo.setMarca(marca);
+                articulo.setCategoriaArticulo(categoria);
+                articulo.setEstado(estado);
+                articuloService.guardar(articulo);
             } else {
                 articuloActual.setNombre(nombre);
                 articuloActual.setMarca(marca);
-                articuloActual.setCategoriaId(categoria.getId());
+                articuloActual.setCategoriaArticulo(categoria);
                 articuloActual.setEstado(estado);
                 articuloService.editar(articuloActual);
             }
@@ -87,11 +90,7 @@ public class ArticuloController implements Controller<ArticuloView> {
         articuloActual = tableModel.getItem(row);
         view.getTxfNombre().setText(articuloActual.getNombre());
         view.getTxfMarca().setText(articuloActual.getMarca());
-        CategoriaArticulo ca = categoriaArticuloService.buscar(articuloActual.getCategoriaId());
-        System.out.println(articuloActual.getNombre() + " " + articuloActual.getId() + " " + articuloActual.getCategoriaId());
-        System.out.println(ca.getNombre() + " " + ca.getId());
-        view.getCbxComuna().getModel().setSelectedItem(ca);
-        articuloActual.setCategoriaId(ca.getId());
+        view.getCbxCategoria().getModel().setSelectedItem(articuloActual.getCategoriaArticulo());
         
         if (articuloActual.getEstado())
             view.getjRadioButtonActivo().setSelected(true);

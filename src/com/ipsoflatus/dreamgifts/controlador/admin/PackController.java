@@ -28,13 +28,8 @@ public class PackController implements Controller<PackView> {
     
     public void filtrarArticulo() {
         CategoriaArticulo ca = (CategoriaArticulo) view.getCbxCategoriaArticulo().getSelectedItem();
-        if (ca != null) {
-           System.out.println(ca.getId());
-           List<Articulo> articulos = articuloService.buscarPorCategoria(ca.getId());
-           System.out.println(articulos);
-           articuloListModel.actualizar(articulos);
-        }
-        
+        List<Articulo> articulos = ca.getId() == null ? articuloService.buscar() : ca.getArticulos();
+        articuloListModel.actualizar(articulos);
     }
     
     public void agregarArticuloPack() {
@@ -44,15 +39,16 @@ public class PackController implements Controller<PackView> {
             mostrarInformacion("Seleccione artículo");
             return;
         }
-        Integer packId = packActual != null ? packActual.getId() : null;
-        PackHasArticulo pha = new PackHasArticulo(packId, articulo.getId(), cantidad);
-        System.out.println(pha);
+        PackHasArticulo pha = new PackHasArticulo();
+        if (packActual != null)
+            pha.setPack(packActual);
+        pha.setArticulo(articulo);
+        pha.setCantidad(cantidad);
         packHasArticuloListModel.addItem(pha);
     }
     
     public void removerArticuloPack() {
         PackHasArticulo pha = view.getLstPackHasArticulo().getSelectedValue();
-        System.out.println(pha);
         if (pha != null)
             packHasArticuloListModel.removeItem(pha);
     }
@@ -108,11 +104,14 @@ public class PackController implements Controller<PackView> {
                 packActual.setNombre(nombre);
                 packActual.setCosto(precio);
                 packActual.setEstado(estado);
+                articulos.forEach(a -> {
+                    a.setPack(packActual);
+                });
                 packActual.setArticulos(articulos);
                 packService.editar(packActual);
             }
             cancelar();
-        } catch (DreamGiftsException e) {
+        } catch (Exception e) {
             mostrarError(e.getMessage());
         }
         
@@ -128,14 +127,11 @@ public class PackController implements Controller<PackView> {
     @Override
     public void editar() {
         int row = view.getjTable().getSelectedRow();
-        
         if (row == -1) {
             mostrarInformacion("Seleccione pack.");
             return;
         }
-        
         packActual = tableModel.getItem(row);
-        System.out.println(packActual.getArticulos());
         view.getTxfNombre().setText(packActual.getNombre());
         view.getSpnPrecio().setValue(packActual.getCosto());
         view.getCbxCategoriaArticulo().setSelectedIndex(0);

@@ -13,8 +13,9 @@ public class RRSSComboBoxModel extends ObserverComboBoxModel<RedSocial> {
 
     @Override
     public void actualizar(List<RedSocial> items) {
-        List<RedSocial> rrssActivas = items.stream().filter(rs -> rs.isEstado()).collect(Collectors.toList());
-        RedSocial seleccioneRedSocial = new RedSocial("Seleccione red social");
+        List<RedSocial> rrssActivas = items.stream().filter(rs -> rs.getEstado()).collect(Collectors.toList());
+        RedSocial seleccioneRedSocial = new RedSocial();
+        seleccioneRedSocial.setNombre("Seleccione red social");
         rrssActivas.add(0, seleccioneRedSocial);
         updateModel(rrssActivas.toArray());
     }

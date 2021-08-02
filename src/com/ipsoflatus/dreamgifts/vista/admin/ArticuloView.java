@@ -41,7 +41,7 @@ public class ArticuloView extends javax.swing.JPanel {
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        cbxComuna = new javax.swing.JComboBox();
+        cbxCategoria = new javax.swing.JComboBox();
         jLabelEstado = new javax.swing.JLabel();
         jRadioButtonActivo = new javax.swing.JRadioButton();
         jRadioButtonInactivo = new javax.swing.JRadioButton();
@@ -115,7 +115,7 @@ public class ArticuloView extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Categoría:");
 
-        cbxComuna.setModel(new CategoriaArticuloComboBoxModel(CategoriaArticuloService.getInstance()));
+        cbxCategoria.setModel(new CategoriaArticuloComboBoxModel(CategoriaArticuloService.getInstance()));
 
         jLabelEstado.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabelEstado.setText("Estado:");
@@ -144,7 +144,7 @@ public class ArticuloView extends javax.swing.JPanel {
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cbxComuna, 0, 229, Short.MAX_VALUE))
+                                .addComponent(cbxCategoria, 0, 229, Short.MAX_VALUE))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
@@ -188,7 +188,7 @@ public class ArticuloView extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(cbxComuna, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(cbxCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
 
@@ -332,8 +332,8 @@ public class ArticuloView extends javax.swing.JPanel {
         return buttonGroup;
     }
 
-    public JComboBox<String> getCbxComuna() {
-        return cbxComuna;
+    public JComboBox<String> getCbxCategoria() {
+        return cbxCategoria;
     }
 
     public JRadioButton getjRadioButtonActivo() {
@@ -368,7 +368,7 @@ public class ArticuloView extends javax.swing.JPanel {
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.ButtonGroup buttonGroup;
-    private javax.swing.JComboBox cbxComuna;
+    private javax.swing.JComboBox cbxCategoria;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;

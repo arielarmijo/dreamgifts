@@ -33,8 +33,8 @@ public class ComunaController implements Controller<ComunaView> {
         String nombre = view.getNombreComuna().getText();
         String codigo = view.getCodigoComuna().getText();
         if (comunaActual == null) {
-            Comuna comuna = new Comuna(nombre, codigo);
-            service.guardar(comuna);
+            //Comuna comuna = new Comuna(nombre, codigo);
+            //service.guardar(comuna);
         } else {
             comunaActual.setCodigo(codigo);
             comunaActual.setNombre(nombre);

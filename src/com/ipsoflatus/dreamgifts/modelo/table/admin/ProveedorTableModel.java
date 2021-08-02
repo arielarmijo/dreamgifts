@@ -1,14 +1,11 @@
 package com.ipsoflatus.dreamgifts.modelo.table.admin;
 
-import com.ipsoflatus.dreamgifts.modelo.entidad.Comuna;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Proveedor;
-import com.ipsoflatus.dreamgifts.modelo.servicio.ComunaService;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ObservableService;
 import com.ipsoflatus.dreamgifts.modelo.table.ObservableTableModel;
 
 public class ProveedorTableModel extends ObservableTableModel<Proveedor> {
     
-    private final ComunaService comunaService = ComunaService.getInstance();
     
     public ProveedorTableModel(ObservableService service) {
         super(service);
@@ -28,10 +25,8 @@ public class ProveedorTableModel extends ObservableTableModel<Proveedor> {
             return item.getContacto();
         if (columnIndex == 3)
             return item.getDireccion();
-        if (columnIndex == 4) {
-            Comuna comuna = comunaService.buscar(item.getComunaId());
-            return comuna.getNombre();
-        }
+        if (columnIndex == 4)
+            return item.getComuna().getNombre();
         if (columnIndex == 5)
             return item.getTelefono();
         if (columnIndex == 6)

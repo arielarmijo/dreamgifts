@@ -1,178 +1,88 @@
 package com.ipsoflatus.dreamgifts.modelo.dao;
 
-import com.ipsoflatus.dreamgifts.modelo.conexion.MySQLConection;
-import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
 import com.ipsoflatus.dreamgifts.modelo.entidad.RedSocial;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 public class RedSocialDao implements DAO<RedSocial> {
+
+    private final EntityManagerFactory emf;
+
+    public RedSocialDao() {
+        this(Persistence.createEntityManagerFactory("dreamgifts"));
+    }
+
+    public RedSocialDao(EntityManagerFactory emf) {
+        this.emf = emf;
+    }
     
+    @Override
     public List<RedSocial> findAll() {
-        List<RedSocial> rrss = new ArrayList<>();
-        String sql = "SELECT id, codigo, nombre, estado FROM rrss";
-        try (Connection conn = MySQLConection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-            conn.setReadOnly(true);
-            System.out.println(ps);
-            while (rs.next()) {
-                rrss.add(rowMapper(rs));
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
-            throw new DreamGiftsException(e.getMessage());
-        }
+        EntityManager em = emf.createEntityManager();
+        List<RedSocial> rrss;
+        String sql = "SELECT rs FROM RedSocial rs";
+        Query query = em.createQuery(sql);
+        rrss = query.getResultList();
+        em.close();
         return rrss;
     }
-    
+
+    @Override
+    public List<RedSocial> findByTermLike(String term) {
+        EntityManager em = emf.createEntityManager();
+        Query query = em.createQuery("SELECT rs FROM RedSocial rs WHERE UPPER(rs.codigo) LIKE UPPER(:term) OR UPPER(rs.nombre) LIKE UPPER(:term)");
+        query.setParameter("term", "%" + term + "%");
+        List<RedSocial> rrss = query.getResultList();
+        em.close();
+        return rrss;
+    }
+
+    @Override
     public RedSocial findById(int id) {
-        RedSocial redSocial = null;
-        String sql = "SELECT id, codigo, nombre, estado FROM rrss WHERE id = ?";
-        try (Connection conn = MySQLConection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            conn.setReadOnly(true);
-            ps.setInt(1, id);
-            System.out.println(ps);
-            try (ResultSet rs = ps.executeQuery()) {
-               if (rs.next()) {
-                   redSocial = rowMapper(rs);
-               }
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
-            throw new DreamGiftsException(e.getMessage());
-        }
-        return redSocial;
+        EntityManager em = emf.createEntityManager();
+        Query query = em.createQuery("SELECT rs FROM RedSocial rs WHERE rs.id = :id");
+        query.setParameter("id", id);
+        RedSocial rs = (RedSocial) query.getSingleResult();
+        em.close();
+        return rs;
     }
-    
-    public RedSocial findByCode(String codigo) {
-        RedSocial redSocial = null;
-        String sql = "SELECT id, codigo, nombre, estado FROM rrss WHERE UPPER(codigo) = UPPER(?)";
-        try (Connection conn = MySQLConection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            conn.setReadOnly(true);
-            ps.setString(1, codigo);
-            System.out.println(ps);
-            try (ResultSet rs = ps.executeQuery()) {
-               if (rs.next()) {
-                   redSocial = rowMapper(rs);
-               }
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
-            throw new DreamGiftsException(e.getMessage());
-        }
-        return redSocial;
+
+    @Override
+    public void save(RedSocial rs) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();  
+        em.persist(rs);
+        em.getTransaction().commit();
+        em.close();
     }
-    
-    public List<RedSocial> findByTermLike(String terminoBuscado) {
-        List<RedSocial> rrss = new ArrayList<>();
-        String sql = "SELECT id, codigo, nombre, estado FROM rrss WHERE UPPER(nombre) LIKE UPPER(?) OR UPPER(codigo) LIKE UPPER(?)";
-        try (Connection conn = MySQLConection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            conn.setReadOnly(true);
-            ps.setString(1, "%" + terminoBuscado + "%");
-            ps.setString(2, "%" + terminoBuscado + "%");
-            System.out.println(ps);
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    rrss.add(rowMapper(rs));
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
-            throw new DreamGiftsException(e.getMessage());
-        }
-        return rrss;
-    }
-    
-    public void save(RedSocial redSocial) {
-        String sql = "INSERT INTO rrss (codigo, nombre, estado) VALUES (?, ?, ?)";
-        try (Connection conn = MySQLConection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            conn.setAutoCommit(false);
-            ps.setString(1, redSocial.getCodigo().toUpperCase());
-            ps.setString(2, redSocial.getNombre());
-            ps.setBoolean(3, redSocial.isEstado());
-            System.out.println(ps);
-            ps.executeUpdate();
-            conn.commit();
-            conn.setAutoCommit(true);
-        } catch (SQLException e) {
-            System.out.println(e);
-            throw new DreamGiftsException(e.getMessage());
-        }
-    }
-    
-    public void update(RedSocial redSocial) {
-        String sql = "UPDATE rrss SET codigo = UPPER(?), nombre = ?, estado = ? WHERE id = ?";
-        try (Connection conn = MySQLConection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            conn.setAutoCommit(false);
-            ps.setString(1, redSocial.getCodigo());
-            ps.setString(2, redSocial.getNombre());
-            ps.setBoolean(3, redSocial.isEstado());
-            ps.setInt(4, redSocial.getId());
-            System.out.println(ps);
-            ps.executeUpdate();
-            conn.commit();
-            conn.setAutoCommit(true);
-        } catch (SQLException e) {
-            System.out.println(e);
-            throw new DreamGiftsException(e.getMessage());
-        }
-    }
-    
-    public void delete(int id) {
-        String sql = "DELETE FROM rrss WHERE id = ?";
-        try (Connection conn = MySQLConection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            conn.setAutoCommit(false);
-            ps.setInt(1, id);
-            ps.executeUpdate();
-            System.out.println(ps);
-            conn.commit();
-            conn.setAutoCommit(true);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            throw new DreamGiftsException(e.getMessage());
-        }
-    }
-   
-    public void activateByCodes(List<String> codigos, boolean estado) {
-        String codes = codigos.stream().map(codigo -> "'" + codigo + "'").collect(Collectors.joining(", "));
-        String sql = String.format("UPDATE rrss SET estado = %s WHERE codigo IN (%s)", estado, codes);
-        System.out.println(sql);
-        try (Connection conn = MySQLConection.getConnection();
-             Statement s = conn.createStatement()) {
-            conn.setAutoCommit(false);
-            s.executeUpdate(sql);
-            conn.commit();conn.setAutoCommit(true);
-        } catch (SQLException e) {
-            System.out.println(e);
-            throw new DreamGiftsException(e.getMessage());
-        }
-    }
-    
-    private RedSocial rowMapper(ResultSet rs) throws SQLException {
-        RedSocial redSocial = new RedSocial();
-        redSocial.setId(rs.getInt(1));
-        redSocial.setCodigo(rs.getString(2));
-        redSocial.setNombre(rs.getString(3));
-        redSocial.setEstado(rs.getBoolean(4));
-        return redSocial;
+
+    @Override
+    public void update(RedSocial rs) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin(); 
+        RedSocial redSocial = em.find(RedSocial.class, rs.getId());
+        redSocial.setCodigo(rs.getCodigo());
+        redSocial.setNombre(rs.getNombre());
+        redSocial.setEstado(rs.getEstado());
+        em.getTransaction().commit();
+        em.close();
     }
 
     @Override
     public void updateStateByIds(List<Integer> ids, boolean estado) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin(); 
+        Query query = em.createQuery("SELECT rs FROM RedSocial rs WHERE rs.id IN :ids");
+        query.setParameter("ids", ids);
+        List<RedSocial> rrss = query.getResultList();
+        rrss.forEach(rs -> {
+            rs.setEstado(estado);
+        });
+        em.getTransaction().commit();
+        em.close();
     }
-   
+    
 }
