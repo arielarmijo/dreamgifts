@@ -9,7 +9,7 @@ import com.ipsoflatus.dreamgifts.controlador.Controller;
 import com.ipsoflatus.dreamgifts.modelo.entidad.EstadoVenta;
 import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
 import com.ipsoflatus.dreamgifts.modelo.servicio.EVService;
-import com.ipsoflatus.dreamgifts.modelo.table.admin.EVTableModel;
+import com.ipsoflatus.dreamgifts.modelo.tabla.admin.EVTableModel;
 import com.ipsoflatus.dreamgifts.vista.admin.EstadoVentaView;
 import java.util.List;
 import java.util.stream.Collectors;

@@ -3,7 +3,7 @@ package com.ipsoflatus.dreamgifts.vista.admin;
 import com.ipsoflatus.dreamgifts.controlador.admin.UsuarioController;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Usuario;
 import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
-import com.ipsoflatus.dreamgifts.modelo.table.admin.UsuarioTableModel;
+import com.ipsoflatus.dreamgifts.modelo.tabla.admin.UsuarioTableModel;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;

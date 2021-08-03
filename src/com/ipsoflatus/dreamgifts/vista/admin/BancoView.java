@@ -6,7 +6,7 @@
 package com.ipsoflatus.dreamgifts.vista.admin;
 
 import com.ipsoflatus.dreamgifts.controlador.admin.BancoController;
-import com.ipsoflatus.dreamgifts.modelo.table.admin.BancoTableModel;
+import com.ipsoflatus.dreamgifts.modelo.tabla.admin.BancoTableModel;
 import com.ipsoflatus.dreamgifts.modelo.servicio.BancoService;
 import javax.swing.JTable;
 import javax.swing.JTextField;

@@ -1,7 +1,8 @@
-package com.ipsoflatus.dreamgifts.modelo.table.ventas;
+package com.ipsoflatus.dreamgifts.modelo.tabla.ventas;
 
 import com.ipsoflatus.dreamgifts.modelo.Observer;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Venta;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -12,7 +13,7 @@ public abstract class VentaTableModel extends AbstractTableModel implements Obse
     protected static List<Venta> ventas;
     
     public VentaTableModel() {
-        
+        ventas = new ArrayList<>();
     }
     
     public Venta getItem(int row) {
@@ -45,10 +46,7 @@ public abstract class VentaTableModel extends AbstractTableModel implements Obse
     @Override
     public void actualizar(List<Venta> items) {
         ventas = items;
-        actualizar();
         fireTableDataChanged();
     }
     
-    public abstract void actualizar();
-
 }

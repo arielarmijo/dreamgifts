@@ -2,7 +2,7 @@ package com.ipsoflatus.dreamgifts.vista.admin;
 
 import com.ipsoflatus.dreamgifts.controlador.admin.RRSSController;
 import com.ipsoflatus.dreamgifts.modelo.servicio.RedSocialService;
-import com.ipsoflatus.dreamgifts.modelo.table.admin.RedSocialTableModel;
+import com.ipsoflatus.dreamgifts.modelo.tabla.admin.RedSocialTableModel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;

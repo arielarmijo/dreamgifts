@@ -43,6 +43,9 @@ public class Comuna implements Serializable {
     @Column(name = "estado")
     private Boolean estado;
     
+    @OneToMany(mappedBy = "comuna")
+    private List<Venta> ventas;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "comuna")
     private List<Cliente> clientes;
 
@@ -93,6 +96,14 @@ public class Comuna implements Serializable {
 
     public void setEstado(Boolean estado) {
         this.estado = estado;
+    }
+
+    public List<Venta> getVentas() {
+        return ventas;
+    }
+
+    public void setVentas(List<Venta> ventas) {
+        this.ventas = ventas;
     }
 
     public List<Cliente> getClientes() {

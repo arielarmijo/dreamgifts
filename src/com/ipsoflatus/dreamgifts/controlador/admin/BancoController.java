@@ -1,6 +1,6 @@
 package com.ipsoflatus.dreamgifts.controlador.admin;
 
-import com.ipsoflatus.dreamgifts.modelo.table.admin.BancoTableModel;
+import com.ipsoflatus.dreamgifts.modelo.tabla.admin.BancoTableModel;
 import com.ipsoflatus.dreamgifts.controlador.Controller;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Banco;
 import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;

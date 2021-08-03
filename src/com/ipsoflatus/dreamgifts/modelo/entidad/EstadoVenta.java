@@ -1,6 +1,7 @@
 package com.ipsoflatus.dreamgifts.modelo.entidad;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -40,6 +42,10 @@ public class EstadoVenta implements Serializable {
     @Basic(optional = false)
     @Column(name = "estado")
     private Boolean estado;
+    
+    @OneToMany(mappedBy = "estadoVenta")
+    private List<Venta> ventas;
+    
 
     public EstadoVenta() {
     }
@@ -95,6 +101,14 @@ public class EstadoVenta implements Serializable {
         this.estado = estado;
     }
 
+    public List<Venta> getVentas() {
+        return ventas;
+    }
+
+    public void setVentas(List<Venta> ventas) {
+        this.ventas = ventas;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -119,5 +133,5 @@ public class EstadoVenta implements Serializable {
     public String toString() {
         return nombre;
     }
-    
+
 }

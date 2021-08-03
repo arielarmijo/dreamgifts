@@ -1,4 +1,4 @@
-package com.ipsoflatus.dreamgifts.modelo;
+package com.ipsoflatus.dreamgifts.modelo.exporter;
 
 public interface Exporter {
     

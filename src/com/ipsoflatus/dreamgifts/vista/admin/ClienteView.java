@@ -6,7 +6,7 @@ import com.ipsoflatus.dreamgifts.controlador.admin.ClienteController;
 import com.ipsoflatus.dreamgifts.modelo.combobox.ComunaComboBoxModel;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ClienteService;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ComunaService;
-import com.ipsoflatus.dreamgifts.modelo.table.admin.ClienteTableModel;
+import com.ipsoflatus.dreamgifts.modelo.tabla.admin.ClienteTableModel;
 import com.ipsoflatus.dreamgifts.vista.DreamGifts;
 import java.awt.Image;
 import java.awt.Toolkit;

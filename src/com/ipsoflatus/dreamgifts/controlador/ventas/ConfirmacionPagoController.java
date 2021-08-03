@@ -8,7 +8,7 @@ import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ClienteService;
 import com.ipsoflatus.dreamgifts.modelo.servicio.EVService;
 import com.ipsoflatus.dreamgifts.modelo.servicio.VentaService;
-import com.ipsoflatus.dreamgifts.modelo.table.ventas.ConfirmacionPagoTableModel;
+import com.ipsoflatus.dreamgifts.modelo.tabla.ventas.ConfirmacionPagoTableModel;
 import com.ipsoflatus.dreamgifts.vista.ventas.ConfirmacionPagoView;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -17,18 +17,17 @@ import javax.swing.JOptionPane;
 
 public class ConfirmacionPagoController {
 
-    private final ConfirmacionPagoView view;
     private final EVService evSrv = EVService.getInstance();
-    private final ClienteService clienteSrv = ClienteService.getInstance();
     private final VentaService ventaSrv = VentaService.getInstance();
-    private Venta ventaActual;
+    private final ConfirmacionPagoView view;
+    private Venta venta;
     
     public ConfirmacionPagoController(ConfirmacionPagoView view) {
         this.view = view;
     }
     
     public void cancelar() {
-        ventaActual = null;
+        venta = null;
         view.getTxfVentaId().setText("");
         view.getTxfNombreCliente().setText("");
         view.getTxfRut().setText("");
@@ -39,7 +38,7 @@ public class ConfirmacionPagoController {
 
     public void confirmarPago() {
         
-        if (ventaActual == null) {
+        if (venta == null) {
            mostrarInformacion("Seleccione venta a actualizar.");
             return; 
         }
@@ -68,20 +67,18 @@ public class ConfirmacionPagoController {
             return;
         }
         
-        ventaActual.setBancoId(bancoId);
-        ventaActual.setFechaTransferencia(fechaPago);
-        ventaActual.setCodigoTransferencia(codigo);
+        venta.setBanco(banco);
+        venta.setFechaTransferencia(fechaPago);
+        venta.setCodigoTransferencia(codigo);
         
         
         try {
             List<EstadoVenta> eevv = evSrv.buscar();
-            eevv.forEach(System.out::println);
             if (eevv.size() < 2)
                throw new DreamGiftsException("No hay suficientes estados de ventas creados.");
             EstadoVenta ev = eevv.get(1);
-            System.out.println(ev.getNombre());
-            ventaActual.setEstadoVentaId(ev.getId());
-            ventaSrv.editar(ventaActual);
+            venta.setEstadoVenta(ev);
+            ventaSrv.editar(venta);
             mostrarInformacion("Pago registrado.");
             cancelar();
         } catch (DreamGiftsException e) {
@@ -101,9 +98,9 @@ public class ConfirmacionPagoController {
             return;
         }
         ConfirmacionPagoTableModel tableModel = (ConfirmacionPagoTableModel) this.view.getjTable().getModel();
-        ventaActual = tableModel.getItem(row);
-        view.getTxfVentaId().setText(ventaActual.getId().toString());
-        Cliente c = clienteSrv.buscar(ventaActual.getClienteId());
+        venta = tableModel.getItem(row);
+        view.getTxfVentaId().setText(venta.getId().toString());
+        Cliente c = venta.getCliente();
         view.getTxfNombreCliente().setText(c.getNombre() + " " + c.getApellido());
         view.getTxfRut().setText(c.getRut());
     }

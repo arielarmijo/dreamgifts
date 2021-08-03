@@ -45,6 +45,9 @@ public class Pack implements Serializable {
     private Boolean estado;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pack")
+    private List<Venta> ventas;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pack")
     private List<PackHasArticulo> articulos;
 
     public Pack() {
@@ -102,6 +105,14 @@ public class Pack implements Serializable {
         this.estado = estado;
     }
 
+    public List<Venta> getVentas() {
+        return ventas;
+    }
+
+    public void setVentas(List<Venta> ventas) {
+        this.ventas = ventas;
+    }
+
     public List<PackHasArticulo> getArticulos() {
         return articulos;
     }
@@ -134,5 +145,5 @@ public class Pack implements Serializable {
     public String toString() {
         return nombre;
     }
-    
+
 }

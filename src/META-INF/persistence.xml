@@ -13,6 +13,7 @@
     <class>com.ipsoflatus.dreamgifts.modelo.entidad.PackHasArticulo</class>
     <class>com.ipsoflatus.dreamgifts.modelo.entidad.Proveedor</class>
     <class>com.ipsoflatus.dreamgifts.modelo.entidad.Usuario</class>
+    <class>com.ipsoflatus.dreamgifts.modelo.entidad.Venta</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/dreamgifts?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="dreamgifts"/>

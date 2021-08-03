@@ -6,7 +6,7 @@ import com.ipsoflatus.dreamgifts.modelo.entidad.Proveedor;
 import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ComunaService;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ProveedorService;
-import com.ipsoflatus.dreamgifts.modelo.table.admin.ProveedorTableModel;
+import com.ipsoflatus.dreamgifts.modelo.tabla.admin.ProveedorTableModel;
 import com.ipsoflatus.dreamgifts.vista.admin.ProveedorView;
 import java.util.List;
 import java.util.stream.Collectors;

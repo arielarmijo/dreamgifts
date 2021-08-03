@@ -9,10 +9,10 @@ import com.ipsoflatus.dreamgifts.controlador.admin.PackController;
 import com.ipsoflatus.dreamgifts.modelo.combobox.CategoriaArticuloComboBoxModel;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Articulo;
 import com.ipsoflatus.dreamgifts.modelo.entidad.PackHasArticulo;
-import com.ipsoflatus.dreamgifts.modelo.list.ArticuloListModel;
-import com.ipsoflatus.dreamgifts.modelo.list.PackHasArticuloCellRenderer;
+import com.ipsoflatus.dreamgifts.modelo.lista.ArticuloListModel;
+import com.ipsoflatus.dreamgifts.modelo.lista.PackHasArticuloCellRenderer;
 import com.ipsoflatus.dreamgifts.modelo.servicio.CategoriaArticuloService;
-import com.ipsoflatus.dreamgifts.modelo.table.admin.PackTableModel;
+import com.ipsoflatus.dreamgifts.modelo.tabla.admin.PackTableModel;
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
 import javax.swing.JList;
@@ -91,7 +91,7 @@ public class PackView extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setText("Creación de Packs");
 
-        lstPackHasArticulo.setModel(new com.ipsoflatus.dreamgifts.modelo.list.PackHasArticuloListModel());
+        lstPackHasArticulo.setModel(new com.ipsoflatus.dreamgifts.modelo.lista.PackHasArticuloListModel());
         lstPackHasArticulo.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         lstPackHasArticulo.setCellRenderer(new PackHasArticuloCellRenderer());
         jScrollPane2.setViewportView(lstPackHasArticulo);

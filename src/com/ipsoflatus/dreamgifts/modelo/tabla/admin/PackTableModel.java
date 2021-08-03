@@ -1,8 +1,8 @@
-package com.ipsoflatus.dreamgifts.modelo.table.admin;
+package com.ipsoflatus.dreamgifts.modelo.tabla.admin;
 
 import com.ipsoflatus.dreamgifts.modelo.entidad.Pack;
 import com.ipsoflatus.dreamgifts.modelo.servicio.PackService;
-import com.ipsoflatus.dreamgifts.modelo.table.ObservableTableModel;
+import com.ipsoflatus.dreamgifts.modelo.tabla.ObservableTableModel;
 
 public class PackTableModel extends ObservableTableModel<Pack> {
     

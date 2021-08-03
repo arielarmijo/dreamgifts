@@ -2,7 +2,7 @@ package com.ipsoflatus.dreamgifts.vista.admin;
 
 import com.ipsoflatus.dreamgifts.controlador.admin.ArticuloController;
 import com.ipsoflatus.dreamgifts.controlador.Controller;
-import com.ipsoflatus.dreamgifts.modelo.table.admin.ArticuloTableModel;
+import com.ipsoflatus.dreamgifts.modelo.tabla.admin.ArticuloTableModel;
 import com.ipsoflatus.dreamgifts.modelo.combobox.CategoriaArticuloComboBoxModel;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ArticuloService;
 import com.ipsoflatus.dreamgifts.modelo.servicio.CategoriaArticuloService;

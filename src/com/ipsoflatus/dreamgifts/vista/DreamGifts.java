@@ -35,11 +35,11 @@ public class DreamGifts extends javax.swing.JFrame {
     
     public DreamGifts() {
         initComponents();
-        //crearPanelVentas();
-        //crearPanelCompras();
-        //crearPanelInformes();
+        crearPanelVentas();
+        crearPanelCompras();
+        crearPanelInformes();
         crearPanelAdmin();
-        showTabbedPaneAndTab(jTabbedPaneAdmin, "admin", 0);
+        //showTabbedPaneAndTab(jTabbedPaneAdmin, "admin", 0);
     }
     
     private void crearPanelVentas() {

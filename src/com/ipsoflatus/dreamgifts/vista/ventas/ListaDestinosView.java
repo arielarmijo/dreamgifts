@@ -5,10 +5,10 @@
  */
 package com.ipsoflatus.dreamgifts.vista.ventas;
 
-import com.ipsoflatus.dreamgifts.modelo.ExcelExporter;
-import com.ipsoflatus.dreamgifts.modelo.Exporter;
+import com.ipsoflatus.dreamgifts.modelo.exporter.ExcelExporter;
+import com.ipsoflatus.dreamgifts.modelo.exporter.Exporter;
 import com.ipsoflatus.dreamgifts.modelo.servicio.VentaService;
-import com.ipsoflatus.dreamgifts.modelo.table.ventas.ListaDestinoTableModel;
+import com.ipsoflatus.dreamgifts.modelo.tabla.ventas.ListaDestinoTableModel;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;

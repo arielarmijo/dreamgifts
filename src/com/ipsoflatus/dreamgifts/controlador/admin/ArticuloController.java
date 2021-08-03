@@ -1,6 +1,6 @@
 package com.ipsoflatus.dreamgifts.controlador.admin;
 
-import com.ipsoflatus.dreamgifts.modelo.table.admin.ArticuloTableModel;
+import com.ipsoflatus.dreamgifts.modelo.tabla.admin.ArticuloTableModel;
 import com.ipsoflatus.dreamgifts.controlador.Controller;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Articulo;
 import com.ipsoflatus.dreamgifts.modelo.entidad.CategoriaArticulo;

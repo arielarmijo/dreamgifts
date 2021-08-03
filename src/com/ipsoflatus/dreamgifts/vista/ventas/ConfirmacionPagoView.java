@@ -6,7 +6,7 @@ import com.ipsoflatus.dreamgifts.controlador.ventas.ConfirmacionPagoController;
 import com.ipsoflatus.dreamgifts.modelo.combobox.BancoComboBoxModel;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Banco;
 import com.ipsoflatus.dreamgifts.modelo.servicio.BancoService;
-import com.ipsoflatus.dreamgifts.modelo.table.ventas.ConfirmacionPagoTableModel;
+import com.ipsoflatus.dreamgifts.modelo.tabla.ventas.ConfirmacionPagoTableModel;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.time.LocalDate;

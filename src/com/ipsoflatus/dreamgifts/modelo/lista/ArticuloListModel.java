@@ -1,4 +1,4 @@
-package com.ipsoflatus.dreamgifts.modelo.list;
+package com.ipsoflatus.dreamgifts.modelo.lista;
 
 import com.ipsoflatus.dreamgifts.modelo.Observer;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Articulo;

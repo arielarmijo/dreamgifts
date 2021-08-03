@@ -7,6 +7,7 @@ package com.ipsoflatus.dreamgifts.modelo.entidad;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -32,6 +34,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Cliente.findAll", query = "SELECT c FROM Cliente c")})
 public class Cliente implements Serializable {
+
+    @OneToMany(mappedBy = "cliente")
+    private List<Venta> ventaList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -198,6 +203,14 @@ public class Cliente implements Serializable {
     @Override
     public String toString() {
         return "com.ipsoflatus.dreamgifts.modelo.entidad.Cliente[ id=" + id + " ]";
+    }
+
+    public List<Venta> getVentaList() {
+        return ventaList;
+    }
+
+    public void setVentaList(List<Venta> ventaList) {
+        this.ventaList = ventaList;
     }
     
 }
