@@ -7,7 +7,7 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-public abstract class AbstractDao<T> implements Dao<T> {
+public abstract class AbstractDao<T> implements DAO<T> {
 
     protected final EntityManagerFactory emf;
     protected final Class<T> typeClass;
