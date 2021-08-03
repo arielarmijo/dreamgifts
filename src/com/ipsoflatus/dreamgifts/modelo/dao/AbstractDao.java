@@ -5,12 +5,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
-public abstract class AbstractDao<T> implements DAO<T> {
+public abstract class AbstractDao<T> implements Dao<T> {
 
     protected final EntityManagerFactory emf;
-    private final Class<T> typeClass;
-    protected String searchSql;
+    protected final Class<T> typeClass;
     
     public AbstractDao(Class<T> typeClass) {
         this(Persistence.createEntityManagerFactory("dreamgifts"), typeClass);
@@ -35,7 +35,8 @@ public abstract class AbstractDao<T> implements DAO<T> {
     @Override
     public List<T> findByTermLike(String term) {
         EntityManager em = emf.createEntityManager();
-        Query query = em.createQuery(searchSql);
+        String namedQuery = String.format("$s.findByTermLike", typeClass.getSimpleName());
+        TypedQuery<T> query = em.createNamedQuery(namedQuery, typeClass);
         query.setParameter("term", "%" + term + "%");
         List<T> result = query.getResultList();
         em.close();
@@ -68,20 +69,6 @@ public abstract class AbstractDao<T> implements DAO<T> {
         em.close();
     }
 
-    @Override
-    public void updateStateByIds(List<Integer> ids, boolean estado) {
-        EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
-        String sql = String.format("SELECT o FROM %s o WHERE o.id IN :ids", typeClass.getSimpleName());
-        Query query = em.createQuery(sql);
-        query.setParameter("ids", ids);
-        List<T> items = query.getResultList();
-        items.forEach(i -> {setEstado(i, estado);});
-        em.getTransaction().commit();
-        em.close();
-    }
-    
-    protected abstract void setEstado(T t, boolean estado);
     protected abstract void update(EntityManager em, T t);
     
 }

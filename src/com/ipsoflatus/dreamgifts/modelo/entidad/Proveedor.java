@@ -16,8 +16,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "proveedores")
 @NamedQueries({
-    @NamedQuery(name = "Proveedor.findAll", query = "SELECT p FROM Proveedor p")})
-public class Proveedor implements Serializable {
+    @NamedQuery(name = "Proveedor.findByTermLike", query = "SELECT p FROM Proveedor p WHERE UPPER(p.rut) LIKE UPPER(:term) OR UPPER(p.razonSocial) LIKE UPPER(:term)")})
+public class Proveedor implements Serializable, SoftDelete {
 
     private static final long serialVersionUID = 1L;
     

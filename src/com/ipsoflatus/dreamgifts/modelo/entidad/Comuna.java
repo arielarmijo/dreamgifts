@@ -14,14 +14,13 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @Table(name = "comunas")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Comuna.findAll", query = "SELECT c FROM Comuna c")})
-public class Comuna implements Serializable {
+    @NamedQuery(name = "Comuna.findByTermLike", query = "SELECT c FROM Comuna c WHERE UPPER(c.codigo) LIKE UPPER(:term) OR UPPER(c.nombre) LIKE UPPER(:term)")})
+public class Comuna implements Serializable, SoftDelete {
 
     private static final long serialVersionUID = 1L;
     

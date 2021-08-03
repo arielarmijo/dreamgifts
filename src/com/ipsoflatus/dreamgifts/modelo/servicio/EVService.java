@@ -5,9 +5,9 @@
  */
 package com.ipsoflatus.dreamgifts.modelo.servicio;
 
-import com.ipsoflatus.dreamgifts.modelo.dao.DAO;
 import com.ipsoflatus.dreamgifts.modelo.dao.EstadoVentaDao;
 import com.ipsoflatus.dreamgifts.modelo.entidad.EstadoVenta;
+import com.ipsoflatus.dreamgifts.modelo.dao.Dao;
 
 
 

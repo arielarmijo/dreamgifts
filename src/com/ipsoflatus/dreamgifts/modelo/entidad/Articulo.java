@@ -19,8 +19,8 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "articulos")
 @NamedQueries({
-    @NamedQuery(name = "Articulo.findAll", query = "SELECT a FROM Articulo a")})
-public class Articulo implements Serializable {
+    @NamedQuery(name = "Articulo.findByTermLike", query = "SELECT a FROM Articulo a WHERE UPPER(a.nombre) LIKE UPPER(:term) OR UPPER(a.marca) LIKE UPPER(:term)")})
+public class Articulo implements Serializable, SoftDelete {
 
     private static final long serialVersionUID = 1L;
     

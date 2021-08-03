@@ -27,7 +27,7 @@ public class ClienteTableModel extends ObservableTableModel<Cliente> {
         if (columnIndex == 4)
             return item.getCelular();
         if (columnIndex == 5)
-            return item.getEstado() == 1 ? "Activo" : "Inactivo";
+            return item.getEstado() ? "Activo" : "Inactivo";
         if (columnIndex == 6)
             return seleccionados.get(rowIndex);
         return null;

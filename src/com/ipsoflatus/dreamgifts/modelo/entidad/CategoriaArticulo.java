@@ -17,8 +17,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "categorias_articulo")
 @NamedQueries({
-    @NamedQuery(name = "CategoriaArticulo.findAll", query = "SELECT c FROM CategoriaArticulo c")})
-public class CategoriaArticulo implements Serializable {
+    @NamedQuery(name = "CategoriaArticulo.findByTermLike", query = "SELECT ca FROM CategoriaArticulo ca WHERE UPPER(ca.codigo) LIKE UPPER(:term) OR UPPER(ca.nombre) LIKE UPPER(:term)")})
+public class CategoriaArticulo implements Serializable, SoftDelete {
 
     private static final long serialVersionUID = 1L;
     

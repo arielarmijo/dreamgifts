@@ -11,11 +11,6 @@ public class VentaDao extends AbstractDao<Venta> {
     }
 
     @Override
-    protected void setEstado(Venta t, boolean estado) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     protected void update(EntityManager em, Venta v) {
         Venta venta = em.find(Venta.class, v.getId());
         venta.setCliente(v.getCliente());

@@ -25,8 +25,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "rrss")
 @NamedQueries({
-    @NamedQuery(name = "RedSocial.findAll", query = "SELECT r FROM RedSocial r")})
-public class RedSocial implements Serializable {
+    @NamedQuery(name = "RedSocial.findByTermLike", query = "SELECT rs FROM RedSocial rs WHERE UPPER(rs.codigo) LIKE UPPER(:term) OR UPPER(rs.nombre) LIKE UPPER(:term)")})
+public class RedSocial implements Serializable, SoftDelete {
 
     private static final long serialVersionUID = 1L;
     

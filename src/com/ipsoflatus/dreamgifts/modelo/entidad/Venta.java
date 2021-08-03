@@ -19,7 +19,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "ventas")
 @NamedQueries({
-    @NamedQuery(name = "Venta.findAll", query = "SELECT v FROM Venta v")})
+    @NamedQuery(name = "Venta.findByTermLike", query = "SELECT v FROM Venta v")})
 public class Venta implements Serializable {
 
     private static final long serialVersionUID = 1L;

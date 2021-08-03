@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ipsoflatus.dreamgifts.modelo.entidad;
 
 import java.io.Serializable;
@@ -24,16 +19,12 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author Usuario
- */
 @Entity
 @Table(name = "clientes")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Cliente.findAll", query = "SELECT c FROM Cliente c")})
-public class Cliente implements Serializable {
+    @NamedQuery(name = "Cliente.findByTermLike", query = "SELECT c FROM Cliente c WHERE UPPER(c.nombre) LIKE UPPER(:term) OR UPPER(c.apellido) LIKE UPPER(:term) OR c.rut LIKE :term")})
+public class Cliente implements Serializable, SoftDelete {
 
     @OneToMany(mappedBy = "cliente")
     private List<Venta> ventas;
@@ -44,32 +35,42 @@ public class Cliente implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    
     @Basic(optional = false)
     @Column(name = "rut")
     private String rut;
+    
     @Basic(optional = false)
     @Column(name = "nombre")
     private String nombre;
+    
     @Basic(optional = false)
     @Column(name = "apellido")
     private String apellido;
+    
     @Basic(optional = false)
     @Column(name = "correo")
     private String correo;
+    
     @Basic(optional = false)
     @Column(name = "direccion")
     private String direccion;
+    
     @Column(name = "telefono")
     private String telefono;
+    
     @Basic(optional = false)
     @Column(name = "celular")
     private String celular;
+    
     @Column(name = "fecha_nacimiento")
     @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
+    
     @Basic(optional = false)
     @Column(name = "estado")
-    private short estado;
+    private Boolean estado;
+    
     @JoinColumn(name = "comuna_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Comuna comuna;
@@ -81,7 +82,7 @@ public class Cliente implements Serializable {
         this.id = id;
     }
 
-    public Cliente(Integer id, String rut, String nombre, String apellido, String correo, String direccion, String celular, short estado) {
+    public Cliente(Integer id, String rut, String nombre, String apellido, String correo, String direccion, String celular, Boolean estado) {
         this.id = id;
         this.rut = rut;
         this.nombre = nombre;
@@ -164,11 +165,11 @@ public class Cliente implements Serializable {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public short getEstado() {
+    public Boolean getEstado() {
         return estado;
     }
 
-    public void setEstado(short estado) {
+    public void setEstado(Boolean estado) {
         this.estado = estado;
     }
 

@@ -82,7 +82,7 @@ public class ClienteController implements Controller<ClienteView> {
                 cliente.setTelefono(telefono);
                 cliente.setCelular(celular);
                 cliente.setFechaNacimiento(fechaNacimiento);
-                cliente.setEstado((short)1);
+                cliente.setEstado(Boolean.TRUE);
                 clienteSrv.guardar(cliente);
 
             } else {

@@ -1,20 +1,21 @@
 package com.ipsoflatus.dreamgifts.modelo.servicio;
 
 import com.ipsoflatus.dreamgifts.modelo.Observer;
-import com.ipsoflatus.dreamgifts.modelo.dao.DAO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import com.ipsoflatus.dreamgifts.modelo.dao.Dao;
+import com.ipsoflatus.dreamgifts.modelo.dao.SoftDeleteDao;
 
 public abstract class AbstractService<T> implements Service<T>, ObservableService<Observer<T>> {
 
-    protected DAO<T> dao;
+    protected Dao<T> dao;
     private final List<Observer<T>> obs;
     private List<T> items = new ArrayList<>();
     private final ExecutorService executor = Executors.newCachedThreadPool();
 
-    public AbstractService(DAO dao) {
+    public AbstractService(Dao dao) {
         this.dao = dao;
         this.obs = new ArrayList<>();
         this.items = dao.findAll();
@@ -51,7 +52,7 @@ public abstract class AbstractService<T> implements Service<T>, ObservableServic
 
     @Override
     public void cambiarEstado(List<Integer> ids, Boolean estado) {
-        dao.updateStateByIds(ids, estado);
+        ((SoftDeleteDao) dao).updateStateByIds(ids, estado);
         notifyObservers();
     }
 
