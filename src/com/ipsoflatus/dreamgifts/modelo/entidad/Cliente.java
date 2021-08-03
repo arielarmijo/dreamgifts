@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Cliente implements Serializable {
 
     @OneToMany(mappedBy = "cliente")
-    private List<Venta> ventaList;
+    private List<Venta> ventas;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -179,6 +179,14 @@ public class Cliente implements Serializable {
     public void setComuna(Comuna comuna) {
         this.comuna = comuna;
     }
+    
+    public List<Venta> getVentas() {
+        return ventas;
+    }
+
+    public void setVentas(List<Venta> ventas) {
+        this.ventas = ventas;
+    }
 
     @Override
     public int hashCode() {
@@ -202,15 +210,9 @@ public class Cliente implements Serializable {
 
     @Override
     public String toString() {
-        return "com.ipsoflatus.dreamgifts.modelo.entidad.Cliente[ id=" + id + " ]";
+        return rut;
     }
 
-    public List<Venta> getVentaList() {
-        return ventaList;
-    }
-
-    public void setVentaList(List<Venta> ventaList) {
-        this.ventaList = ventaList;
-    }
+    
     
 }

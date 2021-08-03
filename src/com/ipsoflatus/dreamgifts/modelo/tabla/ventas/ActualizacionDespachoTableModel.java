@@ -3,7 +3,6 @@ package com.ipsoflatus.dreamgifts.modelo.tabla.ventas;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Venta;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ObservableService;
 import java.sql.Date;
-import java.util.stream.Collectors;
 
 public final class ActualizacionDespachoTableModel extends VentaTableModel {
 

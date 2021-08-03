@@ -171,7 +171,7 @@ public class Proveedor implements Serializable {
 
     @Override
     public String toString() {
-        return "com.ipsoflatus.dreamgifts.modelo.entidad.Proveedor[ id=" + id + " ]";
+        return rut;
     }
     
 }

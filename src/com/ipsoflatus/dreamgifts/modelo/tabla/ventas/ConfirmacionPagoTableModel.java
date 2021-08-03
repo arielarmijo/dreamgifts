@@ -1,12 +1,20 @@
 package com.ipsoflatus.dreamgifts.modelo.tabla.ventas;
 
+import com.ipsoflatus.dreamgifts.modelo.entidad.EstadoVenta;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Venta;
+import com.ipsoflatus.dreamgifts.modelo.servicio.EVService;
 import java.sql.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public final class ConfirmacionPagoTableModel extends VentaTableModel {
+   
+    private EstadoVenta pendiente;
     
     public ConfirmacionPagoTableModel() {
         super();
+        System.out.println("ventas pendiente de pago: " + ventas);
+        pendiente = obtenerEstado();
         columnNames = new String[]{"N° Pedido", "Nombre Cliente", "Celular", "Pack", "Monto", "Fecha Venta"};
         columnClases = new Class[]{Integer.class, String.class, String.class, String.class, Integer.class, Date.class};
     }
@@ -33,6 +41,19 @@ public final class ConfirmacionPagoTableModel extends VentaTableModel {
             return venta.getFechaVenta();
         }
         return null;
+    }
+
+    @Override
+    public void actualizar(List<Venta> items) {
+        if (pendiente == null) {
+            pendiente = obtenerEstado();
+        }
+        ventas = items.stream().filter(v -> v.getEstadoVenta().equals(pendiente)).collect(Collectors.toList());
+        fireTableDataChanged();
+    }
+
+    private EstadoVenta obtenerEstado() {
+        return EVService.getInstance().buscar().get(0);
     }
 
 }

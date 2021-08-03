@@ -276,7 +276,7 @@ public class Venta implements Serializable {
 
     @Override
     public String toString() {
-        return "com.ipsoflatus.dreamgifts.modelo.entidad.Venta[ id=" + id + " ]";
+        return "Venta[ id=" + id + " ]";
     }
     
 }
