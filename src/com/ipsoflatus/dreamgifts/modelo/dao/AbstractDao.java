@@ -35,7 +35,7 @@ public abstract class AbstractDao<T> implements Dao<T> {
     @Override
     public List<T> findByTermLike(String term) {
         EntityManager em = emf.createEntityManager();
-        String namedQuery = String.format("$s.findByTermLike", typeClass.getSimpleName());
+        String namedQuery = String.format("%s.findByTermLike", typeClass.getSimpleName());
         TypedQuery<T> query = em.createNamedQuery(namedQuery, typeClass);
         query.setParameter("term", "%" + term + "%");
         List<T> result = query.getResultList();
