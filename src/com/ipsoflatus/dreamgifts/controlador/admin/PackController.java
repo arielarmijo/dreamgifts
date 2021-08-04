@@ -5,7 +5,6 @@ import com.ipsoflatus.dreamgifts.modelo.entidad.Articulo;
 import com.ipsoflatus.dreamgifts.modelo.entidad.CategoriaArticulo;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Pack;
 import com.ipsoflatus.dreamgifts.modelo.entidad.PackHasArticulo;
-import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
 import com.ipsoflatus.dreamgifts.modelo.lista.ArticuloListModel;
 import com.ipsoflatus.dreamgifts.modelo.lista.PackHasArticuloListModel;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ArticuloService;
@@ -26,9 +25,15 @@ public class PackController implements Controller<PackView> {
     private PackTableModel tableModel;
     private Pack packActual;
     
+    public PackController(PackView view) {
+        this.view = view;
+    }
+    
     public void filtrarArticulo() {
-        //CategoriaArticulo ca = (CategoriaArticulo) view.getCbxCategoriaArticulo().getSelectedItem();
-        List<Articulo> articulos = articuloService.buscar();
+        
+        CategoriaArticulo ca = (CategoriaArticulo) view.getCbxCategoriaArticulo().getSelectedItem();
+        
+        List<Articulo> articulos = ca.getId() == null ? articuloService.buscar() : null;
         articuloListModel.actualizar(articulos);
     }
     

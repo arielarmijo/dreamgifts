@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ipsoflatus.dreamgifts.vista.admin;
 
 import com.ipsoflatus.dreamgifts.controlador.admin.PackController;
@@ -21,10 +16,6 @@ import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-/**
- *
- * @author Usuario
- */
 public class PackView extends javax.swing.JPanel {
 
     private final PackController controlador;
@@ -34,8 +25,7 @@ public class PackView extends javax.swing.JPanel {
      */
     public PackView() {
         initComponents();
-        controlador = new PackController();
-        controlador.setView(this);
+        controlador = new PackController(this);
     }
 
     /**
