@@ -85,6 +85,7 @@ public class CategoriaArticulo implements Serializable, SoftDelete {
         return estado;
     }
 
+    @Override
     public void setEstado(Boolean estado) {
         this.estado = estado;
     }
@@ -121,5 +122,5 @@ public class CategoriaArticulo implements Serializable, SoftDelete {
     public String toString() {
         return nombre;
     }
-    
+
 }

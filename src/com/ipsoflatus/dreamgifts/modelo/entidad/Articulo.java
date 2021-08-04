@@ -2,7 +2,9 @@ package com.ipsoflatus.dreamgifts.modelo.entidad;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,7 +24,7 @@ import javax.persistence.TemporalType;
 @NamedQueries({
     @NamedQuery(name = "Articulo.findByTermLike", query = "SELECT a FROM Articulo a WHERE UPPER(a.nombre) LIKE UPPER(:term) OR UPPER(a.marca) LIKE UPPER(:term)")})
 public class Articulo implements Serializable, SoftDelete {
-
+    
     private static final long serialVersionUID = 1L;
     
     @Id
@@ -52,6 +55,9 @@ public class Articulo implements Serializable, SoftDelete {
     @ManyToOne(optional = false)
     @JoinColumn(name = "categoria_articulo_id", referencedColumnName = "id")
     private CategoriaArticulo categoriaArticulo;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "articulo")
+    private List<PackHasArticulo> packs;
 
     public Articulo() {
     }
@@ -106,14 +112,24 @@ public class Articulo implements Serializable, SoftDelete {
     public void setFechaVencimiento(Date fechaVencimiento) {
         this.fechaVencimiento = fechaVencimiento;
     }
-
+    
     public Boolean getEstado() {
         return estado;
     }
 
+    @Override
     public void setEstado(Boolean estado) {
         this.estado = estado;
     }
+
+    public List<PackHasArticulo> getPacks() {
+        return packs;
+    }
+
+    public void setPacks(List<PackHasArticulo> packs) {
+        this.packs = packs;
+    }
+
 
     public CategoriaArticulo getCategoriaArticulo() {
         return categoriaArticulo;

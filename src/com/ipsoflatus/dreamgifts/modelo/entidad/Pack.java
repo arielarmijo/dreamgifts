@@ -1,6 +1,7 @@
 package com.ipsoflatus.dreamgifts.modelo.entidad;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -13,6 +14,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "packs")
@@ -44,8 +47,16 @@ public class Pack implements Serializable, SoftDelete {
     @Column(name = "estado")
     private Boolean estado;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pack")
-    private List<Venta> ventas;
+    @Column(name = "stock_critico")
+    private Integer stockCritico;
+    
+    @Column(name = "fecha_inicio")
+    @Temporal(TemporalType.DATE)
+    private Date fechaInicio;
+    
+    @Column(name = "fecha_termino")
+    @Temporal(TemporalType.DATE)
+    private Date fechaTermino;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pack")
     private List<PackHasArticulo> articulos;
@@ -101,16 +112,33 @@ public class Pack implements Serializable, SoftDelete {
         return estado;
     }
 
+    @Override
     public void setEstado(Boolean estado) {
         this.estado = estado;
     }
 
-    public List<Venta> getVentas() {
-        return ventas;
+    public Integer getStockCritico() {
+        return stockCritico;
     }
 
-    public void setVentas(List<Venta> ventas) {
-        this.ventas = ventas;
+    public void setStockCritico(Integer stockCritico) {
+        this.stockCritico = stockCritico;
+    }
+
+    public Date getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public Date getFechaTermino() {
+        return fechaTermino;
+    }
+
+    public void setFechaTermino(Date fechaTermino) {
+        this.fechaTermino = fechaTermino;
     }
 
     public List<PackHasArticulo> getArticulos() {
@@ -145,5 +173,5 @@ public class Pack implements Serializable, SoftDelete {
     public String toString() {
         return nombre;
     }
-
+    
 }
