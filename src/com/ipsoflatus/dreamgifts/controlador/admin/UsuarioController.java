@@ -18,7 +18,7 @@ public class UsuarioController {
     
     public UsuarioController(UsuarioView view) {
         this.view = view;
-        this.tableModel = (UsuarioTableModel) view.getjTableUsuarios().getModel();
+        this.tableModel = (UsuarioTableModel) view.getjTable().getModel();
         this.usuarioSrv =  UsuarioService.getInstance();
         this.usuarioActual = null;
     }
@@ -65,6 +65,11 @@ public class UsuarioController {
     }
     
     public void editar() {
+        int row = view.getjTable().getSelectedRow();
+        if (row == -1) {
+            view.mostrarInformacion("Seleccione categoría.");
+            return;
+        }
         usuarioActual = tableModel.getItem(view.getSelectedRow());
         view.setNombre(usuarioActual.getNombre());
         view.setNuevoPassword(usuarioActual.getClave());

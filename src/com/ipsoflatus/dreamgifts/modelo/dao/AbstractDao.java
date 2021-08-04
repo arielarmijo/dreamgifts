@@ -20,6 +20,10 @@ public abstract class AbstractDao<T> implements DAO<T> {
         this.emf = emf;
         this.typeClass = typeClass;
     }
+    
+    public EntityManager getEntityManager() {
+        return emf.createEntityManager();
+    }
 
     @Override
     public List<T> findAll() {
@@ -59,16 +63,5 @@ public abstract class AbstractDao<T> implements DAO<T> {
         em.getTransaction().commit();
         em.close();
     }
-
-    @Override
-    public void update(T t) {
-        EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
-        update(em, t);
-        em.getTransaction().commit();
-        em.close();
-    }
-
-    protected abstract void update(EntityManager em, T t);
     
 }

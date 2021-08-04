@@ -1,6 +1,7 @@
 package com.ipsoflatus.dreamgifts.modelo.entidad;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -10,63 +11,72 @@ public class PackHasArticuloPK implements Serializable {
 
     @Basic(optional = false)
     @Column(name = "pack_id")
-    private int packId;
+    private Integer packId;
     
     @Basic(optional = false)
     @Column(name = "articulo_id")
-    private int articuloId;
+    private Integer articuloId;
 
     public PackHasArticuloPK() {
     }
 
-    public PackHasArticuloPK(int packId, int articuloId) {
+    public PackHasArticuloPK(Integer packId, Integer articuloId) {
         this.packId = packId;
         this.articuloId = articuloId;
     }
 
-    public int getPackId() {
+    public Integer getPackId() {
         return packId;
     }
 
-    public void setPackId(int packId) {
+    public void setPackId(Integer packId) {
         this.packId = packId;
     }
 
-    public int getArticuloId() {
+    public Integer getArticuloId() {
         return articuloId;
     }
 
-    public void setArticuloId(int articuloId) {
+    public void setArticuloId(Integer articuloId) {
         this.articuloId = articuloId;
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (int) packId;
-        hash += (int) articuloId;
+        int hash = 3;
+        hash = 71 * hash + Objects.hashCode(this.packId);
+        hash = 71 * hash + Objects.hashCode(this.articuloId);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof PackHasArticuloPK)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        PackHasArticuloPK other = (PackHasArticuloPK) object;
-        if (this.packId != other.packId) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        if (this.articuloId != other.articuloId) {
+        final PackHasArticuloPK other = (PackHasArticuloPK) obj;
+        if (!Objects.equals(this.packId, other.packId)) {
+            return false;
+        }
+        if (!Objects.equals(this.articuloId, other.articuloId)) {
             return false;
         }
         return true;
     }
 
+
+
+
+
     @Override
     public String toString() {
-        return "com.ipsoflatus.dreamgifts.modelo.entidad.PackHasArticuloPK[ packId=" + packId + ", articuloId=" + articuloId + " ]";
+        return "[" + packId + ", " + articuloId + "]";
     }
     
 }

@@ -12,6 +12,10 @@ public class PackHasArticuloListModel extends AbstractListModel<PackHasArticulo>
     public PackHasArticuloListModel() {
         this.items = new ArrayList<>();
     }
+    
+    public List<PackHasArticulo> getItems() {
+        return items;
+    }
    
     public void addItem(PackHasArticulo pha) {
         if (items.contains(pha)) {
@@ -26,10 +30,6 @@ public class PackHasArticuloListModel extends AbstractListModel<PackHasArticulo>
     public void removeItem(PackHasArticulo pha) {
         fireIntervalRemoved(this, items.indexOf(pha), items.indexOf(pha));
         items.remove(pha);
-    }
-    
-    public List<PackHasArticulo> getItems() {
-        return items;
     }
     
     @Override

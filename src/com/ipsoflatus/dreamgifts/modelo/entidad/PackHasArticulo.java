@@ -1,12 +1,14 @@
 package com.ipsoflatus.dreamgifts.modelo.entidad;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -22,19 +24,22 @@ public class PackHasArticulo implements Serializable {
     @EmbeddedId
     protected PackHasArticuloPK packHasArticuloPK;
     
-    @Basic(optional = false)
+    @Basic(optional = true)
     @Column(name = "cantidad")
     private int cantidad;
     
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "articulo_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @ManyToOne(optional = true)
+    //@JoinColumn(name = "articulo_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @MapsId("articuloId")
     private Articulo articulo;
     
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "pack_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @ManyToOne(optional = true)
+    //@JoinColumn(name = "pack_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @MapsId("packId")
     private Pack pack;
 
     public PackHasArticulo() {
+        packHasArticuloPK = new PackHasArticuloPK();
     }
 
     public PackHasArticulo(PackHasArticuloPK packHasArticuloPK) {
@@ -46,7 +51,7 @@ public class PackHasArticulo implements Serializable {
         this.cantidad = cantidad;
     }
 
-    public PackHasArticulo(int packId, int articuloId) {
+    public PackHasArticulo(Integer packId, Integer articuloId) {
         this.packHasArticuloPK = new PackHasArticuloPK(packId, articuloId);
     }
 
@@ -71,6 +76,7 @@ public class PackHasArticulo implements Serializable {
     }
 
     public void setArticulo(Articulo articulo) {
+        this.packHasArticuloPK.setArticuloId(articulo == null ? null : articulo.getId());
         this.articulo = articulo;
     }
 
@@ -79,24 +85,30 @@ public class PackHasArticulo implements Serializable {
     }
 
     public void setPack(Pack pack) {
+        this.packHasArticuloPK.setPackId(pack == null ? null : pack.getId());
         this.pack = pack;
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (packHasArticuloPK != null ? packHasArticuloPK.hashCode() : 0);
+        int hash = 7;
+        hash = 31 * hash + Objects.hashCode(this.articulo);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof PackHasArticulo)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        PackHasArticulo other = (PackHasArticulo) object;
-        if ((this.packHasArticuloPK == null && other.packHasArticuloPK != null) || (this.packHasArticuloPK != null && !this.packHasArticuloPK.equals(other.packHasArticuloPK))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final PackHasArticulo other = (PackHasArticulo) obj;
+        if (!Objects.equals(this.articulo, other.articulo)) {
             return false;
         }
         return true;
@@ -104,7 +116,7 @@ public class PackHasArticulo implements Serializable {
 
     @Override
     public String toString() {
-        return "com.ipsoflatus.dreamgifts.modelo.entidad.PackHasArticulo[ packHasArticuloPK=" + packHasArticuloPK + " ]";
+        return "<"+packHasArticuloPK+">";
     }
     
 }

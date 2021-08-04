@@ -8,6 +8,6 @@ public interface DAO<T> {
     List<T> findByTermLike(String term);
     T findById(int id);
     void save(T t);
-    void update(T t);
+    void update(T t) throws Exception;
     
 }

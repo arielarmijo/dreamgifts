@@ -14,7 +14,8 @@ public class PackHasArticuloCellRenderer extends JLabel implements ListCellRende
 
     @Override
     public Component getListCellRendererComponent(JList<? extends PackHasArticulo> list, PackHasArticulo value, int index, boolean isSelected, boolean cellHasFocus) {
-        setText(value.getCantidad() + " X " + value.getArticulo().getNombre());
+        if (value != null)
+            setText(value.getCantidad() + " X " + value.getArticulo().getNombre());
         if (isSelected) {
             setBackground(list.getSelectionBackground());
             setForeground(list.getSelectionForeground());

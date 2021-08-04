@@ -20,7 +20,8 @@ public class ClienteDao extends AbstractSoftDeleteDao<Cliente> {
     }
 
     @Override
-    protected void update(EntityManager em, Cliente c) {
+    public void update(Cliente c) {
+        EntityManager em = getEntityManager();
         em.getTransaction().begin(); 
         Cliente cliente = em.find(Cliente.class, c.getId());
         cliente.setRut(c.getRut());
@@ -33,6 +34,8 @@ public class ClienteDao extends AbstractSoftDeleteDao<Cliente> {
         cliente.setCelular(c.getCelular());
         cliente.setFechaNacimiento(c.getFechaNacimiento());
         cliente.setEstado(c.getEstado());
+        em.getTransaction().commit();
+        em.close();
     }
 
 }

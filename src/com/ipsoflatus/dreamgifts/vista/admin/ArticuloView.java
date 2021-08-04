@@ -4,7 +4,6 @@ import com.ipsoflatus.dreamgifts.controlador.admin.ArticuloController;
 import com.ipsoflatus.dreamgifts.controlador.Controller;
 import com.ipsoflatus.dreamgifts.modelo.tabla.admin.ArticuloTableModel;
 import com.ipsoflatus.dreamgifts.modelo.combobox.CategoriaArticuloComboBoxModel;
-import com.ipsoflatus.dreamgifts.modelo.servicio.ArticuloService;
 import com.ipsoflatus.dreamgifts.modelo.servicio.CategoriaArticuloService;
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
@@ -197,7 +196,7 @@ public class ArticuloView extends javax.swing.JPanel {
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel13.setText("Listado Articulos");
 
-        jTableArticulo.setModel(new ArticuloTableModel(ArticuloService.getInstance()));
+        jTableArticulo.setModel(new ArticuloTableModel());
         jScrollPane1.setViewportView(jTableArticulo);
 
         btnEditar.setText("Editar");

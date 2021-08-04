@@ -10,7 +10,9 @@ public class ProveedorDao extends AbstractSoftDeleteDao<Proveedor> {
     }
 
     @Override
-    protected void update(EntityManager em, Proveedor p) {
+    public void update(Proveedor p) {
+        EntityManager em = getEntityManager();
+        em.getTransaction().begin();  
         Proveedor proveedor = em.find(Proveedor.class, p.getId());
         proveedor.setRut(p.getRut());
         proveedor.setRazonSocial(p.getRazonSocial());
@@ -20,6 +22,8 @@ public class ProveedorDao extends AbstractSoftDeleteDao<Proveedor> {
         proveedor.setTelefono(p.getTelefono());
         proveedor.setEmail(p.getEmail());
         proveedor.setEstado(p.getEstado());
+        em.getTransaction().commit();
+        em.close();
     }
 
 }

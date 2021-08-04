@@ -11,7 +11,9 @@ public class VentaDao extends AbstractDao<Venta> {
     }
 
     @Override
-    protected void update(EntityManager em, Venta v) {
+    public void update(Venta v) {
+        EntityManager em = getEntityManager();
+        em.getTransaction().begin();  
         Venta venta = em.find(Venta.class, v.getId());
         venta.setCliente(v.getCliente());
         venta.setTotal(v.getTotal());
@@ -31,6 +33,8 @@ public class VentaDao extends AbstractDao<Venta> {
         venta.setRedSocial(v.getRedSocial());
         venta.setEstadoVenta(v.getEstadoVenta());
         venta.setPack(v.getPack());
+        em.getTransaction().commit();
+        em.close();
     }
 
 }

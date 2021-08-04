@@ -38,7 +38,8 @@ public abstract class ObservableTableModel<T> extends AbstractTableModel impleme
     
     @Override
     public int getRowCount() {
-        return items.size();    }
+        return items.size();  
+    }
 
     @Override
     public int getColumnCount() {

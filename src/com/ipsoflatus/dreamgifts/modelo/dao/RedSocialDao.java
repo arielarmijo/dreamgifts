@@ -10,11 +10,15 @@ public class RedSocialDao extends AbstractSoftDeleteDao<RedSocial> {
     }
     
     @Override
-    protected void update(EntityManager em, RedSocial rs) {
+    public void update(RedSocial rs) {
+        EntityManager em = getEntityManager();
+        em.getTransaction().begin();  
         RedSocial redSocial = em.find(RedSocial.class, rs.getId());
         redSocial.setCodigo(rs.getCodigo());
         redSocial.setNombre(rs.getNombre());
         redSocial.setEstado(rs.getEstado());
+        em.getTransaction().commit();
+        em.close();
     }
     
 }

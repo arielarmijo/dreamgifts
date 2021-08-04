@@ -1,15 +1,12 @@
 package com.ipsoflatus.dreamgifts.vista.admin;
 
 import com.ipsoflatus.dreamgifts.controlador.admin.UsuarioController;
-import com.ipsoflatus.dreamgifts.modelo.entidad.Usuario;
 import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
 import com.ipsoflatus.dreamgifts.modelo.tabla.admin.UsuarioTableModel;
-import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JToggleButton;
-import javax.swing.table.DefaultTableModel;
 
 public class UsuarioView extends JPanel {
 
@@ -48,7 +45,7 @@ public class UsuarioView extends JPanel {
         jPanelListado = new javax.swing.JPanel();
         jLabelTablaUsuarios = new javax.swing.JLabel();
         jScrollPaneUsuarios = new javax.swing.JScrollPane();
-        jTableUsuarios = new javax.swing.JTable();
+        jTable = new javax.swing.JTable();
         jToggleButtonSeleccion = new javax.swing.JToggleButton();
         jButtonBorrar = new javax.swing.JButton();
         jButtonEditar = new javax.swing.JButton();
@@ -200,8 +197,8 @@ public class UsuarioView extends JPanel {
         jLabelTablaUsuarios.setText("Usuarios Registrados");
         jLabelTablaUsuarios.setToolTipText("");
 
-        jTableUsuarios.setModel(new UsuarioTableModel());
-        jScrollPaneUsuarios.setViewportView(jTableUsuarios);
+        jTable.setModel(new UsuarioTableModel());
+        jScrollPaneUsuarios.setViewportView(jTable);
 
         jToggleButtonSeleccion.setText("Seleccionar todos");
         jToggleButtonSeleccion.addActionListener(new java.awt.event.ActionListener() {
@@ -406,13 +403,7 @@ public class UsuarioView extends JPanel {
         return jTextFieldBuscar.getText();
     }
     
-    public void mostrarInformacion(String mensaje) {
-        JOptionPane.showMessageDialog(null, mensaje, "Información", JOptionPane.INFORMATION_MESSAGE);
-    }
     
-    public void mostrarError(String mensaje) {
-        JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
-    }
 
     public JToggleButton getjToggleButtonSeleccion() {
         return jToggleButtonSeleccion;
@@ -422,17 +413,25 @@ public class UsuarioView extends JPanel {
         this.jToggleButtonSeleccion = jToggleButtonSeleccion;
     }
     
-    public JTable getjTableUsuarios() {
-        return jTableUsuarios;
+    public JTable getjTable() {
+        return jTable;
     }
     
     public int getSelectedRow() {
-        int row = jTableUsuarios.getSelectedRow();
+        int row = jTable.getSelectedRow();
         if (row == -1) {
             mostrarInformacion("Seleccione usuario.");
             throw new DreamGiftsException("No se ha seleccionado usaurio");
         }
         return row;
+    }
+    
+    public void mostrarInformacion(String mensaje) {
+        JOptionPane.showMessageDialog(null, mensaje, "Información", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    public void mostrarError(String mensaje) {
+        JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -457,7 +456,7 @@ public class UsuarioView extends JPanel {
     private javax.swing.JRadioButton jRadioButtonActivo;
     private javax.swing.JRadioButton jRadioButtonInactivo;
     private javax.swing.JScrollPane jScrollPaneUsuarios;
-    private javax.swing.JTable jTableUsuarios;
+    private javax.swing.JTable jTable;
     private javax.swing.JTextField jTextFieldBuscar;
     private javax.swing.JTextField jTextFieldNombreUsuario;
     private javax.swing.JPasswordField jTextFieldNuevoPassword;

@@ -84,10 +84,20 @@ public class PackView extends javax.swing.JPanel {
         lstPackHasArticulo.setModel(new com.ipsoflatus.dreamgifts.modelo.lista.PackHasArticuloListModel());
         lstPackHasArticulo.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         lstPackHasArticulo.setCellRenderer(new PackHasArticuloCellRenderer());
+        lstPackHasArticulo.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstPackHasArticuloValueChanged(evt);
+            }
+        });
         jScrollPane2.setViewportView(lstPackHasArticulo);
 
         lstArticulo.setModel(new ArticuloListModel());
         lstArticulo.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lstArticulo.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstArticuloValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(lstArticulo);
 
         cbxCategoriaArticulo.setModel(new CategoriaArticuloComboBoxModel(CategoriaArticuloService.getInstance()));
@@ -479,6 +489,14 @@ public class PackView extends javax.swing.JPanel {
         System.out.println(evt.getActionCommand());
         controlador.activarSeleccionados();
     }//GEN-LAST:event_btnActivarActionPerformed
+
+    private void lstPackHasArticuloValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstPackHasArticuloValueChanged
+        System.out.println(lstPackHasArticulo.getSelectedValue());
+    }//GEN-LAST:event_lstPackHasArticuloValueChanged
+
+    private void lstArticuloValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstArticuloValueChanged
+        System.out.println(lstArticulo.getSelectedValue());
+    }//GEN-LAST:event_lstArticuloValueChanged
 
     public JComboBox getCbxCategoriaArticulo() {
         return cbxCategoriaArticulo;

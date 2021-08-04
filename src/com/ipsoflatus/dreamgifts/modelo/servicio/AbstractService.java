@@ -46,8 +46,12 @@ public abstract class AbstractService<T> implements Service<T>, ObservableServic
 
     @Override
     public void editar(T t) {
-        dao.update(t);
-        notifyObservers();
+        try {
+            dao.update(t);
+            notifyObservers();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override

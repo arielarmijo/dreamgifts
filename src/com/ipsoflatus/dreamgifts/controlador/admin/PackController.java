@@ -1,72 +1,72 @@
 package com.ipsoflatus.dreamgifts.controlador.admin;
 
-import com.ipsoflatus.dreamgifts.controlador.Controller;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Articulo;
 import com.ipsoflatus.dreamgifts.modelo.entidad.CategoriaArticulo;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Pack;
 import com.ipsoflatus.dreamgifts.modelo.entidad.PackHasArticulo;
 import com.ipsoflatus.dreamgifts.modelo.lista.ArticuloListModel;
 import com.ipsoflatus.dreamgifts.modelo.lista.PackHasArticuloListModel;
-import com.ipsoflatus.dreamgifts.modelo.servicio.ArticuloService;
 import com.ipsoflatus.dreamgifts.modelo.servicio.PackService;
 import com.ipsoflatus.dreamgifts.modelo.tabla.admin.PackTableModel;
 import com.ipsoflatus.dreamgifts.vista.admin.PackView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.swing.JOptionPane;
 
-public class PackController implements Controller<PackView> {
+public class PackController {
     
-    private final ArticuloService articuloService = ArticuloService.getInstance();
-    private final PackService packService = PackService.getInstance();
-    private PackView view;
-    private ArticuloListModel articuloListModel;
-    private PackHasArticuloListModel packHasArticuloListModel;
-    private PackTableModel tableModel;
+    private final PackService packService;
+    private final PackView view;
+    private final ArticuloListModel articuloListModel;
+    private final PackHasArticuloListModel packHasArticuloListModel;
+    private final PackTableModel tableModel;
     private Pack packActual;
     
+    protected final EntityManagerFactory emf;
+    
     public PackController(PackView view) {
-        this.view = view;
-    }
-    
-    public void filtrarArticulo() {
-        
-        CategoriaArticulo ca = (CategoriaArticulo) view.getCbxCategoriaArticulo().getSelectedItem();
-        
-        List<Articulo> articulos = ca.getId() == null ? articuloService.buscar() : null;
-        articuloListModel.actualizar(articulos);
-    }
-    
-    public void agregarArticuloPack() {
-        Articulo articulo = view.getLstArticulo().getSelectedValue();
-        Integer cantidad = (Integer) view.getSpnCantidad().getValue();
-        if (articulo == null) {
-            mostrarInformacion("Seleccione artículo");
-            return;
-        }
-        PackHasArticulo pha = new PackHasArticulo();
-        if (packActual != null)
-            pha.setPack(packActual);
-        pha.setArticulo(articulo);
-        pha.setCantidad(cantidad);
-        packHasArticuloListModel.addItem(pha);
-    }
-    
-    public void removerArticuloPack() {
-        PackHasArticulo pha = view.getLstPackHasArticulo().getSelectedValue();
-        if (pha != null)
-            packHasArticuloListModel.removeItem(pha);
-    }
-
-    @Override
-    public void setView(PackView view) {
+        this.packService = PackService.getInstance();
         this.view = view;
         this.articuloListModel = (ArticuloListModel) view.getLstArticulo().getModel();
         this.packHasArticuloListModel = (PackHasArticuloListModel) view.getLstPackHasArticulo().getModel();
         this.tableModel = (PackTableModel) view.getjTable().getModel();
+        this.emf = Persistence.createEntityManagerFactory("dreamgifts");
+    }
+    
+    public void filtrarArticulo() {
+        CategoriaArticulo ca = (CategoriaArticulo) view.getCbxCategoriaArticulo().getSelectedItem();
+        if (ca != null) {
+            System.out.println(ca + ": " + ca.getArticulos());
+            articuloListModel.actualizar(ca.getArticulos());
+        }
+    }
+    
+    public void agregarArticuloPack() {
+        Articulo articulo = view.getLstArticulo().getSelectedValue();
+        if (articulo == null)
+            return;
+        PackHasArticulo pha = new PackHasArticulo();
+        if (packActual != null)
+            pha.setPack(packActual);
+        pha.setArticulo(articulo);
+        Integer cantidad = (Integer) view.getSpnCantidad().getValue();
+        pha.setCantidad(cantidad);
+        System.out.println(pha);
+        packHasArticuloListModel.addItem(pha);
+    }
+    
+    // TODO: arreglar este método. No funciona como se esperaría que lo hiciera.
+    public void removerArticuloPack() {
+        PackHasArticulo pha = view.getLstPackHasArticulo().getSelectedValue();
+        System.out.println("remover " + pha);
+        if (pha != null)
+            packHasArticuloListModel.removeItem(pha);
     }
 
-    @Override
     public void cancelar() {
         packActual = null;
         view.getTxfNombre().setText("");
@@ -78,7 +78,6 @@ public class PackController implements Controller<PackView> {
         view.getjRadioButtonActivo().setSelected(true);
     }
 
-    @Override
     public void grabar() {
         
         String nombre = view.getTxfNombre().getText();
@@ -103,33 +102,33 @@ public class PackController implements Controller<PackView> {
                 pack.setCosto(precio);
                 pack.setStock(0);
                 pack.setEstado(estado);
+                articulos.forEach(a -> {
+                    a.setPack(pack);
+                });
                 pack.setArticulos(articulos);
                 packService.guardar(pack);
+                
             } else {
                 packActual.setNombre(nombre);
                 packActual.setCosto(precio);
                 packActual.setEstado(estado);
-                articulos.forEach(a -> {
-                    a.setPack(packActual);
-                });
                 packActual.setArticulos(articulos);
                 packService.editar(packActual);
             }
             cancelar();
         } catch (Exception e) {
+            e.printStackTrace();
             mostrarError(e.getMessage());
         }
         
     }
 
-    @Override
     public void buscar() {
         String termino = view.getTxfBuscar().getText();
         List<Pack> packs = termino.isEmpty() ? packService.buscar(): packService.buscar(termino);
         tableModel.actualizar(packs);
     }
 
-    @Override
     public void editar() {
         int row = view.getjTable().getSelectedRow();
         if (row == -1) {
@@ -140,14 +139,26 @@ public class PackController implements Controller<PackView> {
         view.getTxfNombre().setText(packActual.getNombre());
         view.getSpnPrecio().setValue(packActual.getCosto());
         view.getCbxCategoriaArticulo().setSelectedIndex(0);
-        packHasArticuloListModel.actualizar(packActual.getArticulos());
+        view.getLstArticulo().clearSelection();
+        
+        List<PackHasArticulo> items = packActual.getArticulos();
+        packHasArticuloListModel.actualizar(items);
+        
         if (packActual.getEstado())
             view.getjRadioButtonActivo().setSelected(true);
         else
             view.getjRadioButtonInactivo().setSelected(true);
     }
 
-    @Override
+    
+    public void desactivarSeleccionados() {
+        activarDesactivarSeleccionados(Boolean.FALSE);
+    }
+
+    public void activarSeleccionados() {
+        activarDesactivarSeleccionados(Boolean.TRUE);
+    }
+    
     public void activarDesactivarSeleccionados(Boolean estado) {
         List<Integer> ids = tableModel.getSelected().stream().map(ca -> ca.getId()).collect(Collectors.toList());
         if (ids.isEmpty()) {
@@ -158,11 +169,12 @@ public class PackController implements Controller<PackView> {
         tableModel.selectAll(false);
     }
 
-    @Override
-    public void seleccionarTodos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void mostrarInformacion(String mensaje) {
+        JOptionPane.showMessageDialog(null, mensaje, "Información", JOptionPane.INFORMATION_MESSAGE);
     }
-
     
+    private void mostrarError(String error) {
+        JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.ERROR_MESSAGE);
+    }
 
 }

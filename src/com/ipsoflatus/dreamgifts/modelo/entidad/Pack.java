@@ -1,12 +1,15 @@
 package com.ipsoflatus.dreamgifts.modelo.entidad;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,42 +27,42 @@ import javax.persistence.TemporalType;
 public class Pack implements Serializable, SoftDelete {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    
+
     @Basic(optional = false)
     @Column(name = "nombre")
     private String nombre;
-    
+
     @Basic(optional = false)
     @Column(name = "stock")
     private int stock;
-    
+
     @Basic(optional = false)
     @Column(name = "costo")
     private int costo;
-    
+
     @Basic(optional = false)
     @Column(name = "estado")
     private Boolean estado;
-    
+
     @Column(name = "stock_critico")
     private Integer stockCritico;
-    
+
     @Column(name = "fecha_inicio")
     @Temporal(TemporalType.DATE)
     private Date fechaInicio;
-    
+
     @Column(name = "fecha_termino")
     @Temporal(TemporalType.DATE)
     private Date fechaTermino;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pack")
-    private List<PackHasArticulo> articulos;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "pack", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PackHasArticulo> articulos = new ArrayList<>();
 
     public Pack() {
     }
@@ -149,6 +152,26 @@ public class Pack implements Serializable, SoftDelete {
         this.articulos = articulos;
     }
 
+    public void addArticulo(Articulo articulo) {
+        PackHasArticuloPK phaPK = new PackHasArticuloPK(this.getId(), articulo.getId());
+        PackHasArticulo pha = new PackHasArticulo(phaPK);
+        articulos.add(pha);
+        articulo.getPacks().add(pha);
+    }
+//    
+//    public void removeArticulo(Articulo articulo) {
+//        Iterator<PackHasArticulo> iterator = articulos.iterator();
+//        while (iterator.hasNext()) {
+//            PackHasArticulo pha = iterator.next();
+//            if (pha.getPack().equals(this) && pha.getArticulo().equals(articulo)) {
+//                iterator.remove();
+//                pha.getArticulo().getPacks().remove(pha);
+//                pha.setPack(null);
+//                pha.setArticulo(null);
+//            }
+//        }
+//    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -173,5 +196,5 @@ public class Pack implements Serializable, SoftDelete {
     public String toString() {
         return nombre;
     }
-    
+
 }

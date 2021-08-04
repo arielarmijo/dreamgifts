@@ -10,11 +10,15 @@ public class ComunaDao extends AbstractSoftDeleteDao<Comuna> {
     }
 
     @Override
-    protected void update(EntityManager em, Comuna c) {
+    public void update(Comuna c) {
+        EntityManager em = getEntityManager();
+        em.getTransaction().begin();  
         Comuna comuna = em.find(Comuna.class, c.getId());
         comuna.setCodigo(c.getCodigo());
         comuna.setNombre(c.getNombre());
         comuna.setEstado(c.getEstado());
+        em.getTransaction().commit();
+        em.close();
     }
 
 }

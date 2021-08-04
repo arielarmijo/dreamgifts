@@ -12,18 +12,22 @@ public class UsuarioDao extends AbstractSoftDeleteDao<Usuario>{
     public void delete(Usuario u) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
-        Usuario usuario = u.getId() == null ? em.find(Usuario.class, u.getId()) : u;
+        Usuario usuario = em.merge(u);
         em.remove(usuario);
         em.getTransaction().commit();
         em.close();
     }
 
     @Override
-    protected void update(EntityManager em, Usuario u) {
+    public void update(Usuario u) {
+        EntityManager em = getEntityManager();
+        em.getTransaction().begin();  
         Usuario usuario = em.find(Usuario.class, u.getId());
         usuario.setNombre(u.getNombre());
         usuario.setClave(u.getClave());
         usuario.setEstado(u.getEstado());
+        em.getTransaction().commit();
+        em.close();
     }
     
 }

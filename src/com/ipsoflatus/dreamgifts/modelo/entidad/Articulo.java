@@ -1,6 +1,7 @@
 package com.ipsoflatus.dreamgifts.modelo.entidad;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -48,16 +49,16 @@ public class Articulo implements Serializable, SoftDelete {
     @Temporal(TemporalType.DATE)
     private Date fechaVencimiento;
     
-    @Basic(optional = false)
+    @Basic(optional = true)
     @Column(name = "estado")
     private Boolean estado;
     
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = true)
     @JoinColumn(name = "categoria_articulo_id", referencedColumnName = "id")
     private CategoriaArticulo categoriaArticulo;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "articulo")
-    private List<PackHasArticulo> packs;
+    @OneToMany(mappedBy = "articulo", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PackHasArticulo> packs = new ArrayList<>();
 
     public Articulo() {
     }

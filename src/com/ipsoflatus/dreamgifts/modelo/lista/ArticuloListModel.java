@@ -16,7 +16,6 @@ public class ArticuloListModel extends AbstractListModel<Articulo> implements Ob
     public ArticuloListModel() {
         this.service = ArticuloService.getInstance();
         this.service.addObserver(this);
-        this.items = new ArrayList<>();
     }
 
     @Override

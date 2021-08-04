@@ -10,7 +10,9 @@ public class ArticuloDao extends AbstractSoftDeleteDao<Articulo> {
     }
 
     @Override
-    protected void update(EntityManager em, Articulo a) {
+    public void update(Articulo a) {
+        EntityManager em = getEntityManager();
+        em.getTransaction().begin();  
         Articulo articulo = em.find(Articulo.class, a.getId());
         articulo.setNombre(a.getNombre());
         articulo.setMarca(a.getMarca());
@@ -18,6 +20,8 @@ public class ArticuloDao extends AbstractSoftDeleteDao<Articulo> {
         articulo.setFechaVencimiento(a.getFechaVencimiento());
         articulo.setEstado(a.getEstado());
         articulo.setCategoriaArticulo(a.getCategoriaArticulo());
+        em.getTransaction().commit();
+        em.close();
     }
-    
+
 }
