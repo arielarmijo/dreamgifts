@@ -213,6 +213,12 @@ public class ArticuloView extends javax.swing.JPanel {
             }
         });
 
+        txfBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfBuscarActionPerformed(evt);
+            }
+        });
+
         btnBuscar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -326,6 +332,10 @@ public class ArticuloView extends javax.swing.JPanel {
     private void txfNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfNombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txfNombreActionPerformed
+
+    private void txfBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfBuscarActionPerformed
+        btnBuscarActionPerformed(evt);
+    }//GEN-LAST:event_txfBuscarActionPerformed
 
     public ButtonGroup getButtonGroup() {
         return buttonGroup;

@@ -6,7 +6,6 @@ import com.ipsoflatus.dreamgifts.modelo.entidad.Articulo;
 import com.ipsoflatus.dreamgifts.modelo.entidad.CategoriaArticulo;
 import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ArticuloService;
-import com.ipsoflatus.dreamgifts.modelo.servicio.CategoriaArticuloService;
 import com.ipsoflatus.dreamgifts.vista.admin.ArticuloView;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -56,6 +55,7 @@ public class ArticuloController implements Controller<ArticuloView> {
                 Articulo articulo = new Articulo();
                 articulo.setNombre(nombre);
                 articulo.setMarca(marca);
+                articulo.setStock(0);
                 articulo.setCategoriaArticulo(categoria);
                 articulo.setEstado(estado);
                 articuloService.guardar(articulo);
@@ -74,7 +74,10 @@ public class ArticuloController implements Controller<ArticuloView> {
 
     @Override
     public void buscar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String termino = view.getTxfBuscar().getText();
+        List<Articulo> items = termino.isEmpty() ? articuloService.buscar(): articuloService.buscar(termino);
+        tableModel.actualizar(items);
+        view.getTxfBuscar().setText("");
     }
 
     @Override

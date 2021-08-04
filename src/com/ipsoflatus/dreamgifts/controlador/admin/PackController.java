@@ -12,9 +12,6 @@ import com.ipsoflatus.dreamgifts.vista.admin.PackView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
 
 public class PackController {
@@ -26,15 +23,12 @@ public class PackController {
     private final PackTableModel tableModel;
     private Pack packActual;
     
-    protected final EntityManagerFactory emf;
-    
     public PackController(PackView view) {
         this.packService = PackService.getInstance();
         this.view = view;
         this.articuloListModel = (ArticuloListModel) view.getLstArticulo().getModel();
         this.packHasArticuloListModel = (PackHasArticuloListModel) view.getLstPackHasArticulo().getModel();
         this.tableModel = (PackTableModel) view.getjTable().getModel();
-        this.emf = Persistence.createEntityManagerFactory("dreamgifts");
     }
     
     public void filtrarArticulo() {
@@ -59,7 +53,6 @@ public class PackController {
         packHasArticuloListModel.addItem(pha);
     }
     
-    // TODO: arreglar este método. No funciona como se esperaría que lo hiciera.
     public void removerArticuloPack() {
         PackHasArticulo pha = view.getLstPackHasArticulo().getSelectedValue();
         System.out.println("remover " + pha);
@@ -81,19 +74,20 @@ public class PackController {
     public void grabar() {
         
         String nombre = view.getTxfNombre().getText();
-        Integer precio = (Integer) view.getSpnPrecio().getValue();
-        Boolean estado = view.getButtonGroup().getSelection().getActionCommand().equals("Activo");
-        List<PackHasArticulo> articulos = packHasArticuloListModel.getItems();
-        
         if (nombre.isEmpty()) {
             mostrarInformacion("El pack debe tener un nombre.");
             return;
         }
         
+        List<PackHasArticulo> articulos = packHasArticuloListModel.getItems();
         if (articulos.isEmpty()) {
             mostrarInformacion("El pack debe tener artículos.");
             return;
         }
+        
+        int precio = (int) view.getSpnPrecio().getValue();
+        System.out.println("precio: $" + precio);
+        Boolean estado = view.getButtonGroup().getSelection().getActionCommand().equals("Activo");
 
         try {
             if (packActual == null) {

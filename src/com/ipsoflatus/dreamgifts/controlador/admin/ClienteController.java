@@ -29,7 +29,7 @@ public class ClienteController implements Controller<ClienteView> {
     @Override
     public void setView(ClienteView view) {
         this.view = view;
-        this.tableModel = (ClienteTableModel) view.getjTable2().getModel();
+        this.tableModel = (ClienteTableModel) view.getjTable().getModel();
     }
 
     @Override
@@ -113,7 +113,7 @@ public class ClienteController implements Controller<ClienteView> {
 
     @Override
     public void editar() {
-        int row = view.getjTable2().getSelectedRow();
+        int row = view.getjTable().getSelectedRow();
         if (row == -1) {
             mostrarInformacion("Seleccione cliente.");
             return;
@@ -149,7 +149,7 @@ public class ClienteController implements Controller<ClienteView> {
     }
 
     public void vender() {
-        int row = view.getjTable2().getSelectedRow();
+        int row = view.getjTable().getSelectedRow();
         if (row != -1) {
             Cliente c = tableModel.getItem(row);
             VentaView vv = ((VentaView) view.getRoot().venta);

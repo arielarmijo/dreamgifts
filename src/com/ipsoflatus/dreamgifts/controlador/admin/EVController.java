@@ -45,6 +45,7 @@ public class EVController implements Controller<EstadoVentaView>{
        String nombre = view.getjTextFieldCV().getText();
         String codigo = view.getjTextFieldIdCV().getText();
         String descripcion = view.getjTextAreaDescripcion().getText();
+        System.out.println(descripcion);
                 
         if (codigo.isEmpty() || nombre.isEmpty()) {
             mostrarInformacion("Complete todos los campos.");

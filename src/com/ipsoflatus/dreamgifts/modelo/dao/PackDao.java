@@ -17,7 +17,7 @@ public class PackDao extends AbstractSoftDeleteDao<Pack> {
     public void update(Pack pack) {
 
         if (pack.getArticulos() == null) {
-            pack.setArticulos(new ArrayList<PackHasArticulo>());
+            pack.setArticulos(new ArrayList<>());
         }
         
         EntityManager em = null;
@@ -37,7 +37,9 @@ public class PackDao extends AbstractSoftDeleteDao<Pack> {
                 articulo.setPack(persistentPack);
                 em.persist(articulo);
             }
+            
             persistentPack.setArticulos(articulos);
+            persistentPack.setCosto(pack.getCosto());
             em.merge(persistentPack);
             
             em.getTransaction().commit();

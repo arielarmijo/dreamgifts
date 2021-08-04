@@ -16,6 +16,7 @@ public class EstadoVentaDao extends AbstractSoftDeleteDao<EstadoVenta> {
         EstadoVenta estadoVenta = em.find(EstadoVenta.class, ev.getId());
         estadoVenta.setCodigo(ev.getCodigo());
         estadoVenta.setNombre(ev.getNombre());
+        estadoVenta.setDescripcion(ev.getDescripcion());
         estadoVenta.setEstado(ev.getEstado());
         em.getTransaction().commit();
         em.close();

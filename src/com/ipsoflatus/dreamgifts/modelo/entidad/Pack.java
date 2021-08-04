@@ -152,26 +152,6 @@ public class Pack implements Serializable, SoftDelete {
         this.articulos = articulos;
     }
 
-    public void addArticulo(Articulo articulo) {
-        PackHasArticuloPK phaPK = new PackHasArticuloPK(this.getId(), articulo.getId());
-        PackHasArticulo pha = new PackHasArticulo(phaPK);
-        articulos.add(pha);
-        articulo.getPacks().add(pha);
-    }
-//    
-//    public void removeArticulo(Articulo articulo) {
-//        Iterator<PackHasArticulo> iterator = articulos.iterator();
-//        while (iterator.hasNext()) {
-//            PackHasArticulo pha = iterator.next();
-//            if (pha.getPack().equals(this) && pha.getArticulo().equals(articulo)) {
-//                iterator.remove();
-//                pha.getArticulo().getPacks().remove(pha);
-//                pha.setPack(null);
-//                pha.setArticulo(null);
-//            }
-//        }
-//    }
-
     @Override
     public int hashCode() {
         int hash = 0;
