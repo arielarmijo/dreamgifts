@@ -8,9 +8,13 @@ import com.ipsoflatus.dreamgifts.modelo.entidad.Proveedor;
 import com.ipsoflatus.dreamgifts.modelo.lista.ArticuloListModel;
 import com.ipsoflatus.dreamgifts.modelo.lista.OrdenCompraDetalleListModel;
 import com.ipsoflatus.dreamgifts.modelo.servicio.OrdenCompraService;
+import com.ipsoflatus.dreamgifts.modelo.tabla.compras.DetallePedidoTableModel;
 import com.ipsoflatus.dreamgifts.vista.compras.SolicitudPedidoView;
 import java.sql.Date;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -20,13 +24,15 @@ public class SolicitudPedidoController {
     private final SolicitudPedidoView view;
     private final ArticuloListModel articuloListModel;
     private final OrdenCompraDetalleListModel ocdListModel;
+    private final DetallePedidoTableModel tableModel;
     private OrdenCompra ocActual;
     
     public SolicitudPedidoController(SolicitudPedidoView view) {
+        this.ocSrv = OrdenCompraService.getInstance();
         this.view = view;
         this.articuloListModel = (ArticuloListModel) view.getLstArticulos().getModel();
         this.ocdListModel = (OrdenCompraDetalleListModel) view.getLstDetalleOC().getModel();
-        this.ocSrv = OrdenCompraService.getInstance();
+        this.tableModel = (DetallePedidoTableModel) view.getjTable().getModel();
     }
     
     public void filtrarArticulo() {
@@ -61,10 +67,11 @@ public class SolicitudPedidoController {
     }
 
     public void cancelar() {
+        ocActual = null;
         view.getCbxCategoriaArticulos().setSelectedIndex(0);
         view.getCbxProveedores().setSelectedIndex(0);
         view.getLstArticulos().clearSelection();
-        view.getLstDetalleOC().clearSelection();
+        ocdListModel.actualizar(new ArrayList<>());
         view.getDpFechaPedido().setDate(LocalDate.now());
         view.getSpnCantidad().setValue(1);
     }
@@ -97,8 +104,12 @@ public class SolicitudPedidoController {
                 oc.setProveedor(proveedor);
                 ocSrv.guardar(oc);
             } else {
-                
+                ocActual.setProveedor(proveedor);
+                ocActual.setFechaOrden(fechaEntrega);
+                ocActual.setArticulos(articulos);
+                ocSrv.editar(ocActual);
             }
+            cancelar();
         } catch(Exception e) {
             e.printStackTrace();
             mostrarError(e.getClass().getSimpleName());
@@ -112,6 +123,28 @@ public class SolicitudPedidoController {
     
     private void mostrarError(String error) {
         JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public void editar() {
+        
+        int row = view.getjTable().getSelectedRow();
+        if (row == -1) {
+            mostrarInformacion("Seleccione pedido.");
+            return;
+        }
+        
+        ocActual = tableModel.getItem(row);
+        view.getCbxCategoriaArticulos().setSelectedIndex(0);
+        view.getLstArticulos().clearSelection();
+        view.getCbxProveedores().setSelectedItem(ocActual.getProveedor());
+        
+        java.util.Date date = ocActual.getFechaOrden();
+        LocalDate localDate = Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+        view.getDpFechaPedido().setDate(localDate);
+        
+        List<OrdenCompraDetalle> items = ocActual.getArticulos();
+        ocdListModel.actualizar(items);
+        
     }
     
 }

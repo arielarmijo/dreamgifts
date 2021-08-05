@@ -5,7 +5,6 @@ import com.ipsoflatus.dreamgifts.modelo.entidad.Cliente;
 import com.ipsoflatus.dreamgifts.modelo.entidad.EstadoVenta;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Venta;
 import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
-import com.ipsoflatus.dreamgifts.modelo.servicio.ClienteService;
 import com.ipsoflatus.dreamgifts.modelo.servicio.EVService;
 import com.ipsoflatus.dreamgifts.modelo.servicio.VentaService;
 import com.ipsoflatus.dreamgifts.modelo.tabla.ventas.ConfirmacionPagoTableModel;
