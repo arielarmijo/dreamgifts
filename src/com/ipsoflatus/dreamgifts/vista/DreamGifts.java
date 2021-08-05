@@ -1,6 +1,6 @@
 package com.ipsoflatus.dreamgifts.vista;
 
-import com.ipsoflatus.dreamgifts.vista.admin.ArmadoPackView;
+import com.ipsoflatus.dreamgifts.vista.compras.ArmadoPackView;
 import com.ipsoflatus.dreamgifts.vista.admin.ArticuloView;
 import com.ipsoflatus.dreamgifts.vista.admin.BancoView;
 import com.ipsoflatus.dreamgifts.vista.admin.CategoriaArticuloView;
@@ -39,7 +39,7 @@ public class DreamGifts extends javax.swing.JFrame {
         crearPanelCompras();
         crearPanelInformes();
         crearPanelAdmin();
-        showTabbedPaneAndTab(jTabbedPaneAdmin, "admin", 2);
+        showTabbedPaneAndTab(jTabbedPaneCompras, "compras", 1);
     }
     
     private void crearPanelVentas() {

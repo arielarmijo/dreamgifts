@@ -2,14 +2,14 @@ package com.ipsoflatus.dreamgifts.modelo.combobox;
 
 import com.ipsoflatus.dreamgifts.modelo.entidad.CategoriaArticulo;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ArticuloService;
-import com.ipsoflatus.dreamgifts.modelo.servicio.ObservableService;
+import com.ipsoflatus.dreamgifts.modelo.servicio.CategoriaArticuloService;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class CategoriaArticuloComboBoxModel extends ObserverComboBoxModel<CategoriaArticulo> {
 
-    public CategoriaArticuloComboBoxModel(ObservableService service) {
-        super(service);
+    public CategoriaArticuloComboBoxModel() {
+        super(CategoriaArticuloService.getInstance());
     }
 
     @Override

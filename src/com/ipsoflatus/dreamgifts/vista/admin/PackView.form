@@ -215,7 +215,7 @@
             <Component class="javax.swing.JComboBox" name="cbxCategoriaArticulo">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="new CategoriaArticuloComboBoxModel(CategoriaArticuloService.getInstance())" type="code"/>
+                  <Connection code="new CategoriaArticuloComboBoxModel()" type="code"/>
                 </Property>
               </Properties>
               <Events>

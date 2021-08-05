@@ -171,7 +171,7 @@ public class Proveedor implements Serializable, SoftDelete {
 
     @Override
     public String toString() {
-        return rut;
+        return razonSocial;
     }
     
 }

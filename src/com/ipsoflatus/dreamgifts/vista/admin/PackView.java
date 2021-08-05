@@ -6,7 +6,6 @@ import com.ipsoflatus.dreamgifts.modelo.entidad.Articulo;
 import com.ipsoflatus.dreamgifts.modelo.entidad.PackHasArticulo;
 import com.ipsoflatus.dreamgifts.modelo.lista.ArticuloListModel;
 import com.ipsoflatus.dreamgifts.modelo.lista.PackHasArticuloCellRenderer;
-import com.ipsoflatus.dreamgifts.modelo.servicio.CategoriaArticuloService;
 import com.ipsoflatus.dreamgifts.modelo.tabla.admin.PackTableModel;
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
@@ -100,7 +99,7 @@ public class PackView extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(lstArticulo);
 
-        cbxCategoriaArticulo.setModel(new CategoriaArticuloComboBoxModel(CategoriaArticuloService.getInstance()));
+        cbxCategoriaArticulo.setModel(new CategoriaArticuloComboBoxModel());
         cbxCategoriaArticulo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxCategoriaArticuloActionPerformed(evt);

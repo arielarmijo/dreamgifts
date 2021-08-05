@@ -4,7 +4,6 @@ import com.ipsoflatus.dreamgifts.modelo.Observer;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Articulo;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ArticuloService;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ObservableService;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.AbstractListModel;
 
