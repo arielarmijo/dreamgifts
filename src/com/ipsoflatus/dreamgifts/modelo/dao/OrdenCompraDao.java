@@ -2,12 +2,10 @@ package com.ipsoflatus.dreamgifts.modelo.dao;
 
 import com.ipsoflatus.dreamgifts.modelo.entidad.OrdenCompra;
 import com.ipsoflatus.dreamgifts.modelo.entidad.OrdenCompraDetalle;
-import com.ipsoflatus.dreamgifts.modelo.entidad.PackHasArticulo;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-import static jdk.nashorn.internal.codegen.ObjectClassGenerator.pack;
 
 public class OrdenCompraDao extends AbstractDao<OrdenCompra> {
 
@@ -25,7 +23,7 @@ public class OrdenCompraDao extends AbstractDao<OrdenCompra> {
             em.getTransaction().begin();  
             
             OrdenCompra persistentOC = em.find(OrdenCompra.class, oc.getId());
-            Query query = em.createQuery("DELETE FROM orden_compra_detalle ocd WHERE ocd.ordenCompra.id = :id");
+            Query query = em.createQuery("DELETE FROM OrdenCompraDetalle ocd WHERE ocd.ordenCompra.id = :id");
             query.setParameter("id", persistentOC.getId());
             query.executeUpdate();
             

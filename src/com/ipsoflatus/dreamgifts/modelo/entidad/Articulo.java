@@ -60,8 +60,8 @@ public class Articulo implements Serializable, SoftDelete {
     @OneToMany(mappedBy = "articulo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PackHasArticulo> packs = new ArrayList<>();
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "articulo")
-    private List<OrdenCompraDetalle> ordenesCompra;
+    @OneToMany(mappedBy = "articulo", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrdenCompraDetalle> ordenesCompra = new ArrayList<>();
 
     public Articulo() {
     }

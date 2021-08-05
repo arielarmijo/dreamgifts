@@ -10,33 +10,33 @@ public class OrdenCompraDetallePK implements Serializable {
 
     @Basic(optional = false)
     @Column(name = "orden_compra_id")
-    private int ordenCompraId;
+    private Integer ordenCompraId;
     
     @Basic(optional = false)
     @Column(name = "articulo_id")
-    private int articuloId;
+    private Integer articuloId;
 
     public OrdenCompraDetallePK() {
     }
 
-    public OrdenCompraDetallePK(int ordenCompraId, int articuloId) {
+    public OrdenCompraDetallePK(Integer ordenCompraId, Integer articuloId) {
         this.ordenCompraId = ordenCompraId;
         this.articuloId = articuloId;
     }
 
-    public int getOrdenCompraId() {
+    public Integer getOrdenCompraId() {
         return ordenCompraId;
     }
 
-    public void setOrdenCompraId(int ordenCompraId) {
+    public void setOrdenCompraId(Integer ordenCompraId) {
         this.ordenCompraId = ordenCompraId;
     }
 
-    public int getArticuloId() {
+    public Integer getArticuloId() {
         return articuloId;
     }
 
-    public void setArticuloId(int articuloId) {
+    public void setArticuloId(Integer articuloId) {
         this.articuloId = articuloId;
     }
 
@@ -66,7 +66,7 @@ public class OrdenCompraDetallePK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.ipsoflatus.dreamgifts.modelo.entidad.OrdenCompraDetallePK[ ordenCompraId=" + ordenCompraId + ", articuloId=" + articuloId + " ]";
+        return "[" + ordenCompraId + ", " + articuloId + " ]";
     }
     
 }

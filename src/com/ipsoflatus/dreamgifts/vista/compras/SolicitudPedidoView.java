@@ -7,8 +7,12 @@ import com.ipsoflatus.dreamgifts.modelo.combobox.CategoriaArticuloComboBoxModel;
 import com.ipsoflatus.dreamgifts.modelo.combobox.ProveedorComboBoxModel;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Articulo;
 import com.ipsoflatus.dreamgifts.modelo.entidad.CategoriaArticulo;
+import com.ipsoflatus.dreamgifts.modelo.entidad.OrdenCompraDetalle;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Proveedor;
 import com.ipsoflatus.dreamgifts.modelo.lista.ArticuloListModel;
+import com.ipsoflatus.dreamgifts.modelo.lista.OrdenCompraDetalleCellRenderer;
+import com.ipsoflatus.dreamgifts.modelo.lista.OrdenCompraDetalleListModel;
+import com.ipsoflatus.dreamgifts.modelo.tabla.compras.DetallePedidoTableModel;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.time.LocalDate;
@@ -91,16 +95,18 @@ public class SolicitudPedidoView extends javax.swing.JPanel {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Solicitud de Pedido", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
-        jLabel2.setText("Proveedor");
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel2.setText("Proveedor");
 
         lstArticulos.setModel(new ArticuloListModel());
         jScrollPane1.setViewportView(lstArticulos);
 
+        lstDetalleOC.setModel(new OrdenCompraDetalleListModel());
+        lstDetalleOC.setCellRenderer(new OrdenCompraDetalleCellRenderer());
         jScrollPane2.setViewportView(lstDetalleOC);
 
-        jLabel4.setText("Fecha Pedido");
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel4.setText("Fecha Pedido");
 
         dpFechaPedido.setDate(LocalDate.now());
 
@@ -111,21 +117,21 @@ public class SolicitudPedidoView extends javax.swing.JPanel {
             }
         });
 
-        btnAgregar.setText(">");
         btnAgregar.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnAgregar.setText(">");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarActionPerformed(evt);
             }
         });
 
-        jLabel1.setText("Cantidad");
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel1.setText("Cantidad");
 
         spnCantidad.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
 
-        btnQuitar.setText("<");
         btnQuitar.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnQuitar.setText("<");
         btnQuitar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnQuitarActionPerformed(evt);
@@ -133,6 +139,11 @@ public class SolicitudPedidoView extends javax.swing.JPanel {
         });
 
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setText("Cancelar");
         btnCancelar.setToolTipText("");
@@ -232,28 +243,7 @@ public class SolicitudPedidoView extends javax.swing.JPanel {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Detalle Pedidos Realizados", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
-        jTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Numero Pedido", "Proveedor", "Fecha", "Valor", "Seleccionar"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        jTable.setModel(new DetallePedidoTableModel());
         jScrollPane4.setViewportView(jTable);
 
         btnEditar.setText("Editar");
@@ -319,8 +309,14 @@ public class SolicitudPedidoView extends javax.swing.JPanel {
     }//GEN-LAST:event_cbxCategoriaArticulosActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        System.out.println(evt.getActionCommand());
         controlador.cancelar();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        System.out.println(evt.getActionCommand());
+        controlador.grabar();
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
     public JComboBox<CategoriaArticulo> getCbxCategoriaArticulos() {
         return cbxCategoriaArticulos;
@@ -334,18 +330,18 @@ public class SolicitudPedidoView extends javax.swing.JPanel {
         return lstArticulos;
     }
 
+    public JList<OrdenCompraDetalle> getLstDetalleOC() {
+        return lstDetalleOC;
+    }
+
+    
     public JSpinner getSpnCantidad() {
         return spnCantidad;
     }
-    
-    
 
     public DatePicker getDpFechaPedido() {
         return dpFechaPedido;
     }
-
-    
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
@@ -369,7 +365,7 @@ public class SolicitudPedidoView extends javax.swing.JPanel {
     private javax.swing.JTable jTable;
     private javax.swing.JTable jTable1;
     private javax.swing.JList<Articulo> lstArticulos;
-    private javax.swing.JList<String> lstDetalleOC;
+    private javax.swing.JList<OrdenCompraDetalle> lstDetalleOC;
     private javax.swing.JSpinner spnCantidad;
     // End of variables declaration//GEN-END:variables
 }

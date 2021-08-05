@@ -15,7 +15,7 @@ public class ClienteTableModel extends ObservableTableModel<Cliente> {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
- Cliente item = items.get(rowIndex);
+        Cliente item = items.get(rowIndex);
         if (columnIndex == 0)
             return item.getRut();
         if (columnIndex == 1)

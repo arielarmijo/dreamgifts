@@ -1,12 +1,14 @@
 package com.ipsoflatus.dreamgifts.modelo.entidad;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -27,14 +29,17 @@ public class OrdenCompraDetalle implements Serializable {
     private int cantidad;
     
     @ManyToOne(optional = false)
-    @JoinColumn(name = "articulo_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @MapsId("articuloId")
+    @JoinColumn(name = "articulo_id", referencedColumnName = "id")
     private Articulo articulo;
     
     @ManyToOne(optional = false)
-    @JoinColumn(name = "orden_compra_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @MapsId("ordenCompraId")
+    @JoinColumn(name = "orden_compra_id", referencedColumnName = "id")
     private OrdenCompra ordenCompra;
 
     public OrdenCompraDetalle() {
+        this.ordenCompraDetallePK = new OrdenCompraDetallePK();
     }
 
     public OrdenCompraDetalle(OrdenCompraDetallePK ordenCompraDetallePK) {
@@ -71,6 +76,7 @@ public class OrdenCompraDetalle implements Serializable {
     }
 
     public void setArticulo(Articulo articulo) {
+        this.ordenCompraDetallePK.setArticuloId(articulo.getId());
         this.articulo = articulo;
     }
 
@@ -79,32 +85,40 @@ public class OrdenCompraDetalle implements Serializable {
     }
 
     public void setOrdenCompra(OrdenCompra ordenCompra) {
+        this.ordenCompraDetallePK.setOrdenCompraId(ordenCompra.getId());
         this.ordenCompra = ordenCompra;
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (ordenCompraDetallePK != null ? ordenCompraDetallePK.hashCode() : 0);
+        int hash = 5;
+        hash = 89 * hash + Objects.hashCode(this.articulo);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof OrdenCompraDetalle)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        OrdenCompraDetalle other = (OrdenCompraDetalle) object;
-        if ((this.ordenCompraDetallePK == null && other.ordenCompraDetallePK != null) || (this.ordenCompraDetallePK != null && !this.ordenCompraDetallePK.equals(other.ordenCompraDetallePK))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final OrdenCompraDetalle other = (OrdenCompraDetalle) obj;
+        if (!Objects.equals(this.articulo, other.articulo)) {
             return false;
         }
         return true;
     }
 
+
+
     @Override
     public String toString() {
-        return "com.ipsoflatus.dreamgifts.modelo.entidad.OrdenCompraDetalle[ ordenCompraDetallePK=" + ordenCompraDetallePK + " ]";
+        return "OrdenCompraDetalle[" + ordenCompraDetallePK + "]";
     }
     
 }
