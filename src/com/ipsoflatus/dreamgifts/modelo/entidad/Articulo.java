@@ -25,7 +25,7 @@ import javax.persistence.TemporalType;
 @NamedQueries({
     @NamedQuery(name = "Articulo.findByTermLike", query = "SELECT a FROM Articulo a WHERE UPPER(a.nombre) LIKE UPPER(:term) OR UPPER(a.marca) LIKE UPPER(:term) OR UPPER(a.categoriaArticulo.nombre) LIKE UPPER(:term)")})
 public class Articulo implements Serializable, SoftDelete {
-    
+
     private static final long serialVersionUID = 1L;
     
     @Id
@@ -49,7 +49,7 @@ public class Articulo implements Serializable, SoftDelete {
     @Temporal(TemporalType.DATE)
     private Date fechaVencimiento;
     
-    @Basic(optional = true)
+    @Basic(optional = false)
     @Column(name = "estado")
     private Boolean estado;
     
@@ -59,6 +59,9 @@ public class Articulo implements Serializable, SoftDelete {
     
     @OneToMany(mappedBy = "articulo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PackHasArticulo> packs = new ArrayList<>();
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "articulo")
+    private List<OrdenCompraDetalle> ordenesCompra;
 
     public Articulo() {
     }
@@ -123,6 +126,14 @@ public class Articulo implements Serializable, SoftDelete {
         this.estado = estado;
     }
 
+    public CategoriaArticulo getCategoriaArticulo() {
+        return categoriaArticulo;
+    }
+
+    public void setCategoriaArticulo(CategoriaArticulo categoriaArticulo) {
+        this.categoriaArticulo = categoriaArticulo;
+    }
+    
     public List<PackHasArticulo> getPacks() {
         return packs;
     }
@@ -130,14 +141,13 @@ public class Articulo implements Serializable, SoftDelete {
     public void setPacks(List<PackHasArticulo> packs) {
         this.packs = packs;
     }
-
-
-    public CategoriaArticulo getCategoriaArticulo() {
-        return categoriaArticulo;
+    
+     public List<OrdenCompraDetalle> getOrdenesCompra() {
+        return ordenesCompra;
     }
 
-    public void setCategoriaArticulo(CategoriaArticulo categoriaArticulo) {
-        this.categoriaArticulo = categoriaArticulo;
+    public void setOrdenesCompra(List<OrdenCompraDetalle> ordenesCompra) {
+        this.ordenesCompra = ordenesCompra;
     }
 
     @Override

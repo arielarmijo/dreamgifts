@@ -1,7 +1,9 @@
 package com.ipsoflatus.dreamgifts.modelo.entidad;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -58,6 +61,9 @@ public class Proveedor implements Serializable, SoftDelete {
     @ManyToOne(optional = false)
     @JoinColumn(name = "comuna_id", referencedColumnName = "id")
     private Comuna comuna;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "proveedor")
+    private List<OrdenCompra> ordenesCompra;
 
     public Proveedor() {
     }
@@ -133,13 +139,6 @@ public class Proveedor implements Serializable, SoftDelete {
         this.email = email;
     }
 
-    public Boolean getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Boolean estado) {
-        this.estado = estado;
-    }
 
     public Comuna getComuna() {
         return comuna;
@@ -147,6 +146,23 @@ public class Proveedor implements Serializable, SoftDelete {
 
     public void setComuna(Comuna comunaId) {
         this.comuna = comunaId;
+    }
+    
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    @Override
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+    
+    public List<OrdenCompra> getOrdenesCompra() {
+        return ordenesCompra;
+    }
+
+    public void setOrdenesCompra(List<OrdenCompra> ordenesCompra) {
+        this.ordenesCompra = ordenesCompra;
     }
 
     @Override

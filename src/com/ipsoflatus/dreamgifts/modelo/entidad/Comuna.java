@@ -88,11 +88,12 @@ public class Comuna implements Serializable, SoftDelete {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
+    
     public Boolean getEstado() {
         return estado;
     }
 
+    @Override
     public void setEstado(Boolean estado) {
         this.estado = estado;
     }
