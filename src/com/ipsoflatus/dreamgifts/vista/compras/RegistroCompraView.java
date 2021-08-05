@@ -65,7 +65,7 @@ public class RegistroCompraView extends javax.swing.JPanel {
         dpFechaRecepcion = new com.github.lgooddatepicker.components.DatePicker();
         jPanel5 = new javax.swing.JPanel();
         label7 = new java.awt.Label();
-        jTextField4 = new javax.swing.JTextField();
+        txfCodigo = new javax.swing.JTextField();
         cbxArticulos = new javax.swing.JComboBox<>();
         label8 = new java.awt.Label();
         label9 = new java.awt.Label();
@@ -92,8 +92,6 @@ public class RegistroCompraView extends javax.swing.JPanel {
         label3.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         label3.setText("Número Factura");
 
-        txfNumeroFactura.setText("08123666");
-
         label4.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         label4.setName(""); // NOI18N
         label4.setText("RUT");
@@ -105,8 +103,6 @@ public class RegistroCompraView extends javax.swing.JPanel {
         label6.setText("Fecha Recepción");
 
         cbxProveedores.setModel(new ProveedorComboBoxModel());
-
-        txfRut.setText("08123666");
 
         dpFechaRecepcion.setDate(LocalDate.now());
 
@@ -163,8 +159,6 @@ public class RegistroCompraView extends javax.swing.JPanel {
         label7.setName(""); // NOI18N
         label7.setText("Código");
 
-        jTextField4.setText("B0001");
-
         cbxArticulos.setModel(new ArticuloComboBoxModel());
 
         label8.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
@@ -192,6 +186,10 @@ public class RegistroCompraView extends javax.swing.JPanel {
 
         cbxCategoriaArticulos.setModel(new CategoriaArticuloComboBoxModel());
 
+        spnCantidad.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+
+        spnValorUnitario.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+
         btnCancelar.setText("Cancelar");
         btnCancelar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -207,7 +205,7 @@ public class RegistroCompraView extends javax.swing.JPanel {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(label7, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -253,7 +251,7 @@ public class RegistroCompraView extends javax.swing.JPanel {
                     .addComponent(dpFechaVencimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbxArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbxCategoriaArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(spnCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(spnValorUnitario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -361,7 +359,6 @@ public class RegistroCompraView extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable;
-    private javax.swing.JTextField jTextField4;
     private java.awt.Label label10;
     private java.awt.Label label11;
     private java.awt.Label label12;
@@ -374,6 +371,7 @@ public class RegistroCompraView extends javax.swing.JPanel {
     private java.awt.Label label9;
     private javax.swing.JSpinner spnCantidad;
     private javax.swing.JSpinner spnValorUnitario;
+    private javax.swing.JTextField txfCodigo;
     private javax.swing.JTextField txfNumeroFactura;
     private javax.swing.JTextField txfRut;
     // End of variables declaration//GEN-END:variables
