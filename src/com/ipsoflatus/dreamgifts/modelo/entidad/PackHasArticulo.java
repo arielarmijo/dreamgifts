@@ -75,7 +75,7 @@ public class PackHasArticulo implements Serializable {
     }
 
     public void setArticulo(Articulo articulo) {
-        this.packHasArticuloPK.setArticuloId(articulo == null ? null : articulo.getId());
+        this.packHasArticuloPK.setArticuloId(articulo.getId());
         this.articulo = articulo;
     }
 
@@ -84,7 +84,7 @@ public class PackHasArticulo implements Serializable {
     }
 
     public void setPack(Pack pack) {
-        this.packHasArticuloPK.setPackId(pack == null ? null : pack.getId());
+        this.packHasArticuloPK.setPackId(pack.getId());
         this.pack = pack;
     }
 

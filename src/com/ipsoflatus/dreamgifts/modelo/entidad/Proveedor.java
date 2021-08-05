@@ -64,6 +64,9 @@ public class Proveedor implements Serializable, SoftDelete {
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "proveedor")
     private List<OrdenCompra> ordenesCompra;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "proveedor")
+    private List<Factura> facturas;
 
     public Proveedor() {
     }
@@ -148,7 +151,7 @@ public class Proveedor implements Serializable, SoftDelete {
         this.comuna = comunaId;
     }
     
-    public Boolean getEstado() {
+     public Boolean getEstado() {
         return estado;
     }
 
@@ -163,6 +166,14 @@ public class Proveedor implements Serializable, SoftDelete {
 
     public void setOrdenesCompra(List<OrdenCompra> ordenesCompra) {
         this.ordenesCompra = ordenesCompra;
+    }
+    
+    public List<Factura> getFacturas() {
+        return facturas;
+    }
+
+    public void setFacturas(List<Factura> facturaList) {
+        this.facturas = facturaList;
     }
 
     @Override

@@ -62,6 +62,9 @@ public class Articulo implements Serializable, SoftDelete {
     
     @OneToMany(mappedBy = "articulo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrdenCompraDetalle> ordenesCompra = new ArrayList<>();
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "articulo")
+    private List<FacturaDetalle> facturas;
 
     public Articulo() {
     }
@@ -149,6 +152,14 @@ public class Articulo implements Serializable, SoftDelete {
     public void setOrdenesCompra(List<OrdenCompraDetalle> ordenesCompra) {
         this.ordenesCompra = ordenesCompra;
     }
+    
+    public List<FacturaDetalle> getFacturas() {
+        return facturas;
+    }
+
+    public void setFacturas(List<FacturaDetalle> facturas) {
+        this.facturas = facturas;
+    }
 
     @Override
     public int hashCode() {
@@ -174,5 +185,5 @@ public class Articulo implements Serializable, SoftDelete {
     public String toString() {
         return nombre;
     }
-    
+
 }
