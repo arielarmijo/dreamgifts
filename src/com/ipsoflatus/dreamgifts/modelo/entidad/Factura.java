@@ -47,9 +47,9 @@ public class Factura implements Serializable {
     private List<FacturaDetalle> articulos = new ArrayList<>();
     
     @ManyToOne(optional = false)
-    @JoinColumn(name = "proveedor_id", referencedColumnName = "id")
-    private Proveedor proveedor;
-
+    @JoinColumn(name = "orden_compra_id", referencedColumnName = "id")
+    private OrdenCompra ordenCompra;
+    
     public Factura() {
     }
 
@@ -94,13 +94,14 @@ public class Factura implements Serializable {
     public void setFacturas(List<FacturaDetalle> facturas) {
         this.articulos = facturas;
     }
-
-    public Proveedor getProveedor() {
-        return proveedor;
+    
+    
+    public OrdenCompra getOrdenCompra() {
+        return ordenCompra;
     }
 
-    public void setProveedor(Proveedor proveedor) {
-        this.proveedor = proveedor;
+    public void setOrdenCompra(OrdenCompra ordenCompra) {
+        this.ordenCompra = ordenCompra;
     }
 
     @Override

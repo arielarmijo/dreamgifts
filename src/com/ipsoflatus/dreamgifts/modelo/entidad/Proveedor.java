@@ -1,11 +1,13 @@
 package com.ipsoflatus.dreamgifts.modelo.entidad;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -62,11 +64,8 @@ public class Proveedor implements Serializable, SoftDelete {
     @JoinColumn(name = "comuna_id", referencedColumnName = "id")
     private Comuna comuna;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "proveedor")
-    private List<OrdenCompra> ordenesCompra;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "proveedor")
-    private List<Factura> facturas;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "proveedor")
+    private List<OrdenCompra> ordenesCompra = new ArrayList<>();
 
     public Proveedor() {
     }
@@ -151,7 +150,7 @@ public class Proveedor implements Serializable, SoftDelete {
         this.comuna = comunaId;
     }
     
-     public Boolean getEstado() {
+    public Boolean getEstado() {
         return estado;
     }
 
@@ -168,14 +167,6 @@ public class Proveedor implements Serializable, SoftDelete {
         this.ordenesCompra = ordenesCompra;
     }
     
-    public List<Factura> getFacturas() {
-        return facturas;
-    }
-
-    public void setFacturas(List<Factura> facturaList) {
-        this.facturas = facturaList;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -200,5 +191,5 @@ public class Proveedor implements Serializable, SoftDelete {
     public String toString() {
         return razonSocial;
     }
-    
+
 }

@@ -28,6 +28,7 @@ import javax.persistence.TemporalType;
 public class OrdenCompra implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    private static final String SELECCIONE_OC = "Seleccione oc";
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,6 +47,9 @@ public class OrdenCompra implements Serializable {
     
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "ordenCompra")
     private List<OrdenCompraDetalle> articulos = new ArrayList<>();
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ordenCompra")
+    private List<Factura> facturas;
 
     public OrdenCompra() {
     }
@@ -57,6 +61,10 @@ public class OrdenCompra implements Serializable {
     public OrdenCompra(Integer id, Date fechaOrden) {
         this.id = id;
         this.fechaOrden = fechaOrden;
+    }
+    
+    public String getSeleccioneOC() {
+        return SELECCIONE_OC;
     }
 
     public Integer getId() {
@@ -90,6 +98,14 @@ public class OrdenCompra implements Serializable {
     public void setArticulos(List<OrdenCompraDetalle> articulos) {
         this.articulos = articulos;
     }
+    
+    public List<Factura> getFacturas() {
+        return facturas;
+    }
+
+    public void setFacturas(List<Factura> facturas) {
+        this.facturas = facturas;
+    }
 
     @Override
     public int hashCode() {
@@ -113,7 +129,7 @@ public class OrdenCompra implements Serializable {
 
     @Override
     public String toString() {
-        return "com.ipsoflatus.dreamgifts.modelo.entidad.OrdenCompra[ id=" + id + " ]";
+        return id == null ? SELECCIONE_OC : id.toString();
     }
-    
+
 }

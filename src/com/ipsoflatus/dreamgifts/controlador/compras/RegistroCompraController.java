@@ -1,11 +1,14 @@
 package com.ipsoflatus.dreamgifts.controlador.compras;
 
 import com.ipsoflatus.dreamgifts.modelo.combobox.ArticuloComboBoxModel;
+import com.ipsoflatus.dreamgifts.modelo.combobox.OrdenCompraComboBoxModel;
 import com.ipsoflatus.dreamgifts.modelo.entidad.CategoriaArticulo;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Factura;
+import com.ipsoflatus.dreamgifts.modelo.entidad.OrdenCompra;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Proveedor;
 import com.ipsoflatus.dreamgifts.vista.compras.RegistroCompraView;
 import java.time.LocalDate;
+import java.util.List;
 
 public class RegistroCompraController {
 
@@ -24,6 +27,8 @@ public class RegistroCompraController {
     public void buscarProveedor() {
         Proveedor proveedor = (Proveedor) view.getCbxProveedores().getSelectedItem();
         view.getTxfRut().setText(proveedor.getRut());
+        List<OrdenCompra> ordenes = proveedor.getOrdenesCompra();
+        ((OrdenCompraComboBoxModel) view.getCbxOrdenesCompra().getModel()).actualizar(ordenes);
     }
 
     public void cancelar() {
