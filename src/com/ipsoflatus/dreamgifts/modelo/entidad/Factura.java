@@ -23,7 +23,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "facturas")
 @NamedQueries({
-    @NamedQuery(name = "Factura.findAll", query = "SELECT f FROM Factura f")})
+    @NamedQuery(name = "Factura.findById", query = "SELECT f FROM Factura f WHERE f.id = :id")})
 public class Factura implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -87,12 +87,12 @@ public class Factura implements Serializable {
         this.fecha = fecha;
     }
 
-    public List<FacturaDetalle> getFacturas() {
+    public List<FacturaDetalle> getArticulos() {
         return articulos;
     }
 
-    public void setFacturas(List<FacturaDetalle> facturas) {
-        this.articulos = facturas;
+    public void setArticulos(List<FacturaDetalle> articulos) {
+        this.articulos = articulos;
     }
     
     

@@ -154,12 +154,10 @@ public class FacturaDetalle implements Serializable {
         }
         return true;
     }
-
     
-
     @Override
     public String toString() {
-        return "com.ipsoflatus.dreamgifts.modelo.entidad.FacturaDetalle[ facturaDetallePK=" + facturaDetallePK + " ]";
+        return "FacturaDetalle[" + facturaDetallePK + "]";
     }
 
 }

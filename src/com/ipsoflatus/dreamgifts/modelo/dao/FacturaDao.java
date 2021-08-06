@@ -1,13 +1,11 @@
 package com.ipsoflatus.dreamgifts.modelo.dao;
 
 import com.ipsoflatus.dreamgifts.modelo.entidad.Factura;
-import com.ipsoflatus.dreamgifts.modelo.entidad.OrdenCompra;
-import com.ipsoflatus.dreamgifts.modelo.entidad.OrdenCompraDetalle;
 import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
-import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 public class FacturaDao extends AbstractDao<Factura> {
 
@@ -39,6 +37,28 @@ public class FacturaDao extends AbstractDao<Factura> {
             //em.merge(persistentFactura);
 
             em.getTransaction().commit();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            throw new DreamGiftsException(ex.getMessage());
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public Factura findById(Integer id) {
+        EntityManager em = null;
+        try {
+            em = emf.createEntityManager();
+            String namedQuery = String.format("Factura.findById");
+            TypedQuery<Factura> query = em.createNamedQuery(namedQuery, Factura.class);
+            query.setParameter("id", id);
+            Factura result = query.getSingleResult();
+            return result;
+        } catch (NoResultException ex) {
+            ex.printStackTrace();
+            throw new DreamGiftsException("Factura N° " + id + " no existe.");
         } catch (Exception ex) {
             ex.printStackTrace();
             throw new DreamGiftsException(ex.getMessage());
