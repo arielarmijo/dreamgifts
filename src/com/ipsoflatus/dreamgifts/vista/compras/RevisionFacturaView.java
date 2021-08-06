@@ -5,10 +5,14 @@ import com.github.lgooddatepicker.components.DatePickerSettings;
 import com.ipsoflatus.dreamgifts.controlador.compras.RevisionFacturaController;
 import com.ipsoflatus.dreamgifts.modelo.combobox.ProveedorComboBoxModel;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Proveedor;
+import com.ipsoflatus.dreamgifts.modelo.tabla.ButtonColumn;
 import com.ipsoflatus.dreamgifts.modelo.tabla.compras.DetalleFacturaTableModel;
 import com.ipsoflatus.dreamgifts.modelo.tabla.compras.FacturaTableModel;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -25,9 +29,8 @@ public class RevisionFacturaView extends javax.swing.JPanel {
     public RevisionFacturaView() {
         initComponents();
         this.controlador = new RevisionFacturaController(this);
-        
         jTableFacturas.getModel().addTableModelListener(controlador);
-        
+               
         // Configura el date picker
         DatePickerSettings desdeSettings = new DatePickerSettings();
         desdeSettings.setFormatForDatesCommonEra("dd/MM/yyyy");

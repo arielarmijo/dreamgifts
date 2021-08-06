@@ -27,7 +27,9 @@ public class FacturaTableModel extends ObservableTableModel<Factura> {
             return item.getArticulos().stream().mapToInt(a -> a.getCantidad() * a.getValorUnitario()).sum();
         if (columnIndex == 4)
             return item.getFecha();
+        if (columnIndex == 5)
+            return "Editar";
         return null;
-    }
+    } 
     
 }
