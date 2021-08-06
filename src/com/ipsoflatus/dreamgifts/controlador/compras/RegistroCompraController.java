@@ -27,8 +27,7 @@ public class RegistroCompraController {
     public void buscarProveedor() {
         Proveedor proveedor = (Proveedor) view.getCbxProveedores().getSelectedItem();
         view.getTxfRut().setText(proveedor.getRut());
-        List<OrdenCompra> ordenes = proveedor.getOrdenesCompra();
-        ((OrdenCompraComboBoxModel) view.getCbxOrdenesCompra().getModel()).actualizar(ordenes);
+        ((OrdenCompraComboBoxModel) view.getCbxOrdenesCompra().getModel()).actualizar(proveedor.getOrdenesCompra());
     }
 
     public void cancelar() {
