@@ -5,6 +5,9 @@
  */
 package com.ipsoflatus.dreamgifts.vista.compras;
 
+import com.ipsoflatus.dreamgifts.modelo.servicio.PackService;
+import com.ipsoflatus.dreamgifts.modelo.tabla.admin.ArmPackTableModel;
+
 /**
  *
  * @author Usuario
@@ -31,13 +34,13 @@ public class ArmadoPackView extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jButtonCancelar = new javax.swing.JButton();
+        jButtonGuardar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        jTextFieldCantidad = new javax.swing.JTextField();
+        jTextFieldNombre = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        jTextFieldStockCritico = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         datePicker1 = new com.github.lgooddatepicker.components.DatePicker();
         datePicker2 = new com.github.lgooddatepicker.components.DatePicker();
@@ -45,9 +48,9 @@ public class ArmadoPackView extends javax.swing.JPanel {
         jLabel8 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton3 = new javax.swing.JButton();
+        jButtonEditar = new javax.swing.JButton();
         jTextField4 = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
+        jButtonBuscar = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(810, 604));
 
@@ -60,17 +63,22 @@ public class ArmadoPackView extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel2.setText("Nombre Pack");
 
-        jButton1.setText("Cancelar");
+        jButtonCancelar.setText("Cancelar");
 
-        jButton2.setText("Agregar");
+        jButtonGuardar.setText("Guardar");
+        jButtonGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGuardarActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel3.setText("Cantidad ");
 
-        jTextField2.setEditable(false);
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldNombre.setEditable(false);
+        jTextFieldNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                jTextFieldNombreActionPerformed(evt);
             }
         });
 
@@ -97,26 +105,26 @@ public class ArmadoPackView extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(17, 17, 17)
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(datePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextFieldCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel5))
                             .addComponent(datePicker2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jTextFieldStockCritico, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(54, 54, 54)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jButtonGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(153, 153, 153)
                         .addComponent(jLabel7)
@@ -130,11 +138,11 @@ public class ArmadoPackView extends javax.swing.JPanel {
                 .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldStockCritico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
@@ -144,40 +152,12 @@ public class ArmadoPackView extends javax.swing.JPanel {
                     .addComponent(jLabel6)
                     .addComponent(datePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(datePicker2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(jButtonCancelar)
+                    .addComponent(jButtonGuardar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"1", "Pack Día del Niño", "11", "10", "Julio-Agosto"},
-                {"2", "Pack Día Madre", "1", "0", "Julio-Agosto"},
-                {"3", "Pack Día Padre", "1", "0", "Julio-Agosto"},
-                {"4", "Pack Navidad", "0", "0", "Julio-Agosto"},
-                {"5", "Pack Celebración", "6", "5", "Julio-Agosto"},
-                {"6", "Pack Copa America", "10", "10", "Julio-Agosto"},
-                {"7", "Pack Desayuno", "6", "5", "Julio-Agosto"}
-            },
-            new String [] {
-                "ID Pack", "Nombre Pack", "Stock Actual", "Stock Crítico", "Periodo Stock Crítico"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        jTable1.setModel(new ArmPackTableModel());
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setResizable(false);
@@ -187,14 +167,14 @@ public class ArmadoPackView extends javax.swing.JPanel {
             jTable1.getColumnModel().getColumn(4).setResizable(false);
         }
 
-        jButton3.setText("Editar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jButtonEditar.setText("Editar");
+        jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jButtonEditarActionPerformed(evt);
             }
         });
 
-        jButton4.setText("Buscar");
+        jButtonBuscar.setText("Buscar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -215,12 +195,12 @@ public class ArmadoPackView extends javax.swing.JPanel {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(158, 158, 158))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(85, 85, 85)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(63, 63, 63))))
@@ -236,31 +216,35 @@ public class ArmadoPackView extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4))
+                    .addComponent(jButtonBuscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
+                .addComponent(jButtonEditar)
                 .addContainerGap(145, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_jButtonEditarActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void jTextFieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNombreActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_jTextFieldNombreActionPerformed
+
+    private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonGuardarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.github.lgooddatepicker.components.DatePicker datePicker1;
     private com.github.lgooddatepicker.components.DatePicker datePicker2;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButtonBuscar;
+    private javax.swing.JButton jButtonCancelar;
+    private javax.swing.JButton jButtonEditar;
+    private javax.swing.JButton jButtonGuardar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -272,9 +256,9 @@ public class ArmadoPackView extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextFieldCantidad;
+    private javax.swing.JTextField jTextFieldNombre;
+    private javax.swing.JTextField jTextFieldStockCritico;
     // End of variables declaration//GEN-END:variables
 }
