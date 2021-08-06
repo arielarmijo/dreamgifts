@@ -12,6 +12,16 @@ public class DetalleFacturaTableModel extends ObservableTableModel<FacturaDetall
         columnClases = new Class[] {String.class, String.class, Integer.class, Integer.class,};
         isEditable = new boolean[] {false, false, false, false, false};
     }
+    
+    public void addItem(FacturaDetalle facturaDetalle) {
+        items.add(facturaDetalle);
+        fireTableRowsInserted(items.size(), items.size());
+    }
+    
+    public void removeItem(int row) {
+        items.remove(row);  
+        fireTableRowsDeleted(row, row);
+    }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {

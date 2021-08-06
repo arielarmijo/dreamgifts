@@ -19,6 +19,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 
 public class RegistroCompraView extends javax.swing.JPanel {
@@ -135,8 +136,8 @@ public class RegistroCompraView extends javax.swing.JPanel {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel1.setText("OC");
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -357,6 +358,11 @@ public class RegistroCompraView extends javax.swing.JPanel {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Detalle Factura", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
         jTable.setModel(new DetalleFacturaTableModel());
+        jTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -422,6 +428,7 @@ public class RegistroCompraView extends javax.swing.JPanel {
 
     private void btnQuitarArticuloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarArticuloActionPerformed
         System.out.println(evt.getActionCommand());
+        controlador.quitarArticulo();
     }//GEN-LAST:event_btnQuitarArticuloActionPerformed
 
     private void cbxOrdenesCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxOrdenesCompraActionPerformed
@@ -434,7 +441,13 @@ public class RegistroCompraView extends javax.swing.JPanel {
 
     private void btnAgregarArticuloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarArticuloActionPerformed
         System.out.println(evt.getActionCommand());
+        controlador.agregarArticulo();
     }//GEN-LAST:event_btnAgregarArticuloActionPerformed
+
+    private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
+        System.out.println(evt.getClickCount());
+        controlador.seleccionarArticulo();
+    }//GEN-LAST:event_jTableMouseClicked
 
     public JTextField getTxfCodigo() {
         return txfCodigo;
@@ -478,6 +491,10 @@ public class RegistroCompraView extends javax.swing.JPanel {
 
     public JSpinner getSpnValorUnitario() {
         return spnValorUnitario;
+    }
+
+    public JTable getjTable() {
+        return jTable;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
