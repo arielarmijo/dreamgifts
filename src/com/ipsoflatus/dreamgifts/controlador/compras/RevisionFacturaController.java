@@ -105,4 +105,8 @@ public class RevisionFacturaController implements TableModelListener, DateChange
         facturaDetalleTableModel.setItems(factura.getArticulos());
     }
 
+    public void editarFactura() {
+        mostrarInformacion("Editar no está implementado.");
+    }
+
 }
