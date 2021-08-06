@@ -5,6 +5,7 @@ import com.github.lgooddatepicker.components.DatePickerSettings;
 import com.ipsoflatus.dreamgifts.controlador.compras.RevisionFacturaController;
 import com.ipsoflatus.dreamgifts.modelo.combobox.ProveedorComboBoxModel;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Proveedor;
+import com.ipsoflatus.dreamgifts.modelo.tabla.compras.DetalleFacturaTableModel;
 import com.ipsoflatus.dreamgifts.modelo.tabla.compras.FacturaTableModel;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -25,7 +26,7 @@ public class RevisionFacturaView extends javax.swing.JPanel {
         initComponents();
         this.controlador = new RevisionFacturaController(this);
         
-        jTable.getModel().addTableModelListener(controlador);
+        jTableFacturas.getModel().addTableModelListener(controlador);
         
         // Configura el date picker
         DatePickerSettings desdeSettings = new DatePickerSettings();
@@ -68,7 +69,7 @@ public class RevisionFacturaView extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable = new javax.swing.JTable();
+        jTableFacturas = new javax.swing.JTable();
         dpHasta = new com.github.lgooddatepicker.components.DatePicker();
         dpDesde = new com.github.lgooddatepicker.components.DatePicker();
         jLabel3 = new javax.swing.JLabel();
@@ -78,13 +79,21 @@ public class RevisionFacturaView extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         txfNumeroFactura = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTableDetallesFactura = new javax.swing.JTable();
 
         setMinimumSize(new java.awt.Dimension(850, 500));
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Listado Facturas"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Listado Facturas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
-        jTable.setModel(new FacturaTableModel());
-        jScrollPane1.setViewportView(jTable);
+        jTableFacturas.setModel(new FacturaTableModel());
+        jTableFacturas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableFacturasMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTableFacturas);
 
         jLabel3.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jLabel3.setText("Desde");
@@ -118,7 +127,7 @@ public class RevisionFacturaView extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(23, Short.MAX_VALUE)
+                .addContainerGap(60, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(cbxProveedores, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
@@ -130,7 +139,7 @@ public class RevisionFacturaView extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(dpHasta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txfNumeroFactura)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
@@ -154,7 +163,23 @@ public class RevisionFacturaView extends javax.swing.JPanel {
                     .addComponent(cbxProveedores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txfNumeroFactura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 391, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE))
+        );
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Detalle Factura", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+
+        jTableDetallesFactura.setModel(new DetalleFacturaTableModel());
+        jScrollPane2.setViewportView(jTableDetallesFactura);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -163,7 +188,9 @@ public class RevisionFacturaView extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -171,6 +198,8 @@ public class RevisionFacturaView extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -185,16 +214,17 @@ public class RevisionFacturaView extends javax.swing.JPanel {
         controlador.buscarNumeroFactura();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
+    private void jTableFacturasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableFacturasMouseClicked
+        System.out.println(evt.paramString());
+        controlador.mostrarDetalle();
+    }//GEN-LAST:event_jTableFacturasMouseClicked
+
     public JTextField getTxfNumeroFactura() {
         return txfNumeroFactura;
     }
 
     public JComboBox<Proveedor> getCbxProveedores() {
         return cbxProveedores;
-    }
-
-    public JTable getjTable() {
-        return jTable;
     }
 
     public DatePicker getDpDesde() {
@@ -205,8 +235,13 @@ public class RevisionFacturaView extends javax.swing.JPanel {
         return dpHasta;
     }
 
-    
-    
+    public JTable getjTableDetallesFactura() {
+        return jTableDetallesFactura;
+    }
+
+    public JTable getjTableFacturas() {
+        return jTableFacturas;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
@@ -218,8 +253,11 @@ public class RevisionFacturaView extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTableDetallesFactura;
+    private javax.swing.JTable jTableFacturas;
     private javax.swing.JTextField txfNumeroFactura;
     // End of variables declaration//GEN-END:variables
 }

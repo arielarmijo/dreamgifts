@@ -6,6 +6,7 @@ import com.ipsoflatus.dreamgifts.modelo.entidad.Factura;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Proveedor;
 import com.ipsoflatus.dreamgifts.modelo.servicio.FacturaService;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ProveedorService;
+import com.ipsoflatus.dreamgifts.modelo.tabla.compras.DetalleFacturaTableModel;
 import com.ipsoflatus.dreamgifts.modelo.tabla.compras.FacturaTableModel;
 import com.ipsoflatus.dreamgifts.vista.compras.RevisionFacturaView;
 import java.time.Instant;
@@ -22,20 +23,22 @@ public class RevisionFacturaController implements TableModelListener, DateChange
 
     private final FacturaService facturaSrv;
     private final RevisionFacturaView view;
-    private final FacturaTableModel tableModel;
+    private final FacturaTableModel facturaTableModel;
+    private final DetalleFacturaTableModel facturaDetalleTableModel;
     
     
     public RevisionFacturaController(RevisionFacturaView view) {
         this.facturaSrv = FacturaService.getInstance();
         this.view = view;
-        this.tableModel = (FacturaTableModel) view.getjTable().getModel();
+        this.facturaTableModel = (FacturaTableModel) view.getjTableFacturas().getModel();
+        this.facturaDetalleTableModel = (DetalleFacturaTableModel) view.getjTableDetallesFactura().getModel();
     }
 
     public void filtrarPorProveedor() {
         view.getTxfNumeroFactura().setText("");
         Proveedor proveedor = (Proveedor) view.getCbxProveedores().getSelectedItem();
         List<Proveedor> proveedores = proveedor.getId() == null ? ProveedorService.getInstance().buscar() : Arrays.asList(proveedor);
-        tableModel.actualizar(facturaSrv.buscarPorProveedor(proveedores));
+        facturaTableModel.actualizar(facturaSrv.buscarPorProveedor(proveedores));
     }
     
     public LocalDate obtenerFechaMinima() {
@@ -69,7 +72,7 @@ public class RevisionFacturaController implements TableModelListener, DateChange
         LocalDate hastaLocalDate = view.getDpHasta().getDate();
         Date hastaDate = Date.from(hastaLocalDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         
-        tableModel.actualizar(facturaSrv.buscarPorFecha(desdeDate, hastaDate));
+        facturaTableModel.actualizar(facturaSrv.buscarPorFecha(desdeDate, hastaDate));
         
     }
 
@@ -77,7 +80,7 @@ public class RevisionFacturaController implements TableModelListener, DateChange
         try {
             Integer numeroFactura = Integer.valueOf(view.getTxfNumeroFactura().getText());
             Factura factura = facturaSrv.buscarPorNumeroFactura(numeroFactura);
-            tableModel.actualizar(Arrays.asList(factura));
+            facturaTableModel.actualizar(Arrays.asList(factura));
         } catch(NumberFormatException e) {
             //e.printStackTrace();
             mostrarInformacion("Ingrese un número.");
@@ -94,6 +97,12 @@ public class RevisionFacturaController implements TableModelListener, DateChange
     
     private void mostrarError(String error) {
         JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public void mostrarDetalle() {
+        int row = view.getjTableFacturas().getSelectedRow();
+        Factura factura = facturaTableModel.getItem(row);
+        facturaDetalleTableModel.setItems(factura.getArticulos());
     }
 
 }
