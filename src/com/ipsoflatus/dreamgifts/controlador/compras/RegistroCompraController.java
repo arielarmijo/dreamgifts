@@ -35,16 +35,24 @@ public class RegistroCompraController {
 
     public void buscarFactura() {
         try {
-            Integer id = Integer.valueOf(view.getTxfNumeroFactura().getText());
-            facturaActual = facturaSrv.buscarPorId(id);
-            System.out.println(facturaActual);
+            Integer numeroFactura = Integer.valueOf(view.getTxfNumeroFactura().getText());
+            facturaActual = facturaSrv.buscarPorNumeroFactura(numeroFactura);
+            Proveedor proveedor = facturaActual.getOrdenCompra().getProveedor();
+            view.getCbxProveedores().setSelectedItem(proveedor);
+            view.getTxfRut().setText(proveedor.getRut());
+            view.getCbxOrdenesCompra().setSelectedItem(facturaActual.getOrdenCompra());
+            Date date = facturaActual.getFecha();
+            LocalDate localDate = Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+            view.getDpFechaRecepcion().setDate(localDate);
+            tableModel.setItems(facturaActual.getArticulos());
         } catch(NumberFormatException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             mostrarInformacion("Ingrese un número.");
             view.getTxfNumeroFactura().setText("");
         } catch(Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             mostrarError(e.getMessage());
+            cancelar();
         }
     }
     
@@ -62,16 +70,17 @@ public class RegistroCompraController {
     public void cancelar() {
         limpiarFactura();
         limpiarArticulo();
-        tableModel.actualizar(new ArrayList<>());
+        tableModel.clearItems();
     }
     
     public void grabar() {
         
-        int numero = -1;
+        int numero;
         try {
             numero = Integer.valueOf(view.getTxfNumeroFactura().getText());
         } catch(NumberFormatException e) {
             mostrarInformacion("Ingrese un número.");
+            return;
         }
         
         OrdenCompra oc = (OrdenCompra) view.getCbxOrdenesCompra().getSelectedItem();
@@ -94,11 +103,15 @@ public class RegistroCompraController {
                 factura.setNumero(numero);
                 factura.setFecha(fechaRecepcion);
                 factura.setOrdenCompra(oc);
+                articulos.forEach(a -> {
+                    a.setFactura(factura);
+                });
                 factura.setArticulos(articulos);
                 facturaSrv.guardar(factura);
             }
+            cancelar();
         } catch(Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             mostrarError(e.getMessage());
         }
         
@@ -193,16 +206,6 @@ public class RegistroCompraController {
         view.getDpFechaVencimiento().clear();
     }
     
-    private int getIntFromTex(String number) {
-        int result = -1;
-        try {
-            result = Integer.valueOf(number);
-        } catch(NumberFormatException e) {
-            mostrarInformacion("Ingrese un número.");
-        }
-        return result;
-    }
-
     private void mostrarInformacion(String mensaje) {
         JOptionPane.showMessageDialog(null, mensaje, "Información", JOptionPane.INFORMATION_MESSAGE);
     }

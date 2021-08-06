@@ -38,7 +38,7 @@ public class FacturaDao extends AbstractDao<Factura> {
 
             em.getTransaction().commit();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            //ex.printStackTrace();
             throw new DreamGiftsException(ex.getMessage());
         } finally {
             if (em != null) {
@@ -47,18 +47,21 @@ public class FacturaDao extends AbstractDao<Factura> {
         }
     }
 
-    public Factura findById(Integer id) {
+    public Factura findByNumber(Integer numeroFactura) {
         EntityManager em = null;
         try {
             em = emf.createEntityManager();
-            String namedQuery = String.format("Factura.findById");
+            em.getTransaction().begin(); 
+            String namedQuery = String.format("Factura.findByNumber");
             TypedQuery<Factura> query = em.createNamedQuery(namedQuery, Factura.class);
-            query.setParameter("id", id);
+            query.setParameter("numero", numeroFactura);
             Factura result = query.getSingleResult();
+            em.getTransaction().commit();
             return result;
         } catch (NoResultException ex) {
             ex.printStackTrace();
-            throw new DreamGiftsException("Factura N° " + id + " no existe.");
+            em.getTransaction().rollback();
+            throw new DreamGiftsException("Factura N° " + numeroFactura + " no existe.");
         } catch (Exception ex) {
             ex.printStackTrace();
             throw new DreamGiftsException(ex.getMessage());

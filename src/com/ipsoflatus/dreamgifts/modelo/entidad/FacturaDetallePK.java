@@ -10,33 +10,33 @@ public class FacturaDetallePK implements Serializable {
 
     @Basic(optional = false)
     @Column(name = "articulo_id")
-    private int articuloId;
+    private Integer articuloId;
     
     @Basic(optional = false)
     @Column(name = "factura_id")
-    private int facturaId;
+    private Integer facturaId;
 
     public FacturaDetallePK() {
     }
 
-    public FacturaDetallePK(int articuloId, int facturaId) {
+    public FacturaDetallePK(Integer articuloId, Integer facturaId) {
         this.articuloId = articuloId;
         this.facturaId = facturaId;
     }
 
-    public int getArticuloId() {
+    public Integer getArticuloId() {
         return articuloId;
     }
 
-    public void setArticuloId(int articuloId) {
+    public void setArticuloId(Integer articuloId) {
         this.articuloId = articuloId;
     }
 
-    public int getFacturaId() {
+    public Integer getFacturaId() {
         return facturaId;
     }
 
-    public void setFacturaId(int facturaId) {
+    public void setFacturaId(Integer facturaId) {
         this.facturaId = facturaId;
     }
 

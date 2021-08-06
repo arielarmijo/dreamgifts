@@ -126,7 +126,8 @@ public class FacturaDetalle implements Serializable {
     }
 
     public void setFactura(Factura factura) {
-        this.facturaDetallePK.setFacturaId(factura.getId());
+        if (factura.getId() != null)
+            this.facturaDetallePK.setFacturaId(factura.getId());
         this.factura = factura;
     }
 

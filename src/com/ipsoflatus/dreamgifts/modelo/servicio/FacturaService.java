@@ -17,8 +17,8 @@ public class FacturaService extends AbstractService<Factura> {
         return instance;
     }
     
-    public Factura buscarPorId(Integer id) {
-        return ((FacturaDao) dao).findById(id);
+    public Factura buscarPorNumeroFactura(Integer numeroFactura) {
+        return ((FacturaDao) dao).findByNumber(numeroFactura);
     }
     
 }
