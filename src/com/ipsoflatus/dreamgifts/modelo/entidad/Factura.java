@@ -8,6 +8,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,7 +24,11 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "facturas")
 @NamedQueries({
-    @NamedQuery(name = "Factura.findByNumber", query = "SELECT f FROM Factura f WHERE f.numero = :numero")})
+    @NamedQuery(name = "Factura.findByNumber", query = "SELECT f FROM Factura f WHERE f.numero = :numero"),
+    @NamedQuery(name = "Factura.findByProveedorIn", query = "SELECT f FROM Factura f WHERE f.ordenCompra.proveedor IN :proveedor"),
+    @NamedQuery(name = "Factura.findMinDate", query = "SELECT MIN(f.fecha) FROM Factura f"),
+    @NamedQuery(name = "Factura.findMaxDate", query = "SELECT MAX(f.fecha) FROM Factura f"),
+    @NamedQuery(name = "Factura.findByDateBetween", query = "SELECT f FROM Factura f WHERE f.fecha BETWEEN :desde AND :hasta")})
 public class Factura implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -43,7 +48,7 @@ public class Factura implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fecha;
     
-    @OneToMany(mappedBy = "factura", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "factura", cascade = CascadeType.ALL)
     private List<FacturaDetalle> articulos = new ArrayList<>();
     
     @ManyToOne(optional = false)

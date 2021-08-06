@@ -14,7 +14,6 @@ import com.ipsoflatus.dreamgifts.vista.compras.RegistroCompraView;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -108,6 +107,8 @@ public class RegistroCompraController {
                 });
                 factura.setArticulos(articulos);
                 facturaSrv.guardar(factura);
+            } else {
+                mostrarInformacion("Editar no está implementado.");
             }
             cancelar();
         } catch(Exception e) {
