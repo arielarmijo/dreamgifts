@@ -14,7 +14,6 @@ public class CategoriaArticuloComboBoxModel extends ObserverComboBoxModel<Catego
 
     @Override
     public void actualizar(List<CategoriaArticulo> items) {
-        System.out.println("CA CBX: " + items);
         CategoriaArticulo seleccioneCategoria = new CategoriaArticulo();
         seleccioneCategoria.setNombre("Seleccione categoría");
         seleccioneCategoria.setArticulos(ArticuloService.getInstance().buscar());

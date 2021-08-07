@@ -1,5 +1,6 @@
 package com.ipsoflatus.dreamgifts.modelo.tabla.ventas;
 
+import com.ipsoflatus.dreamgifts.modelo.tabla.informes.VentaTableModel;
 import com.ipsoflatus.dreamgifts.modelo.entidad.EstadoVenta;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Venta;
 import com.ipsoflatus.dreamgifts.modelo.servicio.EVService;

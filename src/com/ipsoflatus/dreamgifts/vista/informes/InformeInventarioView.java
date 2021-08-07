@@ -1,23 +1,59 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ipsoflatus.dreamgifts.vista.informes;
 
-import com.ipsoflatus.dreamgifts.vista.ventas.*;
+import com.github.lgooddatepicker.components.DatePicker;
+import com.github.lgooddatepicker.components.DatePickerSettings;
+import com.ipsoflatus.dreamgifts.controlador.informes.InformeInventarioController;
+import com.ipsoflatus.dreamgifts.modelo.combobox.CategoriaArticuloComboBoxModel;
+import com.ipsoflatus.dreamgifts.modelo.combobox.ProveedorComboBoxModel;
+import com.ipsoflatus.dreamgifts.modelo.entidad.CategoriaArticulo;
+import com.ipsoflatus.dreamgifts.modelo.entidad.Proveedor;
+import com.ipsoflatus.dreamgifts.modelo.tabla.informes.InventarioTableModel;
+import java.awt.Image;
+import java.awt.Toolkit;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JTable;
 
-/**
- *
- * @author Usuario
- */
 public class InformeInventarioView extends javax.swing.JPanel {
 
+    private final InformeInventarioController controlador;
     /**
      * Creates new form PanelConfirmcionPago
      */
     public InformeInventarioView() {
         initComponents();
+        controlador = new InformeInventarioController(this);
+        
+        // Configura el date picker
+        DatePickerSettings desdeSettings = new DatePickerSettings();
+        desdeSettings.setFormatForDatesCommonEra("dd/MM/yyyy");
+        desdeSettings.setFormatForDatesBeforeCommonEra("dd/MM/uuuu");
+        dpDesde.setSettings(desdeSettings);
+        //desdeSettings.setDateRangeLimits(controlador.obtenerFechaMinima(), controlador.obtenerFechaMaxima());
+        
+        DatePickerSettings hastaSettings = new DatePickerSettings();
+        hastaSettings.setFormatForDatesCommonEra("dd/MM/yyyy");
+        hastaSettings.setFormatForDatesBeforeCommonEra("dd/MM/uuuu");
+        dpHasta.setSettings(hastaSettings);
+        //hastaSettings.setDateRangeLimits(controlador.obtenerFechaMinima(), controlador.obtenerFechaMaxima());
+        
+        Image dateImage = Toolkit.getDefaultToolkit().getImage("images/datepickerbutton.png");
+        ImageIcon dateExampleIcon = new ImageIcon(dateImage);
+        
+        JButton datePickerButton = dpDesde.getComponentToggleCalendarButton();
+        datePickerButton.setText("");
+        datePickerButton.setIcon(dateExampleIcon);
+        
+        datePickerButton = dpHasta.getComponentToggleCalendarButton();
+        datePickerButton.setText("");
+        datePickerButton.setIcon(dateExampleIcon);
+        
+        //dpDesde.setDate(controlador.obtenerFechaMinima());
+        //dpHasta.setDate(controlador.obtenerFechaMaxima());
+        dpDesde.addDateChangeListener(controlador);
+        dpHasta.addDateChangeListener(controlador);
+        
     }
 
     /**
@@ -54,11 +90,21 @@ public class InformeInventarioView extends javax.swing.JPanel {
 
         jLabel10.setText("Hasta");
 
-        cbxCategoriasArticulo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxCategoriasArticulo.setModel(new CategoriaArticuloComboBoxModel());
+        cbxCategoriasArticulo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxCategoriasArticuloActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Categoría Artículo");
 
-        cbxProveedores.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxProveedores.setModel(new ProveedorComboBoxModel());
+        cbxProveedores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxProveedoresActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Proveedor");
 
@@ -110,20 +156,10 @@ public class InformeInventarioView extends javax.swing.JPanel {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Inventario", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12)))); // NOI18N
 
-        jTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+        jTable.setModel(new InventarioTableModel());
         jScrollPane1.setViewportView(jTable);
 
-        btnExportarExcel.setText("Expirtar a Excel");
+        btnExportarExcel.setText("Exportar a Excel");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -166,11 +202,40 @@ public class InformeInventarioView extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cbxCategoriasArticuloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxCategoriasArticuloActionPerformed
+        System.out.println(evt.paramString());
+        controlador.filtrarPorCategoriaArticulo();
+    }//GEN-LAST:event_cbxCategoriasArticuloActionPerformed
+
+    private void cbxProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxProveedoresActionPerformed
+        System.out.println(evt.paramString());
+        controlador.filtrarPorProveedor();
+    }//GEN-LAST:event_cbxProveedoresActionPerformed
+
+    public JComboBox<CategoriaArticulo> getCbxCategoriasArticulo() {
+        return cbxCategoriasArticulo;
+    }
+
+    public JComboBox<Proveedor> getCbxProveedores() {
+        return cbxProveedores;
+    }
+
+    public DatePicker getDpDesde() {
+        return dpDesde;
+    }
+
+    public DatePicker getDpHasta() {
+        return dpHasta;
+    }
+
+    public JTable getjTable() {
+        return jTable;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExportarExcel;
-    private javax.swing.JComboBox<String> cbxCategoriasArticulo;
-    private javax.swing.JComboBox<String> cbxProveedores;
+    private javax.swing.JComboBox<CategoriaArticulo> cbxCategoriasArticulo;
+    private javax.swing.JComboBox<Proveedor> cbxProveedores;
     private com.github.lgooddatepicker.components.DatePicker dpDesde;
     private com.github.lgooddatepicker.components.DatePicker dpHasta;
     private javax.swing.JLabel jLabel1;

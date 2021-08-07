@@ -40,7 +40,7 @@ public class DreamGifts extends javax.swing.JFrame {
         crearPanelCompras();
         crearPanelInformes();
         crearPanelAdmin();
-        showTabbedPaneAndTab(jTabbedPaneCompras, "compras", 2);
+        showTabbedPaneAndTab(jTabbedPaneInformes, "informes", 1);
     }
     
     private void crearPanelVentas() {

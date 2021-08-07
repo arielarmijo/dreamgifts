@@ -4,7 +4,7 @@ import com.github.lgooddatepicker.optionalusertools.DateChangeListener;
 import com.github.lgooddatepicker.zinternaltools.DateChangeEvent;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ExportService;
 import com.ipsoflatus.dreamgifts.modelo.servicio.VentaService;
-import com.ipsoflatus.dreamgifts.modelo.tabla.ventas.ClienteTableModel;
+import com.ipsoflatus.dreamgifts.modelo.tabla.informes.ClienteTableModel;
 import com.ipsoflatus.dreamgifts.vista.informes.InformeClientesView;
 import java.time.Instant;
 import java.time.LocalDate;

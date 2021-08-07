@@ -3,7 +3,7 @@ package com.ipsoflatus.dreamgifts.vista.informes;
 import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DatePickerSettings;
 import com.ipsoflatus.dreamgifts.controlador.informes.InformeVentaController;
-import com.ipsoflatus.dreamgifts.modelo.tabla.ventas.VentaTableModel;
+import com.ipsoflatus.dreamgifts.modelo.tabla.informes.VentaTableModel;
 import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;

@@ -1,4 +1,4 @@
-    package com.ipsoflatus.dreamgifts.modelo.tabla.ventas;
+    package com.ipsoflatus.dreamgifts.modelo.tabla.informes;
 
 import com.ipsoflatus.dreamgifts.modelo.Observer;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Venta;

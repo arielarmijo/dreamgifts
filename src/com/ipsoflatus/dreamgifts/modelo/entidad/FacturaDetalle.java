@@ -19,7 +19,10 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "factura_detalle")
 @NamedQueries({
-    @NamedQuery(name = "FacturaDetalle.findAll", query = "SELECT f FROM FacturaDetalle f")})
+    @NamedQuery(name = "FacturaDetalle.findAll", query = "SELECT f FROM FacturaDetalle f"),
+    @NamedQuery(name = "FacturaDetalle.findByDateSmallerThan", query = "SELECT fd FROM FacturaDetalle fd WHERE fd.fechaVencimiento <= :hasta"),
+    @NamedQuery(name = "FacturaDetalle.findByDateGreaterThan", query = "SELECT fd FROM FacturaDetalle fd WHERE fd.fechaVencimiento >= :desde"),
+    @NamedQuery(name = "FacturaDetalle.findByDateBetween", query = "SELECT fd FROM FacturaDetalle fd WHERE fd.fechaVencimiento BETWEEN :desde AND :hasta")})
 public class FacturaDetalle implements Serializable {
 
     private static final long serialVersionUID = 1L;
