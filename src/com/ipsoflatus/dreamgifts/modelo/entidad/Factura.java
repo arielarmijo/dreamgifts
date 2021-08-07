@@ -8,6 +8,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,7 +24,11 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "facturas")
 @NamedQueries({
-    @NamedQuery(name = "Factura.findAll", query = "SELECT f FROM Factura f")})
+    @NamedQuery(name = "Factura.findByNumber", query = "SELECT f FROM Factura f WHERE f.numero = :numero"),
+    @NamedQuery(name = "Factura.findByProveedorIn", query = "SELECT f FROM Factura f WHERE f.ordenCompra.proveedor IN :proveedor"),
+    @NamedQuery(name = "Factura.findMinDate", query = "SELECT MIN(f.fecha) FROM Factura f"),
+    @NamedQuery(name = "Factura.findMaxDate", query = "SELECT MAX(f.fecha) FROM Factura f"),
+    @NamedQuery(name = "Factura.findByDateBetween", query = "SELECT f FROM Factura f WHERE f.fecha BETWEEN :desde AND :hasta")})
 public class Factura implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -43,13 +48,13 @@ public class Factura implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fecha;
     
-    @OneToMany(mappedBy = "factura", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "factura", cascade = CascadeType.ALL)
     private List<FacturaDetalle> articulos = new ArrayList<>();
     
     @ManyToOne(optional = false)
-    @JoinColumn(name = "proveedor_id", referencedColumnName = "id")
-    private Proveedor proveedor;
-
+    @JoinColumn(name = "orden_compra_id", referencedColumnName = "id")
+    private OrdenCompra ordenCompra;
+    
     public Factura() {
     }
 
@@ -87,20 +92,21 @@ public class Factura implements Serializable {
         this.fecha = fecha;
     }
 
-    public List<FacturaDetalle> getFacturas() {
+    public List<FacturaDetalle> getArticulos() {
         return articulos;
     }
 
-    public void setFacturas(List<FacturaDetalle> facturas) {
-        this.articulos = facturas;
+    public void setArticulos(List<FacturaDetalle> articulos) {
+        this.articulos = articulos;
+    }
+    
+    
+    public OrdenCompra getOrdenCompra() {
+        return ordenCompra;
     }
 
-    public Proveedor getProveedor() {
-        return proveedor;
-    }
-
-    public void setProveedor(Proveedor proveedor) {
-        this.proveedor = proveedor;
+    public void setOrdenCompra(OrdenCompra ordenCompra) {
+        this.ordenCompra = ordenCompra;
     }
 
     @Override

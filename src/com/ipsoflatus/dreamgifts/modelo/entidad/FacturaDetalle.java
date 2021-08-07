@@ -2,6 +2,7 @@ package com.ipsoflatus.dreamgifts.modelo.entidad;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -125,33 +126,39 @@ public class FacturaDetalle implements Serializable {
     }
 
     public void setFactura(Factura factura) {
-        this.facturaDetallePK.setFacturaId(factura.getId());
+        if (factura.getId() != null)
+            this.facturaDetallePK.setFacturaId(factura.getId());
         this.factura = factura;
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (facturaDetallePK != null ? facturaDetallePK.hashCode() : 0);
+        int hash = 3;
+        hash = 53 * hash + Objects.hashCode(this.articulo);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof FacturaDetalle)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        FacturaDetalle other = (FacturaDetalle) object;
-        if ((this.facturaDetallePK == null && other.facturaDetallePK != null) || (this.facturaDetallePK != null && !this.facturaDetallePK.equals(other.facturaDetallePK))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final FacturaDetalle other = (FacturaDetalle) obj;
+        if (!Objects.equals(this.articulo, other.articulo)) {
             return false;
         }
         return true;
     }
-
+    
     @Override
     public String toString() {
-        return "com.ipsoflatus.dreamgifts.modelo.entidad.FacturaDetalle[ facturaDetallePK=" + facturaDetallePK + " ]";
+        return "FacturaDetalle[" + facturaDetallePK + "]";
     }
 
 }
