@@ -32,6 +32,7 @@ import javax.swing.JTabbedPane;
 public class DreamGifts extends javax.swing.JFrame {
 
     public JPanel venta;
+    public JPanel registroCompras;
     
     public DreamGifts() {
         initComponents();
@@ -54,10 +55,11 @@ public class DreamGifts extends javax.swing.JFrame {
     }
     
     private void crearPanelCompras() {
+        
         JPanel armadoPacks = new ArmadoPackView();
         JPanel solicitudPedido = new SolicitudPedidoView();
-        JPanel registroCompras = new RegistroCompraView();
-        JPanel revisionFactura = new RevisionFacturaView();
+        registroCompras = new RegistroCompraView();
+        JPanel revisionFactura = new RevisionFacturaView(this);
         jTabbedPaneCompras.addTab("Armado Packs",armadoPacks);
         jTabbedPaneCompras.addTab("Solicitud Pedido", solicitudPedido);
         jTabbedPaneCompras.addTab("Registro Compra", registroCompras);
@@ -567,6 +569,9 @@ public class DreamGifts extends javax.swing.JFrame {
         showTabbedPaneAndTab(jTabbedPaneVentas, "ventas", tab);
     }
     
+    public void showComprasTab(int tab) {
+        showTabbedPaneAndTab(jTabbedPaneCompras, "compras", tab);
+    }
     private void showTabbedPaneAndTab(JTabbedPane pane, String card, ActionEvent evt) {
         JMenuItem menuItem = (JMenuItem) evt.getSource(); 
         JPopupMenu popupMenu = (JPopupMenu) menuItem.getParent(); 

@@ -149,6 +149,7 @@ public class ClienteController implements Controller<ClienteView> {
     }
 
     public void vender() {
+     
         int row = view.getjTable().getSelectedRow();
         if (row != -1) {
             Cliente c = tableModel.getItem(row);
@@ -158,7 +159,7 @@ public class ClienteController implements Controller<ClienteView> {
             vv.getTxfTelefonoCliente().setText(c.getTelefono());
             vv.getTxfEmailCliente().setText(c.getCorreo());
         }
-        view.getRoot().showVentasTab(0);
+        view.getRoot().showVentasTab(0);   
     }
 
 }

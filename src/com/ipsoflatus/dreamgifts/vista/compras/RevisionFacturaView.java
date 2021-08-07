@@ -8,6 +8,7 @@ import com.ipsoflatus.dreamgifts.modelo.entidad.Proveedor;
 import com.ipsoflatus.dreamgifts.modelo.tabla.ButtonColumn;
 import com.ipsoflatus.dreamgifts.modelo.tabla.compras.DetalleFacturaTableModel;
 import com.ipsoflatus.dreamgifts.modelo.tabla.compras.FacturaTableModel;
+import com.ipsoflatus.dreamgifts.vista.DreamGifts;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -22,11 +23,12 @@ import javax.swing.JTextField;
 public class RevisionFacturaView extends javax.swing.JPanel {
 
     private final RevisionFacturaController controlador;
-    
+    private DreamGifts root;
     /**
      * Creates new form PanelConfirmcionPago
      */
-    public RevisionFacturaView() {
+    public RevisionFacturaView(DreamGifts root) {
+        this.root = root;
         initComponents();
         this.controlador = new RevisionFacturaController(this);
         jTableFacturas.getModel().addTableModelListener(controlador);
@@ -261,6 +263,10 @@ public class RevisionFacturaView extends javax.swing.JPanel {
 
     public JTable getjTableFacturas() {
         return jTableFacturas;
+    }
+
+    public DreamGifts getRoot() {
+        return root;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

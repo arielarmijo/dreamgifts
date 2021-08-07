@@ -8,6 +8,7 @@ import com.ipsoflatus.dreamgifts.modelo.servicio.FacturaService;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ProveedorService;
 import com.ipsoflatus.dreamgifts.modelo.tabla.compras.DetalleFacturaTableModel;
 import com.ipsoflatus.dreamgifts.modelo.tabla.compras.FacturaTableModel;
+import com.ipsoflatus.dreamgifts.vista.compras.RegistroCompraView;
 import com.ipsoflatus.dreamgifts.vista.compras.RevisionFacturaView;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -108,7 +109,13 @@ public class RevisionFacturaController implements TableModelListener, DateChange
     }
 
     public void editarFactura() {
-        mostrarInformacion("Editar no está implementado.");
+      int row = view.getjTableFacturas().getSelectedRow();
+        if (row > -1) {
+            Factura factura = facturaTableModel.getItem(row);
+            RegistroCompraView rc = ((RegistroCompraView) view.getRoot().registroCompras);
+            rc.getTxfNumeroFactura().setText(String.valueOf(factura.getNumero()));
+        }
+        view.getRoot().showComprasTab(2);   
     }
 
 }
