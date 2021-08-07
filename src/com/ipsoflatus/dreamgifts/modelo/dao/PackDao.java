@@ -40,6 +40,10 @@ public class PackDao extends AbstractSoftDeleteDao<Pack> {
             
             persistentPack.setArticulos(articulos);
             persistentPack.setCosto(pack.getCosto());
+            persistentPack.setStock(persistentPack.getStock() + pack.getStock());
+            persistentPack.setStockCritico(pack.getStockCritico());
+            persistentPack.setFechaInicio(pack.getFechaInicio());
+            persistentPack.setFechaTermino(pack.getFechaTermino());
             em.merge(persistentPack);
             
             em.getTransaction().commit();
