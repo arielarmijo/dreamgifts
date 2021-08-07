@@ -1,33 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ipsoflatus.dreamgifts.vista.ventas;
 
-import com.ipsoflatus.dreamgifts.modelo.exporter.ExcelExporter;
-import com.ipsoflatus.dreamgifts.modelo.exporter.Exporter;
+import com.ipsoflatus.dreamgifts.modelo.servicio.ExportService;
 import com.ipsoflatus.dreamgifts.modelo.servicio.VentaService;
 import com.ipsoflatus.dreamgifts.modelo.tabla.ventas.ListaDestinoTableModel;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
-/**
- *
- * @author Usuario
- */
 public class ListaDestinosView extends javax.swing.JPanel {
 
+    private final ExportService exportSrv;
+    
     /**
      * Creates new form PanelConfirmcionPago
      */
     public ListaDestinosView() {
         initComponents();
+        exportSrv = new ExportService();
     }
 
     /**
@@ -45,7 +31,7 @@ public class ListaDestinosView extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
-        exportar = new javax.swing.JButton();
+        btnExportarExcel = new javax.swing.JButton();
 
         setMinimumSize(new java.awt.Dimension(850, 500));
 
@@ -60,11 +46,11 @@ public class ListaDestinosView extends javax.swing.JPanel {
 
         jButton2.setText("Buscar");
 
-        exportar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        exportar.setText("Exportar a Excel");
-        exportar.addActionListener(new java.awt.event.ActionListener() {
+        btnExportarExcel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnExportarExcel.setText("Exportar a Excel");
+        btnExportarExcel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exportarActionPerformed(evt);
+                btnExportarExcelActionPerformed(evt);
             }
         });
 
@@ -72,7 +58,7 @@ public class ListaDestinosView extends javax.swing.JPanel {
         jDesktopPane2.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane2.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane2.setLayer(jButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane2.setLayer(exportar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane2.setLayer(btnExportarExcel, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane2Layout = new javax.swing.GroupLayout(jDesktopPane2);
         jDesktopPane2.setLayout(jDesktopPane2Layout);
@@ -90,7 +76,7 @@ public class ListaDestinosView extends javax.swing.JPanel {
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(exportar)))
+                        .addComponent(btnExportarExcel)))
                 .addContainerGap())
         );
         jDesktopPane2Layout.setVerticalGroup(
@@ -104,7 +90,7 @@ public class ListaDestinosView extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(exportar)
+                .addComponent(btnExportarExcel)
                 .addContainerGap())
         );
 
@@ -126,32 +112,14 @@ public class ListaDestinosView extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void exportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportarActionPerformed
-        if (jTable.getRowCount() > 0) {
-            JFileChooser chooser = new JFileChooser();
-            FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos de excel", "xls");
-            chooser.setFileFilter(filter);
-            chooser.setDialogTitle("Guardar archivo");
-            chooser.setAcceptAllFileFilterUsed(false);
-            if (chooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
-                String file = chooser.getSelectedFile().toString().concat(".xls");
-                try {
-                    Exporter e = new ExcelExporter(new File(file), jTable, "Ventas");
-                    if (e.export()) {
-                        JOptionPane.showMessageDialog(null, "Datos exportados a " + file.toString(), "Mensaje de Informacion", JOptionPane.INFORMATION_MESSAGE);
-                    }
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "Hubo un error " + e.getMessage(), " Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        }else{
-            JOptionPane.showMessageDialog(this, "No hay datos para exportar","Mensaje de error",JOptionPane.ERROR_MESSAGE);
-        }   
-    }//GEN-LAST:event_exportarActionPerformed
+    private void btnExportarExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarExcelActionPerformed
+        System.out.println(evt.paramString());
+        exportSrv.exportarAExcel(jTable, "Destinos");
+    }//GEN-LAST:event_btnExportarExcelActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton exportar;
+    private javax.swing.JButton btnExportarExcel;
     private javax.swing.JButton jButton2;
     private javax.swing.JDesktopPane jDesktopPane2;
     private javax.swing.JLabel jLabel1;

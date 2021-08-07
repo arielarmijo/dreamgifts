@@ -39,8 +39,6 @@ public class VentaTableModel extends AbstractTableModel implements Observer<Vent
         if (columnIndex == 4)
             return venta.getFechaEntrega();
         if (columnIndex == 5)
-            return venta.getFechaEntrega();
-        if (columnIndex == 6)
             return venta.getPack().getCosto();
         return null;
     }

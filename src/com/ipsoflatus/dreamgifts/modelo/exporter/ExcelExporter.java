@@ -27,11 +27,11 @@ public class ExcelExporter implements Exporter {
             WritableWorkbook workbook = Workbook.createWorkbook(out);
             WritableSheet sheet = workbook.createSheet(fileName, 0);
             for (int i = 0; i < table.getColumnCount(); i++) {
+                String column = table.getColumnName(i);
+                sheet.addCell(new Label(i, 0, column));
                 for (int j = 0; j < table.getRowCount(); j++) {
-                    String column = table.getColumnName(i);
                     Object object = table.getValueAt(j, i);
-                    sheet.addCell(new Label(i, 0, column));
-                    sheet.addCell(new Label(i, j, String.valueOf(object)));
+                    sheet.addCell(new Label(i, j+1, String.valueOf(object)));
                 }
             }
             workbook.write();
