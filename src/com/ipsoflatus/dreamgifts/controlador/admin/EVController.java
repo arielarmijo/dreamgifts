@@ -9,7 +9,7 @@ import com.ipsoflatus.dreamgifts.controlador.Controller;
 import com.ipsoflatus.dreamgifts.modelo.entidad.EstadoVenta;
 import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
 import com.ipsoflatus.dreamgifts.modelo.servicio.EVService;
-import com.ipsoflatus.dreamgifts.modelo.table.admin.EVTableModel;
+import com.ipsoflatus.dreamgifts.modelo.tabla.admin.EVTableModel;
 import com.ipsoflatus.dreamgifts.vista.admin.EstadoVentaView;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,6 +45,7 @@ public class EVController implements Controller<EstadoVentaView>{
        String nombre = view.getjTextFieldCV().getText();
         String codigo = view.getjTextFieldIdCV().getText();
         String descripcion = view.getjTextAreaDescripcion().getText();
+        System.out.println(descripcion);
                 
         if (codigo.isEmpty() || nombre.isEmpty()) {
             mostrarInformacion("Complete todos los campos.");
@@ -53,7 +54,12 @@ public class EVController implements Controller<EstadoVentaView>{
 
         try {
             if (evActual == null) {
-               service.guardar(new EstadoVenta(codigo, nombre, descripcion, true));
+                EstadoVenta ev = new EstadoVenta();
+                ev.setCodigo(codigo);
+                ev.setNombre(nombre);
+                ev.setDescripcion(descripcion);
+                ev.setEstado(Boolean.TRUE);
+                service.guardar(ev);
             }else{
                 evActual.setCodigo(codigo);
                 evActual.setNombre(nombre);

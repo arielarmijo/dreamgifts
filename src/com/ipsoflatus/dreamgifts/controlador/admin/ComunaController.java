@@ -1,6 +1,6 @@
- package com.ipsoflatus.dreamgifts.controlador.admin;
+package com.ipsoflatus.dreamgifts.controlador.admin;
 
-import com.ipsoflatus.dreamgifts.modelo.table.admin.ComunaTableModel;
+import com.ipsoflatus.dreamgifts.modelo.tabla.admin.ComunaTableModel;
 import com.ipsoflatus.dreamgifts.controlador.Controller;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Comuna;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ComunaService;
@@ -14,7 +14,7 @@ public class ComunaController implements Controller<ComunaView> {
     private ComunaService service = ComunaService.getInstance();
     private ComunaTableModel tableModel;
     private Comuna comunaActual = null;
-    
+
     @Override
     public void setView(ComunaView view) {
         this.view = view;
@@ -30,10 +30,24 @@ public class ComunaController implements Controller<ComunaView> {
 
     @Override
     public void grabar() {
+
         String nombre = view.getNombreComuna().getText();
+        if (nombre.isEmpty()) {
+            mostrarInformacion("Ingrese nombre de la comuna.");
+            return;
+        }
+
         String codigo = view.getCodigoComuna().getText();
+        if (codigo.isEmpty()) {
+            mostrarInformacion("Ingrese código de la comuna");
+            return;
+        }
+
         if (comunaActual == null) {
-            Comuna comuna = new Comuna(nombre, codigo);
+            Comuna comuna = new Comuna();
+            comuna.setCodigo(codigo);
+            comuna.setNombre(nombre);
+            comuna.setEstado(Boolean.TRUE);
             service.guardar(comuna);
         } else {
             comunaActual.setCodigo(codigo);
@@ -52,7 +66,7 @@ public class ComunaController implements Controller<ComunaView> {
         } else {
             comunas = service.buscar(termino);
         }
-        
+
         tableModel.actualizar(comunas);
         view.getBuscar().setText("");
     }
@@ -67,7 +81,7 @@ public class ComunaController implements Controller<ComunaView> {
         comunaActual = tableModel.getItem(row);
         view.getCodigoComuna().setText(comunaActual.getCodigo());
         view.getNombreComuna().setText(comunaActual.getNombre());
-        
+
     }
 
     @Override
@@ -85,7 +99,5 @@ public class ComunaController implements Controller<ComunaView> {
     public void seleccionarTodos() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    
 
 }

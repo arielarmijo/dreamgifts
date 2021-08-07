@@ -119,27 +119,27 @@ public class VentaController {
         }
         
         Venta venta = new Venta();
-        venta.setClienteId(clienteId);
+        venta.setCliente(cliente);
         venta.setTotal(total);
         venta.setNombreDestinatario(nombreDestinatario);
         venta.setApellidoDestinatario(apellidoDestinatario);
         venta.setTelefonoDestinatario(telefonoDestinatario);
         venta.setDireccionDestinatario(direccionDestinatario);
-        venta.setComunaId(comunaId);
+        venta.setComuna(comuna);
         venta.setFechaVenta(fechaVenta);
         venta.setFechaEntrega(fechaEntrega);
         venta.setHoraEntregaInicial(horaEntregaInicial);
         venta.setHoraEntregaFinal(horaEntregaFinal);
         venta.setSaludo(saludo);
-        venta.setPackId(packId);
-        venta.setRrssId(rsId);
+        venta.setPack(pack);
+        venta.setRedSocial(rs);
         
         try {
             List<EstadoVenta> eevv = evSrv.buscar();
             if (eevv.isEmpty())
                throw new DreamGiftsException("No hay estados de ventas creados.");
             EstadoVenta ev = eevv.get(0);    
-            venta.setEstadoVentaId(ev.getId());
+            venta.setEstadoVenta(ev);
             ventaSrv.guardar(venta);
             mostrarInformacion("Venta creada exitosamente.");
             cancelar();
@@ -188,7 +188,6 @@ public class VentaController {
             System.out.println(e.getMessage());
             return 0;
         }
-        
     }
 
 }

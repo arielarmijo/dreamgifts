@@ -1,6 +1,6 @@
 package com.ipsoflatus.dreamgifts.vista;
 
-import com.ipsoflatus.dreamgifts.vista.admin.ArmadoPackView;
+import com.ipsoflatus.dreamgifts.vista.compras.ArmadoPackView;
 import com.ipsoflatus.dreamgifts.vista.admin.ArticuloView;
 import com.ipsoflatus.dreamgifts.vista.admin.BancoView;
 import com.ipsoflatus.dreamgifts.vista.admin.CategoriaArticuloView;
@@ -32,6 +32,7 @@ import javax.swing.JTabbedPane;
 public class DreamGifts extends javax.swing.JFrame {
 
     public JPanel venta;
+    public JPanel registroCompras;
     
     public DreamGifts() {
         initComponents();
@@ -39,7 +40,7 @@ public class DreamGifts extends javax.swing.JFrame {
         crearPanelCompras();
         crearPanelInformes();
         crearPanelAdmin();
-        showTabbedPaneAndTab(jTabbedPaneVentas, "ventas", 0);
+        showTabbedPaneAndTab(jTabbedPaneInformes, "informes", 1);
     }
     
     private void crearPanelVentas() {
@@ -54,10 +55,11 @@ public class DreamGifts extends javax.swing.JFrame {
     }
     
     private void crearPanelCompras() {
+        
         JPanel armadoPacks = new ArmadoPackView();
         JPanel solicitudPedido = new SolicitudPedidoView();
-        JPanel registroCompras = new RegistroCompraView();
-        JPanel revisionFactura = new RevisionFacturaView();
+        registroCompras = new RegistroCompraView();
+        JPanel revisionFactura = new RevisionFacturaView(this);
         jTabbedPaneCompras.addTab("Armado Packs",armadoPacks);
         jTabbedPaneCompras.addTab("Solicitud Pedido", solicitudPedido);
         jTabbedPaneCompras.addTab("Registro Compra", registroCompras);
@@ -78,22 +80,22 @@ public class DreamGifts extends javax.swing.JFrame {
     private void crearPanelAdmin() {
         JPanel cliente = new ClienteView(this);
         JPanel proveedor = new ProveedorView();
-        JPanel articulo = new ArticuloView();
         JPanel pack = new PackView();
-        JPanel rrss = new RRSSView(jLabelEstado);
+        JPanel articulo = new ArticuloView();
         JPanel categoriaArticulo = new CategoriaArticuloView();
         JPanel comuna = new ComunaView();
         JPanel banco = new BancoView();
+        JPanel rrss = new RRSSView();
         JPanel estadoVenta = new EstadoVentaView();
-        JPanel usuario = new UsuarioView(jLabelEstado);
+        JPanel usuario = new UsuarioView();
         jTabbedPaneAdmin.addTab("Clientes", cliente);
         jTabbedPaneAdmin.addTab("Proveedores", proveedor);
-        jTabbedPaneAdmin.addTab("Articulos", articulo);
         jTabbedPaneAdmin.addTab("Packs", pack);
-        jTabbedPaneAdmin.addTab("RRSS", rrss);
+        jTabbedPaneAdmin.addTab("Articulos", articulo);
         jTabbedPaneAdmin.addTab("Categoría Artículos", categoriaArticulo);
         jTabbedPaneAdmin.addTab("Comunas", comuna);
         jTabbedPaneAdmin.addTab("Bancos", banco);
+        jTabbedPaneAdmin.addTab("RRSS", rrss);
         jTabbedPaneAdmin.addTab("Estados Venta", estadoVenta);
         jTabbedPaneAdmin.addTab("Usuarios", usuario);
     }
@@ -134,12 +136,12 @@ public class DreamGifts extends javax.swing.JFrame {
         jMenuadmin = new javax.swing.JMenu();
         jMenuItemClientes = new javax.swing.JMenuItem();
         jMenuItemProveedores = new javax.swing.JMenuItem();
-        jMenuItemArticulos = new javax.swing.JMenuItem();
         jMenuItemPacks = new javax.swing.JMenuItem();
-        jMenuItemRRSS = new javax.swing.JMenuItem();
+        jMenuItemArticulos = new javax.swing.JMenuItem();
         jMenuItemCategoriaArticulos = new javax.swing.JMenuItem();
         jMenuItemComunas = new javax.swing.JMenuItem();
         jMenuItemBancos = new javax.swing.JMenuItem();
+        jMenuItemRRSS = new javax.swing.JMenuItem();
         jMenuItemCategoriaVentas = new javax.swing.JMenuItem();
         jMenuItemUsuarios = new javax.swing.JMenuItem();
 
@@ -345,14 +347,6 @@ public class DreamGifts extends javax.swing.JFrame {
         });
         jMenuadmin.add(jMenuItemProveedores);
 
-        jMenuItemArticulos.setText("Artículos");
-        jMenuItemArticulos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemArticulosActionPerformed(evt);
-            }
-        });
-        jMenuadmin.add(jMenuItemArticulos);
-
         jMenuItemPacks.setText("Packs");
         jMenuItemPacks.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -361,13 +355,13 @@ public class DreamGifts extends javax.swing.JFrame {
         });
         jMenuadmin.add(jMenuItemPacks);
 
-        jMenuItemRRSS.setText("RRSS");
-        jMenuItemRRSS.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemArticulos.setText("Artículos");
+        jMenuItemArticulos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemRRSSActionPerformed(evt);
+                jMenuItemArticulosActionPerformed(evt);
             }
         });
-        jMenuadmin.add(jMenuItemRRSS);
+        jMenuadmin.add(jMenuItemArticulos);
 
         jMenuItemCategoriaArticulos.setText("Categoría Artículos");
         jMenuItemCategoriaArticulos.addActionListener(new java.awt.event.ActionListener() {
@@ -393,7 +387,15 @@ public class DreamGifts extends javax.swing.JFrame {
         });
         jMenuadmin.add(jMenuItemBancos);
 
-        jMenuItemCategoriaVentas.setText("Categoría Venta");
+        jMenuItemRRSS.setText("RRSS");
+        jMenuItemRRSS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemRRSSActionPerformed(evt);
+            }
+        });
+        jMenuadmin.add(jMenuItemRRSS);
+
+        jMenuItemCategoriaVentas.setText("Estados Venta");
         jMenuItemCategoriaVentas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemCategoriaVentasActionPerformed(evt);
@@ -567,6 +569,9 @@ public class DreamGifts extends javax.swing.JFrame {
         showTabbedPaneAndTab(jTabbedPaneVentas, "ventas", tab);
     }
     
+    public void showComprasTab(int tab) {
+        showTabbedPaneAndTab(jTabbedPaneCompras, "compras", tab);
+    }
     private void showTabbedPaneAndTab(JTabbedPane pane, String card, ActionEvent evt) {
         JMenuItem menuItem = (JMenuItem) evt.getSource(); 
         JPopupMenu popupMenu = (JPopupMenu) menuItem.getParent(); 

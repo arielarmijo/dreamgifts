@@ -5,14 +5,13 @@ import com.ipsoflatus.dreamgifts.modelo.entidad.Cliente;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Comuna;
 import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ClienteService;
-import com.ipsoflatus.dreamgifts.modelo.servicio.ComunaService;
-import com.ipsoflatus.dreamgifts.modelo.table.admin.ClienteTableModel;
+import com.ipsoflatus.dreamgifts.modelo.tabla.admin.ClienteTableModel;
 import com.ipsoflatus.dreamgifts.vista.admin.ClienteView;
 import com.ipsoflatus.dreamgifts.vista.ventas.VentaView;
-import java.sql.Date;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,7 +21,6 @@ public class ClienteController implements Controller<ClienteView> {
     private ClienteView view;
     private ClienteTableModel tableModel;
     private Cliente clienteActual;
-    private final ComunaService comunaService = ComunaService.getInstance();
 
     public ClienteController() {
 
@@ -31,7 +29,7 @@ public class ClienteController implements Controller<ClienteView> {
     @Override
     public void setView(ClienteView view) {
         this.view = view;
-        this.tableModel = (ClienteTableModel) view.getjTable2().getModel();
+        this.tableModel = (ClienteTableModel) view.getjTable().getModel();
     }
 
     @Override
@@ -66,15 +64,26 @@ public class ClienteController implements Controller<ClienteView> {
         }
 
         LocalDate fecha = view.getDatePicker().getDate();
-
         if (fecha == null) {
             mostrarInformacion("Ingrese Fecha de Nacimiento.");
             return;
         }
-        Date fechaNac = Date.valueOf(fecha);
+        Date fechaNacimiento = Date.from(fecha.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
         try {
             if (clienteActual == null) {
-                clienteSrv.guardar(new Cliente(rut, nombre, apellido, correo, direccion, comuna.getId(), fechaNac, telefono, celular, true));
+                Cliente cliente = new Cliente();
+                cliente.setRut(rut);
+                cliente.setNombre(nombre);
+                cliente.setApellido(apellido);
+                cliente.setCorreo(correo);
+                cliente.setDireccion(direccion);
+                cliente.setComuna(comuna);
+                cliente.setTelefono(telefono);
+                cliente.setCelular(celular);
+                cliente.setFechaNacimiento(fechaNacimiento);
+                cliente.setEstado(Boolean.TRUE);
+                clienteSrv.guardar(cliente);
 
             } else {
                 clienteActual.setRut(rut);
@@ -82,10 +91,10 @@ public class ClienteController implements Controller<ClienteView> {
                 clienteActual.setApellido(apellido);
                 clienteActual.setCorreo(correo);
                 clienteActual.setDireccion(direccion);
-                clienteActual.setComunaId(comuna.getId());
+                clienteActual.setComuna(comuna);
                 clienteActual.setCelular(celular);
                 clienteActual.setTelefono(telefono);
-                clienteActual.setFechaNacimiento(fechaNac);
+                clienteActual.setFechaNacimiento(fechaNacimiento);
                 clienteSrv.editar(clienteActual);
             }
             cancelar();
@@ -104,7 +113,7 @@ public class ClienteController implements Controller<ClienteView> {
 
     @Override
     public void editar() {
-        int row = view.getjTable2().getSelectedRow();
+        int row = view.getjTable().getSelectedRow();
         if (row == -1) {
             mostrarInformacion("Seleccione cliente.");
             return;
@@ -117,8 +126,7 @@ public class ClienteController implements Controller<ClienteView> {
         view.getjTextFieldDireccion().setText(clienteActual.getDireccion());
         view.getjTextFieldEmail().setText(clienteActual.getCorreo());
         view.getjTextFieldTelefono().setText(clienteActual.getTelefono());
-        Comuna comuna = comunaService.buscar(clienteActual.getComunaId());
-        view.getjComboBoxComuna().getModel().setSelectedItem(comuna);
+        view.getjComboBoxComuna().getModel().setSelectedItem(clienteActual.getComuna());
         Date date = clienteActual.getFechaNacimiento();
         LocalDate localDate = Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
         view.getDatePicker().setDate(localDate);
@@ -141,7 +149,8 @@ public class ClienteController implements Controller<ClienteView> {
     }
 
     public void vender() {
-        int row = view.getjTable2().getSelectedRow();
+     
+        int row = view.getjTable().getSelectedRow();
         if (row != -1) {
             Cliente c = tableModel.getItem(row);
             VentaView vv = ((VentaView) view.getRoot().venta);
@@ -150,7 +159,7 @@ public class ClienteController implements Controller<ClienteView> {
             vv.getTxfTelefonoCliente().setText(c.getTelefono());
             vv.getTxfEmailCliente().setText(c.getCorreo());
         }
-        view.getRoot().showVentasTab(0);
+        view.getRoot().showVentasTab(0);   
     }
 
 }

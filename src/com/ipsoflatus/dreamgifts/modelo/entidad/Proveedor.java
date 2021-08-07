@@ -1,16 +1,89 @@
 package com.ipsoflatus.dreamgifts.modelo.entidad;
 
-public class Proveedor {
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "proveedores")
+@NamedQueries({
+    @NamedQuery(name = "Proveedor.findByTermLike", query = "SELECT p FROM Proveedor p WHERE UPPER(p.rut) LIKE UPPER(:term) OR UPPER(p.razonSocial) LIKE UPPER(:term)")})
+public class Proveedor implements Serializable, SoftDelete {
+
+    private static final long serialVersionUID = 1L;
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
     private Integer id;
+    
+    @Basic(optional = false)
+    @Column(name = "rut")
     private String rut;
+    
+    @Basic(optional = false)
+    @Column(name = "razon_social")
     private String razonSocial;
+    
+    @Basic(optional = false)
+    @Column(name = "contacto")
     private String contacto;
+    
+    @Basic(optional = false)
+    @Column(name = "direccion")
     private String direccion;
-    private Integer comunaId;
+    
+    @Basic(optional = false)
+    @Column(name = "telefono")
     private String telefono;
+    
+    @Basic(optional = false)
+    @Column(name = "email")
     private String email;
+    
+    @Basic(optional = false)
+    @Column(name = "estado")
     private Boolean estado;
+    
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "comuna_id", referencedColumnName = "id")
+    private Comuna comuna;
+    
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "proveedor")
+    private List<OrdenCompra> ordenesCompra = new ArrayList<>();
+
+    public Proveedor() {
+    }
+
+    public Proveedor(Integer id) {
+        this.id = id;
+    }
+
+    public Proveedor(Integer id, String rut, String razonSocial, String contacto, String direccion, String telefono, String email, Boolean estado) {
+        this.id = id;
+        this.rut = rut;
+        this.razonSocial = razonSocial;
+        this.contacto = contacto;
+        this.direccion = direccion;
+        this.telefono = telefono;
+        this.email = email;
+        this.estado = estado;
+    }
 
     public Integer getId() {
         return id;
@@ -43,21 +116,13 @@ public class Proveedor {
     public void setContacto(String contacto) {
         this.contacto = contacto;
     }
-    
+
     public String getDireccion() {
         return direccion;
     }
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
-    }
-
-    public Integer getComunaId() {
-        return comunaId;
-    }
-
-    public void setComunaId(Integer comunaId) {
-        this.comunaId = comunaId;
     }
 
     public String getTelefono() {
@@ -76,19 +141,55 @@ public class Proveedor {
         this.email = email;
     }
 
+
+    public Comuna getComuna() {
+        return comuna;
+    }
+
+    public void setComuna(Comuna comunaId) {
+        this.comuna = comunaId;
+    }
+    
     public Boolean getEstado() {
         return estado;
     }
 
+    @Override
     public void setEstado(Boolean estado) {
         this.estado = estado;
+    }
+    
+    public List<OrdenCompra> getOrdenesCompra() {
+        return ordenesCompra;
+    }
+
+    public void setOrdenesCompra(List<OrdenCompra> ordenesCompra) {
+        this.ordenesCompra = ordenesCompra;
+    }
+    
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Proveedor)) {
+            return false;
+        }
+        Proveedor other = (Proveedor) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public String toString() {
-        return "Proveedor{" + "rut=" + rut + ", razonSocial=" + razonSocial + '}';
+        return razonSocial;
     }
-    
-    
-    
+
 }

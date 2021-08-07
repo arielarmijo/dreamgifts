@@ -1,6 +1,6 @@
 package com.ipsoflatus.dreamgifts.controlador.admin;
 
-import com.ipsoflatus.dreamgifts.modelo.table.admin.BancoTableModel;
+import com.ipsoflatus.dreamgifts.modelo.tabla.admin.BancoTableModel;
 import com.ipsoflatus.dreamgifts.controlador.Controller;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Banco;
 import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
@@ -43,7 +43,7 @@ public class BancoController implements Controller<BancoView> {
 
         try {
             if (bancoActual == null) {
-               service.guardar(new Banco(codigo, nombre, true));
+               service.guardar(new Banco(null, codigo, nombre, true));
             }else{
                 bancoActual.setCodigo(codigo);
                 bancoActual.setNombre(nombre);

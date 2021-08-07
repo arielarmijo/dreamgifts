@@ -6,7 +6,7 @@
 package com.ipsoflatus.dreamgifts.vista.admin;
 import com.ipsoflatus.dreamgifts.controlador.admin.EVController;
 import com.ipsoflatus.dreamgifts.modelo.servicio.EVService;
-import com.ipsoflatus.dreamgifts.modelo.table.admin.EVTableModel;
+import com.ipsoflatus.dreamgifts.modelo.tabla.admin.EVTableModel;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;

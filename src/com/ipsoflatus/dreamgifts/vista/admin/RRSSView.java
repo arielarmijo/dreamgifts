@@ -1,25 +1,19 @@
 package com.ipsoflatus.dreamgifts.vista.admin;
 
 import com.ipsoflatus.dreamgifts.controlador.admin.RRSSController;
-import com.ipsoflatus.dreamgifts.modelo.entidad.RedSocial;
-import java.util.List;
-import javax.swing.JLabel;
+import com.ipsoflatus.dreamgifts.modelo.servicio.RedSocialService;
+import com.ipsoflatus.dreamgifts.modelo.tabla.admin.RedSocialTableModel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.JTable;
 
 public final class RRSSView extends JPanel {
 
     private final RRSSController controlador;
-    private final JLabel estado;
 
-    public RRSSView(JLabel estado) {
+    public RRSSView() {
         initComponents();
-        this.controlador = new RRSSController();
-        this.controlador.setView(this);
-        this.estado = estado;
-        this.jTableRRSS.getModel().addTableModelListener(controlador);
-        this.controlador.actualizarTabla();
+        this.controlador = new RRSSController(this);
     }
 
     /**
@@ -41,7 +35,7 @@ public final class RRSSView extends JPanel {
         jLabel1 = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTableRRSS = new javax.swing.JTable();
+        jTable = new javax.swing.JTable();
         jButtonEditar = new javax.swing.JButton();
         jButtonDesactivar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -116,30 +110,8 @@ public final class RRSSView extends JPanel {
 
         jPanel11.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jTableRRSS.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Código", "Nombre", "Estado", "Selección"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, true
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane2.setViewportView(jTableRRSS);
+        jTable.setModel(new RedSocialTableModel(RedSocialService.getInstance()));
+        jScrollPane2.setViewportView(jTable);
 
         jButtonEditar.setText("Editar");
         jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -265,9 +237,9 @@ public final class RRSSView extends JPanel {
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
         System.out.println(evt.getActionCommand());
-        int row = jTableRRSS.getSelectedRow();
+        int row = jTable.getSelectedRow();
         try {
-            String codigo = (String) jTableRRSS.getValueAt(row, 0);
+            String codigo = (String) jTable.getValueAt(row, 0);
             controlador.editar(codigo);
         } catch (ArrayIndexOutOfBoundsException e) {
             mostrarInformacion("Seleccione red social.");
@@ -276,27 +248,14 @@ public final class RRSSView extends JPanel {
 
     private void jButtonActivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActivarActionPerformed
         System.out.println(evt.getActionCommand());
-        controlador.activarSeleccionados();
+        controlador.activarDesactivarSeleccionados(true);
     }//GEN-LAST:event_jButtonActivarActionPerformed
 
     private void jButtonDesactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDesactivarActionPerformed
         System.out.println(evt.getActionCommand());
-        controlador.desactivarSeleccionados();
+        controlador.activarDesactivarSeleccionados(false);
     }//GEN-LAST:event_jButtonDesactivarActionPerformed
-
-    public void actualizarTabla(List<RedSocial> rrss) {
-        DefaultTableModel modeloTabla = (DefaultTableModel) jTableRRSS.getModel();
-        Object[] encabezados = {"Código", "Nombre", "Estado", "Selección"};
-        Object[][] datos = new Object[rrss.size()][encabezados.length];
-        for (int i = 0; i < rrss.size(); i++) {
-            RedSocial rs = rrss.get(i);
-            datos[i][0] = rs.getCodigo();
-            datos[i][1] = rs.getNombre();
-            datos[i][2] = rs.isEstado() ? "Activo" : "Inactivo";
-            datos[i][3] = false;
-        }
-        modeloTabla.setDataVector(datos, encabezados);
-    }
+    
     
     public void setCodigo(String codigo) {
         jTextFieldCodigo.setText(codigo);
@@ -314,6 +273,12 @@ public final class RRSSView extends JPanel {
         return jTextFieldBuscar.getText();
     }
 
+    public JTable getjTable() {
+        return jTable;
+    }
+    
+    
+
     public void mostrarInformacion(String mensaje) {
         JOptionPane.showMessageDialog(null, mensaje, "Información", JOptionPane.INFORMATION_MESSAGE);
     }
@@ -322,9 +287,6 @@ public final class RRSSView extends JPanel {
         JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
-    public void mostrarEstado(String mensaje) {
-        this.estado.setText(mensaje);
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonActivar;
@@ -340,7 +302,7 @@ public final class RRSSView extends JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTableRRSS;
+    private javax.swing.JTable jTable;
     private javax.swing.JTextField jTextFieldBuscar;
     private javax.swing.JTextField jTextFieldCodigo;
     private javax.swing.JTextField jTextFieldNombre;

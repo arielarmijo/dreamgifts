@@ -1,27 +1,83 @@
 package com.ipsoflatus.dreamgifts.modelo.entidad;
 
-import java.sql.Date;
-import java.util.Objects;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-public class Articulo {
+@Entity
+@Table(name = "articulos")
+@NamedQueries({
+    @NamedQuery(name = "Articulo.findByTermLike", query = "SELECT a FROM Articulo a WHERE UPPER(a.nombre) LIKE UPPER(:term) OR UPPER(a.marca) LIKE UPPER(:term) OR UPPER(a.categoriaArticulo.nombre) LIKE UPPER(:term)")})
+public class Articulo implements Serializable, SoftDelete {
+
+    private static final long serialVersionUID = 1L;
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
     private Integer id;
+    
+    @Basic(optional = false)
+    @Column(name = "nombre")
     private String nombre;
+    
+    @Basic(optional = false)
+    @Column(name = "marca")
     private String marca;
+    
+    @Column(name = "stock")
     private Integer stock;
+    
+    @Column(name = "fecha_vencimiento")
+    @Temporal(TemporalType.DATE)
     private Date fechaVencimiento;
+    
+    @Basic(optional = false)
+    @Column(name = "estado")
     private Boolean estado;
-    private Integer categoriaId;
+    
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "categoria_articulo_id", referencedColumnName = "id")
+    private CategoriaArticulo categoriaArticulo;
+    
+    @OneToMany(mappedBy = "articulo", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PackHasArticulo> packs = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "articulo", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrdenCompraDetalle> ordenesCompra = new ArrayList<>();
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "articulo")
+    private List<FacturaDetalle> facturas;
 
     public Articulo() {
     }
 
-    public Articulo(String nombre, String marca, Integer categoriaId, Boolean estado) {
+    public Articulo(Integer id) {
+        this.id = id;
+    }
+
+    public Articulo(Integer id, String nombre, String marca, Boolean estado) {
+        this.id = id;
         this.nombre = nombre;
         this.marca = marca;
-        this.stock = 0;
         this.estado = estado;
-        this.categoriaId = categoriaId;
     }
 
     public Integer getId() {
@@ -63,53 +119,71 @@ public class Articulo {
     public void setFechaVencimiento(Date fechaVencimiento) {
         this.fechaVencimiento = fechaVencimiento;
     }
-
+    
     public Boolean getEstado() {
         return estado;
     }
 
+    @Override
     public void setEstado(Boolean estado) {
         this.estado = estado;
     }
 
-    public Integer getCategoriaId() {
-        return categoriaId;
+    public CategoriaArticulo getCategoriaArticulo() {
+        return categoriaArticulo;
     }
 
-    public void setCategoriaId(Integer categoriaId) {
-        this.categoriaId = categoriaId;
+    public void setCategoriaArticulo(CategoriaArticulo categoriaArticulo) {
+        this.categoriaArticulo = categoriaArticulo;
+    }
+    
+    public List<PackHasArticulo> getPacks() {
+        return packs;
+    }
+
+    public void setPacks(List<PackHasArticulo> packs) {
+        this.packs = packs;
+    }
+    
+     public List<OrdenCompraDetalle> getOrdenesCompra() {
+        return ordenesCompra;
+    }
+
+    public void setOrdenesCompra(List<OrdenCompraDetalle> ordenesCompra) {
+        this.ordenesCompra = ordenesCompra;
+    }
+    
+    public List<FacturaDetalle> getFacturas() {
+        return facturas;
+    }
+
+    public void setFacturas(List<FacturaDetalle> facturas) {
+        this.facturas = facturas;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 13 * hash + Objects.hashCode(this.id);
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Articulo)) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Articulo other = (Articulo) obj;
-        if (!Objects.equals(this.id, other.id)) {
+        Articulo other = (Articulo) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
     }
-    
-    
 
     @Override
     public String toString() {
         return nombre;
     }
-    
+
 }

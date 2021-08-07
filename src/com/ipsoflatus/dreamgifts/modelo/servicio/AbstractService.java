@@ -6,16 +6,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import com.ipsoflatus.dreamgifts.modelo.dao.SoftDeleteDao;
 
 public abstract class AbstractService<T> implements Service<T>, ObservableService<Observer<T>> {
 
     protected DAO<T> dao;
     private final List<Observer<T>> obs;
+    private List<T> items = new ArrayList<>();
     private final ExecutorService executor = Executors.newCachedThreadPool();
 
     public AbstractService(DAO dao) {
         this.dao = dao;
         this.obs = new ArrayList<>();
+        this.items = dao.findAll();
+        System.out.println(items);
     }
 
     @Override
@@ -42,28 +46,34 @@ public abstract class AbstractService<T> implements Service<T>, ObservableServic
 
     @Override
     public void editar(T t) {
-        dao.update(t);
-        notifyObservers();
+        try {
+            dao.update(t);
+            notifyObservers();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
     public void cambiarEstado(List<Integer> ids, Boolean estado) {
-        dao.updateStateByIds(ids, estado);
+        ((SoftDeleteDao) dao).updateStateByIds(ids, estado);
         notifyObservers();
     }
 
     @Override
     public void addObserver(Observer<T> o) {
         this.obs.add(o);
-        o.actualizar(dao.findAll());
+        o.actualizar(items);
     }
 
     @Override
     public void notifyObservers() {
+        items = dao.findAll();
         obs.forEach(o -> {
             executor.execute(() -> {
                 System.out.println("Start thread " + Thread.currentThread().getName());
-                o.actualizar(dao.findAll());
+                System.out.println("notificando observador " + o.getClass().getSimpleName() + " con " + items);
+                o.actualizar(items);
                 System.out.println("End thread " + Thread.currentThread().getName());
             });
         });

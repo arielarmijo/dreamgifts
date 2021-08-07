@@ -1,25 +1,84 @@
 package com.ipsoflatus.dreamgifts.modelo.entidad;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-public class Pack {
+@Entity
+@Table(name = "packs")
+@NamedQueries({
+    @NamedQuery(name = "Pack.findByTermLike", query = "SELECT p FROM Pack p WHERE UPPER(p.nombre) LIKE UPPER(:term)")})
+public class Pack implements Serializable, SoftDelete {
 
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
     private Integer id;
+
+    @Basic(optional = false)
+    @Column(name = "nombre")
     private String nombre;
-    private Integer stock;
-    private Integer costo;
+
+    @Basic(optional = false)
+    @Column(name = "stock")
+    private int stock;
+
+    @Basic(optional = false)
+    @Column(name = "costo")
+    private int costo;
+
+    @Basic(optional = false)
+    @Column(name = "estado")
     private Boolean estado;
+
+    @Column(name = "stock_critico")
+    private Integer stockCritico;
+
+    @Column(name = "fecha_inicio")
+    @Temporal(TemporalType.DATE)
+    private Date fechaInicio;
+
+    @Column(name = "fecha_termino")
+    @Temporal(TemporalType.DATE)
+    private Date fechaTermino;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "pack", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PackHasArticulo> articulos = new ArrayList<>();
 
     public Pack() {
-        
     }
-    
-    public Pack(String nombre) {
+
+    public Pack(Integer id) {
+        this.id = id;
+    }
+
+    public Pack(Integer id, String nombre, int stock, int costo, Boolean estado) {
+        this.id = id;
         this.nombre = nombre;
+        this.stock = stock;
+        this.costo = costo;
+        this.estado = estado;
     }
+
     public Integer getId() {
         return id;
     }
@@ -36,19 +95,19 @@ public class Pack {
         this.nombre = nombre;
     }
 
-    public Integer getStock() {
+    public int getStock() {
         return stock;
     }
 
-    public void setStock(Integer stock) {
+    public void setStock(int stock) {
         this.stock = stock;
     }
 
-    public Integer getCosto() {
+    public int getCosto() {
         return costo;
     }
 
-    public void setCosto(Integer costo) {
+    public void setCosto(int costo) {
         this.costo = costo;
     }
 
@@ -56,8 +115,33 @@ public class Pack {
         return estado;
     }
 
+    @Override
     public void setEstado(Boolean estado) {
         this.estado = estado;
+    }
+
+    public Integer getStockCritico() {
+        return stockCritico;
+    }
+
+    public void setStockCritico(Integer stockCritico) {
+        this.stockCritico = stockCritico;
+    }
+
+    public Date getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public Date getFechaTermino() {
+        return fechaTermino;
+    }
+
+    public void setFechaTermino(Date fechaTermino) {
+        this.fechaTermino = fechaTermino;
     }
 
     public List<PackHasArticulo> getArticulos() {
@@ -70,24 +154,19 @@ public class Pack {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 37 * hash + Objects.hashCode(this.id);
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Pack)) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Pack other = (Pack) obj;
-        if (!Objects.equals(this.id, other.id)) {
+        Pack other = (Pack) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -97,7 +176,5 @@ public class Pack {
     public String toString() {
         return nombre;
     }
-    
-    
-    
+
 }

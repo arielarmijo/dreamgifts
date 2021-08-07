@@ -1,41 +1,26 @@
 package com.ipsoflatus.dreamgifts.controlador.admin;
 
-import com.ipsoflatus.dreamgifts.modelo.dao.UsuarioDao;
 import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Usuario;
+import com.ipsoflatus.dreamgifts.modelo.servicio.UsuarioService;
+import com.ipsoflatus.dreamgifts.modelo.tabla.admin.UsuarioTableModel;
 import com.ipsoflatus.dreamgifts.vista.admin.UsuarioView;
-import java.util.ArrayList;
 import java.util.List;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.TableModel;
+import java.util.stream.Collectors;
+import javax.swing.JOptionPane;
 
-public class UsuarioController implements TableModelListener {
+public class UsuarioController {
     
-    private final UsuarioDao usuarioDao;
-    private final List<String> usuariosSeleccionados;
-    private List<Usuario> usuarios;
-    private UsuarioView view;
+    private final UsuarioService usuarioSrv;
+    private final UsuarioView view;
+    private final UsuarioTableModel tableModel;
     private Usuario usuarioActual;
     
-    public UsuarioController() {
-        usuarioDao =  new UsuarioDao();
-        usuariosSeleccionados = new ArrayList<>();
-        usuarios = usuarioDao.findAll();
-        usuarioActual = null;
-    }
-    
-    public void setView(UsuarioView view) {
+    public UsuarioController(UsuarioView view) {
         this.view = view;
-    }
-    
-    public void actualizarTabla() {
-        if (usuarios.isEmpty()) {
-            view.mostrarEstado("No se encontraron registros.");
-        } else {
-            view.actualizarTabla(usuarios);
-            usuarios.forEach(System.out::println);
-        }
+        this.tableModel = (UsuarioTableModel) view.getjTable().getModel();
+        this.usuarioSrv =  UsuarioService.getInstance();
+        this.usuarioActual = null;
     }
     
     public void cancelar() {
@@ -44,7 +29,6 @@ public class UsuarioController implements TableModelListener {
         view.setNuevoPassword("");
         view.setRePassword("");
         view.setActivo(true);
-        view.mostrarEstado("Administración: Usuarios.");
     }
     
     public void grabar(String nombre, String password, String rePassword, boolean estado) {
@@ -62,55 +46,44 @@ public class UsuarioController implements TableModelListener {
         try {
             String mensaje;
             if (usuarioActual == null) {
-                Usuario usuario = usuarioDao.save(new Usuario(nombre, password, estado));
-                usuarios.add(usuario);
-                mensaje = "Usuario guardado con éxito.";
+                usuarioSrv.guardar(new Usuario(null, nombre, password, estado));
             } else {
                 usuarioActual.setNombre(nombre);
                 usuarioActual.setClave(password);
                 usuarioActual.setEstado(estado);
-                Usuario usuario = usuarioDao.update(usuarioActual);
-                usuarios.set(usuarios.indexOf(usuarioActual), usuario);
-                mensaje = "Usuario actualizado con éxito.";
+                usuarioSrv.editar(usuarioActual);
             }
-            actualizarTabla();
-            view.setNombre("");
-            view.setNuevoPassword("");
-            view.setRePassword("");
-            view.mostrarEstado(mensaje);
-            usuarioActual = null;
+            cancelar();
         } catch (DreamGiftsException e) {
             view.mostrarError(e.getMessage());
         }
     }    
    
     public void buscar(String nombre) {
-        usuarios = nombre.isEmpty() ? usuarioDao.findAll() : usuarioDao.findByNameLike(nombre);
-        actualizarTabla();
-        view.mostrarEstado(String.format("Mostrando %d registros.", usuarios.size()));
+        List<Usuario> usuarios = nombre.isEmpty() ? usuarioSrv.buscar(): usuarioSrv.buscar(nombre);
+        tableModel.actualizar(usuarios);
     }
     
-    public void editar(String nombre) {
-        usuarioActual = usuarioDao.findByName(nombre);
+    public void editar() {
+        int row = view.getjTable().getSelectedRow();
+        if (row == -1) {
+            view.mostrarInformacion("Seleccione categoría.");
+            return;
+        }
+        usuarioActual = tableModel.getItem(view.getSelectedRow());
         view.setNombre(usuarioActual.getNombre());
         view.setNuevoPassword(usuarioActual.getClave());
         view.setRePassword(usuarioActual.getClave());
         view.setEstado(usuarioActual.getEstado());
-        view.mostrarEstado("Editando usuario " + usuarioActual.getNombre());
     }
     
-    public void borrar(String nombre) {
-        Usuario usuario = usuarioDao.findByName(nombre);
-        usuarioDao.delete(usuario.getId());
-        usuarios.remove(usuario);
-        actualizarTabla();
-        view.mostrarEstado("Usuario borrado.");
-        if (usuarioActual != null) {
-            usuarioActual = null;
-            view.setNombre("");
-            view.setNuevoPassword("");
-            view.setRePassword("");
-            view.setActivo(true);
+    public void borrar() {
+        usuarioActual = tableModel.getItem(view.getSelectedRow());
+        String mensaje = String.format("¿Está seguro que quiere borrar al usuario %s?", usuarioActual.getNombre());
+        int response = JOptionPane.showConfirmDialog(null, mensaje, "Advertencia", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+        if (response == 0) {    
+            usuarioSrv.borrar(usuarioActual);
+            cancelar();
         }
     }
     
@@ -123,35 +96,22 @@ public class UsuarioController implements TableModelListener {
     }
 
     public void activarDesactivarSeleccionados(boolean estado) {
-        if (usuariosSeleccionados.isEmpty()) {
-            view.mostrarError("Seleccione usuarios.");
-        } else {
-            List<Usuario> users = usuarioDao.activateByNames(usuariosSeleccionados, estado);
-            users.forEach(u -> {
-                usuarios.set(usuarios.indexOf(u), u);
-            });
-            actualizarTabla();
-            usuariosSeleccionados.clear();
-            view.setSeleccionarTodos(false);
-            view.mostrarEstado(String.format("Usuarios %s", estado ? "activados" : "desactivados"));
+        List<Integer> ids = tableModel.getSelected().stream().map(u -> u.getId()).collect(Collectors.toList());
+        if (ids.isEmpty()) {
+            view.mostrarInformacion("Selecciones usuarios");
+            return;
         }
+        usuarioSrv.cambiarEstado(ids, estado);
+        tableModel.selectAll(false);
+        view.getjToggleButtonSeleccion().setSelected(false);
+        view.getjToggleButtonSeleccion().setText("Seleccionar todos");
     }
     
-    @Override
-    public void tableChanged(TableModelEvent e) {
-        int row = e.getFirstRow();
-        int column = e.getColumn();
-        if (row >= 0 && column >= 0) {
-            TableModel model = (TableModel) e.getSource();
-            boolean seleccionado = (boolean) model.getValueAt(row, column);
-            String codigo = (String) model.getValueAt(row, 0);
-            if (seleccionado) {
-                usuariosSeleccionados.add(codigo);
-            } else {
-                usuariosSeleccionados.remove(codigo);
-            }
-            System.out.println("Usuarios seleccionados: " + usuariosSeleccionados);
-        }
+    public void seleccionarTodos() {
+        boolean select = view.getjToggleButtonSeleccion().isSelected();
+        tableModel.selectAll(select);
+        String text = select ? "Deseleccionar todos" : "Seleccionar todos";
+        view.getjToggleButtonSeleccion().setText(text);
     }
     
 }

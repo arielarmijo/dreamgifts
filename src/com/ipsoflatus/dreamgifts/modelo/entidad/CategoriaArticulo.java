@@ -1,23 +1,56 @@
 package com.ipsoflatus.dreamgifts.modelo.entidad;
 
-public class CategoriaArticulo {
+import java.io.Serializable;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "categorias_articulo")
+@NamedQueries({
+    @NamedQuery(name = "CategoriaArticulo.findByTermLike", query = "SELECT ca FROM CategoriaArticulo ca WHERE UPPER(ca.codigo) LIKE UPPER(:term) OR UPPER(ca.nombre) LIKE UPPER(:term)")})
+public class CategoriaArticulo implements Serializable, SoftDelete {
+
+    private static final long serialVersionUID = 1L;
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
     private Integer id;
+    
+    @Basic(optional = false)
+    @Column(name = "codigo")
     private String codigo;
+    
+    @Basic(optional = false)
+    @Column(name = "nombre")
     private String nombre;
+    
+    @Basic(optional = false)
+    @Column(name = "estado")
     private Boolean estado;
+    
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "categoriaArticulo")
+    private List<Articulo> articulos;
 
     public CategoriaArticulo() {
     }
-    
-    public CategoriaArticulo(String codigo, String nombre) {
-        this(null, codigo, nombre, true);
+
+    public CategoriaArticulo(Integer id) {
+        this.id = id;
     }
-    
-    public CategoriaArticulo(String codigo, String nombre, Boolean estado) {
-        this(null, codigo, nombre, estado);
-    }
-    
+
     public CategoriaArticulo(Integer id, String codigo, String nombre, Boolean estado) {
         this.id = id;
         this.codigo = codigo;
@@ -53,13 +86,42 @@ public class CategoriaArticulo {
         return estado;
     }
 
+    @Override
     public void setEstado(Boolean estado) {
         this.estado = estado;
+    }
+
+    public List<Articulo> getArticulos() {
+        return articulos;
+    }
+
+    public void setArticulos(List<Articulo> articulos) {
+        this.articulos = articulos;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof CategoriaArticulo)) {
+            return false;
+        }
+        CategoriaArticulo other = (CategoriaArticulo) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public String toString() {
         return nombre;
     }
-    
+
 }

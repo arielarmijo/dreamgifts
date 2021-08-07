@@ -6,7 +6,7 @@ import com.ipsoflatus.dreamgifts.modelo.entidad.Proveedor;
 import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ComunaService;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ProveedorService;
-import com.ipsoflatus.dreamgifts.modelo.table.admin.ProveedorTableModel;
+import com.ipsoflatus.dreamgifts.modelo.tabla.admin.ProveedorTableModel;
 import com.ipsoflatus.dreamgifts.vista.admin.ProveedorView;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -44,7 +44,6 @@ public class ProveedorController implements Controller<ProveedorView> {
         String razonSocial = view.getjTextFieldRazonSocial().getText();
         String contacto = view.getjTextFieldContacto().getText();
         String direccion = view.getjTextFieldDireccion().getText();
-        Integer comunaId = ((Comuna) view.getjComboBoxComunas().getSelectedItem()).getId();
         String telefono = view.getjTextFieldTelefono().getText();
         String  email = view.getjTextFieldEmail().getText();
         
@@ -54,7 +53,8 @@ public class ProveedorController implements Controller<ProveedorView> {
             return;
         }
         
-        if (comunaId == null) {
+        Comuna comuna = (Comuna) view.getjComboBoxComunas().getSelectedItem();
+        if (comuna.getId() == null) {
             mostrarInformacion("Seleccione comuna.");
             return;
         }
@@ -66,7 +66,7 @@ public class ProveedorController implements Controller<ProveedorView> {
                 p.setRazonSocial(razonSocial);
                 p.setContacto(contacto);
                 p.setDireccion(direccion);
-                p.setComunaId(comunaId);
+                p.setComuna(comuna);
                 p.setTelefono(telefono);
                 p.setEmail(email);
                 p.setEstado(Boolean.TRUE);
@@ -76,7 +76,7 @@ public class ProveedorController implements Controller<ProveedorView> {
                 proveedorActual.setRazonSocial(razonSocial);
                 proveedorActual.setContacto(contacto);
                 proveedorActual.setDireccion(direccion);
-                proveedorActual.setComunaId(comunaId);
+                proveedorActual.setComuna(comuna);
                 proveedorActual.setTelefono(telefono);
                 proveedorActual.setEmail(email);
                 proveedorService.editar(proveedorActual);
@@ -109,9 +109,7 @@ public class ProveedorController implements Controller<ProveedorView> {
         view.getjTextFieldDireccion().setText(proveedorActual.getDireccion());
         view.getjTextFieldTelefono().setText(proveedorActual.getTelefono());
         view.getjTextFieldEmail().setText(proveedorActual.getEmail());
-        Comuna comuna = comunaService.buscar(proveedorActual.getComunaId());
-        System.out.println("Comuna id: " + comuna.getId() + ", nombre: " + comuna.getNombre());
-        view.getjComboBoxComunas().getModel().setSelectedItem(comuna);
+        view.getjComboBoxComunas().getModel().setSelectedItem(proveedorActual.getComuna());
     }
 
     @Override

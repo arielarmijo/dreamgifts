@@ -18,10 +18,10 @@ public class ArticuloService extends AbstractService<Articulo> {
         return instance;
     }
     
-    public List<Articulo> buscarPorCategoria(Integer categoriaId) {
-        if (categoriaId == null) {
-            return buscar();
-        }
-        return ((ArticuloDao) dao).findByCategoryId(categoriaId);
-    }
+//    public List<Articulo> buscarPorCategoria(Integer categoriaId) {
+//        if (categoriaId == null) {
+//            return buscar();
+//        }
+//        return ((ArticuloDao) dao).findByCategoryId(categoriaId);
+//    }
 }

@@ -1,26 +1,50 @@
 package com.ipsoflatus.dreamgifts.modelo.entidad;
 
-import java.util.Objects;
+import java.io.Serializable;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
-public class Usuario {
+@Entity
+@Table(name = "usuarios")
+@NamedQueries({
+    @NamedQuery(name = "Usuario.findByTermLike", query = "SELECT u FROM Usuario u WHERE UPPER(u.nombre) LIKE UPPER(:term)")})
+public class Usuario implements Serializable, SoftDelete {
+
+    private static final long serialVersionUID = 1L;
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
     private Integer id;
+    
+    @Basic(optional = false)
+    @Column(name = "nombre")
     private String nombre;
+    
+    @Basic(optional = false)
+    @Column(name = "clave")
     private String clave;
+    
+    @Basic(optional = false)
+    @Column(name = "estado")
     private Boolean estado;
 
     public Usuario() {
     }
-    
-    public Usuario(String nombre, String clave, boolean estado) {
-        this(null, nombre, clave, estado);
+
+    public Usuario(Integer id) {
+        this.id = id;
     }
 
-    public Usuario(String nombre, String clave) {
-        this(null, nombre, clave, false);
-    }
-    
-    public Usuario(Integer id, String nombre, String clave, boolean estado) {
+    public Usuario(Integer id, String nombre, String clave, Boolean estado) {
         this.id = id;
         this.nombre = nombre;
         this.clave = clave;
@@ -31,7 +55,7 @@ public class Usuario {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -61,32 +85,27 @@ public class Usuario {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 29 * hash + Objects.hashCode(this.id);
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Usuario)) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Usuario other = (Usuario) obj;
-        if (!Objects.equals(this.id, other.id)) {
+        Usuario other = (Usuario) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
     }
-    
+
     @Override
     public String toString() {
-        return "Usuario{" + "id=" + id + ", nombre=" + nombre + ", clave=" + clave + ", activo=" + estado + '}';
+        return nombre;
     }
-
+    
 }

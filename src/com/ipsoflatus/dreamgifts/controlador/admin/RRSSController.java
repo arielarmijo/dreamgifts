@@ -1,74 +1,54 @@
 package com.ipsoflatus.dreamgifts.controlador.admin;
 
-import com.ipsoflatus.dreamgifts.modelo.dao.RedSocialDao;
 import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
 import com.ipsoflatus.dreamgifts.modelo.entidad.RedSocial;
+import com.ipsoflatus.dreamgifts.modelo.servicio.RedSocialService;
+import com.ipsoflatus.dreamgifts.modelo.tabla.admin.RedSocialTableModel;
 import com.ipsoflatus.dreamgifts.vista.admin.RRSSView;
-import java.util.ArrayList;
 import java.util.List;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.TableModel;
+import java.util.stream.Collectors;
+import javax.swing.JOptionPane;
 
-public class RRSSController implements TableModelListener {
+public class RRSSController {
 
-    private final RedSocialDao redSocialDao;
-    private final List<String> redesSocialesSeleccionadas;
-    private List<RedSocial> rrss;
-    private RRSSView view;
+    private final RedSocialService redSocialSrv;
+    private final RRSSView view;
+    private final RedSocialTableModel tableModel;
     private RedSocial redSocialActual;
-    
 
-    public RRSSController() {
-        redSocialDao = new RedSocialDao();
-        redesSocialesSeleccionadas = new ArrayList<>();
-        rrss = redSocialDao.findAll();
-        redSocialActual = null;
-    }
-
-    public void setView(RRSSView view) {
+    public RRSSController(RRSSView view) {
+        redSocialSrv = RedSocialService.getInstance();
         this.view = view;
-    }
-
-    public void actualizarTabla() {
-        if (rrss.isEmpty()) {
-            view.mostrarEstado("No se encontraron registros.");
-        } else {
-            view.actualizarTabla(rrss);
-            view.mostrarEstado(String.format("Mostrando %d registros.", rrss.size()));
-        }
+        this.tableModel = (RedSocialTableModel) view.getjTable().getModel();
+        redSocialActual = null;
     }
 
     public void cancelar() {
         redSocialActual = null;
         view.setCodigo("");
         view.setNombre("");
-        view.mostrarEstado("Administración: Redes Sociales.");
     }
 
     public void grabar(String codigo, String nombre) {
-        
+
         if (nombre.isEmpty() || codigo.isEmpty()) {
-            view.mostrarInformacion("Complete todos los campos.");
+            mostrarInformacion("Complete todos los campos.");
             return;
         }
-        
+
         try {
-            String estado;
             if (redSocialActual == null) {
-                redSocialDao.save(new RedSocial(codigo, nombre));
-                estado = "Red social guardada con éxito.";
+                RedSocial rs = new RedSocial();
+                rs.setCodigo(codigo);
+                rs.setNombre(nombre);
+                rs.setEstado(Boolean.TRUE);
+                redSocialSrv.guardar(rs);
             } else {
                 redSocialActual.setCodigo(codigo);
                 redSocialActual.setNombre(nombre);
-                redSocialDao.update(redSocialActual);
-                estado = "Red social actualizada con éxito.";
+                redSocialSrv.editar(redSocialActual);
             }
-            buscar("");
-            redSocialActual = null;
-            view.setCodigo("");
-            view.setNombre("");
-            view.mostrarEstado(estado);
+            cancelar();
         } catch (DreamGiftsException e) {
             view.mostrarError(e.getMessage());
         }
@@ -76,51 +56,35 @@ public class RRSSController implements TableModelListener {
     }
 
     public void buscar(String termino) {
-        rrss = termino.isEmpty() ? redSocialDao.findAll() : redSocialDao.findByTermLike(termino);
-        actualizarTabla();
+        String text = view.getBuscar();
+        List<RedSocial> rrss = termino.isEmpty() ? redSocialSrv.buscar() : redSocialSrv.buscar(termino);
+        tableModel.actualizar(rrss);
+        view.setBuscar("");
     }
 
     public void editar(String codigo) {
-        redSocialActual = redSocialDao.findByCode(codigo);
-        view.setNombre(redSocialActual.getNombre());
+        int row = view.getjTable().getSelectedRow();
+        if (row == -1) {
+            mostrarInformacion("Seleccione Red social.");
+            return;
+        }
+        redSocialActual = tableModel.getItem(row);
         view.setCodigo(redSocialActual.getCodigo());
-        view.mostrarEstado("Editando red social " + redSocialActual.getNombre());
-    }
-    
-    public void activarSeleccionados() {
-        activarDesactivarSeleccionados(true);
-    }
-
-    public void desactivarSeleccionados() {
-        activarDesactivarSeleccionados(false);
+        view.setNombre(redSocialActual.getNombre());
     }
 
     public void activarDesactivarSeleccionados(boolean estado) {
-        if (redesSocialesSeleccionadas.isEmpty()) {
-            view.mostrarError("Seleccione redes sociales.");
-        } else {
-            redSocialDao.activateByCodes(redesSocialesSeleccionadas, estado);
-            buscar(view.getBuscar());
-            redesSocialesSeleccionadas.clear();
-            view.mostrarEstado(String.format("Redes sociales %s", estado ? "activadas" : "desactivadas"));
+        List<Integer> ids = tableModel.getSelected().stream().map(ca -> ca.getId()).collect(Collectors.toList());
+        if (ids.isEmpty()) {
+            mostrarInformacion("Selecciones comunas");
+            return;
         }
+        redSocialSrv.cambiarEstado(ids, estado);
+        tableModel.selectAll(false);
     }
 
-    @Override
-    public void tableChanged(TableModelEvent e) {
-        int row = e.getFirstRow();
-        int column = e.getColumn();
-        if (row >= 0 && column >= 0) {
-            TableModel model = (TableModel) e.getSource();
-            boolean seleccionado = (boolean) model.getValueAt(row, column);
-            String codigo = (String) model.getValueAt(row, 0);
-            if (seleccionado) {
-                redesSocialesSeleccionadas.add(codigo);
-            } else {
-                redesSocialesSeleccionadas.remove(codigo);
-            }
-            System.out.println("Redes sociales seleccionadas: " + redesSocialesSeleccionadas);
-        }
+    private void mostrarInformacion(String mensaje) {
+        JOptionPane.showMessageDialog(null, mensaje, "Información", JOptionPane.INFORMATION_MESSAGE);
     }
 
 }

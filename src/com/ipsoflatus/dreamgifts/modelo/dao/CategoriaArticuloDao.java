@@ -1,144 +1,90 @@
 package com.ipsoflatus.dreamgifts.modelo.dao;
 
-import com.ipsoflatus.dreamgifts.modelo.conexion.MySQLConection;
-import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
+import com.ipsoflatus.dreamgifts.modelo.dao.exceptions.NonexistentEntityException;
+import com.ipsoflatus.dreamgifts.modelo.entidad.Articulo;
 import com.ipsoflatus.dreamgifts.modelo.entidad.CategoriaArticulo;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import javax.persistence.EntityManager;
 
-public class CategoriaArticuloDao implements DAO<CategoriaArticulo> {
-
-    @Override
-    public List<CategoriaArticulo> findAll() {
-        List<CategoriaArticulo> ccaa = new ArrayList<>();
-        String sql = "SELECT id, codigo, nombre, estado FROM categorias_articulo ORDER BY codigo";
-        try (Connection conn = MySQLConection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-            System.out.println(ps);
-            while (rs.next()) {
-                ccaa.add(rowMapper(rs));
-            }
-        } catch (SQLException e) {
-            throw new DreamGiftsException(e.getMessage());
-        }
-        return ccaa;
+public class CategoriaArticuloDao extends AbstractSoftDeleteDao<CategoriaArticulo> {
+    
+    public CategoriaArticuloDao() {
+        super(CategoriaArticulo.class);
     }
 
     @Override
-    public List<CategoriaArticulo> findByTermLike(String termino) {
-        List<CategoriaArticulo> ccaa = new ArrayList<>();
-        String sql = "SELECT id, codigo, nombre, estado FROM categorias_articulo WHERE UPPER(codigo) LIKE UPPER(?) OR UPPER(nombre) LIKE UPPER(?)";
-        try (Connection conn = MySQLConection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, "%" + termino + "%");
-            ps.setString(2, "%" + termino + "%");
-            System.out.println(ps);
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    ccaa.add(rowMapper(rs));
+    public void update(CategoriaArticulo categoriaArticulo) throws NonexistentEntityException, Exception {
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            CategoriaArticulo persistentCategoriaArticulo = em.find(CategoriaArticulo.class, categoriaArticulo.getId());
+            List<Articulo> articulosOld = persistentCategoriaArticulo.getArticulos();
+            List<Articulo> articulosNew = categoriaArticulo.getArticulos();
+            List<Articulo> attachedArticulosNew = new ArrayList<Articulo>();
+            for (Articulo articulosNewArticuloToAttach : articulosNew) {
+                articulosNewArticuloToAttach = em.getReference(articulosNewArticuloToAttach.getClass(), articulosNewArticuloToAttach.getId());
+                attachedArticulosNew.add(articulosNewArticuloToAttach);
+            }
+            articulosNew = attachedArticulosNew;
+            categoriaArticulo.setArticulos(articulosNew);
+            categoriaArticulo = em.merge(categoriaArticulo);
+            for (Articulo articulosOldArticulo : articulosOld) {
+                if (!articulosNew.contains(articulosOldArticulo)) {
+                    articulosOldArticulo.setCategoriaArticulo(null);
+                    articulosOldArticulo = em.merge(articulosOldArticulo);
                 }
             }
-        } catch (SQLException e) {
-            throw new DreamGiftsException(e.getMessage());
-        }
-        return ccaa;
-    }
-
-    @Override
-    public CategoriaArticulo findById(int id) {
-        CategoriaArticulo ca = null;
-        String sql = "SELECT id, codigo, nombre, estado FROM categorias_articulo WHERE id = ?";
-        try (Connection conn = MySQLConection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, id);
-            System.out.println(ps);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    ca = rowMapper(rs);
+            for (Articulo articulosNewArticulo : articulosNew) {
+                if (!articulosOld.contains(articulosNewArticulo)) {
+                    CategoriaArticulo oldCategoriaArticuloOfArticulosNewArticulo = articulosNewArticulo.getCategoriaArticulo();
+                    articulosNewArticulo.setCategoriaArticulo(categoriaArticulo);
+                    articulosNewArticulo = em.merge(articulosNewArticulo);
+                    if (oldCategoriaArticuloOfArticulosNewArticulo != null && !oldCategoriaArticuloOfArticulosNewArticulo.equals(categoriaArticulo)) {
+                        oldCategoriaArticuloOfArticulosNewArticulo.getArticulos().remove(articulosNewArticulo);
+                        oldCategoriaArticuloOfArticulosNewArticulo = em.merge(oldCategoriaArticuloOfArticulosNewArticulo);
+                    }
                 }
             }
-        } catch (SQLException e) {
-            throw new DreamGiftsException(e.getMessage());
-        }
-        return ca;
-    }
-
-    public CategoriaArticulo findByCode(String codigo) {
-        CategoriaArticulo ca = null;
-        String sql = "SELECT id, codigo, nombre, estado FROM categorias_articulo WHERE UPPER(codigo) = UPPER(?)";
-        try (Connection conn = MySQLConection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, codigo);
-            System.out.println(ps);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    ca = rowMapper(rs);
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            String msg = ex.getLocalizedMessage();
+            if (msg == null || msg.length() == 0) {
+                Integer id = categoriaArticulo.getId();
+                if (findCategoriaArticulo(id) == null) {
+                    throw new NonexistentEntityException("The categoriaArticulo with id " + id + " no longer exists.");
                 }
             }
-        } catch (SQLException e) {
-            throw new DreamGiftsException(e.getMessage());
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
         }
-        return ca;
+        
+//        EntityManager em = getEntityManager();
+//        em.getTransaction().begin();
+//        CategoriaArticulo pca = em.find(CategoriaArticulo.class, ca.getId());
+//        pca.setCodigo(ca.getCodigo());
+//        pca.setNombre(ca.getNombre());
+//        pca.setEstado(ca.getEstado());
+//        List<Articulo> articulos = pca.getArticulos();
+//        for (Articulo articulo : articulos) {
+//            Articulo pa = em.find(Articulo.class, articulo.getId());
+//            pa.setCategoriaArticulo(pca);
+//        }
+//        em.getTransaction().commit();
+//        em.close();
     }
     
-    @Override
-    public void save(CategoriaArticulo ca) {
-        String sql = "INSERT INTO categorias_articulo (codigo, nombre, estado) VALUES (?, ?, ?)";
-        try (Connection conn = MySQLConection.getConnection();
-                PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, ca.getCodigo().toUpperCase());
-            ps.setString(2, ca.getNombre());
-            ps.setBoolean(3, ca.getEstado());
-            System.out.println(ps);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new DreamGiftsException(e.getMessage());
+    public CategoriaArticulo findCategoriaArticulo(Integer id) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.find(CategoriaArticulo.class, id);
+        } finally {
+            em.close();
         }
-    }
-
-    @Override
-    public void update(CategoriaArticulo ca) {
-        String sql = "UPDATE categorias_articulo SET codigo = ?, nombre = ?, estado = ? WHERE id = ?";
-        try (Connection conn = MySQLConection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, ca.getCodigo().toUpperCase());
-            ps.setString(2, ca.getNombre());
-            ps.setBoolean(3, ca.getEstado());
-            ps.setInt(4, ca.getId());
-            System.out.println(ps);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new DreamGiftsException(e.getMessage());
-        }
-    }
-
-    @Override
-    public void updateStateByIds(List<Integer> ids, boolean estado) {
-        String in = ids.stream().map(id -> id.toString()).collect(Collectors.joining(", "));
-        String sql = String.format("UPDATE categorias_articulo SET estado = %s WHERE id IN (%s)", estado, in);
-        System.out.println(sql);
-        try (Connection conn = MySQLConection.getConnection();
-             Statement s = conn.createStatement()) {
-            s.executeUpdate(sql);
-        } catch (SQLException e) {
-            throw new DreamGiftsException(e.getMessage());
-        }
-    }
-
-    private CategoriaArticulo rowMapper(ResultSet rs) throws SQLException {
-        CategoriaArticulo ca = new CategoriaArticulo();
-        ca.setId(rs.getInt(1));
-        ca.setCodigo(rs.getString(2));
-        ca.setNombre(rs.getString(3));
-        ca.setEstado(rs.getBoolean(4));
-        return ca;
     }
 
 }

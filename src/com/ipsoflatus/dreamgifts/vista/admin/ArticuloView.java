@@ -2,10 +2,8 @@ package com.ipsoflatus.dreamgifts.vista.admin;
 
 import com.ipsoflatus.dreamgifts.controlador.admin.ArticuloController;
 import com.ipsoflatus.dreamgifts.controlador.Controller;
-import com.ipsoflatus.dreamgifts.modelo.table.admin.ArticuloTableModel;
+import com.ipsoflatus.dreamgifts.modelo.tabla.admin.ArticuloTableModel;
 import com.ipsoflatus.dreamgifts.modelo.combobox.CategoriaArticuloComboBoxModel;
-import com.ipsoflatus.dreamgifts.modelo.servicio.ArticuloService;
-import com.ipsoflatus.dreamgifts.modelo.servicio.CategoriaArticuloService;
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
@@ -41,7 +39,7 @@ public class ArticuloView extends javax.swing.JPanel {
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        cbxComuna = new javax.swing.JComboBox();
+        cbxCategoria = new javax.swing.JComboBox();
         jLabelEstado = new javax.swing.JLabel();
         jRadioButtonActivo = new javax.swing.JRadioButton();
         jRadioButtonInactivo = new javax.swing.JRadioButton();
@@ -115,7 +113,7 @@ public class ArticuloView extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Categoría:");
 
-        cbxComuna.setModel(new CategoriaArticuloComboBoxModel(CategoriaArticuloService.getInstance()));
+        cbxCategoria.setModel(new CategoriaArticuloComboBoxModel());
 
         jLabelEstado.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabelEstado.setText("Estado:");
@@ -144,7 +142,7 @@ public class ArticuloView extends javax.swing.JPanel {
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cbxComuna, 0, 229, Short.MAX_VALUE))
+                                .addComponent(cbxCategoria, 0, 229, Short.MAX_VALUE))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
@@ -188,7 +186,7 @@ public class ArticuloView extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(cbxComuna, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(cbxCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
 
@@ -197,7 +195,7 @@ public class ArticuloView extends javax.swing.JPanel {
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel13.setText("Listado Articulos");
 
-        jTableArticulo.setModel(new ArticuloTableModel(ArticuloService.getInstance()));
+        jTableArticulo.setModel(new ArticuloTableModel());
         jScrollPane1.setViewportView(jTableArticulo);
 
         btnEditar.setText("Editar");
@@ -211,6 +209,12 @@ public class ArticuloView extends javax.swing.JPanel {
         btnActivar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnActivarActionPerformed(evt);
+            }
+        });
+
+        txfBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfBuscarActionPerformed(evt);
             }
         });
 
@@ -328,12 +332,16 @@ public class ArticuloView extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txfNombreActionPerformed
 
+    private void txfBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfBuscarActionPerformed
+        btnBuscarActionPerformed(evt);
+    }//GEN-LAST:event_txfBuscarActionPerformed
+
     public ButtonGroup getButtonGroup() {
         return buttonGroup;
     }
 
-    public JComboBox<String> getCbxComuna() {
-        return cbxComuna;
+    public JComboBox<String> getCbxCategoria() {
+        return cbxCategoria;
     }
 
     public JRadioButton getjRadioButtonActivo() {
@@ -368,7 +376,7 @@ public class ArticuloView extends javax.swing.JPanel {
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.ButtonGroup buttonGroup;
-    private javax.swing.JComboBox cbxComuna;
+    private javax.swing.JComboBox cbxCategoria;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;

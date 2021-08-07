@@ -6,7 +6,7 @@
 package com.ipsoflatus.dreamgifts.vista.admin;
 
 import com.ipsoflatus.dreamgifts.controlador.admin.ComunaController;
-import com.ipsoflatus.dreamgifts.modelo.table.admin.ComunaTableModel;
+import com.ipsoflatus.dreamgifts.modelo.tabla.admin.ComunaTableModel;
 import com.ipsoflatus.dreamgifts.modelo.dao.ComunaDao;
 import com.ipsoflatus.dreamgifts.modelo.entidad.CategoriaArticulo;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Comuna;

@@ -14,7 +14,8 @@ public class ComunaComboBoxModel extends ObserverComboBoxModel<Comuna> {
     @Override
     public void actualizar(List<Comuna> items) {
         List<Comuna> comunasActivas = items.stream().filter(c -> c.getEstado()).collect(Collectors.toList());
-        Comuna seleccioneComuna = new Comuna("Seleccione comuna");
+        Comuna seleccioneComuna = new Comuna();
+        seleccioneComuna.setNombre("Seleccione comuna");
         comunasActivas.add(0, seleccioneComuna);
         updateModel(comunasActivas.toArray());
     }

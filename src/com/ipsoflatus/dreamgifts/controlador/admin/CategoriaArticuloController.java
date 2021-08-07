@@ -1,6 +1,6 @@
 package com.ipsoflatus.dreamgifts.controlador.admin;
 
-import com.ipsoflatus.dreamgifts.modelo.table.admin.CategoriaArticuloTableModel;
+import com.ipsoflatus.dreamgifts.modelo.tabla.admin.CategoriaArticuloTableModel;
 import com.ipsoflatus.dreamgifts.controlador.Controller;
 import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
 import com.ipsoflatus.dreamgifts.modelo.entidad.CategoriaArticulo;
@@ -17,7 +17,6 @@ public class CategoriaArticuloController implements Controller<CategoriaArticulo
     private CategoriaArticuloView view;
 
     public CategoriaArticuloController() {
-        
         service = CategoriaArticuloService.getInstance();
         categoriaActual = null; 
     }
@@ -37,19 +36,20 @@ public class CategoriaArticuloController implements Controller<CategoriaArticulo
 
     @Override
     public void grabar() {
-        
         String codigo = view.getjTextFieldCodigo().getText();
         String nombre = view.getjTextFieldNombre().getText();
-        Boolean estado = view.getButtonGroupEstado().getSelection().getActionCommand().equals("Activo");
-                
         if (codigo.isEmpty() || nombre.isEmpty()) {
             mostrarInformacion("Complete todos los campos.");
             return;
         }
-
+        Boolean estado = view.getButtonGroupEstado().getSelection().getActionCommand().equals("Activo");
         try {
             if (categoriaActual == null) {
-                service.guardar(new CategoriaArticulo(codigo, nombre, estado));
+                CategoriaArticulo ca = new CategoriaArticulo();
+                ca.setCodigo(codigo);
+                ca.setNombre(nombre);
+                ca.setEstado(estado);
+                service.guardar(ca);
             } else {
                 categoriaActual.setCodigo(codigo);
                 categoriaActual.setNombre(nombre);
@@ -60,7 +60,6 @@ public class CategoriaArticuloController implements Controller<CategoriaArticulo
         } catch (DreamGiftsException e) {
             mostrarError(e.getMessage());
         }
-        
     }
     
     @Override
@@ -80,7 +79,6 @@ public class CategoriaArticuloController implements Controller<CategoriaArticulo
         categoriaActual = tableModel.getItem(row);
         view.getjTextFieldCodigo().setText(categoriaActual.getCodigo());
         view.getjTextFieldNombre().setText(categoriaActual.getNombre());
-        
         if (categoriaActual.getEstado())
             view.getjRadioButtonActivo().setSelected(true);
         else

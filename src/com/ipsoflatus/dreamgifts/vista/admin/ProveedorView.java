@@ -5,7 +5,7 @@ import com.ipsoflatus.dreamgifts.modelo.combobox.ComunaComboBoxModel;
 import com.ipsoflatus.dreamgifts.modelo.combobox.ObserverComboBoxModel;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ComunaService;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ProveedorService;
-import com.ipsoflatus.dreamgifts.modelo.table.admin.ProveedorTableModel;
+import com.ipsoflatus.dreamgifts.modelo.tabla.admin.ProveedorTableModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
