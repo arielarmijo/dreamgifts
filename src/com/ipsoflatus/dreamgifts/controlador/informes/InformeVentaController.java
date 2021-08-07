@@ -2,6 +2,7 @@ package com.ipsoflatus.dreamgifts.controlador.informes;
 
 import com.github.lgooddatepicker.optionalusertools.DateChangeListener;
 import com.github.lgooddatepicker.zinternaltools.DateChangeEvent;
+import com.ipsoflatus.dreamgifts.modelo.servicio.ExportService;
 import com.ipsoflatus.dreamgifts.modelo.servicio.VentaService;
 import com.ipsoflatus.dreamgifts.modelo.tabla.informes.VentaTableModel;
 import com.ipsoflatus.dreamgifts.vista.informes.InformeVentasView;
@@ -14,11 +15,13 @@ import javax.swing.event.TableModelListener;
 
 public class InformeVentaController implements TableModelListener, DateChangeListener {
     
+    private final ExportService exportSrv;
     private final VentaService ventaSrv;
     private final InformeVentasView view;
     private final VentaTableModel tableModel;
 
     public InformeVentaController(InformeVentasView view) {
+        this.exportSrv = new ExportService();
         this.ventaSrv = VentaService.getInstance();
         this.view = view;
         this.tableModel = (VentaTableModel) view.getjTable().getModel();
@@ -59,6 +62,10 @@ public class InformeVentaController implements TableModelListener, DateChangeLis
         LocalDate hastaLocalDate = view.getDpHasta().getDate();
         Date hastaDate = Date.from(hastaLocalDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         tableModel.actualizar(ventaSrv.buscarPorFecha(desdeDate, hastaDate));
+    }
+
+    public void exportarAExcel() {
+        exportSrv.exportarAExcel(view.getjTable(), "Ventas");
     }
 
 }

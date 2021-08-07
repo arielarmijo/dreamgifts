@@ -5,6 +5,7 @@ import com.github.lgooddatepicker.zinternaltools.DateChangeEvent;
 import com.ipsoflatus.dreamgifts.modelo.entidad.CategoriaArticulo;
 import com.ipsoflatus.dreamgifts.modelo.entidad.FacturaDetalle;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Proveedor;
+import com.ipsoflatus.dreamgifts.modelo.servicio.ExportService;
 import com.ipsoflatus.dreamgifts.modelo.servicio.FacturaDetalleService;
 import com.ipsoflatus.dreamgifts.modelo.tabla.informes.InventarioTableModel;
 import com.ipsoflatus.dreamgifts.vista.informes.InformeInventarioView;
@@ -16,12 +17,14 @@ import java.util.stream.Collectors;
 
 public class InformeInventarioController implements DateChangeListener {
     
+    private final ExportService exportSrv;
     private final FacturaDetalleService fdSrv;
     private final InformeInventarioView view;
     private final InventarioTableModel tableModel;
     private List<FacturaDetalle> items;
 
     public InformeInventarioController(InformeInventarioView view) {
+        this.exportSrv = new ExportService();
         this.fdSrv = FacturaDetalleService.getInstance();
         this.view = view;
         this.tableModel = (InventarioTableModel) view.getjTable().getModel();
@@ -71,6 +74,10 @@ public class InformeInventarioController implements DateChangeListener {
         
         tableModel.setItems(tmp);
         
+    }
+    
+    public void exportarAExcel() {
+        exportSrv.exportarAExcel(view.getjTable(), "Inventario");
     }
     
     private List<FacturaDetalle> filtrarPorCategoriaArticulo(List<FacturaDetalle> ffdd, CategoriaArticulo ca) {

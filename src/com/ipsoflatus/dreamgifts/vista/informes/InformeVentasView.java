@@ -72,7 +72,7 @@ public class InformeVentasView extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
+        btnExportarExcel = new javax.swing.JButton();
 
         setMinimumSize(new java.awt.Dimension(850, 500));
 
@@ -145,7 +145,12 @@ public class InformeVentasView extends javax.swing.JPanel {
         jTable.setModel(new VentaTableModel());
         jScrollPane1.setViewportView(jTable);
 
-        jButton2.setText("Imprimir");
+        btnExportarExcel.setText("Exportar a Excel");
+        btnExportarExcel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportarExcelActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -157,7 +162,7 @@ public class InformeVentasView extends javax.swing.JPanel {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton2)))
+                        .addComponent(btnExportarExcel)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -165,7 +170,7 @@ public class InformeVentasView extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2)
+                .addComponent(btnExportarExcel)
                 .addContainerGap())
         );
 
@@ -196,6 +201,11 @@ public class InformeVentasView extends javax.swing.JPanel {
         controlador.buscar();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
+    private void btnExportarExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarExcelActionPerformed
+        System.out.println(evt.paramString());
+        controlador.exportarAExcel();
+    }//GEN-LAST:event_btnExportarExcelActionPerformed
+
     public DatePicker getDpDesde() {
         return dpDesde;
     }
@@ -214,9 +224,9 @@ public class InformeVentasView extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnExportarExcel;
     private com.github.lgooddatepicker.components.DatePicker dpDesde;
     private com.github.lgooddatepicker.components.DatePicker dpHasta;
-    private javax.swing.JButton jButton2;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
