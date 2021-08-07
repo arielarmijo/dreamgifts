@@ -68,9 +68,9 @@
                   <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="datePicker1" min="-2" max="-2" attributes="0"/>
+                          <Component id="dpDesde" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="datePicker2" min="-2" max="-2" attributes="0"/>
+                          <Component id="dpHasta" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel1" min="-2" pref="166" max="-2" attributes="0"/>
@@ -81,9 +81,9 @@
                   <EmptySpace min="-2" pref="126" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="jTextField3" min="-2" pref="100" max="-2" attributes="0"/>
+                          <Component id="txfRut" min="-2" pref="100" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jButton1" min="-2" pref="81" max="-2" attributes="0"/>
+                          <Component id="btnBuscar" min="-2" pref="81" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jLabel4" min="-2" pref="100" max="-2" attributes="0"/>
                   </Group>
@@ -101,10 +101,10 @@
                   </Group>
                   <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="datePicker1" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="datePicker2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextField3" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jButton1" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                      <Component id="dpDesde" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="dpHasta" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txfRut" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnBuscar" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -127,16 +127,19 @@
             <Property name="text" type="java.lang.String" value="RUT"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField3">
+        <Component class="javax.swing.JTextField" name="txfRut">
         </Component>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="btnBuscar">
           <Properties>
             <Property name="text" type="java.lang.String" value="Buscar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBuscarActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="com.github.lgooddatepicker.components.DatePicker" name="datePicker1">
+        <Component class="com.github.lgooddatepicker.components.DatePicker" name="dpDesde">
         </Component>
-        <Component class="com.github.lgooddatepicker.components.DatePicker" name="datePicker2">
+        <Component class="com.github.lgooddatepicker.components.DatePicker" name="dpHasta">
         </Component>
       </SubComponents>
     </Container>
@@ -157,24 +160,26 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="jButton2" min="-2" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" min="-2" pref="259" max="-2" attributes="0"/>
+              <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jScrollPane1" alignment="1" max="32767" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" min="-2" pref="106" max="-2" attributes="0"/>
+                  <Component id="jScrollPane1" pref="315" max="32767" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jButton2" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="209" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -187,63 +192,10 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="jTable1">
+            <Component class="javax.swing.JTable" name="jTable">
               <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="f0" green="f0" red="f0" type="rgb"/>
-                </Property>
-                <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="7" rowCount="5">
-                    <Column editable="true" title="Numero de Pedidos" type="java.lang.Object">
-                      <Data value="001"/>
-                      <Data value="002"/>
-                      <Data value="003"/>
-                      <Data value="004"/>
-                      <Data value="005"/>
-                    </Column>
-                    <Column editable="true" title="RUT_Cliente" type="java.lang.Object">
-                      <Data value="12.345.678-9"/>
-                      <Data value="19.125.563-7"/>
-                      <Data value="20.536-867-4"/>
-                      <Data value="18.889.121.8 "/>
-                      <Data value="19.404.838-9"/>
-                    </Column>
-                    <Column editable="true" title="Nombre_Cliente" type="java.lang.Object">
-                      <Data value="Ariel Armijo"/>
-                      <Data value="Ariel Figueroa"/>
-                      <Data value="Pablo Tapia"/>
-                      <Data value="Cecilia Gonzalez"/>
-                      <Data value="Camila Orellana"/>
-                    </Column>
-                    <Column editable="true" title="Fecha_Compra" type="java.lang.Object">
-                      <Data value="01/06/2021"/>
-                      <Data value="08/06/2021"/>
-                      <Data value="10/06/2021"/>
-                      <Data value="11/06/2021"/>
-                      <Data value="13/06/2021"/>
-                    </Column>
-                    <Column editable="true" title="Fecha_Entrega" type="java.lang.Object">
-                      <Data value="05/06/2021"/>
-                      <Data value="12/06/2021"/>
-                      <Data value="14/06/2021"/>
-                      <Data value="15/06/2021"/>
-                      <Data value="18/06/2021"/>
-                    </Column>
-                    <Column editable="true" title="Pack_Comprado" type="java.lang.Object">
-                      <Data value="Pack Cumplea&#xf1;os"/>
-                      <Data value="Pack Amigos"/>
-                      <Data value="Pack Amigos"/>
-                      <Data value="Pack Aniversario"/>
-                      <Data value="Pack Matrimonio"/>
-                    </Column>
-                    <Column editable="true" title="Monto_Pagado" type="java.lang.Object">
-                      <Data value="$10.990"/>
-                      <Data value="$15.990"/>
-                      <Data value="$15.990"/>
-                      <Data value="$18.990"/>
-                      <Data value="$18.990"/>
-                    </Column>
-                  </Table>
+                <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="new VentaTableModel()" type="code"/>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                   <TableColumnModel selectionModel="0">
@@ -295,9 +247,6 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Imprimir"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
-          </Events>
         </Component>
       </SubComponents>
     </Container>

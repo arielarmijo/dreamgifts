@@ -19,7 +19,10 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "ventas")
 @NamedQueries({
-    @NamedQuery(name = "Venta.findByTermLike", query = "SELECT v FROM Venta v")})
+    @NamedQuery(name = "Venta.findByTermLike", query = "SELECT v FROM Venta v WHERE v.cliente.rut LIKE :term"),
+    @NamedQuery(name = "Venta.findMinDate", query = "SELECT MIN(v.fechaVenta) FROM Venta v"),
+    @NamedQuery(name = "Venta.findMaxDate", query = "SELECT MAX(v.fechaVenta) FROM Venta v"),
+    @NamedQuery(name = "Venta.findByDateBetween", query = "SELECT v FROM Venta v WHERE v.fechaVenta BETWEEN :desde AND :hasta")})
 public class Venta implements Serializable {
 
     private static final long serialVersionUID = 1L;

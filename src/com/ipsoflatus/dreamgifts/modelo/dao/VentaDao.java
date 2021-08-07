@@ -1,8 +1,12 @@
 package com.ipsoflatus.dreamgifts.modelo.dao;
 
 import com.ipsoflatus.dreamgifts.modelo.entidad.Venta;
+import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
+import java.util.Date;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 
 public class VentaDao extends AbstractDao<Venta> {
 
@@ -35,6 +39,71 @@ public class VentaDao extends AbstractDao<Venta> {
         venta.setPack(v.getPack());
         em.getTransaction().commit();
         em.close();
+    }
+
+    public Date findMinDate() {
+        EntityManager em = null;
+        try {
+            em = emf.createEntityManager();
+            em.getTransaction().begin(); 
+            String namedQuery = String.format("Venta.findMinDate");
+            TypedQuery<Date> query = em.createNamedQuery(namedQuery, Date.class);
+            Date result = query.getSingleResult();
+            em.getTransaction().commit();
+            return result;
+        } catch (Exception ex) {
+            em.getTransaction().rollback();
+            ex.printStackTrace();
+            throw new DreamGiftsException(ex.getMessage());
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public Date findMaxDate() {
+        EntityManager em = null;
+        try {
+            em = emf.createEntityManager();
+            em.getTransaction().begin();
+            String namedQuery = String.format("Venta.findMaxDate");
+            TypedQuery<Date> query = em.createNamedQuery(namedQuery, Date.class);
+            Date result = query.getSingleResult();
+            em.getTransaction().commit();
+            return result;
+        } catch (Exception ex) {
+            em.getTransaction().rollback();
+            ex.printStackTrace();
+            throw new DreamGiftsException(ex.getMessage());
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+    
+     public List<Venta> findByDateBetween(Date desde, Date hasta) {
+        EntityManager em = null;
+        try {
+            em = emf.createEntityManager();
+            em.getTransaction().begin(); 
+            String namedQuery = String.format("Venta.findByDateBetween");
+            TypedQuery<Venta> query = em.createNamedQuery(namedQuery, Venta.class);
+            query.setParameter("desde", desde);
+            query.setParameter("hasta", hasta);
+            List<Venta> result = query.getResultList();
+            em.getTransaction().commit();
+            return result;
+        } catch (Exception ex) {
+            em.getTransaction().rollback();
+            ex.printStackTrace();
+            throw new DreamGiftsException(ex.getMessage());
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
     }
 
 }

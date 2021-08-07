@@ -1,23 +1,55 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ipsoflatus.dreamgifts.vista.informes;
 
-import com.ipsoflatus.dreamgifts.vista.ventas.*;
+import com.github.lgooddatepicker.components.DatePicker;
+import com.github.lgooddatepicker.components.DatePickerSettings;
+import com.ipsoflatus.dreamgifts.controlador.informes.InformeVentaController;
+import com.ipsoflatus.dreamgifts.modelo.tabla.ventas.VentaTableModel;
+import java.awt.Image;
+import java.awt.Toolkit;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 
-/**
- *
- * @author Usuario
- */
 public class InformeVentasView extends javax.swing.JPanel {
-
+    
+    private final InformeVentaController controlador;
+    
     /**
      * Creates new form PanelConfirmcionPago
      */
     public InformeVentasView() {
         initComponents();
+        this.controlador = new InformeVentaController(this);
+        
+        // Configura el date picker
+        DatePickerSettings desdeSettings = new DatePickerSettings();
+        desdeSettings.setFormatForDatesCommonEra("dd/MM/yyyy");
+        desdeSettings.setFormatForDatesBeforeCommonEra("dd/MM/uuuu");
+        dpDesde.setSettings(desdeSettings);
+        desdeSettings.setDateRangeLimits(controlador.obtenerFechaMinima(), controlador.obtenerFechaMaxima());
+        
+        DatePickerSettings hastaSettings = new DatePickerSettings();
+        hastaSettings.setFormatForDatesCommonEra("dd/MM/yyyy");
+        hastaSettings.setFormatForDatesBeforeCommonEra("dd/MM/uuuu");
+        dpHasta.setSettings(hastaSettings);
+        hastaSettings.setDateRangeLimits(controlador.obtenerFechaMinima(), controlador.obtenerFechaMaxima());
+        
+        Image dateImage = Toolkit.getDefaultToolkit().getImage("images/datepickerbutton.png");
+        ImageIcon dateExampleIcon = new ImageIcon(dateImage);
+        
+        JButton datePickerButton = dpDesde.getComponentToggleCalendarButton();
+        datePickerButton.setText("");
+        datePickerButton.setIcon(dateExampleIcon);
+        
+        datePickerButton = dpHasta.getComponentToggleCalendarButton();
+        datePickerButton.setText("");
+        datePickerButton.setIcon(dateExampleIcon);
+        
+        dpDesde.setDate(controlador.obtenerFechaMinima());
+        dpHasta.setDate(controlador.obtenerFechaMaxima());
+        dpDesde.addDateChangeListener(controlador);
+        dpHasta.addDateChangeListener(controlador);
     }
 
     /**
@@ -33,13 +65,13 @@ public class InformeVentasView extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        datePicker1 = new com.github.lgooddatepicker.components.DatePicker();
-        datePicker2 = new com.github.lgooddatepicker.components.DatePicker();
+        txfRut = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
+        dpDesde = new com.github.lgooddatepicker.components.DatePicker();
+        dpHasta = new com.github.lgooddatepicker.components.DatePicker();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTable = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
 
         setMinimumSize(new java.awt.Dimension(850, 500));
@@ -53,15 +85,20 @@ public class InformeVentasView extends javax.swing.JPanel {
 
         jLabel4.setText("RUT");
 
-        jButton1.setText("Buscar");
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         jDesktopPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jTextField3, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(datePicker1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(datePicker2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(txfRut, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnBuscar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(dpDesde, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(dpHasta, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -71,9 +108,9 @@ public class InformeVentasView extends javax.swing.JPanel {
                 .addGap(36, 36, 36)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                        .addComponent(datePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(dpDesde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(datePicker2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(dpHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -81,9 +118,9 @@ public class InformeVentasView extends javax.swing.JPanel {
                 .addGap(126, 126, 126)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txfRut, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(115, Short.MAX_VALUE))
         );
@@ -96,56 +133,40 @@ public class InformeVentasView extends javax.swing.JPanel {
                     .addComponent(jLabel4))
                 .addGap(7, 7, 7)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(datePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(datePicker2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dpDesde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dpHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txfRut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Listado Ventas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
-        jTable1.setBackground(new java.awt.Color(240, 240, 240));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"001", "12.345.678-9", "Ariel Armijo", "01/06/2021", "05/06/2021", "Pack Cumpleaños", "$10.990"},
-                {"002", "19.125.563-7", "Ariel Figueroa", "08/06/2021", "12/06/2021", "Pack Amigos", "$15.990"},
-                {"003", "20.536-867-4", "Pablo Tapia", "10/06/2021", "14/06/2021", "Pack Amigos", "$15.990"},
-                {"004", "18.889.121.8 ", "Cecilia Gonzalez", "11/06/2021", "15/06/2021", "Pack Aniversario", "$18.990"},
-                {"005", "19.404.838-9", "Camila Orellana", "13/06/2021", "18/06/2021", "Pack Matrimonio", "$18.990"}
-            },
-            new String [] {
-                "Numero de Pedidos", "RUT_Cliente", "Nombre_Cliente", "Fecha_Compra", "Fecha_Entrega", "Pack_Comprado", "Monto_Pagado"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        jTable.setModel(new VentaTableModel());
+        jScrollPane1.setViewportView(jTable);
 
         jButton2.setText("Imprimir");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton2)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton2)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton2)
-                .addContainerGap(209, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -170,15 +191,31 @@ public class InformeVentasView extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        System.out.println(evt.paramString());
+        controlador.buscar();
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
+    public DatePicker getDpDesde() {
+        return dpDesde;
+    }
+
+    public DatePicker getDpHasta() {
+        return dpHasta;
+    }
+
+    public JTextField getTxfRut() {
+        return txfRut;
+    }
+    
+    public JTable getjTable() {
+        return jTable;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.github.lgooddatepicker.components.DatePicker datePicker1;
-    private com.github.lgooddatepicker.components.DatePicker datePicker2;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnBuscar;
+    private com.github.lgooddatepicker.components.DatePicker dpDesde;
+    private com.github.lgooddatepicker.components.DatePicker dpHasta;
     private javax.swing.JButton jButton2;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
@@ -186,7 +223,7 @@ public class InformeVentasView extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTable jTable;
+    private javax.swing.JTextField txfRut;
     // End of variables declaration//GEN-END:variables
 }
