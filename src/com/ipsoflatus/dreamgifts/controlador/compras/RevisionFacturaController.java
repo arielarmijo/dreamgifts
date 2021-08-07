@@ -43,12 +43,14 @@ public class RevisionFacturaController implements TableModelListener, DateChange
     
     public LocalDate obtenerFechaMinima() {
         Date date = facturaSrv.obtenerFechaMinima();
-        return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+//        return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+    return LocalDate.now();
     }
     
     public LocalDate obtenerFechaMaxima() {
         Date date = facturaSrv.obtenerFechaMaxima();
-        return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+      //  return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+      return LocalDate.now();
     }
 
     @Override

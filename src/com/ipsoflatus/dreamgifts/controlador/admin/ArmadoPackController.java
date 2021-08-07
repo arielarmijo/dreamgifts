@@ -86,7 +86,10 @@ public class ArmadoPackController implements Controller<ArmadoPackView>{
 
     @Override
     public void buscar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      String termino = view.getjTextFieldBuscar().getText();
+        List<Pack> items = termino.isEmpty() ? packService.buscar(): packService.buscar(termino);
+        tableModel.actualizar(items);
+        view.getjTextFieldBuscar().setText("");
     }
 
     @Override
