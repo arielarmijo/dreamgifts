@@ -7,7 +7,7 @@ public class DreamGiftsApp {
     
     public static void main(String[] args) {
        //JFrame app = new Login(new LoginController());
-       JFrame app = DreamGifts.getInstance();
+       JFrame app = new DreamGifts();
        app.setLocationRelativeTo(null);
        app.setVisible(true);
     }

@@ -5,15 +5,11 @@ import com.github.lgooddatepicker.components.DatePickerSettings;
 import com.ipsoflatus.dreamgifts.controlador.compras.RevisionFacturaController;
 import com.ipsoflatus.dreamgifts.modelo.combobox.ProveedorComboBoxModel;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Proveedor;
-import com.ipsoflatus.dreamgifts.modelo.tabla.ButtonColumn;
 import com.ipsoflatus.dreamgifts.modelo.tabla.compras.DetalleFacturaTableModel;
 import com.ipsoflatus.dreamgifts.modelo.tabla.compras.FacturaTableModel;
 import com.ipsoflatus.dreamgifts.vista.DreamGifts;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -23,12 +19,11 @@ import javax.swing.JTextField;
 public class RevisionFacturaView extends javax.swing.JPanel {
 
     private final RevisionFacturaController controlador;
-    private final DreamGifts root;
+    private DreamGifts root;
     /**
      * Creates new form PanelConfirmcionPago
      */
     public RevisionFacturaView() {
-        this.root = DreamGifts.getInstance();
         initComponents();
         this.controlador = new RevisionFacturaController(this);
         jTableFacturas.getModel().addTableModelListener(controlador);
@@ -241,6 +236,14 @@ public class RevisionFacturaView extends javax.swing.JPanel {
         controlador.editarFactura();
     }//GEN-LAST:event_btnEditarActionPerformed
 
+    public DreamGifts getRoot() {
+        return root;
+    }
+    
+    public void setRoot(DreamGifts root) {
+        this.root = root;
+    }
+    
     public JTextField getTxfNumeroFactura() {
         return txfNumeroFactura;
     }
@@ -263,10 +266,6 @@ public class RevisionFacturaView extends javax.swing.JPanel {
 
     public JTable getjTableFacturas() {
         return jTableFacturas;
-    }
-
-    public DreamGifts getRoot() {
-        return root;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

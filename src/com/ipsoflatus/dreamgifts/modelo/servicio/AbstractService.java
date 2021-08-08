@@ -19,7 +19,6 @@ public abstract class AbstractService<T> implements Service<T>, ObservableServic
         this.dao = dao;
         this.obs = new ArrayList<>();
         this.items = dao.findAll();
-        System.out.println(items);
     }
 
     @Override

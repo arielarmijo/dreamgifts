@@ -14,7 +14,6 @@ public final class ConfirmacionPagoTableModel extends VentaTableModel {
     
     public ConfirmacionPagoTableModel() {
         super();
-        System.out.println("ventas pendiente de pago: " + ventas);
         pendiente = obtenerEstado();
         columnNames = new String[]{"N° Pedido", "Nombre Cliente", "Celular", "Pack", "Monto", "Fecha Venta"};
         columnClases = new Class[]{Integer.class, String.class, String.class, String.class, Integer.class, Date.class};

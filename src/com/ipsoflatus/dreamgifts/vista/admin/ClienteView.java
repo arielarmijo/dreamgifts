@@ -20,13 +20,12 @@ import javax.swing.JTextField;
 public class ClienteView extends JPanel {
 
     private final ClienteController controlador;
-    private final DreamGifts root;
+    private DreamGifts root;
     
     /**
      * Creates new form PanelCliente
      */
     public ClienteView() {
-        this.root = DreamGifts.getInstance();
         initComponents();
         controlador = new ClienteController();
         controlador.setView(this); 
@@ -379,6 +378,10 @@ controlador.activarSeleccionados();
 
     public DreamGifts getRoot() {
         return root;
+    }
+    
+    public void setRoot(DreamGifts root) {
+        this.root = root;
     }
 
     public JComboBox getjComboBoxComuna() {

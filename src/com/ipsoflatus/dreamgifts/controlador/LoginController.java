@@ -38,7 +38,7 @@ public class LoginController {
 //            return;
 //        } 
         EventQueue.invokeLater(() -> {
-            DreamGifts.getInstance().setVisible(true);
+            new DreamGifts().setVisible(true);
             login.dispose();
         });
     }

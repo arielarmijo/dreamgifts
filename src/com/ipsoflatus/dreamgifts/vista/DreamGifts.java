@@ -31,8 +31,6 @@ import javax.swing.JTabbedPane;
 
 public class DreamGifts extends javax.swing.JFrame {
     
-    private static DreamGifts instance;
-    
     public JPanel venta;
     public JPanel confirmacionPago;
     public JPanel destinos;
@@ -41,14 +39,14 @@ public class DreamGifts extends javax.swing.JFrame {
     public JPanel armadoPacks;
     public JPanel solicitudPedido;
     public JPanel registroCompras;
-    public JPanel revisionFactura;
+    public RevisionFacturaView revisionFactura;
     
     public JPanel informeVentas;
     public JPanel informeInventario;
     public JPanel informeClientes;
     public JPanel informeDyC;
     
-    public JPanel cliente;
+    public ClienteView cliente;
     public JPanel proveedor;
     public JPanel pack;
     public JPanel articulo;
@@ -59,7 +57,7 @@ public class DreamGifts extends javax.swing.JFrame {
     public JPanel estadoVenta;
     public JPanel usuario;
     
-    private DreamGifts() {
+    public DreamGifts() {
         initComponents();
         crearPanelVentas();
         crearPanelCompras();
@@ -80,7 +78,6 @@ public class DreamGifts extends javax.swing.JFrame {
     }
     
     private void crearPanelCompras() {
-        
         armadoPacks = new ArmadoPackView();
         solicitudPedido = new SolicitudPedidoView();
         registroCompras = new RegistroCompraView();
@@ -89,6 +86,7 @@ public class DreamGifts extends javax.swing.JFrame {
         jTabbedPaneCompras.addTab("Solicitud Pedido", solicitudPedido);
         jTabbedPaneCompras.addTab("Registro Compra", registroCompras);
         jTabbedPaneCompras.addTab("Revisión Facturas", revisionFactura);
+        revisionFactura.setRoot(this);
     }
     
     private void crearPanelInformes() {
@@ -123,12 +121,7 @@ public class DreamGifts extends javax.swing.JFrame {
         jTabbedPaneAdmin.addTab("RRSS", rrss);
         jTabbedPaneAdmin.addTab("Estados Venta", estadoVenta);
         jTabbedPaneAdmin.addTab("Usuarios", usuario);
-    }
-
-    public static DreamGifts getInstance() {
-        if (instance == null)
-            instance = new DreamGifts();
-        return instance;
+        cliente.setRoot(this);
     }
     
     /**
