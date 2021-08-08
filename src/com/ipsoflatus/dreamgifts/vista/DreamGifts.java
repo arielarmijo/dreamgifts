@@ -15,7 +15,7 @@ import com.ipsoflatus.dreamgifts.vista.compras.RegistroCompraView;
 import com.ipsoflatus.dreamgifts.vista.compras.RevisionFacturaView;
 import com.ipsoflatus.dreamgifts.vista.compras.SolicitudPedidoView;
 import com.ipsoflatus.dreamgifts.vista.informes.InformeClientesView;
-import com.ipsoflatus.dreamgifts.vista.informes.InformeDyCView;
+import com.ipsoflatus.dreamgifts.vista.informes.InformeCyDView;
 import com.ipsoflatus.dreamgifts.vista.informes.InformeInventarioView;
 import com.ipsoflatus.dreamgifts.vista.informes.InformeVentasView;
 import com.ipsoflatus.dreamgifts.vista.ventas.ActualizacionDespachoView;
@@ -70,7 +70,7 @@ public class DreamGifts extends javax.swing.JFrame {
         JPanel informeVentas = new InformeVentasView();
         JPanel informeInventario = new InformeInventarioView();
         JPanel informeClientes = new InformeClientesView();
-        JPanel informeDyC = new InformeDyCView();
+        JPanel informeDyC = new InformeCyDView();
         jTabbedPaneInformes.addTab("Informe Ventas", informeVentas);
         jTabbedPaneInformes.addTab("Informe Inventario", informeInventario);
         jTabbedPaneInformes.addTab("Informe Clientes", informeClientes);

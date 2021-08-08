@@ -42,7 +42,7 @@ public class ActualizacionDespachoView extends javax.swing.JPanel {
 
         jTable.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         jTable.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        jTable.setModel(new ActualizacionDespachoTableModel(VentaService.getInstance()));
+        jTable.setModel(new ActualizacionDespachoTableModel());
         jScrollPane1.setViewportView(jTable);
 
         btnExportarExcel.setText("Exportar a Excel");

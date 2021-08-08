@@ -1,16 +1,52 @@
 package com.ipsoflatus.dreamgifts.vista.informes;
 
 import com.github.lgooddatepicker.components.DatePicker;
+import com.github.lgooddatepicker.components.DatePickerSettings;
+import com.ipsoflatus.dreamgifts.controlador.informes.InformeCyDController;
+import com.ipsoflatus.dreamgifts.modelo.tabla.informes.CyDTableModel;
+import java.awt.Image;
+import java.awt.Toolkit;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-public class InformeDyCView extends javax.swing.JPanel {
+public class InformeCyDView extends javax.swing.JPanel {
 
-    /**
-     * Creates new form PanelConfirmcionPago
-     */
-    public InformeDyCView() {
+    private final InformeCyDController controlador;
+    
+    public InformeCyDView() {
         initComponents();
+        controlador = new InformeCyDController(this);
+        
+        // Configura el date picker
+        DatePickerSettings desdeSettings = new DatePickerSettings();
+        desdeSettings.setFormatForDatesCommonEra("dd/MM/yyyy");
+        desdeSettings.setFormatForDatesBeforeCommonEra("dd/MM/uuuu");
+        dpDesde.setSettings(desdeSettings);
+        desdeSettings.setDateRangeLimits(controlador.obtenerFechaMinima(), controlador.obtenerFechaMaxima());
+        
+        DatePickerSettings hastaSettings = new DatePickerSettings();
+        hastaSettings.setFormatForDatesCommonEra("dd/MM/yyyy");
+        hastaSettings.setFormatForDatesBeforeCommonEra("dd/MM/uuuu");
+        dpHasta.setSettings(hastaSettings);
+        hastaSettings.setDateRangeLimits(controlador.obtenerFechaMinima(), controlador.obtenerFechaMaxima());
+        
+        Image dateImage = Toolkit.getDefaultToolkit().getImage("images/datepickerbutton.png");
+        ImageIcon dateExampleIcon = new ImageIcon(dateImage);
+        
+        JButton datePickerButton = dpDesde.getComponentToggleCalendarButton();
+        datePickerButton.setText("");
+        datePickerButton.setIcon(dateExampleIcon);
+        
+        datePickerButton = dpHasta.getComponentToggleCalendarButton();
+        datePickerButton.setText("");
+        datePickerButton.setIcon(dateExampleIcon);
+        
+        dpDesde.setDate(controlador.obtenerFechaMinima());
+        dpHasta.setDate(controlador.obtenerFechaMaxima());
+        dpDesde.addDateChangeListener(controlador);
+        dpHasta.addDateChangeListener(controlador);
     }
 
     /**
@@ -41,14 +77,14 @@ public class InformeDyCView extends javax.swing.JPanel {
         jDesktopPane3.setBackground(new java.awt.Color(240, 240, 240));
         jDesktopPane3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Búsqueda Ventas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
-        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel15.setText("Desde");
+        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel16.setText("RUT");
+        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        jLabel17.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel17.setText("Hasta");
+        jLabel17.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -57,8 +93,8 @@ public class InformeDyCView extends javax.swing.JPanel {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setText("Fecha Venta");
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         jDesktopPane3.setLayer(jLabel15, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane3.setLayer(jLabel16, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -73,8 +109,8 @@ public class InformeDyCView extends javax.swing.JPanel {
         jDesktopPane3.setLayout(jDesktopPane3Layout);
         jDesktopPane3Layout.setHorizontalGroup(
             jDesktopPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jDesktopPane3Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addGroup(jDesktopPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -84,46 +120,34 @@ public class InformeDyCView extends javax.swing.JPanel {
                 .addGroup(jDesktopPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(dpHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
-                .addComponent(jLabel16)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txfRut, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(60, 60, 60)
+                .addGroup(jDesktopPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txfRut, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29))
+                .addGap(49, 49, 49))
         );
         jDesktopPane3Layout.setVerticalGroup(
             jDesktopPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jDesktopPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
-                    .addComponent(jLabel17))
+                    .addComponent(jLabel17)
+                    .addComponent(jLabel16))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jDesktopPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(dpDesde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(dpHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jDesktopPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnBuscar)
-                        .addComponent(txfRut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel16)))
-                .addContainerGap())
+                    .addComponent(txfRut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Listado Ventas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
-        jTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"001", "Pack-09 Dia de la Madre", "10/03/2021", "Maximiliano Orellana", "Entregado", "Puente Alto"},
-                {"002", "Pack-06 Cumpleaños", "15/04/2021", "Angela Soto", "Entregado ", "Ñuñoa"},
-                {"003", "Pack-02 Aniversario", "20/04", "Juan Flores", "Pendiente", "Providencia"},
-                {"004", "Pack-09 Aniversario", "23/05/2021", "Yanara Perez", "Entregado", "La Granja"}
-            },
-            new String [] {
-                "Codigo Pack", "Pack", "Fecha Registro", "Cliente", "Estado", "Comuna"
-            }
-        ));
+        jTable.setModel(new CyDTableModel());
         jScrollPane3.setViewportView(jTable);
 
         btnExportarExcel.setText("Exportar a Excel");
@@ -141,12 +165,12 @@ public class InformeDyCView extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnExportarExcel)
                 .addContainerGap())
-            .addComponent(jScrollPane3)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 818, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnExportarExcel)
                 .addContainerGap())
@@ -159,8 +183,8 @@ public class InformeDyCView extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jDesktopPane3)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jDesktopPane3))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -176,10 +200,12 @@ public class InformeDyCView extends javax.swing.JPanel {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         System.out.println(evt.paramString());
+        controlador.buscar();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnExportarExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarExcelActionPerformed
         System.out.println(evt.paramString());
+        controlador.exportarAExcel();
     }//GEN-LAST:event_btnExportarExcelActionPerformed
 
     public DatePicker getDpDesde() {

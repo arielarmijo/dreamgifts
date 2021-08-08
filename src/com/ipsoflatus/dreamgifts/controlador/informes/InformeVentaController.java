@@ -61,7 +61,7 @@ public class InformeVentaController implements TableModelListener, DateChangeLis
         Date desdeDate = Date.from(desdeLocalDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         LocalDate hastaLocalDate = view.getDpHasta().getDate();
         Date hastaDate = Date.from(hastaLocalDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        tableModel.actualizar(ventaSrv.buscarPorFecha(desdeDate, hastaDate));
+        tableModel.actualizar(ventaSrv.filtrarPorFecha(desdeDate, hastaDate));
     }
 
     public void exportarAExcel() {

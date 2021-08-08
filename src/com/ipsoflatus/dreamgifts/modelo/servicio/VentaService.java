@@ -29,7 +29,7 @@ public class VentaService extends AbstractService<Venta> {
         return ((VentaDao) dao).findMaxDate();
     }
 
-    public List<Venta> buscarPorFecha(Date desde, Date hasta) {
+    public List<Venta> filtrarPorFecha(Date desde, Date hasta) {
         return ((VentaDao) dao).findByDateBetween(desde, hasta);
     }
     
