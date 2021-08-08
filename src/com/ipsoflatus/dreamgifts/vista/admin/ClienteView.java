@@ -20,13 +20,13 @@ import javax.swing.JTextField;
 public class ClienteView extends JPanel {
 
     private final ClienteController controlador;
-    private DreamGifts root;
+    private final DreamGifts root;
     
     /**
      * Creates new form PanelCliente
      */
-    public ClienteView(DreamGifts root) {
-        this.root = root;
+    public ClienteView() {
+        this.root = DreamGifts.getInstance();
         initComponents();
         controlador = new ClienteController();
         controlador.setView(this); 

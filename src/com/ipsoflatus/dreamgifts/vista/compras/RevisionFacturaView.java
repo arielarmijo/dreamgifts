@@ -23,12 +23,12 @@ import javax.swing.JTextField;
 public class RevisionFacturaView extends javax.swing.JPanel {
 
     private final RevisionFacturaController controlador;
-    private DreamGifts root;
+    private final DreamGifts root;
     /**
      * Creates new form PanelConfirmcionPago
      */
-    public RevisionFacturaView(DreamGifts root) {
-        this.root = root;
+    public RevisionFacturaView() {
+        this.root = DreamGifts.getInstance();
         initComponents();
         this.controlador = new RevisionFacturaController(this);
         jTableFacturas.getModel().addTableModelListener(controlador);

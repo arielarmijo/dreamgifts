@@ -6,11 +6,9 @@
 package com.ipsoflatus.dreamgifts.controlador;
 
 import com.ipsoflatus.dreamgifts.modelo.dao.UsuarioDao;
-import com.ipsoflatus.dreamgifts.modelo.entidad.Usuario;
 import com.ipsoflatus.dreamgifts.vista.DreamGifts;
 import com.ipsoflatus.dreamgifts.vista.Login;
 import java.awt.EventQueue;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -40,7 +38,7 @@ public class LoginController {
 //            return;
 //        } 
         EventQueue.invokeLater(() -> {
-            new DreamGifts().setVisible(true);
+            DreamGifts.getInstance().setVisible(true);
             login.dispose();
         });
     }

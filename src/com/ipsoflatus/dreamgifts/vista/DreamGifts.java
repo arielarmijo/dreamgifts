@@ -30,24 +30,49 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTabbedPane;
 
 public class DreamGifts extends javax.swing.JFrame {
-
-    public JPanel venta;
-    public JPanel registroCompras;
     
-    public DreamGifts() {
+    private static DreamGifts instance;
+    
+    public JPanel venta;
+    public JPanel confirmacionPago;
+    public JPanel destinos;
+    public JPanel despachos;
+    
+    public JPanel armadoPacks;
+    public JPanel solicitudPedido;
+    public JPanel registroCompras;
+    public JPanel revisionFactura;
+    
+    public JPanel informeVentas;
+    public JPanel informeInventario;
+    public JPanel informeClientes;
+    public JPanel informeDyC;
+    
+    public JPanel cliente;
+    public JPanel proveedor;
+    public JPanel pack;
+    public JPanel articulo;
+    public JPanel categoriaArticulo;
+    public JPanel comuna;
+    public JPanel banco;
+    public JPanel rrss;
+    public JPanel estadoVenta;
+    public JPanel usuario;
+    
+    private DreamGifts() {
         initComponents();
         crearPanelVentas();
         crearPanelCompras();
         crearPanelInformes();
         crearPanelAdmin();
-        showTabbedPaneAndTab(jTabbedPaneInformes, "informes", 1);
+        //showTabbedPaneAndTab(jTabbedPaneInformes, "informes", 1);
     }
     
     private void crearPanelVentas() {
         venta = new VentaView();
-        JPanel confirmacionPago = new ConfirmacionPagoView();
-        JPanel destinos = new ListaDestinosView();
-        JPanel despachos = new ActualizacionDespachoView();
+        confirmacionPago = new ConfirmacionPagoView();
+        destinos = new ListaDestinosView();
+        despachos = new ActualizacionDespachoView();
         jTabbedPaneVentas.addTab("Venta", venta);
         jTabbedPaneVentas.addTab("Confirmación Pago", confirmacionPago);
         jTabbedPaneVentas.addTab("Lista Destinos", destinos);
@@ -56,10 +81,10 @@ public class DreamGifts extends javax.swing.JFrame {
     
     private void crearPanelCompras() {
         
-        JPanel armadoPacks = new ArmadoPackView();
-        JPanel solicitudPedido = new SolicitudPedidoView();
+        armadoPacks = new ArmadoPackView();
+        solicitudPedido = new SolicitudPedidoView();
         registroCompras = new RegistroCompraView();
-        JPanel revisionFactura = new RevisionFacturaView(this);
+        revisionFactura = new RevisionFacturaView();
         jTabbedPaneCompras.addTab("Armado Packs",armadoPacks);
         jTabbedPaneCompras.addTab("Solicitud Pedido", solicitudPedido);
         jTabbedPaneCompras.addTab("Registro Compra", registroCompras);
@@ -67,10 +92,10 @@ public class DreamGifts extends javax.swing.JFrame {
     }
     
     private void crearPanelInformes() {
-        JPanel informeVentas = new InformeVentasView();
-        JPanel informeInventario = new InformeInventarioView();
-        JPanel informeClientes = new InformeClientesView();
-        JPanel informeDyC = new InformeCyDView();
+        informeVentas = new InformeVentasView();
+        informeInventario = new InformeInventarioView();
+        informeClientes = new InformeClientesView();
+        informeDyC = new InformeCyDView();
         jTabbedPaneInformes.addTab("Informe Ventas", informeVentas);
         jTabbedPaneInformes.addTab("Informe Inventario", informeInventario);
         jTabbedPaneInformes.addTab("Informe Clientes", informeClientes);
@@ -78,16 +103,16 @@ public class DreamGifts extends javax.swing.JFrame {
     }
         
     private void crearPanelAdmin() {
-        JPanel cliente = new ClienteView(this);
-        JPanel proveedor = new ProveedorView();
-        JPanel pack = new PackView();
-        JPanel articulo = new ArticuloView();
-        JPanel categoriaArticulo = new CategoriaArticuloView();
-        JPanel comuna = new ComunaView();
-        JPanel banco = new BancoView();
-        JPanel rrss = new RRSSView();
-        JPanel estadoVenta = new EstadoVentaView();
-        JPanel usuario = new UsuarioView();
+        cliente = new ClienteView();
+        proveedor = new ProveedorView();
+        pack = new PackView();
+        articulo = new ArticuloView();
+        categoriaArticulo = new CategoriaArticuloView();
+        comuna = new ComunaView();
+        banco = new BancoView();
+        rrss = new RRSSView();
+        estadoVenta = new EstadoVentaView();
+        usuario = new UsuarioView();
         jTabbedPaneAdmin.addTab("Clientes", cliente);
         jTabbedPaneAdmin.addTab("Proveedores", proveedor);
         jTabbedPaneAdmin.addTab("Packs", pack);
@@ -100,6 +125,12 @@ public class DreamGifts extends javax.swing.JFrame {
         jTabbedPaneAdmin.addTab("Usuarios", usuario);
     }
 
+    public static DreamGifts getInstance() {
+        if (instance == null)
+            instance = new DreamGifts();
+        return instance;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -549,22 +580,6 @@ public class DreamGifts extends javax.swing.JFrame {
        showComprasTab(evt);
     }//GEN-LAST:event_jMenuItemArmadoPacksActionPerformed
 
-    public void showAdminTab(ActionEvent evt) {
-        showTabbedPaneAndTab(jTabbedPaneAdmin, "admin", evt);
-    }
-    
-    public void showVentasTab(ActionEvent evt) {
-        showTabbedPaneAndTab(jTabbedPaneVentas, "ventas", evt);
-    }
-    
-    public void showComprasTab(ActionEvent evt) {
-        showTabbedPaneAndTab(jTabbedPaneCompras, "compras", evt);
-    }
-    
-    public void showInformesTab(ActionEvent evt) {
-        showTabbedPaneAndTab(jTabbedPaneInformes, "informes", evt);
-    }
-    
     public void showVentasTab(int tab) {
         showTabbedPaneAndTab(jTabbedPaneVentas, "ventas", tab);
     }
@@ -572,6 +587,31 @@ public class DreamGifts extends javax.swing.JFrame {
     public void showComprasTab(int tab) {
         showTabbedPaneAndTab(jTabbedPaneCompras, "compras", tab);
     }
+    
+    public void showInformesTab(int tab) {
+        showTabbedPaneAndTab(jTabbedPaneInformes, "informes", tab);
+    }
+    
+    private void showAdminTab(int tab) {
+        showTabbedPaneAndTab(jTabbedPaneAdmin, "admin", tab);
+    }
+    
+    private void showAdminTab(ActionEvent evt) {
+        showTabbedPaneAndTab(jTabbedPaneAdmin, "admin", evt);
+    }
+    
+    private void showVentasTab(ActionEvent evt) {
+        showTabbedPaneAndTab(jTabbedPaneVentas, "ventas", evt);
+    }
+    
+    private void showComprasTab(ActionEvent evt) {
+        showTabbedPaneAndTab(jTabbedPaneCompras, "compras", evt);
+    }
+    
+    private void showInformesTab(ActionEvent evt) {
+        showTabbedPaneAndTab(jTabbedPaneInformes, "informes", evt);
+    }
+    
     private void showTabbedPaneAndTab(JTabbedPane pane, String card, ActionEvent evt) {
         JMenuItem menuItem = (JMenuItem) evt.getSource(); 
         JPopupMenu popupMenu = (JPopupMenu) menuItem.getParent(); 
@@ -586,6 +626,7 @@ public class DreamGifts extends javax.swing.JFrame {
         c.show(mainContainer, card);
         pane.setSelectedIndex(tab);
     }
+    
     /**
      * @param args the command line arguments
      */
