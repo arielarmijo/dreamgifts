@@ -45,14 +45,18 @@ public final class ConfirmacionPagoTableModel extends VentaTableModel {
 
     @Override
     public void actualizar(List<Venta> items) {
-        if (pendiente == null) {
-            pendiente = obtenerEstado();
+        if (pendiente != null) {
+            ventas = items.stream().filter(v -> v.getEstadoVenta().equals(pendiente)).collect(Collectors.toList());
+        } else {
+            ventas = items;
         }
-        ventas = items.stream().filter(v -> v.getEstadoVenta().equals(pendiente)).collect(Collectors.toList());
         fireTableDataChanged();
     }
 
     private EstadoVenta obtenerEstado() {
+        List<EstadoVenta> result = EVService.getInstance().buscar();
+        if (result.isEmpty())
+            return null;
         return EVService.getInstance().buscar().get(0);
     }
 

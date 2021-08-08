@@ -24,6 +24,7 @@ public class ArticuloTableModel extends AbstractTableModel implements CategoriaA
     private final CategoriaArticuloService caSrv;
     
     public ArticuloTableModel() {
+        items = new ArrayList<>();
         articuloSrv = ArticuloService.getInstance();
         articuloSrv.addObserver(this);
         caSrv = CategoriaArticuloService.getInstance();
