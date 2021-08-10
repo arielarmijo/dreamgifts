@@ -76,7 +76,7 @@ public class RRSSController {
     public void activarDesactivarSeleccionados(boolean estado) {
         List<Integer> ids = tableModel.getSelected().stream().map(ca -> ca.getId()).collect(Collectors.toList());
         if (ids.isEmpty()) {
-            mostrarInformacion("Selecciones comunas");
+            mostrarInformacion("Seleccione Red Social");
             return;
         }
         redSocialSrv.cambiarEstado(ids, estado);
