@@ -62,6 +62,7 @@ public class UsuarioController {
     public void buscar(String nombre) {
         List<Usuario> usuarios = nombre.isEmpty() ? usuarioSrv.buscar(): usuarioSrv.buscar(nombre);
         tableModel.actualizar(usuarios);
+        view.setBuscar("");
     }
     
     public void editar() {
