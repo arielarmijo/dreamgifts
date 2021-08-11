@@ -1,19 +1,23 @@
 package com.ipsoflatus.dreamgifts.vista.ventas;
 
+import com.ipsoflatus.dreamgifts.controlador.ventas.ActualizacionDespachoController;
+import com.ipsoflatus.dreamgifts.modelo.combobox.EstadoVentaComboBoxModel;
+import com.ipsoflatus.dreamgifts.modelo.entidad.EstadoVenta;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ExportService;
-import com.ipsoflatus.dreamgifts.modelo.servicio.VentaService;
 import com.ipsoflatus.dreamgifts.modelo.tabla.ventas.ActualizacionDespachoTableModel;
+import javax.swing.JComboBox;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 
 public class ActualizacionDespachoView extends javax.swing.JPanel {
 
     private final ExportService exportSrv;
+    private final ActualizacionDespachoController controlador;
     
-    /**
-     * Creates new form PanelConfirmcionPago
-     */
     public ActualizacionDespachoView() {
         initComponents();
         exportSrv = new ExportService();
+        controlador = new ActualizacionDespachoController(this);
     }
 
     /**
@@ -30,6 +34,11 @@ public class ActualizacionDespachoView extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
         btnExportarExcel = new javax.swing.JButton();
+        cbxEstadoVenta = new javax.swing.JComboBox<>();
+        btnActualizar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        txfNumeroVenta = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
 
         setMinimumSize(new java.awt.Dimension(850, 500));
 
@@ -38,43 +47,79 @@ public class ActualizacionDespachoView extends javax.swing.JPanel {
 
         label1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         label1.setName(""); // NOI18N
-        label1.setText("Actualización Estado Despacho");
+        label1.setText("Actualización Estado Venta");
 
-        jTable.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jTable.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jTable.setModel(new ActualizacionDespachoTableModel());
+        jTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable);
 
         btnExportarExcel.setText("Exportar a Excel");
-        btnExportarExcel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnExportarExcel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExportarExcelActionPerformed(evt);
             }
         });
 
+        cbxEstadoVenta.setModel(new EstadoVentaComboBoxModel());
+
+        btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("N° Venta");
+
+        txfNumeroVenta.setEditable(false);
+
+        jLabel2.setText("Estado");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(216, 216, 216)
-                .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(243, Short.MAX_VALUE))
             .addComponent(jScrollPane1)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(215, 215, 215)
+                .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnExportarExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(285, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnExportarExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txfNumeroVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(37, 37, 37)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cbxEstadoVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(48, 48, 48)
+                        .addComponent(btnActualizar)
+                        .addGap(42, 42, 42))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 366, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbxEstadoVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnActualizar)
+                    .addComponent(jLabel1)
+                    .addComponent(txfNumeroVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnExportarExcel)
                 .addContainerGap())
         );
@@ -102,12 +147,38 @@ public class ActualizacionDespachoView extends javax.swing.JPanel {
         exportSrv.exportarAExcel(jTable, "Despachos");
     }//GEN-LAST:event_btnExportarExcelActionPerformed
 
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        System.out.println(evt.paramString());
+        controlador.actualizarEstado();
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
+        System.out.println(evt.paramString());
+        controlador.seleccionarVenta();
+    }//GEN-LAST:event_jTableMouseClicked
+
+    public JTable getjTable() {
+        return jTable;
+    }
+
+    public JComboBox<EstadoVenta> getCbxEstadoVenta() {
+        return cbxEstadoVenta;
+    }
+
+    public JTextField getTxfNumeroVenta() {
+        return txfNumeroVenta;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnExportarExcel;
+    private javax.swing.JComboBox<EstadoVenta> cbxEstadoVenta;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable;
     private java.awt.Label label1;
+    private javax.swing.JTextField txfNumeroVenta;
     // End of variables declaration//GEN-END:variables
 }
