@@ -19,10 +19,12 @@ public class ConfirmacionPagoController {
     private final EVService evSrv = EVService.getInstance();
     private final VentaService ventaSrv = VentaService.getInstance();
     private final ConfirmacionPagoView view;
+    private final ConfirmacionPagoTableModel tableModel;
     private Venta venta;
     
     public ConfirmacionPagoController(ConfirmacionPagoView view) {
         this.view = view;
+        this.tableModel = (ConfirmacionPagoTableModel) view.getjTable().getModel();
     }
     
     public void cancelar() {
@@ -87,7 +89,10 @@ public class ConfirmacionPagoController {
     }
 
     public void buscarVenta() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String termino = view.getTxfBuscar().getText();
+        List<Venta> items = termino.isEmpty() ? ventaSrv.buscar(): ventaSrv.buscar(termino);
+        tableModel.actualizar(items);
+        view.getTxfBuscar().setText("");
     }
 
     public void seleccionarVenta() {

@@ -19,7 +19,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "ventas")
 @NamedQueries({
-    @NamedQuery(name = "Venta.findByTermLike", query = "SELECT v FROM Venta v WHERE v.cliente.rut LIKE :term"),
+    @NamedQuery(name = "Venta.findByTermLike", query = "SELECT v FROM Venta v WHERE v.cliente.rut LIKE :term OR UPPER(v.cliente.nombre) LIKE UPPER(:term) OR UPPER(v.cliente.apellido) LIKE UPPER(:term) OR UPPER(v.pack.nombre) LIKE UPPER(:term)"),
     @NamedQuery(name = "Venta.findMinDate", query = "SELECT MIN(v.fechaVenta) FROM Venta v"),
     @NamedQuery(name = "Venta.findMaxDate", query = "SELECT MAX(v.fechaVenta) FROM Venta v"),
     @NamedQuery(name = "Venta.findByDateBetween", query = "SELECT v FROM Venta v WHERE v.fechaVenta BETWEEN :desde AND :hasta")})

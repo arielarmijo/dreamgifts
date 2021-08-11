@@ -42,7 +42,7 @@ public class InventarioTableModel extends AbstractTableModel implements Observer
         if (column == 2)
             return item.getArticulo().getCategoriaArticulo().getNombre();
         if (column == 3)
-            return item.getArticulo().getStock();
+            return item.getCantidad();
         if (column == 4)
             return item.getValorUnitario();
         if (column == 5)

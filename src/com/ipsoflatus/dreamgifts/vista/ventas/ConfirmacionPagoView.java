@@ -21,8 +21,8 @@ public class ConfirmacionPagoView extends javax.swing.JPanel {
     private final ConfirmacionPagoController controlador;
     
     public ConfirmacionPagoView() {
-        controlador = new ConfirmacionPagoController(this);
         initComponents();
+        controlador = new ConfirmacionPagoController(this);
         // Configura el date picker
         DatePickerSettings dateSettings = new DatePickerSettings();
         dateSettings.setFormatForDatesCommonEra("dd/MM/yyyy");
@@ -192,7 +192,7 @@ public class ConfirmacionPagoView extends javax.swing.JPanel {
         jTable.setModel(new ConfirmacionPagoTableModel());
         jScrollPane1.setViewportView(jTable);
 
-        jLabel3.setText("Ventar por pagar");
+        jLabel3.setText("Ventas por pagar");
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setToolTipText("");
 

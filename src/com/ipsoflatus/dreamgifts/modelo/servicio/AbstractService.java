@@ -39,7 +39,6 @@ public abstract class AbstractService<T> implements Service<T>, ObservableServic
     @Override
     public void guardar(T t) {
         dao.save(t);
-        System.out.println("guardando" + t);
         notifyObservers();
     }
 

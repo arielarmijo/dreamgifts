@@ -42,12 +42,13 @@ public class ListaDestinoTableModel extends VentaTableModel {
 
     @Override
     public void actualizar(List<Venta> items) {
+        if (despacho == null) {
+            despacho = obtenerEstado();
+        }
         if (despacho != null) {
             ventas = items.stream().filter(v -> v.getEstadoVenta().equals(despacho)).collect(Collectors.toList());
-        } else {
-            ventas = items;
+            fireTableDataChanged();
         }
-        fireTableDataChanged();
     }
 
     private EstadoVenta obtenerEstado() {
