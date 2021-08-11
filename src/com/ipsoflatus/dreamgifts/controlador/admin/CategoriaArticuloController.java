@@ -67,6 +67,7 @@ public class CategoriaArticuloController implements Controller<CategoriaArticulo
         String termino = view.getjTextFieldBuscar().getText();
         List<CategoriaArticulo> ccaa = termino.isEmpty() ? service.buscar(): service.buscar(termino);
         tableModel.actualizar(ccaa);
+        view.getjTextFieldBuscar().setText("");
     }
 
     @Override
