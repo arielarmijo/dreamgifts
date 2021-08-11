@@ -8,6 +8,7 @@ import com.ipsoflatus.dreamgifts.modelo.servicio.ComunaService;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ProveedorService;
 import com.ipsoflatus.dreamgifts.modelo.tabla.admin.ProveedorTableModel;
 import com.ipsoflatus.dreamgifts.vista.admin.ProveedorView;
+import com.ipsoflatus.dreamgifts.vista.compras.SolicitudPedidoView;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -129,7 +130,13 @@ public class ProveedorController implements Controller<ProveedorView> {
     }
 
     public void comprar() {
-        mostrarInformacion("¡No implementado!");
+        int row = view.getjTableProveedores().getSelectedRow();
+        if (row != -1) {
+            Proveedor p = tableModel.getItem(row);
+            SolicitudPedidoView sp = ((SolicitudPedidoView) view.getRoot().solicitudPedido);
+            sp.getCbxProveedores().setSelectedItem(p);
+        }
+        view.getRoot().showComprasTab(1);  
     }
 
    

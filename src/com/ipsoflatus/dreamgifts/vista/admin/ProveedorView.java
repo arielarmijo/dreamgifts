@@ -6,6 +6,7 @@ import com.ipsoflatus.dreamgifts.modelo.combobox.ObserverComboBoxModel;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ComunaService;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ProveedorService;
 import com.ipsoflatus.dreamgifts.modelo.tabla.admin.ProveedorTableModel;
+import com.ipsoflatus.dreamgifts.vista.DreamGifts;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -15,6 +16,7 @@ import javax.swing.JTextField;
 public class ProveedorView extends JPanel {
     
     private final ProveedorController controlador;
+    private DreamGifts root;
 
     /**
      * Creates new form PanelProveedor
@@ -267,7 +269,7 @@ public class ProveedorView extends JPanel {
                         .addComponent(jButtonBuscar))
                     .addGroup(jPanelListadoLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButtonComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -303,7 +305,7 @@ public class ProveedorView extends JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanelRegistro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelRegistro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanelListado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -357,6 +359,14 @@ public class ProveedorView extends JPanel {
         System.out.println(evt.getActionCommand());
         controlador.buscar();
     }//GEN-LAST:event_jTextFieldBuscarActionPerformed
+    
+    public DreamGifts getRoot() {
+        return root;
+    }
+    
+    public void setRoot(DreamGifts root) {
+        this.root = root;
+    }
     
     public JComboBox getjComboBoxComunas() {
         return jComboBoxComunas;

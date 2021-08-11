@@ -13,6 +13,7 @@ import com.ipsoflatus.dreamgifts.modelo.lista.ArticuloListModel;
 import com.ipsoflatus.dreamgifts.modelo.lista.OrdenCompraDetalleCellRenderer;
 import com.ipsoflatus.dreamgifts.modelo.lista.OrdenCompraDetalleListModel;
 import com.ipsoflatus.dreamgifts.modelo.tabla.compras.DetallePedidoTableModel;
+import com.ipsoflatus.dreamgifts.vista.DreamGifts;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.time.LocalDate;

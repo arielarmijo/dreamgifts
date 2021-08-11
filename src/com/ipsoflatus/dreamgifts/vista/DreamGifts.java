@@ -47,7 +47,7 @@ public class DreamGifts extends javax.swing.JFrame {
     public JPanel informeDyC;
     
     public ClienteView cliente;
-    public JPanel proveedor;
+    public ProveedorView proveedor;
     public JPanel pack;
     public JPanel articulo;
     public JPanel categoriaArticulo;
@@ -122,6 +122,7 @@ public class DreamGifts extends javax.swing.JFrame {
         jTabbedPaneAdmin.addTab("Estados Venta", estadoVenta);
         jTabbedPaneAdmin.addTab("Usuarios", usuario);
         cliente.setRoot(this);
+        proveedor.setRoot(this);
     }
     
     /**

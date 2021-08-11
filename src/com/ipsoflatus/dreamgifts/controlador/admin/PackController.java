@@ -121,6 +121,7 @@ public class PackController {
         String termino = view.getTxfBuscar().getText();
         List<Pack> packs = termino.isEmpty() ? packService.buscar(): packService.buscar(termino);
         tableModel.actualizar(packs);
+        view.getTxfBuscar().setText("");
     }
 
     public void editar() {
