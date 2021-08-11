@@ -20,12 +20,12 @@
     <class>com.ipsoflatus.dreamgifts.modelo.entidad.FacturaDetalle</class>
     <properties>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-      <!--<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/dreamgifts?zeroDateTimeBehavior=CONVERT_TO_NULL"/>-->
-      <!--<property name="javax.persistence.jdbc.user" value="dreamgifts"/>-->
-      <!--<property name="javax.persistence.jdbc.password" value="dreamgifts"/>-->
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://ummmjiqfvthuvcti:4HnX644xYwlbpUQy2Tdy@bwtnmgrwme3rfzbzwov4-mysql.services.clever-cloud.com:3306/bwtnmgrwme3rfzbzwov4"/>
-      <property name="javax.persistence.jdbc.user" value="ummmjiqfvthuvcti"/>
-      <property name="javax.persistence.jdbc.password" value="4HnX644xYwlbpUQy2Tdy"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/dreamgifts?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
+      <property name="javax.persistence.jdbc.user" value="dreamgifts"/>
+      <property name="javax.persistence.jdbc.password" value="dreamgifts"/>
+      <!--<property name="javax.persistence.jdbc.url" value="jdbc:mysql://ummmjiqfvthuvcti:4HnX644xYwlbpUQy2Tdy@bwtnmgrwme3rfzbzwov4-mysql.services.clever-cloud.com:3306/bwtnmgrwme3rfzbzwov4"/>-->
+      <!--<property name="javax.persistence.jdbc.user" value="ummmjiqfvthuvcti"/>-->
+      <!--<property name="javax.persistence.jdbc.password" value="4HnX644xYwlbpUQy2Tdy"/>-->
     </properties>
   </persistence-unit>
 </persistence>
