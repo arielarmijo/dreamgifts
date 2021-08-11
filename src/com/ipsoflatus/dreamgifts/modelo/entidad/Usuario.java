@@ -14,7 +14,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "usuarios")
 @NamedQueries({
-    @NamedQuery(name = "Usuario.findByTermLike", query = "SELECT u FROM Usuario u WHERE UPPER(u.nombre) LIKE UPPER(:term)")})
+    @NamedQuery(name = "Usuario.findByTermLike", query = "SELECT u FROM Usuario u WHERE UPPER(u.nombre) LIKE UPPER(:term)"),
+    @NamedQuery(name = "Usuario.findByName", query = "SELECT u FROM Usuario u WHERE u.nombre = :name")})
 public class Usuario implements Serializable, SoftDelete {
 
     private static final long serialVersionUID = 1L;

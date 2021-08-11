@@ -2,11 +2,22 @@ package com.ipsoflatus.dreamgifts.modelo.dao;
 
 import com.ipsoflatus.dreamgifts.modelo.entidad.Usuario;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 public class UsuarioDao extends AbstractSoftDeleteDao<Usuario>{
 
     public UsuarioDao() {
         super(Usuario.class);
+    }
+    
+    public Usuario findByName(String nombre) {
+        EntityManager em = emf.createEntityManager();
+        String namedQuery = "Usuario.findByName";
+        TypedQuery<Usuario> query = em.createNamedQuery(namedQuery, Usuario.class);
+        query.setParameter("name", nombre);
+        Usuario result = query.getSingleResult();
+        em.close();
+        return result;
     }
     
     public void delete(Usuario u) {
