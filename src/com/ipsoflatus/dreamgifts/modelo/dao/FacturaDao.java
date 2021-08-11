@@ -1,6 +1,8 @@
 package com.ipsoflatus.dreamgifts.modelo.dao;
 
+import com.ipsoflatus.dreamgifts.modelo.entidad.Articulo;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Factura;
+import com.ipsoflatus.dreamgifts.modelo.entidad.FacturaDetalle;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Proveedor;
 import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
 import java.util.Date;
@@ -14,6 +16,28 @@ public class FacturaDao extends AbstractDao<Factura> {
 
     public FacturaDao() {
         super(Persistence.createEntityManagerFactory("dreamgifts"), Factura.class);
+    }
+    
+    @Override
+    public void save(Factura f) {
+        EntityManager em = null;
+        try {
+            em = emf.createEntityManager();
+            em.getTransaction().begin();
+            List<FacturaDetalle> ffdd = f.getArticulos();
+            for (FacturaDetalle fd : ffdd) {
+                Articulo a = em.merge(fd.getArticulo());
+                a.setStock(a.getStock() + fd.getCantidad());
+            }
+            em.persist(f);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
     }
 
     @Override
