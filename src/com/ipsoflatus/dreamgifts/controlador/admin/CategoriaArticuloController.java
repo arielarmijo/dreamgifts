@@ -95,17 +95,12 @@ public class CategoriaArticuloController implements Controller<CategoriaArticulo
         }
         service.cambiarEstado(ids, estado);
         tableModel.selectAll(false);
-        view.getjToggleButton().setText("Seleccionar todos");
-        view.getjToggleButton().setSelected(false);
         
     }
 
     @Override
     public void seleccionarTodos() {
-        boolean select = view.getjToggleButton().isSelected();
-        tableModel.selectAll(select);
-        String text = select ? "Deseleccionar todos" : "Seleccionar todos";
-        view.getjToggleButton().setText(text);
+        
     }
 
 }

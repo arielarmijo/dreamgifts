@@ -7,7 +7,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.JToggleButton;
 
 public final class CategoriaArticuloView extends javax.swing.JPanel {
 
@@ -37,7 +36,6 @@ public final class CategoriaArticuloView extends javax.swing.JPanel {
         jButtonEditar = new javax.swing.JButton();
         jButtonDesactivar = new javax.swing.JButton();
         jButtonActivar = new javax.swing.JButton();
-        jToggleButton = new javax.swing.JToggleButton();
         jPanel2 = new javax.swing.JPanel();
         jTextFieldNombre = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -90,13 +88,6 @@ public final class CategoriaArticuloView extends javax.swing.JPanel {
             }
         });
 
-        jToggleButton.setText("Seleccionar todos");
-        jToggleButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButtonActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -115,8 +106,6 @@ public final class CategoriaArticuloView extends javax.swing.JPanel {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jToggleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButtonDesactivar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonActivar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -136,7 +125,6 @@ public final class CategoriaArticuloView extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonActivar)
                     .addComponent(jButtonDesactivar)
-                    .addComponent(jToggleButton)
                     .addComponent(jButtonEditar))
                 .addContainerGap())
         );
@@ -280,11 +268,6 @@ public final class CategoriaArticuloView extends javax.swing.JPanel {
         controlador.cancelar();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
-    private void jToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonActionPerformed
-        System.out.println(evt.getActionCommand());
-        controlador.seleccionarTodos();
-    }//GEN-LAST:event_jToggleButtonActionPerformed
-
     public JRadioButton getjRadioButtonActivo() {
         return jRadioButtonActivo;
     }
@@ -307,10 +290,6 @@ public final class CategoriaArticuloView extends javax.swing.JPanel {
 
     public JTextField getjTextFieldNombre() {
         return jTextFieldNombre;
-    }
-
-    public JToggleButton getjToggleButton() {
-        return jToggleButton;
     }
 
     public ButtonGroup getButtonGroupEstado() {
@@ -339,6 +318,5 @@ public final class CategoriaArticuloView extends javax.swing.JPanel {
     private javax.swing.JTextField jTextFieldBuscar;
     private javax.swing.JTextField jTextFieldCodigo;
     private javax.swing.JTextField jTextFieldNombre;
-    private javax.swing.JToggleButton jToggleButton;
     // End of variables declaration//GEN-END:variables
 }
