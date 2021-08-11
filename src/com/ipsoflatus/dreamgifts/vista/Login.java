@@ -9,8 +9,8 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
-    public Login(LoginController controller) {
-        this.controller = controller;
+    public Login() {
+        this.controller = new LoginController();
         this.controller.setView(this);
         initComponents();
     }
@@ -198,7 +198,7 @@ public class Login extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new Login(new LoginController()).setVisible(true);
+            new Login().setVisible(true);
         });
     }
 

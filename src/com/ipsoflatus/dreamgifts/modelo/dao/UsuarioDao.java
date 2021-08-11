@@ -11,14 +11,24 @@ public class UsuarioDao extends AbstractSoftDeleteDao<Usuario>{
     }
     
     public Usuario findByName(String nombre) {
-        EntityManager em = emf.createEntityManager();
-        String namedQuery = "Usuario.findByName";
-        TypedQuery<Usuario> query = em.createNamedQuery(namedQuery, Usuario.class);
-        query.setParameter("name", nombre);
-        Usuario result = query.getSingleResult();
-        em.close();
-        return result;
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            String namedQuery = "Usuario.findByName";
+            TypedQuery<Usuario> query = em.createNamedQuery(namedQuery, Usuario.class);
+            query.setParameter("name", nombre);
+            Usuario result = query.getSingleResult();
+            return result;
+        } catch (Exception e) {
+            return null;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
     }
+    
+   
     
     public void delete(Usuario u) {
         EntityManager em = emf.createEntityManager();

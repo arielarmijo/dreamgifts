@@ -65,7 +65,7 @@ public class BancoController implements Controller<BancoView> {
 
     @Override
     public void editar() {
-         int row = view.getjTableBanco().getSelectedRow();
+        int row = view.getjTableBanco().getSelectedRow();
         if (row == -1) {
             mostrarInformacion("Seleccione Banco.");
             return;
@@ -90,6 +90,5 @@ public class BancoController implements Controller<BancoView> {
     public void seleccionarTodos() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-   
     
 }
