@@ -37,7 +37,7 @@ public class RegistroCompraController {
             Integer numeroFactura = Integer.valueOf(view.getTxfNumeroFactura().getText());
             facturaActual = facturaSrv.buscarPorNumeroFactura(numeroFactura);
             Proveedor proveedor = facturaActual.getOrdenCompra().getProveedor();
-            view.getCbxProveedores().setSelectedItem(proveedor);
+            view.getTxfPrveedor().setText(proveedor.getRazonSocial());
             view.getTxfRut().setText(proveedor.getRut());
             view.getCbxOrdenesCompra().setSelectedItem(facturaActual.getOrdenCompra());
             Date date = facturaActual.getFecha();
@@ -60,11 +60,7 @@ public class RegistroCompraController {
         ((ArticuloComboBoxModel) view.getCbxArticulos().getModel()).actualizar(ca.getArticulos());
     }
 
-    public void buscarProveedor() {
-        Proveedor proveedor = (Proveedor) view.getCbxProveedores().getSelectedItem();
-        view.getTxfRut().setText(proveedor.getRut());
-        ((OrdenCompraComboBoxModel) view.getCbxOrdenesCompra().getModel()).actualizar(proveedor.getOrdenesCompra());
-    }
+
 
     public void cancelar() {
         limpiarFactura();
@@ -188,8 +184,8 @@ public class RegistroCompraController {
     private void limpiarFactura() {
         facturaActual = null;
         view.getTxfRut().setText("");
+        view.getTxfPrveedor().setText("");
         view.getTxfNumeroFactura().setText("");
-        view.getCbxProveedores().setSelectedIndex(0);
         view.getDpFechaRecepcion().setDate(LocalDate.now());
         view.getTxfCodigo().setText("");
         view.getCbxCategoriaArticulos().setSelectedIndex(0);
@@ -213,6 +209,14 @@ public class RegistroCompraController {
     
     private void mostrarError(String error) {
         JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public void actualizarProveedor() {
+        OrdenCompra oc = (OrdenCompra) view.getCbxOrdenesCompra().getSelectedItem();
+        if (oc != null) {
+            view.getTxfPrveedor().setText(oc.getProveedor().getRazonSocial());
+            view.getTxfRut().setText(oc.getProveedor().getRut());
+        }
     }
 
 }

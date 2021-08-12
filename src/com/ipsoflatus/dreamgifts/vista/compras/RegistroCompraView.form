@@ -89,10 +89,10 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="txfRut" max="32767" attributes="0"/>
-                      <Component id="cbxProveedores" pref="143" max="32767" attributes="0"/>
+                      <Component id="txfRut" pref="147" max="32767" attributes="0"/>
+                      <Component id="txfPrveedor" pref="147" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="102" attributes="0">
                           <Component id="btnCancelar" min="-2" max="-2" attributes="0"/>
@@ -117,9 +117,9 @@
                       <Component id="label3" min="-2" max="-2" attributes="0"/>
                       <Component id="label5" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="cbxProveedores" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="cbxOrdenesCompra" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txfPrveedor" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="txfNumeroFactura" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -159,20 +159,6 @@
             <Property name="text" type="java.lang.String" value="Fecha Recepci&#xf3;n"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="cbxProveedores">
-          <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="new ProveedorComboBoxModel()" type="code"/>
-            </Property>
-            <Property name="actionCommand" type="java.lang.String" value="Proveedor ComboBoxChanged"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbxProveedoresActionPerformed"/>
-          </Events>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Proveedor&gt;"/>
-          </AuxValues>
-        </Component>
         <Component class="com.github.lgooddatepicker.components.DatePicker" name="dpFechaRecepcion">
           <Properties>
             <Property name="date" type="java.time.LocalDate" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
@@ -209,7 +195,13 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txfRut">
           <Properties>
+            <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="0" green="0" red="0" type="rgb"/>
+            </Property>
             <Property name="enabled" type="boolean" value="false"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="12" style="1"/>
+            </Property>
           </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="cbxOrdenesCompra">
@@ -249,6 +241,20 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelarActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JTextField" name="txfPrveedor">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="12" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="cc" green="cc" red="cc" type="rgb"/>
+            </Property>
+            <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="0" green="0" red="0" type="rgb"/>
+            </Property>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

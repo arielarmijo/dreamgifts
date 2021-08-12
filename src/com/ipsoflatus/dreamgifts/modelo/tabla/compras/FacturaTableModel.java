@@ -4,6 +4,7 @@ import com.ipsoflatus.dreamgifts.modelo.entidad.Factura;
 import com.ipsoflatus.dreamgifts.modelo.servicio.FacturaService;
 import com.ipsoflatus.dreamgifts.modelo.tabla.ObservableTableModel;
 import java.util.Date;
+import java.util.List;
 
 public class FacturaTableModel extends ObservableTableModel<Factura> {
 
@@ -30,6 +31,15 @@ public class FacturaTableModel extends ObservableTableModel<Factura> {
         if (columnIndex == 5)
             return "Editar";
         return null;
-    } 
+    }
+    
+    public void setItems(List<Factura> items) {
+        this.items = items;
+        fireTableDataChanged();
+    }
+
+    public List<Factura> getItems() {
+        return items;
+    }
     
 }

@@ -65,7 +65,6 @@ public class RegistroCompraView extends javax.swing.JPanel {
         jPanel3 = new javax.swing.JPanel();
         label5 = new java.awt.Label();
         label6 = new java.awt.Label();
-        cbxProveedores = new javax.swing.JComboBox<>();
         dpFechaRecepcion = new com.github.lgooddatepicker.components.DatePicker();
         label3 = new java.awt.Label();
         txfNumeroFactura = new javax.swing.JTextField();
@@ -76,6 +75,7 @@ public class RegistroCompraView extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         btnGrabar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        txfPrveedor = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         label7 = new java.awt.Label();
         txfCodigo = new javax.swing.JTextField();
@@ -105,14 +105,6 @@ public class RegistroCompraView extends javax.swing.JPanel {
         label6.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         label6.setText("Fecha Recepción");
 
-        cbxProveedores.setModel(new ProveedorComboBoxModel());
-        cbxProveedores.setActionCommand("Proveedor ComboBoxChanged");
-        cbxProveedores.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxProveedoresActionPerformed(evt);
-            }
-        });
-
         dpFechaRecepcion.setDate(LocalDate.now());
 
         label3.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
@@ -129,7 +121,9 @@ public class RegistroCompraView extends javax.swing.JPanel {
         label4.setName(""); // NOI18N
         label4.setText("RUT");
 
+        txfRut.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txfRut.setEnabled(false);
+        txfRut.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 
         cbxOrdenesCompra.setModel(new OrdenCompraComboBoxModel());
         cbxOrdenesCompra.setActionCommand("Orden de Compra ComboBox Changed");
@@ -156,6 +150,11 @@ public class RegistroCompraView extends javax.swing.JPanel {
             }
         });
 
+        txfPrveedor.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        txfPrveedor.setForeground(new java.awt.Color(204, 204, 204));
+        txfPrveedor.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        txfPrveedor.setEnabled(false);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -177,9 +176,9 @@ public class RegistroCompraView extends javax.swing.JPanel {
                     .addComponent(label5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txfRut)
-                    .addComponent(cbxProveedores, 0, 143, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(txfRut, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
+                    .addComponent(txfPrveedor, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(btnCancelar)
@@ -199,9 +198,9 @@ public class RegistroCompraView extends javax.swing.JPanel {
                     .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(label5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cbxProveedores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(cbxOrdenesCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel1))
+                        .addComponent(jLabel1)
+                        .addComponent(txfPrveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txfNumeroFactura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnBuscar)))
@@ -394,11 +393,6 @@ public class RegistroCompraView extends javax.swing.JPanel {
         controlador.filtrarProductos();
     }//GEN-LAST:event_cbxCategoriaArticulosActionPerformed
 
-    private void cbxProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxProveedoresActionPerformed
-        System.out.println(evt.getActionCommand());
-        controlador.buscarProveedor();
-    }//GEN-LAST:event_cbxProveedoresActionPerformed
-
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         System.out.println(evt.getActionCommand());
         controlador.cancelar();
@@ -415,6 +409,7 @@ public class RegistroCompraView extends javax.swing.JPanel {
 
     private void cbxOrdenesCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxOrdenesCompraActionPerformed
         System.out.println(evt.getActionCommand());
+        controlador.actualizarProveedor();
     }//GEN-LAST:event_cbxOrdenesCompraActionPerformed
 
     private void btnGrabarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrabarActionPerformed
@@ -449,12 +444,12 @@ public class RegistroCompraView extends javax.swing.JPanel {
         return txfRut;
     }
 
+    public JTextField getTxfPrveedor() {
+        return txfPrveedor;
+    }
+    
     public JComboBox<OrdenCompra> getCbxOrdenesCompra() {
         return cbxOrdenesCompra;
-    }
-
-    public JComboBox<Proveedor> getCbxProveedores() {
-        return cbxProveedores;
     }
 
     public JComboBox<CategoriaArticulo> getCbxCategoriaArticulos() {
@@ -494,7 +489,6 @@ public class RegistroCompraView extends javax.swing.JPanel {
     private javax.swing.JComboBox<Articulo> cbxArticulos;
     private javax.swing.JComboBox<CategoriaArticulo> cbxCategoriaArticulos;
     private javax.swing.JComboBox<OrdenCompra> cbxOrdenesCompra;
-    private javax.swing.JComboBox<Proveedor> cbxProveedores;
     private com.github.lgooddatepicker.components.DatePicker dpFechaRecepcion;
     private com.github.lgooddatepicker.components.DatePicker dpFechaVencimiento;
     private javax.swing.JLabel jLabel1;
@@ -517,6 +511,7 @@ public class RegistroCompraView extends javax.swing.JPanel {
     private javax.swing.JSpinner spnValorUnitario;
     private javax.swing.JTextField txfCodigo;
     private javax.swing.JTextField txfNumeroFactura;
+    private javax.swing.JTextField txfPrveedor;
     private javax.swing.JTextField txfRut;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,6 +1,7 @@
 package com.ipsoflatus.dreamgifts.modelo.combobox;
 
 import com.ipsoflatus.dreamgifts.modelo.entidad.OrdenCompra;
+import com.ipsoflatus.dreamgifts.modelo.entidad.Proveedor;
 import com.ipsoflatus.dreamgifts.modelo.servicio.OrdenCompraService;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,6 +15,10 @@ public class OrdenCompraComboBoxModel extends ObserverComboBoxModel<OrdenCompra>
     @Override
     public void actualizar(List<OrdenCompra> items) {
         OrdenCompra seleccioneOC = new OrdenCompra();
+        Proveedor proveedor = new Proveedor();
+        proveedor.setRut("");
+        proveedor.setRazonSocial("");
+        seleccioneOC.setProveedor(proveedor);
         List<OrdenCompra> ocActivas = items.stream().filter(p -> true).collect(Collectors.toList());
         ocActivas.add(0, seleccioneOC);
         updateModel(ocActivas.toArray());
