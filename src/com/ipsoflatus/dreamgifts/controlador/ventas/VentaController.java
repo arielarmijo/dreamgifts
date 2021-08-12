@@ -155,7 +155,12 @@ public class VentaController {
             mostrarInformacion("Ingrese rut del cliente.");
             return;
         }
+        try {
         cliente = clienteSrv.buscarPorRut(rut);
+        } catch(DreamGiftsException e) {
+            mostrarInformacion("Cliente no existe.");
+            return;
+        }
         if (cliente == null) {
             mostrarInformacion("Cliente no existe.");
             return;
