@@ -149,15 +149,16 @@ public class ClienteController implements Controller<ClienteView> {
     }
 
     public void vender() {
-     
         int row = view.getjTable().getSelectedRow();
         if (row != -1) {
             Cliente c = tableModel.getItem(row);
-            VentaView vv = ((VentaView) view.getRoot().venta);
-            vv.getTxfRut().setText(c.getRut());
-            vv.getTxfNombreCliente().setText(c.getNombre() + " " + c.getApellido());
-            vv.getTxfTelefonoCliente().setText(c.getTelefono());
-            vv.getTxfEmailCliente().setText(c.getCorreo());
+            if (c.getEstado()) {
+                 VentaView vv = ((VentaView) view.getRoot().venta);
+                vv.getTxfRut().setText(c.getRut());
+                vv.getTxfNombreCliente().setText(c.getNombre() + " " + c.getApellido());
+                vv.getTxfTelefonoCliente().setText(c.getTelefono());
+                vv.getTxfEmailCliente().setText(c.getCorreo());
+            }
         }
         view.getRoot().showVentasTab(0);   
     }

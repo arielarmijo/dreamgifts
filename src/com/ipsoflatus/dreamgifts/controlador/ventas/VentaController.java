@@ -156,11 +156,16 @@ public class VentaController {
             return;
         }
         try {
-        cliente = clienteSrv.buscarPorRut(rut);
+            cliente = clienteSrv.buscarPorRut(rut);
+            if (!cliente.getEstado()) {
+                throw new DreamGiftsException("Cliente desactvado.");
+            }
         } catch(DreamGiftsException e) {
-            mostrarInformacion("Cliente no existe.");
+            mostrarInformacion(e.getMessage());
+            limpiar();
             return;
         }
+        
         if (cliente == null) {
             mostrarInformacion("Cliente no existe.");
             return;
