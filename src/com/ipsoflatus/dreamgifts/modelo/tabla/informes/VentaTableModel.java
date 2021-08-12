@@ -4,6 +4,7 @@ import com.ipsoflatus.dreamgifts.modelo.Observer;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Venta;
 import com.ipsoflatus.dreamgifts.modelo.servicio.VentaService;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -11,7 +12,7 @@ public class VentaTableModel extends AbstractTableModel implements Observer<Vent
     
     protected String[] columnNames;
     protected Class[] columnClases;
-    protected List<Venta> ventas;
+    protected List<Venta> ventas = new ArrayList<>();
     protected final VentaService ventaSrv;
     
     public VentaTableModel() {
