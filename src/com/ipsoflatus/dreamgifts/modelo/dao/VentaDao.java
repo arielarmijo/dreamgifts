@@ -1,7 +1,9 @@
 package com.ipsoflatus.dreamgifts.modelo.dao;
 
+import com.ipsoflatus.dreamgifts.modelo.entidad.Pack;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Venta;
 import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
+import com.ipsoflatus.dreamgifts.modelo.servicio.PackService;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -9,9 +11,31 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
 public class VentaDao extends AbstractDao<Venta> {
+    
+    private final PackService packSrv = PackService.getInstance();
 
     public VentaDao() {
         super(Persistence.createEntityManagerFactory("dreamgifts"), Venta.class);
+    }
+    
+    @Override
+    public void save(Venta v) {
+        EntityManager em = null;
+        try {
+            em = emf.createEntityManager();
+            em.getTransaction().begin();
+            Pack pack = em.merge(v.getPack());
+            pack.setStock(pack.getStock() - 1);
+            em.persist(v);
+            em.getTransaction().commit();
+            packSrv.notifyObservers();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
     }
 
     @Override

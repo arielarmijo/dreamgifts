@@ -172,4 +172,8 @@ public class PackController {
         JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
+    public void updateTableModel() {
+        tableModel.actualizar(packService.buscar());
+    }
+
 }
