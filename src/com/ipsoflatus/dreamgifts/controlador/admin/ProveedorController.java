@@ -93,6 +93,7 @@ public class ProveedorController implements Controller<ProveedorView> {
         String termino = view.getjTextFieldBuscar().getText();
         List<Proveedor> proveedores = termino.isEmpty() ? proveedorService.buscar(): proveedorService.buscar(termino);
         tableModel.actualizar(proveedores);
+        view.getjTextFieldBuscar().setText("");
     }
 
     @Override
