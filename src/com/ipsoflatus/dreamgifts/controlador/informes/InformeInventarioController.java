@@ -82,7 +82,7 @@ public class InformeInventarioController implements DateChangeListener {
     
     private List<FacturaDetalle> filtrarPorCategoriaArticulo(List<FacturaDetalle> ffdd, CategoriaArticulo ca) {
         List<FacturaDetalle> items = ffdd;
-        if (ca.getId() != null)
+        if (ca != null && ca.getId() != null)
             items = items.stream().filter(fd -> fd.getArticulo().getCategoriaArticulo().equals(ca)).collect(Collectors.toList());
         return items;
     }

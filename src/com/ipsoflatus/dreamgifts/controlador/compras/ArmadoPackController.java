@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ipsoflatus.dreamgifts.controlador.admin;
+package com.ipsoflatus.dreamgifts.controlador.compras;
 
 import com.ipsoflatus.dreamgifts.controlador.Controller;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Pack;

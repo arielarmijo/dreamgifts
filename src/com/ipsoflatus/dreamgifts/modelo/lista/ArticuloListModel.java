@@ -5,6 +5,7 @@ import com.ipsoflatus.dreamgifts.modelo.entidad.Articulo;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ArticuloService;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ObservableService;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.AbstractListModel;
 
 public class ArticuloListModel extends AbstractListModel<Articulo> implements Observer<Articulo> {
@@ -29,7 +30,7 @@ public class ArticuloListModel extends AbstractListModel<Articulo> implements Ob
 
     @Override
     public void actualizar(List<Articulo> items) {
-        this.items = items;
+        this.items = items.stream().filter(a -> a.getEstado()).collect(Collectors.toList());
         fireContentsChanged(this, 0, items.size());
     }
 

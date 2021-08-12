@@ -57,7 +57,8 @@ public class RegistroCompraController {
     
     public void filtrarProductos() {
         CategoriaArticulo ca = (CategoriaArticulo) view.getCbxCategoriaArticulos().getSelectedItem();
-        ((ArticuloComboBoxModel) view.getCbxArticulos().getModel()).actualizar(ca.getArticulos());
+        if (ca != null)
+            ((ArticuloComboBoxModel) view.getCbxArticulos().getModel()).actualizar(ca.getArticulos());
     }
 
 

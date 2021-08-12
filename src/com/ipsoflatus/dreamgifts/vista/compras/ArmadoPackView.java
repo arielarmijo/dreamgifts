@@ -6,7 +6,7 @@
 package com.ipsoflatus.dreamgifts.vista.compras;
 
 import com.github.lgooddatepicker.components.DatePicker;
-import com.ipsoflatus.dreamgifts.controlador.admin.ArmadoPackController;
+import com.ipsoflatus.dreamgifts.controlador.compras.ArmadoPackController;
 import com.ipsoflatus.dreamgifts.modelo.servicio.PackService;
 import com.ipsoflatus.dreamgifts.modelo.tabla.admin.ArmPackTableModel;
 import javax.swing.JSpinner;
