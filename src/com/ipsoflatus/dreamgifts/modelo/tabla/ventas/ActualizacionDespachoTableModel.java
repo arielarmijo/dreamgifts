@@ -8,7 +8,7 @@ public class ActualizacionDespachoTableModel extends VentaTableModel {
 
     public ActualizacionDespachoTableModel() {
         super();
-        columnNames = new String[]{"N° Pedido", "Pack", "Destinarario", "Comuna", "Fecha Entrega", "Horario Entrega" , "Estado Venta"};
+        columnNames = new String[]{"N° Pedido", "Pack", "Destinatario", "Comuna", "Fecha Entrega", "Horario Entrega" , "Estado Venta"};
         columnClases = new Class[]{Integer.class, String.class, String.class, String.class, Date.class, String.class, String.class};
     }
 

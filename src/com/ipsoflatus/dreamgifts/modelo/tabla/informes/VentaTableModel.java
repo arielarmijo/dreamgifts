@@ -12,7 +12,7 @@ public class VentaTableModel extends AbstractTableModel implements Observer<Vent
     
     protected String[] columnNames;
     protected Class[] columnClases;
-    protected List<Venta> ventas = new ArrayList<>();
+    protected List<Venta> ventas;
     protected final VentaService ventaSrv;
     
     public VentaTableModel() {
@@ -20,6 +20,7 @@ public class VentaTableModel extends AbstractTableModel implements Observer<Vent
         ventaSrv.addObserver(this);
         columnNames = new String[]{"N° Pedido", "Rut Cliente", "Nombre Cliente", "Fecha Compra", "Fecha Entrega" , "Monto"};
         columnClases = new Class[]{Integer.class, String.class, String.class, Date.class, Date.class, Integer.class};
+        ventas = new ArrayList<>();
     }
     
     public Venta getItem(int row) {

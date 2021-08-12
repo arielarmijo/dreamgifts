@@ -16,7 +16,7 @@ public class ListaDestinoTableModel extends VentaTableModel {
     public ListaDestinoTableModel(ObservableService service) {
         super();
         despacho = obtenerEstado();
-        columnNames = new String[] {"N° Pedido", "Pack", "Destinarario", "Direccón", "Comuna", "Fecha Entrega", "Horario Entrega"};
+        columnNames = new String[] {"N° Pedido", "Pack", "Destinatario", "Dirección", "Comuna", "Fecha Entrega", "Horario Entrega"};
         columnClases = new Class[] {Integer.class, String.class, String.class, String.class, String.class, Date.class, String.class};
     }
 
