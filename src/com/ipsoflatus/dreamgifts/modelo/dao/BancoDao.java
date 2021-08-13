@@ -9,16 +9,11 @@ public class BancoDao extends AbstractSoftDeleteDao<Banco> {
         super(Banco.class);
     }
 
-    @Override
-    public void update(Banco b) {
-        EntityManager em = getEntityManager();
-        em.getTransaction().begin();  
-        Banco banco = em.find(Banco.class, b.getId());
+    public void updateEntity(Banco b) {
+        Banco banco = findById(b.getId());
         banco.setCodigo(b.getCodigo());
         banco.setNombre(b.getNombre());
         banco.setEstado(b.getEstado());
-        em.getTransaction().commit();
-        em.close();
     }
 
 }

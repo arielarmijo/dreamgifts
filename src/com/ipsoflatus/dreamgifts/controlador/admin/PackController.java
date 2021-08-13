@@ -111,7 +111,6 @@ public class PackController {
             }
             cancelar();
         } catch (Exception e) {
-            e.printStackTrace();
             mostrarError(e.getMessage());
         }
         

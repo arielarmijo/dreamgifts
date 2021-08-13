@@ -1,47 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ipsoflatus.dreamgifts.vista.admin;
+
 import com.ipsoflatus.dreamgifts.controlador.admin.EVController;
 import com.ipsoflatus.dreamgifts.modelo.servicio.EVService;
 import com.ipsoflatus.dreamgifts.modelo.tabla.admin.EVTableModel;
+import com.ipsoflatus.dreamgifts.vista.DreamGiftsView;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-/**
- *
- * @author Usuario
- */
-public class EstadoVentaView extends javax.swing.JPanel {
+
+
+public class EstadoVentaView extends DreamGiftsView {
 
    private final EVController controlador;
     
     public EstadoVentaView() {
         initComponents();
-        controlador = new EVController();
-        controlador.setView(this);   
+        controlador = new EVController(this);
     }
 
-    public JTextArea getjTextAreaDescripcion() {
-        return jTextAreaDescripcion;
-    }
-
-    public JTextField getjTextFieldBuscar() {
-        return jTextFieldBuscar;
-    }
-
-    public JTextField getjTextFieldCV() {
-        return jTextFieldCV;
-    }
-
-    public JTextField getjTextFieldIdCV() {
-        return jTextFieldIdCV;
-    }
-    
- 
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -252,25 +229,21 @@ public class EstadoVentaView extends javax.swing.JPanel {
                 .addContainerGap(72, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    public JTable getjTableEV() {
-        return jTableEV;
-    }
     
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
-controlador.editar();
+        controlador.editar();
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
-controlador.cancelar();
+        controlador.cancelar();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
-    controlador.grabar();
+        controlador.grabar();
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
-controlador.buscar();
+        controlador.buscar();
     }//GEN-LAST:event_jButtonBuscarActionPerformed
 
     private void jTextFieldCVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldCVActionPerformed
@@ -282,17 +255,36 @@ controlador.buscar();
     }//GEN-LAST:event_jTextFieldIdCVActionPerformed
 
     private void jTextFieldBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldBuscarActionPerformed
-        // TODO add your handcontrolaling code here:
+        jButtonBuscarActionPerformed(evt);
     }//GEN-LAST:event_jTextFieldBuscarActionPerformed
 
     private void jButtonActivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActivarActionPerformed
- controlador.activarSeleccionados();
+        controlador.activarSeleccionados(true);
     }//GEN-LAST:event_jButtonActivarActionPerformed
 
     private void jButtonDesactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDesactivarActionPerformed
-    controlador.desactivarSeleccionados();
+        controlador.activarSeleccionados(false);
     }//GEN-LAST:event_jButtonDesactivarActionPerformed
 
+    public JTextArea getjTextAreaDescripcion() {
+        return jTextAreaDescripcion;
+    }
+
+    public JTextField getjTextFieldBuscar() {
+        return jTextFieldBuscar;
+    }
+
+    public JTextField getjTextFieldCV() {
+        return jTextFieldCV;
+    }
+
+    public JTextField getjTextFieldIdCV() {
+        return jTextFieldIdCV;
+    }
+    
+    public JTable getjTableEV() {
+        return jTableEV;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonActivar;

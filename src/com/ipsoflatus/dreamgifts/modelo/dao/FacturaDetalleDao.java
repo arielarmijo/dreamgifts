@@ -14,8 +14,7 @@ public class FacturaDetalleDao extends AbstractDao<FacturaDetalle>  {
         super(FacturaDetalle.class);
     }
 
-    @Override
-    public void update(FacturaDetalle t) throws Exception {
+    public void updateEntity(FacturaDetalle t) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

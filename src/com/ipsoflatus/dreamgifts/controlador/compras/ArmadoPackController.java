@@ -21,7 +21,7 @@ import java.util.List;
  *
  * @author Usuario
  */
-public class ArmadoPackController implements Controller<ArmadoPackView>{
+public class ArmadoPackController implements Controller<ArmadoPackView> {
 
     private final PackService packService;
     private ArmadoPackView view;
@@ -29,13 +29,12 @@ public class ArmadoPackController implements Controller<ArmadoPackView>{
     private Pack packActual;
 
     public ArmadoPackController() {
-   this.packService = PackService.getInstance();
+        this.packService = PackService.getInstance();
     }
-    
-    
-@Override
+
+    @Override
     public void setView(ArmadoPackView view) {
-       
+
         this.view = view;
         this.tableModel = (ArmPackTableModel) view.getjTable1().getModel();
     }
@@ -52,49 +51,46 @@ public class ArmadoPackController implements Controller<ArmadoPackView>{
 
     @Override
     public void grabar() {
-      if (packActual == null){
-         mostrarInformacion("Seleccione Pack");
-            return; 
-            }
-      int stock = (int) view.getjSpinner1().getValue();
-    
+        if (packActual == null) {
+            mostrarInformacion("Seleccione Pack");
+            return;
+        }
+        int stock = (int) view.getjSpinner1().getValue();
 
         int stockCritico = (int) view.getjSpinner2().getValue();
-      LocalDate date = view.getDatePicker1().getDate();
+        LocalDate date = view.getDatePicker1().getDate();
         Date fechaInicio = Date.valueOf(date);
-      date = view.getDatePicker2().getDate();
+        date = view.getDatePicker2().getDate();
         Date fechaTermino = Date.valueOf(date);
-      
-           try {
-        packActual.setStock(stock);
-        packActual.setStockCritico(stockCritico);
-        if(fechaInicio != null){
-            packActual.setFechaInicio(fechaInicio);
-        }
-        if(fechaTermino != null){
-            packActual.setFechaTermino(fechaTermino);
-        }
-        packService.editar(packActual);
-       
+
+        try {
+            packActual.setStock(stock);
+            packActual.setStockCritico(stockCritico);
+            if (fechaInicio != null) {
+                packActual.setFechaInicio(fechaInicio);
+            }
+            if (fechaTermino != null) {
+                packActual.setFechaTermino(fechaTermino);
+            }
+            packService.editar(packActual);
             cancelar();
         } catch (Exception e) {
-            e.printStackTrace();
             mostrarError(e.getMessage());
         }
-      
-      }
+
+    }
 
     @Override
     public void buscar() {
-      String termino = view.getjTextFieldBuscar().getText();
-        List<Pack> items = termino.isEmpty() ? packService.buscar(): packService.buscar(termino);
+        String termino = view.getjTextFieldBuscar().getText();
+        List<Pack> items = termino.isEmpty() ? packService.buscar() : packService.buscar(termino);
         tableModel.actualizar(items);
         view.getjTextFieldBuscar().setText("");
     }
 
     @Override
     public void editar() {
-    int row = view.getjTable1().getSelectedRow();
+        int row = view.getjTable1().getSelectedRow();
         if (row == -1) {
             mostrarInformacion("Seleccione pack.");
             return;
@@ -102,14 +98,19 @@ public class ArmadoPackController implements Controller<ArmadoPackView>{
         packActual = tableModel.getItem(row);
         view.getjTextFieldNombre().setText(packActual.getNombre());
         view.getjSpinner1().setValue(packActual.getStock());
-        view.getjSpinner2().setValue(packActual.getStockCritico());
-        java.util.Date date = packActual.getFechaInicio();
-        LocalDate localDate = Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
-        view.getDatePicker1().setDate(localDate);
-        date = packActual.getFechaTermino();
-        localDate = Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
-        view.getDatePicker2().setDate(localDate);
+        if (packActual.getStockCritico() != null)
+            view.getjSpinner2().setValue(packActual.getStockCritico());
+        if (packActual.getFechaInicio() != null && packActual.getFechaTermino() != null) {
+            java.util.Date date = packActual.getFechaInicio();
+            LocalDate localDate = Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+            view.getDatePicker1().setDate(localDate);
+            date = packActual.getFechaTermino();
+            localDate = Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+            view.getDatePicker2().setDate(localDate);
+        }
+        
     }
+
     @Override
     public void activarDesactivarSeleccionados(Boolean estado) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -119,9 +120,5 @@ public class ArmadoPackController implements Controller<ArmadoPackView>{
     public void seleccionarTodos() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
-    
-    
-    
+
 }

@@ -1,6 +1,7 @@
 package com.ipsoflatus.dreamgifts.modelo.dao;
 
 import com.ipsoflatus.dreamgifts.modelo.entidad.Proveedor;
+import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
 import javax.persistence.EntityManager;
 
 public class ProveedorDao extends AbstractSoftDeleteDao<Proveedor> {
@@ -9,11 +10,8 @@ public class ProveedorDao extends AbstractSoftDeleteDao<Proveedor> {
         super(Proveedor.class);
     }
 
-    @Override
-    public void update(Proveedor p) {
-        EntityManager em = getEntityManager();
-        em.getTransaction().begin();  
-        Proveedor proveedor = em.find(Proveedor.class, p.getId());
+    public void updateEntity(Proveedor p) {
+        Proveedor proveedor = findById(p.getId());
         proveedor.setRut(p.getRut());
         proveedor.setRazonSocial(p.getRazonSocial());
         proveedor.setContacto(p.getContacto());
@@ -22,8 +20,6 @@ public class ProveedorDao extends AbstractSoftDeleteDao<Proveedor> {
         proveedor.setTelefono(p.getTelefono());
         proveedor.setEmail(p.getEmail());
         proveedor.setEstado(p.getEstado());
-        em.getTransaction().commit();
-        em.close();
     }
 
 }

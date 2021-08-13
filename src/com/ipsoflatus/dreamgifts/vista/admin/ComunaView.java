@@ -1,38 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ipsoflatus.dreamgifts.vista.admin;
 
 import com.ipsoflatus.dreamgifts.controlador.admin.ComunaController;
 import com.ipsoflatus.dreamgifts.modelo.tabla.admin.ComunaTableModel;
-import com.ipsoflatus.dreamgifts.modelo.dao.ComunaDao;
-import com.ipsoflatus.dreamgifts.modelo.entidad.CategoriaArticulo;
-import com.ipsoflatus.dreamgifts.modelo.entidad.Comuna;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ComunaService;
-import java.util.List;
-import javax.swing.JOptionPane;
+import com.ipsoflatus.dreamgifts.vista.DreamGiftsView;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Usuario
- */
-public class ComunaView extends javax.swing.JPanel {
+public class ComunaView extends DreamGiftsView {
     
     private final ComunaController controlador;
 
-    /**
-     * Creates new form PanelComunas
-     */
     public ComunaView() {
         initComponents();    
-        this.controlador = new ComunaController();
-        this.controlador.setView(this);
-        
+        this.controlador = new ComunaController(this);
     }
 
     /**
@@ -243,11 +224,11 @@ public class ComunaView extends javax.swing.JPanel {
     }//GEN-LAST:event_cancelarActionPerformed
 
     private void desactvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desactvarActionPerformed
-        controlador.activarDesactivarSeleccionados(false);
+        controlador.activarSeleccionados(false);
     }//GEN-LAST:event_desactvarActionPerformed
 
     private void activarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_activarActionPerformed
-        controlador.activarDesactivarSeleccionados(true);
+        controlador.activarSeleccionados(true);
     }//GEN-LAST:event_activarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -269,8 +250,6 @@ public class ComunaView extends javax.swing.JPanel {
     public JTextField getBuscar() {
         return buscar;
     }
-    
-    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton activar;

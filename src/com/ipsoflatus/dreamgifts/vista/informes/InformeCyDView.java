@@ -24,13 +24,13 @@ public class InformeCyDView extends javax.swing.JPanel {
         desdeSettings.setFormatForDatesCommonEra("dd/MM/yyyy");
         desdeSettings.setFormatForDatesBeforeCommonEra("dd/MM/uuuu");
         dpDesde.setSettings(desdeSettings);
-        desdeSettings.setDateRangeLimits(controlador.obtenerFechaMinima(), controlador.obtenerFechaMaxima());
+        //desdeSettings.setDateRangeLimits(controlador.obtenerFechaMinima(), controlador.obtenerFechaMaxima());
         
         DatePickerSettings hastaSettings = new DatePickerSettings();
         hastaSettings.setFormatForDatesCommonEra("dd/MM/yyyy");
         hastaSettings.setFormatForDatesBeforeCommonEra("dd/MM/uuuu");
         dpHasta.setSettings(hastaSettings);
-        hastaSettings.setDateRangeLimits(controlador.obtenerFechaMinima(), controlador.obtenerFechaMaxima());
+        //hastaSettings.setDateRangeLimits(controlador.obtenerFechaMinima(), controlador.obtenerFechaMaxima());
         
         Image dateImage = Toolkit.getDefaultToolkit().getImage("images/datepickerbutton.png");
         ImageIcon dateExampleIcon = new ImageIcon(dateImage);

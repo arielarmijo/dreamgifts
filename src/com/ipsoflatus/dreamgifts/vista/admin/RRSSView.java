@@ -3,11 +3,11 @@ package com.ipsoflatus.dreamgifts.vista.admin;
 import com.ipsoflatus.dreamgifts.controlador.admin.RRSSController;
 import com.ipsoflatus.dreamgifts.modelo.servicio.RedSocialService;
 import com.ipsoflatus.dreamgifts.modelo.tabla.admin.RedSocialTableModel;
+import com.ipsoflatus.dreamgifts.vista.DreamGiftsView;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTable;
 
-public final class RRSSView extends JPanel {
+public final class RRSSView extends DreamGiftsView {
 
     private final RRSSController controlador;
 
@@ -161,9 +161,9 @@ public final class RRSSView extends JPanel {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButtonActivar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonDesactivar))
+                        .addComponent(jButtonDesactivar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonActivar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 806, Short.MAX_VALUE)
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -276,17 +276,6 @@ public final class RRSSView extends JPanel {
     public JTable getjTable() {
         return jTable;
     }
-    
-    
-
-    public void mostrarInformacion(String mensaje) {
-        JOptionPane.showMessageDialog(null, mensaje, "Información", JOptionPane.INFORMATION_MESSAGE);
-    }
-
-    public void mostrarError(String mensaje) {
-        JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
-    }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonActivar;

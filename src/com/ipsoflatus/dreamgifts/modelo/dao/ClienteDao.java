@@ -12,30 +12,8 @@ public class ClienteDao extends AbstractSoftDeleteDao<Cliente> {
         super(Cliente.class);
     }
     
-    public Cliente findByRut(String rut) {
-        EntityManager em = null;
-        try {
-            em = emf.createEntityManager();
-            Query query = em.createQuery("SELECT c FROM Cliente c WHERE c.rut = :rut");
-            query.setParameter("rut", rut);
-            Cliente cliente = (Cliente) query.getSingleResult();
-        return cliente;
-        } catch (NoResultException ex) {
-            //ex.printStackTrace();
-            System.out.println("ClienteDao.findByRut(): "  + ex.getMessage());
-            throw new DreamGiftsException("Cliente no existe.");
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
-    }
-
-    @Override
-    public void update(Cliente c) {
-        EntityManager em = getEntityManager();
-        em.getTransaction().begin(); 
-        Cliente cliente = em.find(Cliente.class, c.getId());
+    public void updateEntity(Cliente c) {
+        Cliente cliente = findById(c.getId());
         cliente.setRut(c.getRut());
         cliente.setNombre(c.getNombre());
         cliente.setApellido(c.getApellido());
@@ -46,8 +24,24 @@ public class ClienteDao extends AbstractSoftDeleteDao<Cliente> {
         cliente.setCelular(c.getCelular());
         cliente.setFechaNacimiento(c.getFechaNacimiento());
         cliente.setEstado(c.getEstado());
-        em.getTransaction().commit();
-        em.close();
+    }
+    
+    public Cliente findByRut(String rut) {
+        EntityManager em = null;
+        try {
+            em = emf.createEntityManager();
+            Query query = em.createQuery("SELECT c FROM Cliente c WHERE c.rut = :rut");
+            query.setParameter("rut", rut);
+            Cliente cliente = (Cliente) query.getSingleResult();
+        return cliente;
+        } catch (NoResultException e) {
+            printError(e);
+            throw new DreamGiftsException("Cliente no existe.");
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
     }
 
 }

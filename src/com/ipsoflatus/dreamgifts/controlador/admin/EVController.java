@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ipsoflatus.dreamgifts.controlador.admin;
 
-import com.ipsoflatus.dreamgifts.controlador.Controller;
 import com.ipsoflatus.dreamgifts.modelo.entidad.EstadoVenta;
 import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
 import com.ipsoflatus.dreamgifts.modelo.servicio.EVService;
@@ -14,25 +8,19 @@ import com.ipsoflatus.dreamgifts.vista.admin.EstadoVentaView;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- *
- * @author Usuario
- */
-public class EVController implements Controller<EstadoVentaView>{
+public class EVController {
     
-      private EstadoVentaView view;
-      private EstadoVenta evActual = null;
-      private EVTableModel tableModel;
       private final EVService service = EVService.getInstance();
+      private final EstadoVentaView view;
+      private final EVTableModel tableModel;
+      private EstadoVenta evActual;
 
      
-    @Override
-    public void setView(EstadoVentaView view) {
+    public EVController(EstadoVentaView view) {
         this.view = view;
         this.tableModel = (EVTableModel) view.getjTableEV().getModel();
     }
 
-    @Override
     public void cancelar() {
         evActual = null;
         view.getjTextFieldCV().setText("");
@@ -40,7 +28,6 @@ public class EVController implements Controller<EstadoVentaView>{
         view.getjTextAreaDescripcion().setText("");
     }
 
-    @Override
     public void grabar() {
        String nombre = view.getjTextFieldCV().getText();
         String codigo = view.getjTextFieldIdCV().getText();
@@ -48,7 +35,7 @@ public class EVController implements Controller<EstadoVentaView>{
         System.out.println(descripcion);
                 
         if (codigo.isEmpty() || nombre.isEmpty()) {
-            mostrarInformacion("Complete todos los campos.");
+            view.mostrarInformacion("Complete todos los campos.");
             return;
         }
 
@@ -68,11 +55,10 @@ public class EVController implements Controller<EstadoVentaView>{
             }
             cancelar();
         } catch (DreamGiftsException e) {
-            mostrarError(e.getMessage());
+            view.mostrarError(e.getMessage());
         }
     }
 
-    @Override
     public void buscar() {
          String termino = view.getjTextFieldBuscar().getText();
         List<EstadoVenta> eevv = termino.isEmpty() ? service.buscar(): service.buscar(termino);
@@ -80,11 +66,10 @@ public class EVController implements Controller<EstadoVentaView>{
         view.getjTextFieldBuscar().setText("");
     }
 
-    @Override
     public void editar() {
           int row = view.getjTableEV().getSelectedRow();
         if (row == -1) {
-            mostrarInformacion("Seleccione Categoria Venta.");
+            view.mostrarInformacion("Seleccione Categoria Venta.");
             return;
         }
         evActual = tableModel.getItem(row);
@@ -93,22 +78,19 @@ public class EVController implements Controller<EstadoVentaView>{
         view.getjTextAreaDescripcion().setText(evActual.getDescripcion());
     }
 
-    @Override
-    public void activarDesactivarSeleccionados(Boolean estado) {
+    public void activarSeleccionados(Boolean estado) {
         List<Integer> ids = tableModel.getSelected().stream().map(b -> b.getId()).collect(Collectors.toList());
         if (ids.isEmpty()) {
-            mostrarInformacion("Seleccione Categoria Venta");
+            view.mostrarInformacion("Seleccione Categoria Venta");
             return;
         }
-        service.cambiarEstado(ids, estado);
-        tableModel.selectAll(false);  
+        try {
+            service.cambiarEstado(ids, estado);
+            tableModel.selectAll(false); 
+        } catch (Exception e) {
+            view.mostrarError(e.getMessage());
+        }
+         
     }
 
-    @Override
-    public void seleccionarTodos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    
-    
 }

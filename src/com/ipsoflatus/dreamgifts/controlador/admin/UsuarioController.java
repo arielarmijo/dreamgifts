@@ -44,7 +44,6 @@ public class UsuarioController {
         }
         
         try {
-            String mensaje;
             if (usuarioActual == null) {
                 usuarioSrv.guardar(new Usuario(null, nombre, password, estado));
             } else {
@@ -82,9 +81,13 @@ public class UsuarioController {
         usuarioActual = tableModel.getItem(view.getSelectedRow());
         String mensaje = String.format("¿Está seguro que quiere borrar al usuario %s?", usuarioActual.getNombre());
         int response = JOptionPane.showConfirmDialog(null, mensaje, "Advertencia", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
-        if (response == 0) {    
+        if (response == 0) {
+            try {
             usuarioSrv.borrar(usuarioActual);
             cancelar();
+            } catch (Exception e) {
+                view.mostrarError(e.getMessage());
+            }
         }
     }
     
@@ -99,13 +102,17 @@ public class UsuarioController {
     public void activarDesactivarSeleccionados(boolean estado) {
         List<Integer> ids = tableModel.getSelected().stream().map(u -> u.getId()).collect(Collectors.toList());
         if (ids.isEmpty()) {
-            view.mostrarInformacion("Selecciones usuarios");
+            view.mostrarInformacion("Seleccione usuarios");
             return;
         }
-        usuarioSrv.cambiarEstado(ids, estado);
-        tableModel.selectAll(false);
-        view.getjToggleButtonSeleccion().setSelected(false);
-        view.getjToggleButtonSeleccion().setText("Seleccionar todos");
+        try {
+            usuarioSrv.cambiarEstado(ids, estado);
+            tableModel.selectAll(false);
+            view.getjToggleButtonSeleccion().setSelected(false);
+            view.getjToggleButtonSeleccion().setText("Seleccionar todos");
+        } catch(Exception e) {
+            view.mostrarError(e.getMessage());
+        }
     }
     
     public void seleccionarTodos() {

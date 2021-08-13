@@ -9,35 +9,32 @@ import com.ipsoflatus.dreamgifts.vista.admin.BancoView;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BancoController implements Controller<BancoView> {
-    private BancoView view;
-      private Banco bancoActual = null;
-      private BancoTableModel tableModel;
-      private final BancoService service = BancoService.getInstance();
+public class BancoController {
+    
+    private final BancoService service = BancoService.getInstance();
+    private final BancoView view;
+    private final BancoTableModel tableModel;
+    private Banco bancoActual;
      
       
-    @Override
-    public void setView(BancoView view){
-      this.view = view;
+    public BancoController(BancoView view){
+        this.view = view;
         this.tableModel = (BancoTableModel) view.getjTableBanco().getModel();
-
     }
 
-    @Override
     public void cancelar() {
         bancoActual = null;
         view.getjTextFieldCodigo().setText("");
         view.getjTextFieldNombre().setText("");
     }
 
-    @Override
     public void grabar() {
  
         String codigo = view.getjTextFieldCodigo().getText();
         String nombre = view.getjTextFieldNombre().getText();
                 
         if (codigo.isEmpty() || nombre.isEmpty()) {
-            mostrarInformacion("Complete todos los campos.");
+            view.mostrarInformacion("Complete todos los campos.");
             return;
         }
 
@@ -51,11 +48,11 @@ public class BancoController implements Controller<BancoView> {
             }
             cancelar();
         } catch (DreamGiftsException e) {
-            mostrarError(e.getMessage());
+            view.mostrarError(e.getMessage());
         }
+        
     }
 
-    @Override
     public void buscar() {
         String termino = view.getjTextFieldBuscar().getText();
         List<Banco> bancos = termino.isEmpty() ? service.buscar(): service.buscar(termino);
@@ -63,11 +60,10 @@ public class BancoController implements Controller<BancoView> {
         view.getjTextFieldBuscar().setText("");
     }
 
-    @Override
     public void editar() {
         int row = view.getjTableBanco().getSelectedRow();
         if (row == -1) {
-            mostrarInformacion("Seleccione Banco.");
+            view.mostrarInformacion("Seleccione Banco.");
             return;
         }
         bancoActual = tableModel.getItem(row);
@@ -75,20 +71,19 @@ public class BancoController implements Controller<BancoView> {
         view.getjTextFieldNombre().setText(bancoActual.getNombre());
     }
 
-    @Override
-    public void activarDesactivarSeleccionados(Boolean estado) {
+    public void activarSeleccionados(Boolean estado) {
         List<Integer> ids = tableModel.getSelected().stream().map(b -> b.getId()).collect(Collectors.toList());
         if (ids.isEmpty()) {
-            mostrarInformacion("Seleccione banco");
+            view.mostrarInformacion("Seleccione banco");
             return;
         }
-        service.cambiarEstado(ids, estado);
-        tableModel.selectAll(false);    
-    }
-
-    @Override
-    public void seleccionarTodos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            service.cambiarEstado(ids, estado);
+            tableModel.selectAll(false);  
+        } catch (Exception e) {
+            view.mostrarError(e.getMessage());
+        }
+          
     }
     
 }

@@ -3,12 +3,11 @@ package com.ipsoflatus.dreamgifts.vista.admin;
 import com.ipsoflatus.dreamgifts.controlador.admin.UsuarioController;
 import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
 import com.ipsoflatus.dreamgifts.modelo.tabla.admin.UsuarioTableModel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import com.ipsoflatus.dreamgifts.vista.DreamGiftsView;
 import javax.swing.JTable;
 import javax.swing.JToggleButton;
 
-public class UsuarioView extends JPanel {
+public class UsuarioView extends DreamGiftsView {
 
     private final UsuarioController controlador;
     
@@ -323,7 +322,6 @@ public class UsuarioView extends JPanel {
         String nombre = jTextFieldNombreUsuario.getText();
         String password = jTextFieldNuevoPassword.getText();
         String rePassword = jTextFieldRePassword.getText();
-        System.out.println(buttonGroupEstado.getSelection().getActionCommand().equals("Activo"));
         boolean isActive = buttonGroupEstado.getSelection().getActionCommand().equals("Activo");
         controlador.grabar(nombre, password, rePassword, isActive);
     }//GEN-LAST:event_jButtonGuardarActionPerformed
@@ -402,8 +400,6 @@ public class UsuarioView extends JPanel {
     public String getBuscar() {
         return jTextFieldBuscar.getText();
     }
-    
-    
 
     public JToggleButton getjToggleButtonSeleccion() {
         return jToggleButtonSeleccion;
@@ -424,14 +420,6 @@ public class UsuarioView extends JPanel {
             throw new DreamGiftsException("No se ha seleccionado usaurio");
         }
         return row;
-    }
-    
-    public void mostrarInformacion(String mensaje) {
-        JOptionPane.showMessageDialog(null, mensaje, "Información", JOptionPane.INFORMATION_MESSAGE);
-    }
-    
-    public void mostrarError(String mensaje) {
-        JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

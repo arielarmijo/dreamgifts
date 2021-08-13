@@ -13,39 +13,23 @@ public class OrdenCompraDao extends AbstractDao<OrdenCompra> {
         super(Persistence.createEntityManagerFactory("dreamgifts"), OrdenCompra.class);
     }
 
-    @Override
-    public void update(OrdenCompra oc) throws Exception {
-        
-        EntityManager em = null;
-        
-        try {
-            em = getEntityManager();
-            em.getTransaction().begin();  
+    public void updateEntity(OrdenCompra oc) {
             
-            OrdenCompra persistentOC = em.find(OrdenCompra.class, oc.getId());
-            Query query = em.createQuery("DELETE FROM OrdenCompraDetalle ocd WHERE ocd.ordenCompra.id = :id");
-            query.setParameter("id", persistentOC.getId());
-            query.executeUpdate();
-            
-            List<OrdenCompraDetalle> articulos = oc.getArticulos();
-            for (OrdenCompraDetalle articulo : articulos) {
-                articulo.setOrdenCompra(persistentOC);
-                em.persist(articulo);
-            }
-            
-            persistentOC.setArticulos(articulos);
-            persistentOC.setFechaOrden(oc.getFechaOrden());
-            persistentOC.setProveedor(oc.getProveedor());
-            em.merge(persistentOC);
-
-            em.getTransaction().commit();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
+//            OrdenCompra persistentOC = em.find(OrdenCompra.class, oc.getId());
+//            Query query = em.createQuery("DELETE FROM OrdenCompraDetalle ocd WHERE ocd.ordenCompra.id = :id");
+//            query.setParameter("id", persistentOC.getId());
+//            query.executeUpdate();
+//            
+//            List<OrdenCompraDetalle> articulos = oc.getArticulos();
+//            for (OrdenCompraDetalle articulo : articulos) {
+//                articulo.setOrdenCompra(persistentOC);
+//                em.persist(articulo);
+//            }
+//            
+//            persistentOC.setArticulos(articulos);
+//            persistentOC.setFechaOrden(oc.getFechaOrden());
+//            persistentOC.setProveedor(oc.getProveedor());
+//            em.merge(persistentOC);
         
     }
 

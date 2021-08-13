@@ -1,8 +1,6 @@
 package com.ipsoflatus.dreamgifts.modelo.servicio;
 
-import com.ipsoflatus.dreamgifts.modelo.dao.FacturaDao;
 import com.ipsoflatus.dreamgifts.modelo.dao.VentaDao;
-import com.ipsoflatus.dreamgifts.modelo.entidad.Factura;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Venta;
 import java.util.Date;
 import java.util.List;

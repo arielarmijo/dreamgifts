@@ -11,18 +11,20 @@ public class CyDTableModel extends ActualizacionDespachoTableModel {
 
     @Override
     public void actualizar(List<Venta> items) {
-   EstadoVenta devolucion = obtenerEstado();
+        EstadoVenta devolucion = obtenerEstado();
         if (devolucion != null) {
             ventas = items.stream().filter(v -> v.getEstadoVenta().equals(devolucion)).collect(Collectors.toList());
             fireTableDataChanged();
+        }
+
     }
-    
-}
+
     private EstadoVenta obtenerEstado() {
         List<EstadoVenta> result = EVService.getInstance().buscar();
-        if (result.isEmpty())
+        if (result.isEmpty()) {
             return null;
+        }
         return EVService.getInstance().buscar().get(3);
     }
-    
+
 }

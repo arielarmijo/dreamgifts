@@ -7,7 +7,7 @@ import com.ipsoflatus.dreamgifts.modelo.combobox.ProveedorComboBoxModel;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Proveedor;
 import com.ipsoflatus.dreamgifts.modelo.tabla.compras.DetalleFacturaTableModel;
 import com.ipsoflatus.dreamgifts.modelo.tabla.compras.FacturaTableModel;
-import com.ipsoflatus.dreamgifts.vista.DreamGifts;
+import com.ipsoflatus.dreamgifts.vista.DreamGiftsView;
 import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
@@ -16,13 +16,10 @@ import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-public class RevisionFacturaView extends javax.swing.JPanel {
+public class RevisionFacturaView extends DreamGiftsView {
 
     private final RevisionFacturaController controlador;
-    private DreamGifts root;
-    /**
-     * Creates new form PanelConfirmcionPago
-     */
+
     public RevisionFacturaView() {
         initComponents();
         this.controlador = new RevisionFacturaController(this);
@@ -33,13 +30,13 @@ public class RevisionFacturaView extends javax.swing.JPanel {
         desdeSettings.setFormatForDatesCommonEra("dd/MM/yyyy");
         desdeSettings.setFormatForDatesBeforeCommonEra("dd/MM/uuuu");
         dpDesde.setSettings(desdeSettings);
-        desdeSettings.setDateRangeLimits(controlador.obtenerFechaMinima(), controlador.obtenerFechaMaxima());
+        //desdeSettings.setDateRangeLimits(controlador.obtenerFechaMinima(), controlador.obtenerFechaMaxima());
         
         DatePickerSettings hastaSettings = new DatePickerSettings();
         hastaSettings.setFormatForDatesCommonEra("dd/MM/yyyy");
         hastaSettings.setFormatForDatesBeforeCommonEra("dd/MM/uuuu");
         dpHasta.setSettings(hastaSettings);
-        hastaSettings.setDateRangeLimits(controlador.obtenerFechaMinima(), controlador.obtenerFechaMaxima());
+        //hastaSettings.setDateRangeLimits(controlador.obtenerFechaMinima(), controlador.obtenerFechaMaxima());
         
         Image dateImage = Toolkit.getDefaultToolkit().getImage("images/datepickerbutton.png");
         ImageIcon dateExampleIcon = new ImageIcon(dateImage);
@@ -56,6 +53,7 @@ public class RevisionFacturaView extends javax.swing.JPanel {
         dpHasta.setDate(controlador.obtenerFechaMaxima());
         dpDesde.addDateChangeListener(controlador);
         dpHasta.addDateChangeListener(controlador);
+        
     }
 
     /**
@@ -236,14 +234,6 @@ public class RevisionFacturaView extends javax.swing.JPanel {
         controlador.editarFactura();
     }//GEN-LAST:event_btnEditarActionPerformed
 
-    public DreamGifts getRoot() {
-        return root;
-    }
-    
-    public void setRoot(DreamGifts root) {
-        this.root = root;
-    }
-    
     public JTextField getTxfNumeroFactura() {
         return txfNumeroFactura;
     }

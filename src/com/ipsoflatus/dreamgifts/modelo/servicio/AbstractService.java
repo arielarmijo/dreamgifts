@@ -44,12 +44,8 @@ public abstract class AbstractService<T> implements Service<T>, ObservableServic
 
     @Override
     public void editar(T t) {
-        try {
-            dao.update(t);
-            notifyObservers();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        dao.update(t);
+        notifyObservers();
     }
 
     @Override
@@ -66,10 +62,12 @@ public abstract class AbstractService<T> implements Service<T>, ObservableServic
 
     @Override
     public void notifyObservers() {
-        items = dao.findAll();
-        obs.forEach(o -> {
+        executor.execute(() -> {
+            items = dao.findAll();
+            obs.forEach(o -> {
                 System.out.println("notificando observador " + o.getClass().getSimpleName() + " con " + items);
                 o.actualizar(items);
+            });
         });
     }
 

@@ -40,12 +40,7 @@ public class FacturaDao extends AbstractDao<Factura> {
         }
     }
 
-    @Override
-    public void update(Factura f) throws Exception {
-        EntityManager em = null;
-        try {
-            em = getEntityManager();
-            em.getTransaction().begin();  
+    public void updateEntity(Factura f) {
             
             //Factura persistentFactura = em.find(Factura.class, f.getId());
 //            Query query = em.createQuery("DELETE FROM OrdenCompraDetalle ocd WHERE ocd.ordenCompra.id = :id");
@@ -63,15 +58,6 @@ public class FacturaDao extends AbstractDao<Factura> {
 //            persistentOC.setProveedor(oc.getProveedor());
             //em.merge(persistentFactura);
 
-            em.getTransaction().commit();
-        } catch (Exception ex) {
-            //ex.printStackTrace();
-            throw new DreamGiftsException(ex.getMessage());
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
     }
 
     public Factura findByNumber(Integer numeroFactura) {

@@ -3,9 +3,13 @@ package com.ipsoflatus.dreamgifts.modelo.tabla.ventas;
 import com.ipsoflatus.dreamgifts.modelo.tabla.informes.VentaTableModel;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Venta;
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public class ActualizacionDespachoTableModel extends VentaTableModel {
 
+    DateFormat timeFormat = new SimpleDateFormat("hh:mm");  
+    
     public ActualizacionDespachoTableModel() {
         super();
         columnNames = new String[]{"N° Pedido", "Pack", "Destinatario", "Comuna", "Fecha Entrega", "Horario Entrega" , "Estado Venta"};
@@ -26,7 +30,7 @@ public class ActualizacionDespachoTableModel extends VentaTableModel {
         if (columnIndex == 4)
             return venta.getFechaEntrega();
         if (columnIndex == 5)
-            return venta.getHoraEntregaInicial() + " a " + venta.getHoraEntregaFinal();
+            return timeFormat.format(venta.getHoraEntregaInicial()) + " a " + timeFormat.format(venta.getHoraEntregaFinal());
         if (columnIndex == 6)
             return venta.getEstadoVenta().getNombre();
         return null;

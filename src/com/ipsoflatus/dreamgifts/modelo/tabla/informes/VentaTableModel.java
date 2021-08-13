@@ -18,7 +18,7 @@ public class VentaTableModel extends AbstractTableModel implements Observer<Vent
     public VentaTableModel() {
         ventaSrv = VentaService.getInstance();
         ventaSrv.addObserver(this);
-        columnNames = new String[]{"N° Pedido", "Rut Cliente", "Nombre Cliente", "Fecha Compra", "Fecha Entrega" , "Monto"};
+        columnNames = new String[]{"N° Pedido", "Rut Cliente", "Nombre Cliente", "Fecha Venta", "Fecha Entrega" , "Monto"};
         columnClases = new Class[]{Integer.class, String.class, String.class, Date.class, Date.class, Integer.class};
     }
     

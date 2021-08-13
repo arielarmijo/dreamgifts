@@ -1,7 +1,6 @@
 package com.ipsoflatus.dreamgifts.controlador.admin;
 
 import com.ipsoflatus.dreamgifts.modelo.tabla.admin.ArticuloTableModel;
-import com.ipsoflatus.dreamgifts.controlador.Controller;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Articulo;
 import com.ipsoflatus.dreamgifts.modelo.entidad.CategoriaArticulo;
 import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
@@ -10,20 +9,18 @@ import com.ipsoflatus.dreamgifts.vista.admin.ArticuloView;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ArticuloController implements Controller<ArticuloView> {
+public class ArticuloController {
 
     private final ArticuloService articuloService = ArticuloService.getInstance();
-    private ArticuloTableModel tableModel;
+    private final ArticuloView view;
+    private final ArticuloTableModel tableModel;
     private Articulo articuloActual;
-    private ArticuloView view;
     
-    @Override
-    public void setView(ArticuloView view) {
+    public ArticuloController(ArticuloView view) {
         this.view = view;
         this.tableModel = (ArticuloTableModel) view.getjTableArticulo().getModel();
     }
 
-    @Override
     public void cancelar() {
         articuloActual = null;
         view.getTxfNombre().setText("");
@@ -32,19 +29,18 @@ public class ArticuloController implements Controller<ArticuloView> {
         view.getjRadioButtonActivo().setSelected(true);
     }
 
-    @Override
     public void grabar() {
         
         String nombre = view.getTxfNombre().getText();
         String marca = view.getTxfMarca().getText();
         if (nombre.isEmpty() || marca.isEmpty()) {
-            mostrarInformacion("Complete todos los campos.");
+            view.mostrarInformacion("Complete todos los campos.");
             return;
         }
         
         CategoriaArticulo categoria = (CategoriaArticulo) view.getCbxCategoria().getSelectedItem();
         if (categoria.getId() == null) {
-            mostrarInformacion("Seleccione categoría.");
+            view.mostrarInformacion("Seleccione categoría.");
             return;
         }
         
@@ -68,11 +64,10 @@ public class ArticuloController implements Controller<ArticuloView> {
             }
             cancelar();
         } catch (DreamGiftsException e) {
-            mostrarError(e.getMessage());
+            view.mostrarError(e.getMessage());
         }
     }
 
-    @Override
     public void buscar() {
         String termino = view.getTxfBuscar().getText();
         List<Articulo> items = termino.isEmpty() ? articuloService.buscar(): articuloService.buscar(termino);
@@ -80,13 +75,12 @@ public class ArticuloController implements Controller<ArticuloView> {
         view.getTxfBuscar().setText("");
     }
 
-    @Override
     public void editar() {
         
         int row = view.getjTableArticulo().getSelectedRow();
         
         if (row == -1) {
-            mostrarInformacion("Seleccione artículo.");
+            view.mostrarInformacion("Seleccione artículo.");
             return;
         }
         
@@ -102,20 +96,18 @@ public class ArticuloController implements Controller<ArticuloView> {
         
     }
 
-    @Override
-    public void activarDesactivarSeleccionados(Boolean estado) {
+    public void activarSeleccionados(Boolean estado) {
         List<Integer> ids = tableModel.getSelected().stream().map(ca -> ca.getId()).collect(Collectors.toList());
         if (ids.isEmpty()) {
-            mostrarInformacion("Seleccione artículo(s)");
+            view.mostrarInformacion("Seleccione artículo(s)");
             return;
         }
-        articuloService.cambiarEstado(ids, estado);
-        tableModel.selectAll(false);
+        try {
+            articuloService.cambiarEstado(ids, estado);
+            tableModel.selectAll(false);
+        } catch (Exception e) {
+            view.mostrarError(e.getMessage());
+        }
     }
 
-    @Override
-    public void seleccionarTodos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
 }

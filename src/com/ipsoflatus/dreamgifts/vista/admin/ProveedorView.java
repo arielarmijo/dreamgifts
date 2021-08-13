@@ -2,29 +2,21 @@ package com.ipsoflatus.dreamgifts.vista.admin;
 
 import com.ipsoflatus.dreamgifts.controlador.admin.ProveedorController;
 import com.ipsoflatus.dreamgifts.modelo.combobox.ComunaComboBoxModel;
-import com.ipsoflatus.dreamgifts.modelo.combobox.ObserverComboBoxModel;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ComunaService;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ProveedorService;
 import com.ipsoflatus.dreamgifts.modelo.tabla.admin.ProveedorTableModel;
-import com.ipsoflatus.dreamgifts.vista.DreamGifts;
+import com.ipsoflatus.dreamgifts.vista.DreamGiftsView;
 import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-public class ProveedorView extends JPanel {
+public class ProveedorView extends DreamGiftsView {
     
     private final ProveedorController controlador;
-    private DreamGifts root;
 
-    /**
-     * Creates new form PanelProveedor
-     */
     public ProveedorView() {
         initComponents();
-        this.controlador = new ProveedorController();
-        this.controlador.setView(this);
+        this.controlador = new ProveedorController(this);
     }
 
     /**
@@ -273,10 +265,9 @@ public class ProveedorView extends JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButtonActivar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
                         .addComponent(jButtonDesactivar)
-                        .addGap(9, 9, 9)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonActivar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanelListadoLayout.setVerticalGroup(
@@ -360,14 +351,6 @@ public class ProveedorView extends JPanel {
         controlador.buscar();
     }//GEN-LAST:event_jTextFieldBuscarActionPerformed
     
-    public DreamGifts getRoot() {
-        return root;
-    }
-    
-    public void setRoot(DreamGifts root) {
-        this.root = root;
-    }
-    
     public JComboBox getjComboBoxComunas() {
         return jComboBoxComunas;
     }
@@ -403,7 +386,6 @@ public class ProveedorView extends JPanel {
     public JTextField getjTextFieldTelefono() {
         return jTextFieldTelefono;
     }
-    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonActivar;

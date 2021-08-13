@@ -1,6 +1,5 @@
 package com.ipsoflatus.dreamgifts.controlador.admin;
 
-import com.ipsoflatus.dreamgifts.controlador.Controller;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Comuna;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Proveedor;
 import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
@@ -12,21 +11,19 @@ import com.ipsoflatus.dreamgifts.vista.compras.SolicitudPedidoView;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ProveedorController implements Controller<ProveedorView> {
+public class ProveedorController {
 
-    private Proveedor proveedorActual;
-    private ProveedorView view;
-    private ProveedorTableModel tableModel;
     private final ComunaService comunaService = ComunaService.getInstance();
     private final ProveedorService proveedorService = ProveedorService.getInstance();
+    private final ProveedorView view;
+    private final ProveedorTableModel tableModel;
+    private Proveedor proveedorActual;
     
-    @Override
-    public void setView(ProveedorView view) {
+    public ProveedorController(ProveedorView view) {
         this.view = view;
         this.tableModel = (ProveedorTableModel) view.getjTableProveedores().getModel();
     }
 
-    @Override
     public void cancelar() {
         proveedorActual = null;
         view.getjTextFieldRut().setText("");
@@ -38,7 +35,6 @@ public class ProveedorController implements Controller<ProveedorView> {
         view.getjComboBoxComunas().setSelectedIndex(0);
     }
 
-    @Override
     public void grabar() {
         
         String rut = view.getjTextFieldRut().getText();
@@ -50,13 +46,13 @@ public class ProveedorController implements Controller<ProveedorView> {
         
         if (rut.isEmpty() || razonSocial.isEmpty() || contacto.isEmpty() ||
             direccion.isEmpty() || telefono.isEmpty() || email.isEmpty()) {
-            mostrarInformacion("Complete todos los campos.");
+            view.mostrarInformacion("Complete todos los campos.");
             return;
         }
         
         Comuna comuna = (Comuna) view.getjComboBoxComunas().getSelectedItem();
         if (comuna.getId() == null) {
-            mostrarInformacion("Seleccione comuna.");
+            view.mostrarInformacion("Seleccione comuna.");
             return;
         }
         
@@ -84,11 +80,10 @@ public class ProveedorController implements Controller<ProveedorView> {
             }
             cancelar();
         } catch (DreamGiftsException e) {
-            mostrarError(e.getMessage());
+            view.mostrarError(e.getMessage());
         }
     }
 
-    @Override
     public void buscar() {
         String termino = view.getjTextFieldBuscar().getText();
         List<Proveedor> proveedores = termino.isEmpty() ? proveedorService.buscar(): proveedorService.buscar(termino);
@@ -96,11 +91,10 @@ public class ProveedorController implements Controller<ProveedorView> {
         view.getjTextFieldBuscar().setText("");
     }
 
-    @Override
     public void editar() {
         int row = view.getjTableProveedores().getSelectedRow();
         if (row == -1) {
-            mostrarInformacion("Seleccione proveedor.");
+            view.mostrarInformacion("Seleccione proveedor.");
             return;
         }
         proveedorActual = tableModel.getItem(row);
@@ -114,20 +108,22 @@ public class ProveedorController implements Controller<ProveedorView> {
         view.getjComboBoxComunas().getModel().setSelectedItem(proveedorActual.getComuna());
     }
 
-    @Override
+    public void activarSeleccionados() {
+        activarDesactivarSeleccionados(true);
+    }
+    
+    public void desactivarSeleccionados() {
+        activarDesactivarSeleccionados(false);
+    }
+    
     public void activarDesactivarSeleccionados(Boolean estado) {
         List<Integer> ids = tableModel.getSelected().stream().map(ca -> ca.getId()).collect(Collectors.toList());
         if (ids.isEmpty()) {
-            mostrarInformacion("Seleccione proveedor(es).");
+            view.mostrarInformacion("Seleccione proveedor(es).");
             return;
         }
         proveedorService.cambiarEstado(ids, estado);
         tableModel.selectAll(false);
-    }
-
-    @Override
-    public void seleccionarTodos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public void comprar() {
@@ -139,6 +135,5 @@ public class ProveedorController implements Controller<ProveedorView> {
         }
         view.getRoot().showComprasTab(1);  
     }
-
    
 }

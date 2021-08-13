@@ -109,7 +109,6 @@ public class RegistroCompraController {
             }
             cancelar();
         } catch(Exception e) {
-            e.printStackTrace();
             mostrarError(e.getMessage());
         }
         

@@ -15,32 +15,24 @@ public class ArticuloDao extends AbstractSoftDeleteDao<Articulo> {
 
     @Override
     public void save(Articulo t) {
-        super.save(t); //To change body of generated methods, choose Tools | Templates.
-        caSrv.notifyObservers();
-    }
-
-    @Override
-    public void updateStateByIds(List<Integer> ids, boolean estado) {
-        super.updateStateByIds(ids, estado); //To change body of generated methods, choose Tools | Templates.
+        super.save(t);
         caSrv.notifyObservers();
     }
     
-    
-
-    
-    @Override
-    public void update(Articulo a) {
-        EntityManager em = getEntityManager();
-        em.getTransaction().begin();  
-        Articulo articulo = em.find(Articulo.class, a.getId());
+    public void updateEntity(Articulo a) {
+        Articulo articulo = findById(a.getId());
         articulo.setNombre(a.getNombre());
         articulo.setMarca(a.getMarca());
         articulo.setStock(a.getStock());
         articulo.setFechaVencimiento(a.getFechaVencimiento());
         articulo.setEstado(a.getEstado());
         articulo.setCategoriaArticulo(a.getCategoriaArticulo());
-        em.getTransaction().commit();
-        em.close();
+        caSrv.notifyObservers();
+    }
+    
+    @Override
+    public void updateStateByIds(List<Integer> ids, boolean estado) {
+        super.updateStateByIds(ids, estado);
         caSrv.notifyObservers();
     }
 

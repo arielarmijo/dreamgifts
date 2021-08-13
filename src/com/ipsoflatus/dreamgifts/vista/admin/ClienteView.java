@@ -7,28 +7,22 @@ import com.ipsoflatus.dreamgifts.modelo.combobox.ComunaComboBoxModel;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ClienteService;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ComunaService;
 import com.ipsoflatus.dreamgifts.modelo.tabla.admin.ClienteTableModel;
-import com.ipsoflatus.dreamgifts.vista.DreamGifts;
+import com.ipsoflatus.dreamgifts.vista.DreamGiftsView;
 import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-public class ClienteView extends JPanel {
+public class ClienteView extends DreamGiftsView {
 
     private final ClienteController controlador;
-    private DreamGifts root;
-    
-    /**
-     * Creates new form PanelCliente
-     */
+
     public ClienteView() {
         initComponents();
-        controlador = new ClienteController();
-        controlador.setView(this); 
+        controlador = new ClienteController(this);
         // Configura el date picker
         DatePickerSettings dateSettings = new DatePickerSettings();
         dateSettings.setFormatForDatesCommonEra("dd/MM/yyyy");
@@ -349,40 +343,32 @@ public class ClienteView extends JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
-controlador.grabar();
+        controlador.grabar();
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
-    controlador.cancelar();
+        controlador.cancelar();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void jButtonVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVentaActionPerformed
-    controlador.vender();
+        controlador.vender();
     }//GEN-LAST:event_jButtonVentaActionPerformed
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
-      controlador.editar();
+        controlador.editar();
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jButtonActivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActivarActionPerformed
-controlador.activarSeleccionados();
+        controlador.activarSeleccionados();
     }//GEN-LAST:event_jButtonActivarActionPerformed
 
     private void jButtondesactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtondesactivarActionPerformed
-   controlador.desactivarSeleccionados();
+        controlador.desactivarSeleccionados();
     }//GEN-LAST:event_jButtondesactivarActionPerformed
 
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
-   controlador.buscar();
+        controlador.buscar();
     }//GEN-LAST:event_jButtonBuscarActionPerformed
-
-    public DreamGifts getRoot() {
-        return root;
-    }
-    
-    public void setRoot(DreamGifts root) {
-        this.root = root;
-    }
 
     public JComboBox getjComboBoxComuna() {
         return jComboBoxComuna;

@@ -6,12 +6,15 @@ import com.ipsoflatus.dreamgifts.modelo.entidad.Venta;
 import com.ipsoflatus.dreamgifts.modelo.servicio.EVService;
 import com.ipsoflatus.dreamgifts.modelo.servicio.ObservableService;
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ListaDestinoTableModel extends VentaTableModel {
     
     private EstadoVenta despacho;
+    DateFormat timeFormat = new SimpleDateFormat("hh:mm");  
 
     public ListaDestinoTableModel(ObservableService service) {
         super();
@@ -36,7 +39,7 @@ public class ListaDestinoTableModel extends VentaTableModel {
         if (columnIndex == 5)
             return venta.getFechaEntrega();
         if (columnIndex == 6)
-            return venta.getHoraEntregaInicial() + " a " + venta.getHoraEntregaFinal();
+            return timeFormat.format(venta.getHoraEntregaInicial()) + " a " + timeFormat.format(venta.getHoraEntregaFinal());
         return null;
     }
 

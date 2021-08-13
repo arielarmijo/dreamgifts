@@ -8,9 +8,9 @@ public class ClienteTableModel extends ObservableTableModel<Cliente> {
 
     public ClienteTableModel(ObservableService service) {
         super(service);
-        columnNames = new String[] {"Rut", "Nombre", "Apellido", "Email", "Celular", "Estado", "Selección"};
-        columnClases = new Class[] {String.class, String.class, String.class, String.class, String.class, String.class, Boolean.class};
-        isEditable = new boolean[] {false, false, false, false, false, false, true};
+        columnNames = new String[] {"Rut", "Nombre", "Apellido", "Email", "Celular", "Comuna", "Estado", "Selección"};
+        columnClases = new Class[] {String.class, String.class, String.class, String.class, String.class, String.class, String.class, Boolean.class};
+        isEditable = new boolean[] {false, false, false, false, false, false, false, true};
     }
 
     @Override
@@ -27,8 +27,10 @@ public class ClienteTableModel extends ObservableTableModel<Cliente> {
         if (columnIndex == 4)
             return item.getCelular();
         if (columnIndex == 5)
-            return item.getEstado() ? "Activo" : "Inactivo";
+            return item.getComuna().getNombre();
         if (columnIndex == 6)
+            return item.getEstado() ? "Activo" : "Inactivo";
+        if (columnIndex == 7)
             return seleccionados.get(rowIndex);
         return null;
     }

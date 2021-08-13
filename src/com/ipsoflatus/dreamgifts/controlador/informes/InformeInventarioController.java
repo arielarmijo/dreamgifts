@@ -89,7 +89,7 @@ public class InformeInventarioController implements DateChangeListener {
     
     private List<FacturaDetalle> filtrarPorProveedor(List<FacturaDetalle> ffdd,Proveedor p) {
         List<FacturaDetalle> items = ffdd;
-        if (p.getId() != null) 
+        if (p != null && p.getId() != null) 
             items = items.stream().filter(fd -> fd.getFactura().getOrdenCompra().getProveedor().equals(p)).collect(Collectors.toList());
         return items;
     }

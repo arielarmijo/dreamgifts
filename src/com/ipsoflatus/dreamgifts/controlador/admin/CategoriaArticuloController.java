@@ -1,7 +1,6 @@
 package com.ipsoflatus.dreamgifts.controlador.admin;
 
 import com.ipsoflatus.dreamgifts.modelo.tabla.admin.CategoriaArticuloTableModel;
-import com.ipsoflatus.dreamgifts.controlador.Controller;
 import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
 import com.ipsoflatus.dreamgifts.modelo.entidad.CategoriaArticulo;
 import com.ipsoflatus.dreamgifts.modelo.servicio.CategoriaArticuloService;
@@ -9,37 +8,29 @@ import com.ipsoflatus.dreamgifts.vista.admin.CategoriaArticuloView;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CategoriaArticuloController implements Controller<CategoriaArticuloView> {
+public class CategoriaArticuloController {
 
-    private final CategoriaArticuloService service;
+    private final CategoriaArticuloService service = CategoriaArticuloService.getInstance();
+    private final CategoriaArticuloView view;
+    private final CategoriaArticuloTableModel tableModel;
     private CategoriaArticulo categoriaActual;
-    private CategoriaArticuloTableModel tableModel;
-    private CategoriaArticuloView view;
 
-    public CategoriaArticuloController() {
-        service = CategoriaArticuloService.getInstance();
-        categoriaActual = null; 
-    }
-
-    @Override
-    public void setView(CategoriaArticuloView view) {
+    public CategoriaArticuloController(CategoriaArticuloView view) {
         this.view = view;
         this.tableModel = (CategoriaArticuloTableModel) view.getjTableCA().getModel();
     }
     
-    @Override
     public void cancelar() {
         categoriaActual = null;
         view.getjTextFieldCodigo().setText("");
         view.getjTextFieldNombre().setText("");
     }
 
-    @Override
     public void grabar() {
         String codigo = view.getjTextFieldCodigo().getText();
         String nombre = view.getjTextFieldNombre().getText();
         if (codigo.isEmpty() || nombre.isEmpty()) {
-            mostrarInformacion("Complete todos los campos.");
+            view.mostrarInformacion("Complete todos los campos.");
             return;
         }
         Boolean estado = view.getButtonGroupEstado().getSelection().getActionCommand().equals("Activo");
@@ -58,11 +49,10 @@ public class CategoriaArticuloController implements Controller<CategoriaArticulo
             }
             cancelar();
         } catch (DreamGiftsException e) {
-            mostrarError(e.getMessage());
+            view.mostrarError(e.getMessage());
         }
     }
     
-    @Override
     public void buscar() {
         String termino = view.getjTextFieldBuscar().getText();
         List<CategoriaArticulo> ccaa = termino.isEmpty() ? service.buscar(): service.buscar(termino);
@@ -70,11 +60,10 @@ public class CategoriaArticuloController implements Controller<CategoriaArticulo
         view.getjTextFieldBuscar().setText("");
     }
 
-    @Override
     public void editar() {      
         int row = view.getjTableCA().getSelectedRow();
         if (row == -1) {
-            mostrarInformacion("Seleccione categoría.");
+            view.mostrarInformacion("Seleccione categoría.");
             return;
         }
         categoriaActual = tableModel.getItem(row);
@@ -86,20 +75,26 @@ public class CategoriaArticuloController implements Controller<CategoriaArticulo
             view.getjRadioButtonInactivo().setSelected(true);
     }
     
-    @Override
+    public void activarSeleccionados() {
+        activarDesactivarSeleccionados(true);
+    }
+    
+    public void desactivarSeleccionados() {
+        activarDesactivarSeleccionados(false);
+    }
+    
     public void activarDesactivarSeleccionados(Boolean estado) {
         List<Integer> ids = tableModel.getSelected().stream().map(ca -> ca.getId()).collect(Collectors.toList());
         if (ids.isEmpty()) {
-            mostrarInformacion("Selecciones categorías");
+            view.mostrarInformacion("Selecciones categorías");
             return;
         }
-        service.cambiarEstado(ids, estado);
-        tableModel.selectAll(false);
-        
-    }
-
-    @Override
-    public void seleccionarTodos() {
+        try {
+            service.cambiarEstado(ids, estado);service.cambiarEstado(ids, estado);
+            tableModel.selectAll(false);
+        } catch (Exception e) {
+            view.mostrarError(e.getMessage());
+        }
         
     }
 

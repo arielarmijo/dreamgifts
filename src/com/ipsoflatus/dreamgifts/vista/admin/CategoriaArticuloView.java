@@ -3,19 +3,19 @@ package com.ipsoflatus.dreamgifts.vista.admin;
 import com.ipsoflatus.dreamgifts.controlador.admin.CategoriaArticuloController;
 import com.ipsoflatus.dreamgifts.modelo.tabla.admin.CategoriaArticuloTableModel;
 import com.ipsoflatus.dreamgifts.modelo.servicio.CategoriaArticuloService;
+import com.ipsoflatus.dreamgifts.vista.DreamGiftsView;
 import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-public final class CategoriaArticuloView extends javax.swing.JPanel {
+public final class CategoriaArticuloView extends DreamGiftsView {
 
     private final CategoriaArticuloController controlador;
 
     public CategoriaArticuloView() {
         initComponents();
-        controlador = new CategoriaArticuloController();
-        controlador.setView(this);
+        controlador = new CategoriaArticuloController(this);
     }
 
     /**

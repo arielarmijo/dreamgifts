@@ -39,15 +39,15 @@ public class DreamGifts extends javax.swing.JFrame {
     public JPanel armadoPacks;
     public JPanel solicitudPedido;
     public JPanel registroCompras;
-    public RevisionFacturaView revisionFactura;
+    public DreamGiftsView revisionFactura;
     
     public JPanel informeVentas;
     public JPanel informeInventario;
     public JPanel informeClientes;
     public JPanel informeDyC;
     
-    public ClienteView cliente;
-    public ProveedorView proveedor;
+    public DreamGiftsView cliente;
+    public DreamGiftsView proveedor;
     public JPanel pack;
     public JPanel articulo;
     public JPanel categoriaArticulo;
@@ -55,7 +55,7 @@ public class DreamGifts extends javax.swing.JFrame {
     public JPanel banco;
     public JPanel rrss;
     public JPanel estadoVenta;
-    public JPanel usuario;
+    public DreamGiftsView usuario;
     
     public DreamGifts() {
         initComponents();

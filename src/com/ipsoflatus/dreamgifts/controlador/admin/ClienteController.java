@@ -1,6 +1,5 @@
 package com.ipsoflatus.dreamgifts.controlador.admin;
 
-import com.ipsoflatus.dreamgifts.controlador.Controller;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Cliente;
 import com.ipsoflatus.dreamgifts.modelo.entidad.Comuna;
 import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
@@ -15,24 +14,18 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ClienteController implements Controller<ClienteView> {
+public class ClienteController {
 
     private final ClienteService clienteSrv = ClienteService.getInstance();
-    private ClienteView view;
-    private ClienteTableModel tableModel;
+    private final ClienteView view;
+    private final ClienteTableModel tableModel;
     private Cliente clienteActual;
 
-    public ClienteController() {
-
-    }
-
-    @Override
-    public void setView(ClienteView view) {
+    public ClienteController(ClienteView view) {
         this.view = view;
         this.tableModel = (ClienteTableModel) view.getjTable().getModel();
     }
 
-    @Override
     public void cancelar() {
         clienteActual = null;
         view.getjTextFieldRut().setText("");
@@ -46,7 +39,6 @@ public class ClienteController implements Controller<ClienteView> {
         view.getDatePicker().clear();
     }
 
-    @Override
     public void grabar() {
         String rut = view.getjTextFieldRut().getText();
         String nombre = view.getjTextFieldNombre().getText();
@@ -59,13 +51,13 @@ public class ClienteController implements Controller<ClienteView> {
         String celular = view.getjTextFieldCelular().getText();
 
         if (rut.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || correo.isEmpty() || direccion.isEmpty() || celular.isEmpty()) {
-            mostrarInformacion("Complete todos los campos.");
+            view.mostrarInformacion("Complete todos los campos.");
             return;
         }
 
         LocalDate fecha = view.getDatePicker().getDate();
         if (fecha == null) {
-            mostrarInformacion("Ingrese Fecha de Nacimiento.");
+            view.mostrarInformacion("Ingrese Fecha de Nacimiento.");
             return;
         }
         Date fechaNacimiento = Date.from(fecha.atStartOfDay(ZoneId.systemDefault()).toInstant());
@@ -99,11 +91,10 @@ public class ClienteController implements Controller<ClienteView> {
             }
             cancelar();
         } catch (DreamGiftsException e) {
-            mostrarError(e.getMessage());
+            view.mostrarError(e.getMessage());
         }
     }
 
-    @Override
     public void buscar() {
         String termino = view.getjTextFieldBuscar().getText();
         List<Cliente> cliente = termino.isEmpty() ? clienteSrv.buscar() : clienteSrv.buscar(termino);
@@ -111,11 +102,10 @@ public class ClienteController implements Controller<ClienteView> {
         view.getjTextFieldBuscar().setText("");
     }
 
-    @Override
     public void editar() {
         int row = view.getjTable().getSelectedRow();
         if (row == -1) {
-            mostrarInformacion("Seleccione cliente.");
+            view.mostrarInformacion("Seleccione cliente.");
             return;
         }
         clienteActual = tableModel.getItem(row);
@@ -131,21 +121,27 @@ public class ClienteController implements Controller<ClienteView> {
         LocalDate localDate = Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
         view.getDatePicker().setDate(localDate);
     }
-
-    @Override
+    
+    public void activarSeleccionados() {
+        activarDesactivarSeleccionados(true);
+    }
+    
+    public void desactivarSeleccionados() {
+        activarDesactivarSeleccionados(false);
+    }
+    
     public void activarDesactivarSeleccionados(Boolean estado) {
         List<Integer> ids = tableModel.getSelected().stream().map(b -> b.getId()).collect(Collectors.toList());
         if (ids.isEmpty()) {
-            mostrarInformacion("Seleccione Cliente");
+            view.mostrarInformacion("Seleccione Cliente");
             return;
         }
-        clienteSrv.cambiarEstado(ids, estado);
-        tableModel.selectAll(false);
-    }
-
-    @Override
-    public void seleccionarTodos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            clienteSrv.cambiarEstado(ids, estado);
+            tableModel.selectAll(false);  
+        } catch (Exception e) {
+            view.mostrarError(e.getMessage());
+        }
     }
 
     public void vender() {

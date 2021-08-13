@@ -57,6 +57,7 @@ public class InformeCyDController implements DateChangeListener {
     
     @Override
     public void dateChanged(DateChangeEvent dce) {
+        
         LocalDate desde = view.getDpDesde().getDate();
         LocalDate hasta = view.getDpHasta().getDate();
         

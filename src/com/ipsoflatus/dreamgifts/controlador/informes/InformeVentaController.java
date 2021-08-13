@@ -56,6 +56,7 @@ public class InformeVentaController implements TableModelListener, DateChangeLis
     @Override
     public void dateChanged(DateChangeEvent dce) {
         view.getTxfRut().setText("");
+        //dce.getSource().getSettings().setDateRangeLimits(obtenerFechaMinima(), obtenerFechaMinima());
         dce.getSource().setDate(dce.getNewDate());
         LocalDate desdeLocalDate = view.getDpDesde().getDate();
         Date desdeDate = Date.from(desdeLocalDate.atStartOfDay(ZoneId.systemDefault()).toInstant());

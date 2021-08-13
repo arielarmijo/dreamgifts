@@ -1,5 +1,7 @@
 package com.ipsoflatus.dreamgifts.modelo.dao;
 
+import com.ipsoflatus.dreamgifts.modelo.error.DreamGiftsException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -27,41 +29,97 @@ public abstract class AbstractDao<T> implements DAO<T> {
 
     @Override
     public List<T> findAll() {
-        EntityManager em = emf.createEntityManager();
-        List<T> results;
-        String sql = String.format("SELECT o FROM %s o", typeClass.getSimpleName());
-        Query query = em.createQuery(sql);
-        results = query.getResultList();
-        em.close();
+        List<T> results = new ArrayList<>();
+        EntityManager em = null;
+        try {
+            em = emf.createEntityManager();
+            String sql = String.format("SELECT o FROM %s o", typeClass.getSimpleName());
+            Query query = em.createQuery(sql);
+            results = query.getResultList();
+        } catch (Exception e) {
+            printError(e);
+            //throw new DreamGiftsException("No se encontraron registros.");
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
         return results;
     }
 
     @Override
     public List<T> findByTermLike(String term) {
-        EntityManager em = emf.createEntityManager();
-        String namedQuery = String.format("%s.findByTermLike", typeClass.getSimpleName());
-        TypedQuery<T> query = em.createNamedQuery(namedQuery, typeClass);
-        query.setParameter("term", "%" + term + "%");
-        List<T> result = query.getResultList();
-        em.close();
+        List<T> result = new ArrayList<>();
+        EntityManager em = null;
+        try {
+            em = emf.createEntityManager();
+            String namedQuery = String.format("%s.findByTermLike", typeClass.getSimpleName());
+            TypedQuery<T> query = em.createNamedQuery(namedQuery, typeClass);
+            query.setParameter("term", "%" + term + "%");
+            result = query.getResultList();
+        } catch (Exception e) {
+            printError(e);
+            //throw new DreamGiftsException("No se encontron registros.");
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
         return result;
     }
    
     @Override
     public T findById(int id) {
-        EntityManager em = emf.createEntityManager();
-        T t = em.find(typeClass, id);
-        em.close();
-        return t;
+        EntityManager em = null;
+        try {
+            em = emf.createEntityManager();
+            T t = em.find(typeClass, id);
+            return t;
+        } catch (Exception e) {
+            printError(e);
+            throw new DreamGiftsException("No se encontró registro.");
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
     }
 
     @Override
     public void save(T t) {
+        EntityManager em = null;
+        try {
+            em = emf.createEntityManager();
+            em.getTransaction().begin();  
+            em.persist(t);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            printError(e);
+            throw new DreamGiftsException("Registro duplicado.");
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+    
+    @Override
+    public void update(T t) {
         EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();  
-        em.persist(t);
-        em.getTransaction().commit();
-        em.close();
+        try {
+            em.getTransaction().begin();  
+            em.merge(t);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            printError(e);
+            throw new DreamGiftsException("Error al actualizar " + typeClass.getSimpleName());
+        } finally {
+            em.close();
+        }
+    }
+    
+    public void printError(Exception e) {
+        printError(typeClass, e);
     }
     
 }

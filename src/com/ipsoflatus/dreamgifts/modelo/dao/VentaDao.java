@@ -30,39 +30,13 @@ public class VentaDao extends AbstractDao<Venta> {
             em.getTransaction().commit();
             packSrv.notifyObservers();
         } catch (Exception e) {
-            e.printStackTrace();
+            printError(e);
+            throw new DreamGiftsException("Error al guardar venta.");
         } finally {
             if (em != null) {
                 em.close();
             }
         }
-    }
-
-    @Override
-    public void update(Venta v) {
-        EntityManager em = getEntityManager();
-        em.getTransaction().begin();  
-        Venta venta = em.find(Venta.class, v.getId());
-        venta.setCliente(v.getCliente());
-        venta.setTotal(v.getTotal());
-        venta.setFechaVenta(v.getFechaVenta());
-        venta.setFechaTransferencia(v.getFechaTransferencia());
-        venta.setCodigoTransferencia(v.getCodigoTransferencia());
-        venta.setBanco(v.getBanco());
-        venta.setNombreDestinatario(v.getNombreDestinatario());
-        venta.setApellidoDestinatario(v.getApellidoDestinatario());
-        venta.setDireccionDestinatario(v.getDireccionDestinatario());
-        venta.setComuna(v.getComuna());
-        venta.setTelefonoDestinatario(v.getTelefonoDestinatario());
-        venta.setFechaEntrega(v.getFechaEntrega());
-        venta.setHoraEntregaInicial(v.getHoraEntregaInicial());
-        venta.setHoraEntregaFinal(v.getHoraEntregaFinal());
-        venta.setSaludo(v.getSaludo());
-        venta.setRedSocial(v.getRedSocial());
-        venta.setEstadoVenta(v.getEstadoVenta());
-        venta.setPack(v.getPack());
-        em.getTransaction().commit();
-        em.close();
     }
 
     public Date findMinDate() {
