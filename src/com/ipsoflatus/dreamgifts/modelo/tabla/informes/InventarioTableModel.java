@@ -5,6 +5,7 @@ import com.ipsoflatus.dreamgifts.modelo.entidad.Factura;
 import com.ipsoflatus.dreamgifts.modelo.entidad.FacturaDetalle;
 import com.ipsoflatus.dreamgifts.modelo.servicio.FacturaService;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.swing.table.AbstractTableModel;
@@ -14,7 +15,7 @@ public class InventarioTableModel extends AbstractTableModel implements Observer
     private final FacturaService facturaSrv;
     private final String[] columnNames;
     private final Class[] columnClases;
-    private List<FacturaDetalle> items;
+    private List<FacturaDetalle> items = new ArrayList<>();
 
     public InventarioTableModel() {
         facturaSrv = FacturaService.getInstance();

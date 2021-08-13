@@ -68,12 +68,8 @@ public abstract class AbstractService<T> implements Service<T>, ObservableServic
     public void notifyObservers() {
         items = dao.findAll();
         obs.forEach(o -> {
-            executor.execute(() -> {
-                System.out.println("Start thread " + Thread.currentThread().getName());
                 System.out.println("notificando observador " + o.getClass().getSimpleName() + " con " + items);
                 o.actualizar(items);
-                System.out.println("End thread " + Thread.currentThread().getName());
-            });
         });
     }
 
